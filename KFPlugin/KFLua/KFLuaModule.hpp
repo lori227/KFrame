@@ -108,13 +108,13 @@ namespace KFrame
         uint64 LuaGetRealTime();
 
         // 添加数据
-        void LuaAddData( uint64 objectid, const char* strelement, const char* modulename );
+        void LuaAddData( uint64 objectid, const char* strelement, const char* module_name );
 
         // 设置数据
-        void LuaSetData( uint64 objectid, const char* strelement, const char* modulename );
+        void LuaSetData( uint64 objectid, const char* strelement, const char* module_name );
 
         // 减少数据
-        void LuaDecData( uint64 objectid, const char* strelement, const char* modulename );
+        void LuaDecData( uint64 objectid, const char* strelement, const char* module_name );
 
         // http访问
         const char* LuaSTGet( const char* url, const char* data );

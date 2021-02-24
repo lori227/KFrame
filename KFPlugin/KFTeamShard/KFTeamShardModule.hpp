@@ -91,7 +91,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleTeamAgreeToTeamReq, KFMsg::S2STeamAgreeToTeamReq );
     private:
         // 队伍上下文组件
-        KFComponent* _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _kf_component = nullptr;
     };
 }
 

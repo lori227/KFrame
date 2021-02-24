@@ -14,7 +14,7 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
         // 查找组件
-        virtual KFComponent* FindComponent( const std::string& data_name ) = 0;
+        virtual std::shared_ptr<KFComponent> FindComponent( const std::string& data_name ) = 0;
 
         // 查找实体
         virtual EntityPtr FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line ) = 0;

@@ -131,7 +131,7 @@ namespace KFrame
         uint64 _world_server_id = _invalid_int;
 
         // 玩家组建
-        KFComponent* _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _kf_component = nullptr;
     };
 }
 

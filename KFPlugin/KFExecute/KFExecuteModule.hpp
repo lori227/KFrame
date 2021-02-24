@@ -30,13 +30,13 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
 
         virtual bool Execute( EntityPtr player, uint32 executeid, const char* function, uint32 line );
-        virtual bool Execute( EntityPtr player, uint32 executeid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, uint32 executeid, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
 
         virtual bool Execute( EntityPtr player, const UInt32Vector& executelist, const char* function, uint32 line );
-        virtual bool Execute( EntityPtr player, const UInt32Vector& executelist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, const UInt32Vector& executelist, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
 
         virtual bool Execute( EntityPtr player, const ExecuteDataPtr& executedata, const char* function, uint32 line );
-        virtual bool Execute( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
 
     protected:
         virtual void BindExecuteFunction( KFModule* module, const std::string& name, KFExecuteFunction& function );

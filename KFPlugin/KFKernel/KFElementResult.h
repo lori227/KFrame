@@ -70,7 +70,7 @@ namespace KFrame
         uint32 _operate = KFEnum::Add;
 
         // 添加的元素
-        KFElement* _element = nullptr;
+        std::shared_ptr<KFElement> _element = nullptr;
 
         // 倍数
         double _multiple = _default_multiple;

@@ -300,7 +300,7 @@ namespace KFrame
         return KFGlobal::Instance()->_real_time;
     }
 
-    void KFLuaModule::LuaAddData( uint64 objectid, const char* strelement, const char* modulename )
+    void KFLuaModule::LuaAddData( uint64 objectid, const char* strelement, const char* module_name )
     {
         auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
         if ( entity == nullptr )
@@ -312,11 +312,11 @@ namespace KFrame
         auto ok = elements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            entity->AddElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            entity->AddElement( &elements, _default_multiple, module_name, 0u, __FUNC_LINE__ );
         }
     }
 
-    void KFLuaModule::LuaSetData( uint64 objectid, const char* strelement, const char* modulename )
+    void KFLuaModule::LuaSetData( uint64 objectid, const char* strelement, const char* module_name )
     {
         auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
         if ( entity == nullptr )
@@ -329,11 +329,11 @@ namespace KFrame
         if ( ok )
         {
             elements.SetOperate( KFEnum::Set );
-            entity->AddElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            entity->AddElement( &elements, _default_multiple, module_name, 0u, __FUNC_LINE__ );
         }
     }
 
-    void KFLuaModule::LuaDecData( uint64 objectid, const char* strelement, const char* modulename )
+    void KFLuaModule::LuaDecData( uint64 objectid, const char* strelement, const char* module_name )
     {
         auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
         if ( entity == nullptr )
@@ -345,7 +345,7 @@ namespace KFrame
         auto ok = elements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            entity->RemoveElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            entity->RemoveElement( &elements, _default_multiple, module_name, 0u, __FUNC_LINE__ );
         }
     }
 

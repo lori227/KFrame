@@ -153,7 +153,7 @@ namespace KFrame
 
     protected:
         // 玩家组件上下文
-        KFComponent* _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _kf_component = nullptr;
 
         // 初始化
         KFMap<uint32, KFMapFunction<std::string, KFItemInitFunction>> _item_init_function;

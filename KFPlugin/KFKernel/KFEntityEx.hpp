@@ -130,10 +130,10 @@ namespace KFrame
         virtual const std::string& CheckAddElement( const KFElements* elements, double multiple, const char* function, uint32 line );
 
         // 添加元数据
-        virtual void AddElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual void AddElement( const KFElements* elements, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
 
         // 删除元数据( 删除前会判断是否满足 )
-        virtual const std::string& RemoveElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        virtual const std::string& RemoveElement( const KFElements* elements, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
 
         // 设置element到kfdata对象
         virtual void UpdateElementToData( DataPtr kfdata, KFElementObject* kfelement, double multiple );
@@ -141,14 +141,14 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         // 显示奖励
-        virtual void SetDataShowModule( const std::string& modulename, uint64 moduleid );
+        virtual void SetDataShowModule( const std::string& module_name, uint64 module_id );
 
         virtual void AddDataToShow( const std::string& name, uint64 value, bool independ = true );
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, DataPtr kfdata, bool independ = true );
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool independ = true );
+        virtual void AddDataToShow( const std::string& module_name, uint64 module_id, DataPtr kfdata, bool independ = true );
+        virtual void AddDataToShow( const std::string& module_name, uint64 module_id, const std::string& name, uint64 value, bool independ = true );
 
         virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool independ = true );
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool independ = true );
+        virtual void AddDataToShow( const std::string& module_name, uint64 module_id, const std::string& name, uint64 value, StringUInt64& values, bool independ = true );
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -189,7 +189,7 @@ namespace KFrame
         bool CheckAddElement( const KFElement* kfelement, double multiple, const char* function, uint32 line );
 
         // 添加元数据
-        void AddElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        void AddElement( const KFElement* kfelement, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
         bool AddNormalElement( DataPtr kfdata, KFElementResult* kfresult, const char* function, uint32 line );
         bool AddObjectElement( DataPtr kfparent, KFElementResult* kfresult, const char* function, uint32 line );
         bool AddRecordElement( DataPtr kfparent, KFElementResult* kfresult, const char* function, uint32 line );
@@ -202,7 +202,7 @@ namespace KFrame
         bool CheckRecordElement( DataPtr kfparent, KFElement* kfelement, double multiple, const char* function, uint32 line );
 
         // 删除元数据
-        void RemoveElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line );
+        void RemoveElement( const KFElement* kfelement, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
         bool RemoveNormalElement( DataPtr kfdata, KFElementResult* kfresult, const char* function, uint32 line );
         bool RemoveObjectElement( DataPtr kfparent, KFElementResult* kfresult, const char* function, uint32 line );
         bool RemoveRecordElement( DataPtr kfparent, KFElementResult* kfresult, const char* function, uint32 line );
@@ -233,7 +233,7 @@ namespace KFrame
         void AddDataToShowElement( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, StringUInt64& values, bool independ );
 
         KFMsg::PBShowElement* CreateShowElement();
-        KFMsg::PBShowElement* CreateShowElement( const std::string& modulename, uint64 moduleid );
+        KFMsg::PBShowElement* CreateShowElement( const std::string& module_name, uint64 module_id );
         KFMsg::PBShowData* CreateShowData( KFMsg::PBShowElement* pbshowelement, const std::string& name, uint64 value, bool independ );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

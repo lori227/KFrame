@@ -10,10 +10,10 @@ namespace KFrame
 	class KFGiftSetting : public KFIntSetting
 	{
 	public:
-		// µôÂäid
+		// ï¿½ï¿½ï¿½ï¿½id
 		std::string _drop_id;
 
-		// ½±Àø
+		// ï¿½ï¿½ï¿½ï¿½
 		KFElements _reward;
 
 	};
@@ -43,7 +43,7 @@ namespace KFrame
 	protected:
 		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFGiftSetting> setting )
 		{
-			setting->_drop_id = xml_node.ReadString( "dropid", true );
+			setting->_drop_id = xml_node.ReadString( "drop_id", true );
 			setting->_reward._str_parse = xml_node.ReadString( "reward", true );
 		}
 

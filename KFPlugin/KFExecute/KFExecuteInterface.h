@@ -11,13 +11,13 @@ namespace KFrame
     public:
         // 执行输出
         virtual bool Execute( EntityPtr player, uint32 executeid, const char* function, uint32 line ) = 0;
-        virtual bool Execute( EntityPtr player, uint32 executeid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+        virtual bool Execute( EntityPtr player, uint32 executeid, const std::string& module_name, uint64 module_id, const char* function, uint32 line ) = 0;
 
         virtual bool Execute( EntityPtr player, const UInt32Vector& executelist, const char* function, uint32 line ) = 0;
-        virtual bool Execute( EntityPtr player, const UInt32Vector& executelist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+        virtual bool Execute( EntityPtr player, const UInt32Vector& executelist, const std::string& module_name, uint64 module_id, const char* function, uint32 line ) = 0;
 
         virtual bool Execute( EntityPtr player, const ExecuteDataPtr& executedata, const char* function, uint32 line ) = 0;
-        virtual bool Execute( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+        virtual bool Execute( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& module_name, uint64 module_id, const char* function, uint32 line ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册执行函数
         template<class T>
@@ -42,7 +42,7 @@ namespace KFrame
     __KF_INTERFACE__( _kf_execute, KFExecuteInterface );
     //////////////////////////////////////////////////////////////////////////
 #define __KF_EXECUTE_FUNCTION__( _function ) \
-    bool _function( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    bool _function( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
 #define __REGISTER_EXECUTE__( name, function ) \
     _kf_execute->RegisterExecuteFunction( name, this, function )
 #define __UN_EXECUTE__( name ) \

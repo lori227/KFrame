@@ -607,10 +607,10 @@ namespace KFrame
 #define  __KF_ELEMENT_RESULT_FUNCTION__( function ) \
     bool function( EntityPtr player, const KFElementResult* kfresult )
 
-#define __REGISTER_ELEMENT_RESULT__( modulename, function ) \
-    _kf_component->RegisterElementResultFunction( modulename, this, function )
-#define __UN_ELEMENT_RESULT__( modulename ) \
-    _kf_component->UnRegisterElementResultFunction( modulename )
+#define __REGISTER_ELEMENT_RESULT__( module_name, function ) \
+    _kf_component->RegisterElementResultFunction( module_name, this, function )
+#define __UN_ELEMENT_RESULT__( module_name ) \
+    _kf_component->UnRegisterElementResultFunction( module_name )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 }

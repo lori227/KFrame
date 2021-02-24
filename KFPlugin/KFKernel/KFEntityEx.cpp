@@ -709,13 +709,13 @@ namespace KFrame
         return _pb_show_elements.mutable_element( size - 1 );
     }
 
-    KFMsg::PBShowElement* KFEntityEx::CreateShowElement( const std::string& modulename, uint64 moduleid )
+    KFMsg::PBShowElement* KFEntityEx::CreateShowElement( const std::string& module_name, uint64 module_id )
     {
         for ( auto i = 0; i < _pb_show_elements.element_size(); ++i )
         {
             auto pbshowelement = _pb_show_elements.mutable_element( i );
-            if ( pbshowelement->modulename() == modulename &&
-                    pbshowelement->moduleid() == moduleid )
+            if ( pbshowelement->module_name() == module_name &&
+                    pbshowelement->module_id() == module_id )
             {
                 return pbshowelement;
             }
@@ -725,8 +725,8 @@ namespace KFrame
         _kf_component->AddSyncEntity( this );
 
         auto pbshowelement = _pb_show_elements.add_element();
-        pbshowelement->set_modulename( modulename );
-        pbshowelement->set_moduleid( moduleid );
+        pbshowelement->set_modulename( module_name );
+        pbshowelement->set_moduleid( module_id );
         return pbshowelement;
     }
 
@@ -939,19 +939,19 @@ namespace KFrame
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFEntityEx::SetDataShowModule( const std::string& modulename, uint64 moduleid )
+    void KFEntityEx::SetDataShowModule( const std::string& module_name, uint64 module_id )
     {
-        if ( modulename.empty() )
+        if ( module_name.empty() )
         {
             return;
         }
 
-        CreateShowElement( modulename, moduleid );
+        CreateShowElement( module_name, module_id );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, DataPtr kfdata, bool independ )
+    void KFEntityEx::AddDataToShow( const std::string& module_name, uint64 module_id, DataPtr kfdata, bool independ )
     {
-        auto pbshowelement = CreateShowElement( modulename, moduleid );
+        auto pbshowelement = CreateShowElement( module_name, module_id );
         AddDataToShowElement( pbshowelement, kfdata, independ );
     }
 
@@ -966,14 +966,14 @@ namespace KFrame
         CreateShowData( pbshowelement, name, value, independ );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool independ )
+    void KFEntityEx::AddDataToShow( const std::string& module_name, uint64 module_id, const std::string& name, uint64 value, bool independ )
     {
         if ( value == 0u )
         {
             return;
         }
 
-        auto pbshowelement = CreateShowElement( modulename, moduleid );
+        auto pbshowelement = CreateShowElement( module_name, module_id );
         CreateShowData( pbshowelement, name, value, independ );
     }
 
@@ -989,9 +989,9 @@ namespace KFrame
         AddDataToShowElement( pbshowelement, name, value, values, independ );
     }
 
-    void KFEntityEx::AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool independ )
+    void KFEntityEx::AddDataToShow( const std::string& module_name, uint64 module_id, const std::string& name, uint64 value, StringUInt64& values, bool independ )
     {
-        auto pbshowelement = CreateShowElement( modulename, moduleid );
+        auto pbshowelement = CreateShowElement( module_name, module_id );
         AddDataToShowElement( pbshowelement, name, value, values, independ );
     }
 
@@ -1100,7 +1100,7 @@ namespace KFrame
         return !kfdata->IsFull();
     }
 
-    void KFEntityEx::AddElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    void KFEntityEx::AddElement( const KFElements* elements, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
     {
         if ( elements->_element_list.empty() )
         {
@@ -1111,13 +1111,13 @@ namespace KFrame
         _element_sequence = KFGlobal::Instance()->STMakeUuid();
         for ( auto kfelement : elements->_element_list )
         {
-            AddElement( kfelement, multiple, modulename, moduleid, function, line );
+            AddElement( kfelement, multiple, module_name, module_id, function, line );
         }
         __LOG_INFO_FUNCTION__( function, line, "{}=[{}] finish add elements", _kf_component->_component_name, GetKeyID() );
     }
 
     // 添加元数据
-    void KFEntityEx::AddElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    void KFEntityEx::AddElement( const KFElement* kfelement, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
     {
         auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -1137,8 +1137,8 @@ namespace KFrame
         elementresult._sequence = _element_sequence;
         elementresult._element = const_cast< KFElement* >( kfelement );
         elementresult._is_need_show = kfdata->_data_setting->HaveMask( KFDataDefine::DataMaskShow );
-        elementresult._module_name = modulename;
-        elementresult._module_id = moduleid;
+        elementresult._module_name = module_name;
+        elementresult._module_id = module_id;
 
         auto ok = false;
         auto kffunction = _kf_component->_add_element_function.Find( kfdata->_data_setting->_logic_name );
@@ -1446,7 +1446,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
-    const std::string& KFEntityEx::RemoveElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    const std::string& KFEntityEx::RemoveElement( const KFElements* elements, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
     {
         if ( elements->IsEmpty() )
         {
@@ -1460,7 +1460,7 @@ namespace KFrame
             _element_sequence = KFGlobal::Instance()->STMakeUuid();
             for ( auto kfelement : elements->_element_list )
             {
-                RemoveElement( kfelement, multiple, modulename, moduleid, function, line );
+                RemoveElement( kfelement, multiple, module_name, module_id, function, line );
             }
             __LOG_INFO_FUNCTION__( function, line, "{}=[{}] finish remove elements", _kf_component->_component_name, GetKeyID() );
         }
@@ -1469,7 +1469,7 @@ namespace KFrame
     }
 
     // 删除元数据
-    void KFEntityEx::RemoveElement( const KFElement* kfelement, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+    void KFEntityEx::RemoveElement( const KFElement* kfelement, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
     {
         auto kfdata = Find( kfelement->_data_name );
         if ( kfdata == nullptr )
@@ -1486,8 +1486,8 @@ namespace KFrame
         elementresult._operate = KFEnum::Dec;
         elementresult._sequence = _element_sequence;
         elementresult._element = const_cast< KFElement* >( kfelement );
-        elementresult._module_name = modulename;
-        elementresult._module_id = moduleid;
+        elementresult._module_name = module_name;
+        elementresult._module_id = module_id;
 
         auto ok = false;
         auto kffunction = _kf_component->_remove_element_function.Find( kfdata->_data_setting->_logic_name );

@@ -49,7 +49,7 @@ namespace KFrame
 
     protected:
         // 玩家上下文组件
-        KFComponent* _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _kf_component = nullptr;
     };
 }
 

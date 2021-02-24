@@ -103,24 +103,24 @@ namespace KFrame
         virtual const std::string& CheckAddElement( const KFElements* elements, double multiple, const char* function, uint32 line ) = 0;
 
         // 添加元数据
-        virtual void AddElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+        virtual void AddElement( const KFElements* elements, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line ) = 0;
 
         // 删除元数据
-        virtual const std::string& RemoveElement( const KFElements* elements, double multiple, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+        virtual const std::string& RemoveElement( const KFElements* elements, double multiple, const std::string& module_name, uint64 module_id, const char* function, uint32 line ) = 0;
 
         // 设置element到kfdata对象
         virtual void UpdateElementToData( DataPtr kfdata, KFElementObject* kfelement, double multiple ) = 0;
         virtual void SetElementToData( DataPtr kfdata, KFElementObject* kfelement, double multiple ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 显示奖励接口相关
-        virtual void SetDataShowModule( const std::string& modulename, uint64 moduleid ) = 0;
+        virtual void SetDataShowModule( const std::string& module_name, uint64 module_id ) = 0;
 
         virtual void AddDataToShow( const std::string& name, uint64 value, bool independ = true ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, DataPtr kfdata, bool independ = true ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, bool independ = true ) = 0;
+        virtual void AddDataToShow( const std::string& module_name, uint64 module_id, DataPtr kfdata, bool independ = true ) = 0;
+        virtual void AddDataToShow( const std::string& module_name, uint64 module_id, const std::string& name, uint64 value, bool independ = true ) = 0;
 
         virtual void AddDataToShow( const std::string& name, uint64 value, StringUInt64& values, bool independ = true ) = 0;
-        virtual void AddDataToShow( const std::string& modulename, uint64 moduleid, const std::string& name, uint64 value, StringUInt64& values, bool independ = true ) = 0;
+        virtual void AddDataToShow( const std::string& module_name, uint64 module_id, const std::string& name, uint64 value, StringUInt64& values, bool independ = true ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 同步更新数据

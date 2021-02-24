@@ -12,30 +12,30 @@ namespace KFrame
     {
     public:
         // 返回的DropDataList只包含掉落属性数据
-        virtual const DropDataList& Drop( EntityPtr player, uint32 dropid, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
-        virtual const DropDataList& Drop( EntityPtr player, uint32 dropid, uint32 count, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
-        virtual const DropDataList& Drop( EntityPtr player, const UInt32Vector& droplist, const std::string& modulename, uint64 moduleid, const char* function, uint32 line ) = 0;
+        virtual const DropDataList& Drop( EntityPtr player, uint32 drop_id, const std::string& module_name, uint64 module_id, const char* function, uint32 line ) = 0;
+        virtual const DropDataList& Drop( EntityPtr player, uint32 drop_id, uint32 count, const std::string& module_name, uint64 module_id, const char* function, uint32 line ) = 0;
+        virtual const DropDataList& Drop( EntityPtr player, const UInt32Vector& drop_list, const std::string& module_name, uint64 module_id, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册掉落逻辑
         template<class T>
-        void RegisterDropLogicFunction( const std::string& logicname, T* module, void ( T::*handle )( EntityPtr, const KFDropData*, const std::string&, uint64, const char*, uint32 ) )
+        void RegisterDropLogicFunction( const std::string& logic_name, T* module, void ( T::*handle )( EntityPtr, const KFDropData*, const std::string&, uint64, const char*, uint32 ) )
         {
             KFDropLogicFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
                                            std::placeholders::_4, std::placeholders::_5, std::placeholders::_6 );
-            BindDropLogicFunction( module, logicname, function );
+            BindDropLogicFunction( logic_name, module, function );
         }
-        virtual void UnRegisterDropLogicFunction( const std::string& logicname ) = 0;
+        virtual void UnRegisterDropLogicFunction( const std::string& logic_name ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
         // 绑定掉落逻辑函数
-        virtual void BindDropLogicFunction( KFModule* module, const std::string& logicname, KFDropLogicFunction& function ) = 0;
+        virtual void BindDropLogicFunction(  const std::string& logic_name, KFModule* module, KFDropLogicFunction& function ) = 0;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_drop, KFDropInterface );
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define __KF_DROP_LOGIC_FUNCTION__( _function )\
-    void _function( EntityPtr player, const KFDropData* dropdata,const std::string& modulename, uint64 moduleid, const char* function, uint32 line )
+#define __KF_DROP_LOGIC_FUNCTION__( function_name )\
+    void function_name( EntityPtr player, const KFDropData* drop_data,const std::string& module_name, uint64 module_id, const char* function, uint32 line )
 #define __REGISTER_DROP_LOGIC__( data_name, function )\
     _kf_drop->RegisterDropLogicFunction( data_name, this, function )
 #define  __UN_DROP_LOGIC__( data_name )\
