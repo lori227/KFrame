@@ -41,11 +41,11 @@ namespace KFrame
     protected:
         //////////////////////////////////////////////////////////////////////////////////////
         // 解锁玩家数据
-        void UnlockPlayerData( EntityPtr player, const KFUnlockSetting* setting );
-        void UnlockPlayerData( EntityPtr player, const KFUnlockSetting* setting, DataPtr kfdatarecord );
+        void UnlockPlayerData( EntityPtr player, std::shared_ptr<const KFUnlockSetting> setting );
+        void UnlockPlayerData( EntityPtr player, std::shared_ptr<const KFUnlockSetting> setting, DataPtr record_data );
 
         // 判断是否需要解锁
-        bool CheckNeedUnlock( EntityPtr player, const KFUnlockSetting* setting, DataPtr kfdatarecord );
+        bool CheckNeedUnlock( EntityPtr player, std::shared_ptr<const KFUnlockSetting> setting, DataPtr record_data );
 
     protected:
         // 玩家上下文组件

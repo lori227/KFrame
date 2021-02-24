@@ -23,10 +23,10 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFExecuteModule::BindExecuteFunction( KFModule* module, const std::string& name, KFExecuteFunction& function )
+    void KFExecuteModule::BindExecuteFunction( const std::string& name, KFModule* module, KFExecuteFunction& function )
     {
-        auto kfhandle = _execute_function.Create( name );
-        kfhandle->SetFunction( module, function );
+        auto function_data = _execute_function.Create( name );
+        function_data->SetFunction( module, function );
     }
 
     void KFExecuteModule::UnBindExecuteFunction( const std::string& name )
@@ -34,12 +34,12 @@ namespace KFrame
         _execute_function.Remove( name );
     }
 
-    void KFExecuteModule::SetExecuteOpen( const std::string& name, bool isopen )
+    void KFExecuteModule::SetExecuteOpen( const std::string& name, bool is_open )
     {
-        auto kfhandle = _execute_function.Find( name );
-        if ( kfhandle != nullptr )
+        auto function_data = _execute_function.Find( name );
+        if ( function_data != nullptr )
         {
-            kfhandle->SetOpen( isopen );
+            function_data->SetOpen( is_open );
         }
     }
 
@@ -54,69 +54,69 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFExecuteModule::Execute( EntityPtr player, uint32 executeid, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, uint32 execute_id, const char* function, uint32 line )
     {
-        return Execute( player, executeid, _invalid_string, _invalid_int, function, line );
+        return Execute( player, execute_id, _invalid_string, _invalid_int, function, line );
     }
 
-    bool KFExecuteModule::Execute( EntityPtr player, uint32 executeid, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, uint32 execute_id, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
     {
-        auto setting = KFExecuteConfig::Instance()->FindSetting( executeid );
+        auto setting = KFExecuteConfig::Instance()->FindSetting( execute_id );
         if ( setting == nullptr )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "execute=[{}] can't find setting", executeid );
+            __LOG_ERROR_FUNCTION__( function, line, "execute=[{}] can't find setting", execute_id );
             return false;
         }
 
-        for ( auto& executedata : setting->_execute_data )
+        for ( auto& execute_data : setting->_execute_data )
         {
-            Execute( player, executedata._execute, module_name, module_id, function, line );
+            Execute( player, execute_data._execute, module_name, module_id, function, line );
         }
 
         return true;
     }
 
-    bool KFExecuteModule::Execute( EntityPtr player, const UInt32Vector& executelist, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, const UInt32Vector& execute_list, const char* function, uint32 line )
     {
-        return Execute( player, executelist, _invalid_string, _invalid_int, function, line );
+        return Execute( player, execute_list, _invalid_string, _invalid_int, function, line );
     }
 
-    bool KFExecuteModule::Execute( EntityPtr player, const UInt32Vector& executelist, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, const UInt32Vector& execute_list, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
     {
-        for ( auto executeid : executelist )
+        for ( auto execute_id : execute_list )
         {
-            auto setting = KFExecuteConfig::Instance()->FindSetting( executeid );
+            auto setting = KFExecuteConfig::Instance()->FindSetting( execute_id );
             if ( setting == nullptr )
             {
-                __LOG_ERROR_FUNCTION__( function, line, "execute=[{}] can't find setting", executeid );
+                __LOG_ERROR_FUNCTION__( function, line, "execute=[{}] can't find setting", execute_id );
                 continue;
             }
 
-            for ( auto& executedata : setting->_execute_data )
+            for ( auto& execute_data : setting->_execute_data )
             {
-                Execute( player, executedata._execute, module_name, module_id, function, line );
+                Execute( player, execute_data._execute, module_name, module_id, function, line );
             }
         }
 
         return true;
     }
 
-    bool KFExecuteModule::Execute( EntityPtr player, const ExecuteDataPtr& executedata, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, const ExecuteDataPtr& execute_data, const char* function, uint32 line )
     {
-        return Execute( player, executedata, _invalid_string, _invalid_int, function, line );
+        return Execute( player, execute_data, _invalid_string, _invalid_int, function, line );
     }
 
-    bool KFExecuteModule::Execute( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
+    bool KFExecuteModule::Execute( EntityPtr player, const ExecuteDataPtr& execute_data, const std::string& module_name, uint64 module_id, const char* function, uint32 line )
     {
         // 注册的执行逻辑
-        auto kffunction = _execute_function.Find( executedata->_name );
-        if ( kffunction != nullptr )
+        auto function_data = _execute_function.Find( execute_data->_name );
+        if ( function_data != nullptr )
         {
-            return kffunction->CallEx<bool>( player, executedata, module_name, module_id, function, line );
+            return function_data->CallEx<bool>( player, execute_data, module_name, module_id, function, line );
         }
         else
         {
-            __LOG_ERROR_FUNCTION__( function, line, "execute name=[{}] no function!", executedata->_name );
+            __LOG_ERROR_FUNCTION__( function, line, "execute name=[{}] no function!", execute_data->_name );
         }
 
         return false;
@@ -125,37 +125,37 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_EXECUTE_FUNCTION__( KFExecuteModule::OnExecuteAddData )
     {
-        if ( executedata->_elements.IsEmpty() )
+        if ( execute_data->_elements.IsEmpty() )
         {
             return false;
         }
 
-        player->AddElement( &executedata->_elements, _default_multiple, module_name, module_id, __FUNC_LINE__ );
+        player->AddElement( &execute_data->_elements, _default_multiple, module_name, module_id, __FUNC_LINE__ );
         return true;
     }
 
     __KF_EXECUTE_FUNCTION__( KFExecuteModule::OnExecuteDropLogic )
     {
-        if ( executedata->_param_list._params.size() < 1u )
+        if ( execute_data->_param_list._params.size() < 1u )
         {
             __LOG_ERROR_FUNCTION__( function, line, "execute drop param size<1" );
             return false;
         }
 
-        auto& drop_list = executedata->_param_list._params[ 0 ]->_vector_value;
+        auto& drop_list = execute_data->_param_list._params[ 0 ]->_vector_value;
         if ( !drop_list.empty() )
         {
             _kf_drop->Drop( player, drop_list, module_name, module_id, function, line );
         }
 
-        if ( executedata->_param_list._params.size() >= 3u )
+        if ( execute_data->_param_list._params.size() >= 3u )
         {
-            if ( executedata->_calc_value != 0u )
+            if ( execute_data->_calc_value != 0u )
             {
-                auto exetenddropid = KFUtility::GetMaxMapValue( executedata->_param_list._params[ 2 ]->_map_value, executedata->_calc_value );
-                if ( exetenddropid != 0u )
+                auto exetend_drop_id = KFUtility::GetMaxMapValue( execute_data->_param_list._params[ 2 ]->_map_value, execute_data->_calc_value );
+                if ( exetend_drop_id != 0u )
                 {
-                    _kf_drop->Drop( player, exetenddropid, module_name, module_id, function, line );
+                    _kf_drop->Drop( player, exetend_drop_id, module_name, module_id, function, line );
                 }
             }
         }
@@ -165,13 +165,13 @@ namespace KFrame
 
     __KF_EXECUTE_FUNCTION__( KFExecuteModule::OnExecuteQueueLogic )
     {
-        if ( executedata->_param_list._params.size() < 1u )
+        if ( execute_data->_param_list._params.size() < 1u )
         {
             __LOG_ERROR_FUNCTION__( function, line, "execute queue param size<1" );
             return false;
         }
 
-        auto& executelist = executedata->_param_list._params[ 0 ]->_vector_value;
-        return Execute( player, executelist, module_name, module_id, function, line );
+        auto& execute_list = execute_data->_param_list._params[ 0 ]->_vector_value;
+        return Execute( player, execute_list, module_name, module_id, function, line );
     }
 }

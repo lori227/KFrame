@@ -207,13 +207,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     DataPtr KFObject::Remove( const std::string& data_name )
     {
-        auto data = _data.Remove( data_name );
-        if ( data != nullptr )
-        {
-            data->SetParent(nullptr );
-        }
-
-        return data;
+        return _data.Remove( data_name );
     }
 
     DataPtr KFObject::Remove( const std::string& data_name, uint64 key )

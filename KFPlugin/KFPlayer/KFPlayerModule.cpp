@@ -19,7 +19,7 @@ namespace KFrame
         // 注册逻辑函数
         _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
         _kf_component->RegisterEntityInitializeFunction( this, &KFPlayerModule::InitPlayer );
-        _kf_component->RegisterEntityUninitializeFunction( this, &KFPlayerModule::UnInitPlayer );
+        _kf_component->RegisterEntityRemoveFunction( this, &KFPlayerModule::UnInitPlayer );
         _kf_component->RegisterEntityRunFunction( this, &KFPlayerModule::RunPlayer );
         _kf_component->RegisterEntityAfterRunFunction( this, &KFPlayerModule::AfterRunPlayer );
 
@@ -55,7 +55,7 @@ namespace KFrame
 
         // 卸载逻辑函数
         _kf_component->UnRegisterEntityInitializeFunction();
-        _kf_component->UnRegisterEntityUninitializeFunction();
+        _kf_component->UnRegisterEntityRemoveFunction();
         _kf_component->UnRegisterEntityRunFunction();
         _kf_component->UnRegisterEntityAfterRunFunction();
 

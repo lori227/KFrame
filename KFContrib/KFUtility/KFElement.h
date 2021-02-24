@@ -147,7 +147,7 @@ namespace KFrame
         uint32 _operate = KFEnum::Add;
 
         // 配置属性
-        const KFDataSetting* _data_setting = nullptr;
+        std::shared_ptr<const KFDataSetting> _data_setting = nullptr;
     };
 
     //////////////////////////////////////////////////////////////////

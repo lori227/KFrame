@@ -511,13 +511,13 @@ namespace KFrame
 
     __KF_EXECUTE_FUNCTION__( KFTaskModule::OnExecuteUpdateTaskStatus )
     {
-        if ( executedata->_param_list._params.size() < 2u )
+        if ( execute_data->_param_list._params.size() < 2u )
         {
             return false;
         }
 
-        auto taskid = executedata->_param_list._params[ 0 ]->_int_value;
-        auto status = executedata->_param_list._params[ 1 ]->_int_value;
+        auto taskid = execute_data->_param_list._params[ 0 ]->_int_value;
+        auto status = execute_data->_param_list._params[ 1 ]->_int_value;
         auto setting = KFTaskConfig::Instance()->FindSetting( taskid );
         if ( setting == nullptr )
         {
@@ -572,15 +572,15 @@ namespace KFrame
 
     __KF_EXECUTE_FUNCTION__( KFTaskModule::OnExecuteUpdateTaskCondition )
     {
-        if ( executedata->_param_list._params.size() < 4u )
+        if ( execute_data->_param_list._params.size() < 4u )
         {
             return false;
         }
 
-        auto taskid = executedata->_param_list._params[ 0 ]->_int_value;
-        auto condition_id = executedata->_param_list._params[ 1 ]->_int_value;
-        auto operate = executedata->_param_list._params[ 2 ]->_int_value;
-        auto condition_value = executedata->_param_list._params[ 3 ]->_int_value;
+        auto taskid = execute_data->_param_list._params[ 0 ]->_int_value;
+        auto condition_id = execute_data->_param_list._params[ 1 ]->_int_value;
+        auto operate = execute_data->_param_list._params[ 2 ]->_int_value;
+        auto condition_value = execute_data->_param_list._params[ 3 ]->_int_value;
         auto setting = KFTaskConfig::Instance()->FindSetting( taskid );
         if ( setting == nullptr )
         {

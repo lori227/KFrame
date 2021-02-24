@@ -250,7 +250,7 @@ namespace KFrame
         }
 
         // 保存队伍数据
-        _kf_kernel->ParseFromProto( kfteam, &kfmsg->pbteam() );
+        _kf_kernel->ParseFromMessage( kfteam, &kfmsg->pbteam() );
 
         // 同步给客户端
         entity->SyncUpdateDataToClient( kfteam, kfmsg->id() );
@@ -264,7 +264,7 @@ namespace KFrame
         auto kfteam = entity->Find( __STRING__( team ) );
 
         // 保存队伍数据
-        _kf_kernel->ParseFromProto( kfteam, &kfmsg->pbteam() );
+        _kf_kernel->ParseFromMessage( kfteam, &kfmsg->pbteam() );
 
         // 同步给客户端
         entity->SyncUpdateDataToClient( kfteam, kfteam->Get( __STRING__( id ) ) );

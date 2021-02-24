@@ -29,21 +29,21 @@ namespace KFrame
 
         ////////////////////////////////////////////////////////////////////////////////
 
-        virtual bool Execute( EntityPtr player, uint32 executeid, const char* function, uint32 line );
-        virtual bool Execute( EntityPtr player, uint32 executeid, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, uint32 execute_id, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, uint32 execute_id, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
 
-        virtual bool Execute( EntityPtr player, const UInt32Vector& executelist, const char* function, uint32 line );
-        virtual bool Execute( EntityPtr player, const UInt32Vector& executelist, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, const UInt32Vector& execute_list, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, const UInt32Vector& execute_list, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
 
-        virtual bool Execute( EntityPtr player, const ExecuteDataPtr& executedata, const char* function, uint32 line );
-        virtual bool Execute( EntityPtr player, const ExecuteDataPtr& executedata, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, const ExecuteDataPtr& execute_data, const char* function, uint32 line );
+        virtual bool Execute( EntityPtr player, const ExecuteDataPtr& execute_data, const std::string& module_name, uint64 module_id, const char* function, uint32 line );
 
     protected:
-        virtual void BindExecuteFunction( KFModule* module, const std::string& name, KFExecuteFunction& function );
+        virtual void BindExecuteFunction( const std::string& name, KFModule* module, KFExecuteFunction& function );
         virtual void UnBindExecuteFunction( const std::string& name );
 
         // 设置执行开关
-        void SetExecuteOpen( const std::string& name, bool isopen );
+        void SetExecuteOpen( const std::string& name, bool is_open );
     protected:
 
         // 关闭, 开启执行功能
@@ -61,7 +61,7 @@ namespace KFrame
 
     protected:
         // 执行列表
-        KFMapFunction< std::string, KFExecuteFunction > _execute_function;
+        KFMapModuleFunction<std::string, KFExecuteFunction> _execute_function;
     };
 }
 

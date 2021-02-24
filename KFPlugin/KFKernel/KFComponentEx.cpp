@@ -7,28 +7,28 @@ namespace KFrame
 {
     KFComponentEx::~KFComponentEx()
     {
-        _sync_entitys.clear();
+        _sync_entity_list.clear();
     }
 
-    void KFComponentEx::InitEntity( EntityPtr entity )
+    void KFComponentEx::OnInitEntity( EntityPtr entity )
     {
         // 初始化
-        _entity_initialize_function.Call( entity );
+        _entity_init_function.Call( entity );
     }
 
-    void KFComponentEx::UnInitEntity( EntityPtr entity )
+    void KFComponentEx::OnRemoveEntity( EntityPtr entity )
     {
-        _entity_uninitialize_function.Call( entity );
+        entity_remove_function.Call( entity );
     }
 
     void KFComponentEx::Run()
     {
         if ( _entity_run_function.IsOpen() )
         {
-            for ( auto& iter : _entitys._objects )
+            for ( auto& iter : _entity_list._objects )
             {
                 auto entity = iter.second;
-                _entity_run_function._function( entity );
+                _entity_run_function.Call( entity );
             }
         }
     }
@@ -37,19 +37,19 @@ namespace KFrame
     {
         if ( _entity_after_run_function.IsOpen() )
         {
-            for ( auto& iter : _entitys._objects )
+            for ( auto& iter : _entity_list._objects )
             {
-                _entity_after_run_function._function( iter.second );
+                _entity_after_run_function.Call( iter.second );
             }
         }
 
-        if ( !_sync_entitys.empty() )
+        if ( !_sync_entity_list.empty() )
         {
-            for ( auto entity : _sync_entitys )
+            for ( auto entity : _sync_entity_list )
             {
                 entity->SyncDataToClient();
             }
-            _sync_entitys.clear();
+            _sync_entity_list.clear();
         }
     }
 
@@ -58,8 +58,8 @@ namespace KFrame
         static StringVector _result;
         _result.clear();
 
-        auto classsetting = _data_setting->_class_setting;
-        for ( auto& iter : classsetting->_static_data._objects )
+        auto class_setting = _data_setting->_class_setting;
+        for ( auto& iter : class_setting->_static_data._objects )
         {
             auto setting = iter.second;
             if ( setting->_logic_name == data_name )
@@ -71,34 +71,17 @@ namespace KFrame
         return _result;
     }
 
-    // 获得类配置
-    const KFClassSetting* KFComponentEx::FindClassSetting()
-    {
-        return _data_setting->_class_setting;
-    }
-
-    const KFClassSetting* KFComponentEx::FindClassSetting( const std::string& data_name )
-    {
-        auto setting = _data_setting->_class_setting->FindSetting( data_name );
-        if ( setting == nullptr )
-        {
-            return nullptr;
-        }
-
-        return setting->_class_setting;
-    }
-
-    const KFDataSetting* KFComponentEx::FindDataSetting()
+    std::shared_ptr<const KFDataSetting> KFComponentEx::FindDataSetting()
     {
         return _data_setting;
     }
 
-    const KFDataSetting* KFComponentEx::FindDataSetting( const std::string& data_name )
+    std::shared_ptr<const KFDataSetting> KFComponentEx::FindDataSetting( const std::string& data_name )
     {
         return _data_setting->_class_setting->FindSetting( data_name );
     }
 
-    const KFDataSetting* KFComponentEx::FindDataSetting( const std::string& parent_name, const std::string& data_name )
+    std::shared_ptr<const KFDataSetting> KFComponentEx::FindDataSetting( const std::string& parent_name, const std::string& data_name )
     {
         auto setting = _data_setting->_class_setting->FindSetting( parent_name );
         if ( setting == nullptr || setting->_class_setting == nullptr )
@@ -111,48 +94,48 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////
     EntityPtr KFComponentEx::FirstEntity()
     {
-        return _entitys.First();
+        return _entity_list.First();
     }
 
     EntityPtr KFComponentEx::NextEntity()
     {
-        return _entitys.Next();
+        return _entity_list.Next();
     }
 
     EntityPtr KFComponentEx::CreateEntity( uint64 key )
     {
-        auto entity = _entitys.Find( key );
+        auto entity = _entity_list.Find( key );
         if ( entity != nullptr )
         {
             return entity;
         }
 
-        entity = ( KFEntityEx* )KFDataFactory::Instance()->CreateFromDataPool( _data_setting );
+        entity = std::static_pointer_cast<KFEntityEx>(KFDataFactory::Instance()->CreateFromDataPool( _data_setting ) );
         if ( entity == nullptr )
         {
-            entity = __KF_NEW__( KFEntityEx );
+            entity = __MAKE_SHARED__( KFEntityEx );
             KFDataFactory::Instance()->InitCreateData( entity, _data_setting );
         }
 
-        static_cast< KFEntityEx* >( entity )->InitEntity( this );
+        std::static_pointer_cast<KFEntityEx>( entity )->InitEntity( shared_from_this() );
         AddEntity( key, entity );
         return entity;
     }
 
-    EntityPtr KFComponentEx::CreateEntity( uint64 key, const KFMsg::PBObject* proto )
+    EntityPtr KFComponentEx::CreateEntity( uint64 key, const KFMsg::PBObject* message )
     {
         auto entity = CreateEntity( key );
-        auto ok = _kf_kernel->ParseFromProto( entity, proto );
+        auto ok = _kf_kernel->ParseFromMessage( entity, message );
         if ( ok )
         {
             entity->SetKeyID( key );
-            InitEntity( entity );
+            OnInitEntity( entity );
         }
         else
         {
             RemoveEntity( entity );
             entity = nullptr;
-            __LOG_ERROR__( "[{}:{}] create error", _component_name, key );
+            __LOG_ERROR__( "[{}:{}] create error", _name, key );
         }
 
         return entity;
@@ -161,20 +144,20 @@ namespace KFrame
     void KFComponentEx::AddEntity( uint64 key, EntityPtr entity )
     {
         entity->SetKeyID( key );
-        _entitys.Insert( key, entity );
+        _entity_list.Insert( key, entity );
     }
 
     EntityPtr KFComponentEx::FindEntity( uint64 key )
     {
-        return _entitys.Find( key );
+        return _entity_list.Find( key );
     }
 
     EntityPtr KFComponentEx::FindEntity( uint64 key, const char* function, uint32 line )
     {
-        auto entity = _entitys.Find( key );
+        auto entity = _entity_list.Find( key );
         if ( entity == nullptr )
         {
-            __LOG_WARN_FUNCTION__( function, line, "can't find entity[{}:{}]", _component_name, key );
+            __LOG_WARN_FUNCTION__( function, line, "can't find entity[{}:{}]", _name, key );
         }
 
         return entity;
@@ -182,7 +165,7 @@ namespace KFrame
 
     uint32 KFComponentEx::GetEntityCount()
     {
-        return _entitys.Size();
+        return _entity_list.Size();
     }
 
     bool KFComponentEx::RemoveEntity( uint64 key )
@@ -201,37 +184,25 @@ namespace KFrame
         // 释放资源, 保存
         if ( entity->IsInited() )
         {
-            UnInitEntity( entity );
+            OnRemoveEntity( entity );
             DeleteSaveEntity( entity );
         }
 
-        _sync_entitys.erase( entity );
-
+        _sync_entity_list.erase( entity );
         KFDataFactory::Instance()->DestroyData( entity );
-        return _entitys.Remove( entity->GetKeyID(), false );
+        _entity_list.Remove( entity->GetKeyID() );
+        return true;
     }
 
     void KFComponentEx::AddSyncEntity( EntityPtr entity )
     {
-        _sync_entitys.insert( entity );
-    }
-
-    void KFComponentEx::SetMaxValue( const std::string& data_name, uint32 value )
-    {
-        auto setting = FindDataSetting( data_name );
-        const_cast< KFDataSetting* >( setting )->_int_max_value = value;
-    }
-
-    void KFComponentEx::SetMaxValue( const std::string& parent_name, const std::string& data_name, uint32 value )
-    {
-        auto setting = FindDataSetting( parent_name, data_name );
-        const_cast<KFDataSetting*>( setting )->_int_max_value = value;
+        _sync_entity_list.insert( entity );
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-    void KFComponentEx::BindCheckAddElementFunction( const std::string& data_name, KFCheckAddElementFunction& function )
+    void KFComponentEx::BindCheckAddElementFunction( KFModule* module, const std::string& data_name, KFCheckAddElementFunction& function )
     {
-        auto kffunction = _check_add_element_function.Create( data_name );
-        kffunction->_function = function;
+        auto function_data = _check_add_element_function.Create( data_name );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnRegisterCheckAddElementFunction( const std::string& data_name )
@@ -239,10 +210,10 @@ namespace KFrame
         _check_add_element_function.Remove( data_name );
     }
 
-    void KFComponentEx::BindAddElementFunction( const std::string& data_name, KFAddElementFunction& function )
+    void KFComponentEx::BindAddElementFunction( KFModule* module, const std::string& data_name, KFAddElementFunction& function )
     {
-        auto kffunction = _add_element_function.Create( data_name );
-        kffunction->_function = function;
+        auto function_data = _add_element_function.Create( data_name );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnRegisterAddElementFunction( const std::string& data_name )
@@ -250,10 +221,10 @@ namespace KFrame
         _add_element_function.Remove( data_name );
     }
 
-    void KFComponentEx::BindCheckRemoveElementFunction( const std::string& data_name, KFCheckRemoveElementFunction& function )
+    void KFComponentEx::BindCheckRemoveElementFunction( KFModule* module, const std::string& data_name, KFCheckRemoveElementFunction& function )
     {
-        auto kffunction = _check_remove_element_function.Create( data_name );
-        kffunction->_function = function;
+        auto function_data = _check_remove_element_function.Create( data_name );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnRegisterCheckRemoveElementFunction( const std::string& data_name )
@@ -261,10 +232,10 @@ namespace KFrame
         _check_remove_element_function.Remove( data_name );
     }
 
-    void KFComponentEx::BindRemoveElementFunction( const std::string& data_name, KFRemoveElementFunction& function )
+    void KFComponentEx::BindRemoveElementFunction( KFModule* module, const std::string& data_name, KFRemoveElementFunction& function )
     {
-        auto kffunction = _remove_element_function.Create( data_name );
-        kffunction->_function = function;
+        auto function_data = _remove_element_function.Create( data_name );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnRegisterRemoveElementFunction( const std::string& data_name )
@@ -275,23 +246,23 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::BindAddDataLogic( KFModule* module, const std::string& data_name, KFAddDataFunction& function )
     {
-        auto kffunction = _add_logic_function.Create( data_name );
-        kffunction->AddFunction( module, function );
+        auto data_function = _add_logic_function.Create( data_name );
+        data_function->AddFunction( module, function );
     }
 
     void KFComponentEx::UnBindAddDataLogic( KFModule* module, const std::string& data_name )
     {
-        auto kfdatafunction = _add_logic_function.Find( data_name );
-        if ( kfdatafunction != nullptr )
+        auto data_function = _add_logic_function.Find( data_name );
+        if ( data_function != nullptr )
         {
-            kfdatafunction->RemoveFunction( module );
+            data_function->RemoveFunction( module );
         }
     }
 
     void KFComponentEx::BindAddDataModule( KFModule* module, KFAddDataFunction& function )
     {
-        auto kffunction = _add_data_module.Create( module );
-        kffunction->SetFunction( module, function );
+        auto function_data = _add_data_module.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnBindAddDataModule( KFModule* module )
@@ -301,40 +272,40 @@ namespace KFrame
 
     void KFComponentEx::BindAddDataFunction( KFModule* module, const std::string& data_name, uint64 key, KFAddDataFunction& function )
     {
-        auto datakey = RecordKeyType( data_name, key );
-        auto kfdatafunction = _add_data_function.Create( datakey );
-        kfdatafunction->AddFunction( module, function );
+        auto data_key = RecordKeyType( data_name, key );
+        auto data_function = _add_data_function.Create( data_key );
+        data_function->AddFunction( module, function );
     }
 
     void KFComponentEx::UnBindAddDataFunction( KFModule* module, const std::string& data_name, uint64 key )
     {
-        auto datakey = RecordKeyType( data_name, key );
-        auto kfdatafunction = _add_data_function.Find( datakey );
-        if ( kfdatafunction != nullptr )
+        auto data_key = RecordKeyType( data_name, key );
+        auto data_function = _add_data_function.Find( data_key );
+        if ( data_function != nullptr )
         {
-            kfdatafunction->RemoveFunction( module );
+            data_function->RemoveFunction( module );
         }
     }
 
     void KFComponentEx::BindRemoveDataLogic( KFModule* module, const std::string& data_name, KFRemoveDataFunction& function )
     {
-        auto kffunction = _remove_logic_function.Create( data_name );
-        kffunction->AddFunction( module, function );
+        auto data_function = _remove_logic_function.Create( data_name );
+        data_function->AddFunction( module, function );
     }
 
     void KFComponentEx::UnBindRemoveDataLogic( KFModule* module, const std::string& data_name )
     {
-        auto kfdatafunction = _remove_logic_function.Find( data_name );
-        if ( kfdatafunction != nullptr )
+        auto data_function = _remove_logic_function.Find( data_name );
+        if ( data_function != nullptr )
         {
-            kfdatafunction->RemoveFunction( module );
+            data_function->RemoveFunction( module );
         }
     }
 
     void KFComponentEx::BindRemoveDataModule( KFModule* module, KFRemoveDataFunction& function )
     {
-        auto kffunction = _remove_data_module.Create( module );
-        kffunction->_function = function;
+        auto function_data = _remove_data_module.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnBindRemoveDataModule( KFModule* module )
@@ -344,25 +315,25 @@ namespace KFrame
 
     void KFComponentEx::BindRemoveDataFunction( KFModule* module, const std::string& data_name, uint64 key, KFRemoveDataFunction& function )
     {
-        auto datakey = RecordKeyType( data_name, key );
-        auto kfdatafunction = _remove_data_function.Create( datakey );
-        kfdatafunction->AddFunction( module, function );
+        auto data_key = RecordKeyType( data_name, key );
+        auto data_function = _remove_data_function.Create( data_key );
+        data_function->AddFunction( module, function );
     }
 
     void KFComponentEx::UnBindRemoveDataFunction( KFModule* module, const std::string& data_name, uint64 key )
     {
-        auto datakey = RecordKeyType( data_name, key );
-        auto kfdatafunction = _remove_data_function.Find( datakey );
-        if ( kfdatafunction != nullptr )
+        auto data_key = RecordKeyType( data_name, key );
+        auto data_function = _remove_data_function.Find( data_key );
+        if ( data_function != nullptr )
         {
-            kfdatafunction->RemoveFunction( module );
+            data_function->RemoveFunction( module );
         }
     }
 
     void KFComponentEx::BindUpdateDataModule( KFModule* module, KFUpdateDataFunction& function )
     {
-        auto kffunction = _update_data_module.Create( module );
-        kffunction->_function = function;
+        auto function_data = _update_data_module.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnBindUpdateDataModule( KFModule* module )
@@ -375,7 +346,7 @@ namespace KFrame
         static DataKeyType _data_key;
         if ( parent_name.empty() )
         {
-            _data_key = DataKeyType( _component_name, data_name );
+            _data_key = DataKeyType( _name, data_name );
         }
         else
         {
@@ -385,41 +356,41 @@ namespace KFrame
         return _data_key;
     }
 
-    const DataKeyType& KFComponentEx::FormatDataKey( DataPtr kfdata )
+    const DataKeyType& KFComponentEx::FormatDataKey( DataPtr data )
     {
-        auto kfparent = kfdata->GetParent();
-        if ( kfparent->_data_setting->_type == KFDataDefine::DataTypeArray )
+        auto parent_data = data->GetParent();
+        if ( parent_data->_data_setting->_type == KFDataDefine::DataTypeArray )
         {
-            if ( kfparent->GetParent() != nullptr )
+            if ( parent_data->GetParent() != nullptr )
             {
-                return FormatDataKey( kfparent->GetParent()->_data_setting->_logic_name, kfparent->_data_setting->_logic_name );
+                return FormatDataKey( parent_data->GetParent()->_data_setting->_logic_name, parent_data->_data_setting->_logic_name );
             }
         }
 
-        return FormatDataKey( kfparent->_data_setting->_logic_name, kfdata->_data_setting->_logic_name );
+        return FormatDataKey( parent_data->_data_setting->_logic_name, parent_data->_data_setting->_logic_name );
     }
 
     void KFComponentEx::BindUpdateDataFunction( KFModule* module, const std::string& parent_name, const std::string& data_name, KFUpdateDataFunction& function )
     {
-        auto& datakey = FormatDataKey( parent_name, data_name );
-        auto kfdatafunction = _update_data_function.Create( datakey );
-        kfdatafunction->AddFunction( module, function );
+        auto& data_key = FormatDataKey( parent_name, data_name );
+        auto data_function = _update_data_function.Create( data_key );
+        data_function->AddFunction( module, function );
     }
 
     void KFComponentEx::UnBindUpdateDataFunction( KFModule* module, const std::string& parent_name, const std::string& data_name )
     {
-        auto& datakey = FormatDataKey( parent_name, data_name );
-        auto kfdatafunction = _update_data_function.Find( datakey );
-        if ( kfdatafunction != nullptr )
+        auto& data_key = FormatDataKey( parent_name, data_name );
+        auto data_function = _update_data_function.Find( data_key );
+        if ( data_function != nullptr )
         {
-            kfdatafunction->RemoveFunction( module );
+            data_function->RemoveFunction( module );
         }
     }
 
     void KFComponentEx::BindUpdateStringModule( KFModule* module, KFUpdateStringFunction& function )
     {
-        auto kffunction = _update_string_module.Create( module );
-        kffunction->_function = function;
+        auto function_data = _update_string_module.Create( module );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnBindUpdateStringModule( KFModule* module )
@@ -429,39 +400,39 @@ namespace KFrame
 
     void KFComponentEx::BindUpdateStringFunction( KFModule* module, const std::string& parent_name, const std::string& data_name, KFUpdateStringFunction& function )
     {
-        auto& datakey = FormatDataKey( parent_name, data_name );
-        auto kfdatafunction = _update_string_function.Create( datakey );
-        kfdatafunction->AddFunction( module, function );
+        auto& data_key = FormatDataKey( parent_name, data_name );
+        auto data_function = _update_string_function.Create( data_key );
+        data_function->AddFunction( module, function );
     }
 
     void KFComponentEx::UnBindUpdateStringFunction( KFModule* module, const std::string& parent_name, const std::string& data_name )
     {
-        auto& datakey = FormatDataKey( parent_name, data_name );
-        auto kfdatafunction = _update_string_function.Find( datakey );
-        if ( kfdatafunction != nullptr )
+        auto& data_key = FormatDataKey( parent_name, data_name );
+        auto data_function = _update_string_function.Find( data_key );
+        if ( data_function != nullptr )
         {
-            kfdatafunction->RemoveFunction( module );
+            data_function->RemoveFunction( module );
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void KFComponentEx::BindEntityInitializeFunction( KFModule* module, KFEntityFunction& function )
     {
-        _entity_initialize_function.SetFunction( module, function );
+        _entity_init_function.SetFunction( module, function );
     }
 
     void KFComponentEx::UnRegisterEntityInitializeFunction()
     {
-        _entity_initialize_function.Reset();
+        _entity_init_function.Reset();
     }
 
-    void KFComponentEx::BindEntityUninitializeFunction( KFModule* module, KFEntityFunction& function )
+    void KFComponentEx::BindEntityRemoveFunction( KFModule* module, KFEntityFunction& function )
     {
-        _entity_uninitialize_function.SetFunction( module, function );
+        entity_remove_function.SetFunction( module, function );
     }
 
-    void KFComponentEx::UnRegisterEntityUninitializeFunction()
+    void KFComponentEx::UnRegisterEntityRemoveFunction()
     {
-        _entity_uninitialize_function.Reset();
+        entity_remove_function.Reset();
     }
 
     void KFComponentEx::BindEntityRunFunction( KFModule* module, KFEntityFunction& function )
@@ -546,8 +517,8 @@ namespace KFrame
 
     void KFComponentEx::BindGetConfigValueFunction( KFModule* module, const std::string& name, KFGetConfigValueFunction& function )
     {
-        auto kffunction = _get_config_value_function.Create( name );
-        kffunction->SetFunction( module, function );
+        auto function_data = _get_config_value_function.Create( name );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnBindGetConfigValueFunction( const std::string& name )
@@ -557,8 +528,8 @@ namespace KFrame
 
     void KFComponentEx::BindLogElementFunction( KFModule* module, const std::string& name, KFLogElementFunction& function )
     {
-        auto kffunction = _log_element_function.Create( name );
-        kffunction->SetFunction( module, function );
+        auto function_data = _log_element_function.Create( name );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnBindLogElementFunction( const std::string& name )
@@ -568,8 +539,8 @@ namespace KFrame
 
     void KFComponentEx::BindElementResultFunction( KFModule* module, const std::string& name, KFElementResultFunction& function )
     {
-        auto kffunction = _element_result_function.Create( name );
-        kffunction->SetFunction( module, function );
+        auto function_data = _element_result_function.Create( name );
+        function_data->SetFunction( module, function );
     }
 
     void KFComponentEx::UnBindElementResultFunction( const std::string& name )
@@ -577,80 +548,80 @@ namespace KFrame
         _element_result_function.Remove( name );
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-    void KFComponentEx::UpdateDataCallBack( EntityPtr entity, uint64 key, DataPtr kfdata, uint64 index, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue, bool callback )
+    void KFComponentEx::UpdateDataCallBack( EntityPtr entity, uint64 key, DataPtr data, uint64 index, uint32 operate, uint64 value, uint64 old_value, uint64 new_value, bool callback )
     {
         // 开启保存数据库定时器
-        StartSaveEntityTimer( entity, kfdata );
+        StartSaveEntityTimer( entity, data );
 
         // 更新同步
-        entity->SyncUpdateDataToClient( kfdata, index );
+        entity->SyncUpdateDataToClient( data, index );
         if ( !callback )
         {
             return;
         }
 
         // 模块回调
-        if ( kfdata->HaveMask( KFDataDefine::DataMaskUpdateCall ) &&
-                kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskUpdateCall ) )
+        if ( data->HaveMask( KFDataDefine::DataMaskUpdateCall ) &&
+                data->GetParent()->HaveMask( KFDataDefine::DataMaskUpdateCall ) )
         {
             for ( auto& iter : _update_data_module._objects )
             {
-                auto kffunction = iter.second;
-                kffunction->_function( entity, key, kfdata, operate, value, oldvalue, newvalue );
+                auto function = iter.second;
+                function->Call( entity, key, data, operate, value, old_value, new_value );
             }
         }
 
         // 注册的函数
-        auto& findkey = FormatDataKey( kfdata );
-        auto kfdatafunction = _update_data_function.Find( findkey );
-        if ( kfdatafunction != nullptr )
+        auto& data_key = FormatDataKey( data );
+        auto data_function = _update_data_function.Find( data_key );
+        if ( data_function != nullptr )
         {
-            kfdatafunction->CallFunction( entity, key, kfdata, operate, value, oldvalue, newvalue );
+            data_function->CallFunction( entity, key, data, operate, value, old_value, new_value );
         }
     }
 
-    void KFComponentEx::UpdateDataCallBack( EntityPtr entity, DataPtr kfdata, const std::string& oldvalue, const std::string& newvalue, bool callback )
+    void KFComponentEx::UpdateDataCallBack( EntityPtr entity, DataPtr data, const std::string& old_value, const std::string& new_value, bool callback )
     {
         // 开启保存数据库定时器
-        StartSaveEntityTimer( entity, kfdata );
+        StartSaveEntityTimer( entity, data );
 
         // 更新同步
-        entity->SyncUpdateDataToClient( kfdata, entity->GetKeyID() );
+        entity->SyncUpdateDataToClient( data, entity->GetKeyID() );
         if ( !callback )
         {
             return;
         }
 
         // 模块回调
-        if ( kfdata->HaveMask( KFDataDefine::DataMaskUpdateCall ) &&
-                kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskUpdateCall ) )
+        if ( data->HaveMask( KFDataDefine::DataMaskUpdateCall ) &&
+                data->GetParent()->HaveMask( KFDataDefine::DataMaskUpdateCall ) )
         {
             for ( auto& iter : _update_string_module._objects )
             {
-                auto kffunction = iter.second;
-                kffunction->_function( entity, kfdata, oldvalue, newvalue );
+                auto function = iter.second;
+                function->Call( entity, data, old_value, new_value );
             }
         }
 
         // 注册的函数
-        auto& findkey = FormatDataKey( kfdata );
-        auto kfdatafunction = _update_string_function.Find( findkey );
-        if ( kfdatafunction != nullptr )
+        auto& data_key = FormatDataKey( data );
+        auto data_function = _update_string_function.Find( data_key );
+        if ( data_function != nullptr )
         {
-            kfdatafunction->CallFunction( entity, kfdata, oldvalue, newvalue );
+            data_function->CallFunction( entity, data, old_value, new_value );
         }
     }
 
-    void KFComponentEx::AddDataCallBack( EntityPtr entity, DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback )
+    void KFComponentEx::AddDataCallBack( EntityPtr entity, DataPtr parent_data, uint64 key, DataPtr data, bool callback )
     {
         // 开启保存数据库定时器
-        StartSaveEntityTimer( entity, kfdata );
+        StartSaveEntityTimer( entity, data );
         {
             // 逻辑回调
-            auto kfdatafunction = _add_logic_function.Find( kfparent->_data_setting->_logic_name );
-            if ( kfdatafunction != nullptr )
+            auto data_function = _add_logic_function.Find( parent_data->_data_setting->_logic_name );
+            if ( data_function != nullptr )
             {
-                kfdatafunction->CallFunction( entity, kfparent, key, kfdata );
+                data_function->CallFunction( entity, parent_data, key, data );
             }
         }
 
@@ -658,121 +629,121 @@ namespace KFrame
         {
             // 注册的函数
             {
-                auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, key );
-                auto kfdatafunction = _add_data_function.Find( findkey );
-                if ( kfdatafunction != nullptr )
+                auto data_key = RecordKeyType( data->_data_setting->_logic_name, key );
+                auto data_function = _add_data_function.Find( data_key );
+                if ( data_function != nullptr )
                 {
-                    kfdatafunction->CallFunction( entity, kfparent, key, kfdata );
+                    data_function->CallFunction( entity, parent_data, key, data );
                 }
             }
             {
-                auto findkey = RecordKeyType( kfdata->_data_setting->_logic_name, 0u );
-                auto kfdatafunction = _add_data_function.Find( findkey );
-                if ( kfdatafunction != nullptr )
+                auto data_key = RecordKeyType( data->_data_setting->_logic_name, 0u );
+                auto data_function = _add_data_function.Find( data_key );
+                if ( data_function != nullptr )
                 {
-                    kfdatafunction->CallFunction( entity, kfparent, key, kfdata );
+                    data_function->CallFunction( entity, parent_data, key, data );
                 }
             }
 
             // 同步属性
-            entity->SyncAddDataToClient( kfdata, key );
+            entity->SyncAddDataToClient( data, key );
 
             // 模块回调
-            if ( kfdata->HaveMask( KFDataDefine::DataMaskAddCall ) )
+            if ( data->HaveMask( KFDataDefine::DataMaskAddCall ) )
             {
                 for ( auto& iter : _add_data_module._objects )
                 {
-                    auto kffunction = iter.second;
-                    kffunction->_function( entity, kfparent, key, kfdata );
+                    auto function = iter.second;
+                    function->Call( entity, parent_data, key, data );
                 }
             }
         }
         else
         {
             // 同步属性
-            entity->SyncAddDataToClient( kfdata, key );
+            entity->SyncAddDataToClient( data, key );
         }
     }
 
-    void KFComponentEx::RemoveDataCallBack( EntityPtr entity, DataPtr kfparent, uint64 key, DataPtr kfdata, bool callback )
+    void KFComponentEx::RemoveDataCallBack( EntityPtr entity, DataPtr parent_data, uint64 key, DataPtr data, bool callback )
     {
         // 开启保存数据库定时器
-        StartSaveEntityTimer( entity, kfdata );
+        StartSaveEntityTimer( entity, data );
 
         // 逻辑回调
         {
-            auto kfdatafunction = _remove_logic_function.Find( kfparent->_data_setting->_logic_name );
-            if ( kfdatafunction != nullptr )
+            auto data_function = _remove_logic_function.Find( parent_data->_data_setting->_logic_name );
+            if ( data_function != nullptr )
             {
-                kfdatafunction->CallFunction( entity, kfparent, key, kfdata );
+                data_function->CallFunction( entity, parent_data, key, data );
             }
         }
 
         // 同步客户端
-        entity->SyncRemoveDataToClient( kfdata, key );
+        entity->SyncRemoveDataToClient( data, key );
         if ( !callback )
         {
             return;
         }
 
         // 模块回调
-        if ( kfdata->HaveMask( KFDataDefine::DataMaskRemoveCall ) )
+        if ( data->HaveMask( KFDataDefine::DataMaskRemoveCall ) )
         {
             for ( auto& iter : _remove_data_module._objects )
             {
-                auto kffunction = iter.second;
-                kffunction->_function( entity, kfparent, key, kfdata );
+                auto function = iter.second;
+                function->Call( entity, parent_data, key, data );
             }
         }
 
         // 注册的函数
         {
-            auto findkey = RecordKeyType( kfparent->_data_setting->_logic_name, key );
-            auto kfdatafunction = _remove_data_function.Find( findkey );
-            if ( kfdatafunction != nullptr )
+            auto data_key = RecordKeyType( parent_data->_data_setting->_logic_name, key );
+            auto data_function = _remove_data_function.Find( data_key );
+            if ( data_function != nullptr )
             {
-                kfdatafunction->CallFunction( entity, kfparent, key, kfdata );
+                data_function->CallFunction( entity, parent_data, key, data );
             }
         }
         {
-            auto findkey = RecordKeyType( kfparent->_data_setting->_logic_name, 0u );
-            auto kfdatafunction = _remove_data_function.Find( findkey );
-            if ( kfdatafunction != nullptr )
+            auto data_key = RecordKeyType( parent_data->_data_setting->_logic_name, 0u );
+            auto data_function = _remove_data_function.Find( data_key );
+            if ( data_function != nullptr )
             {
-                kfdatafunction->CallFunction( entity, kfparent, key, kfdata );
+                data_function->CallFunction( entity, parent_data, key, data );
             }
         }
     }
 
-    void KFComponentEx::StartSaveEntityTimer( EntityPtr entity, DataPtr kfdata )
+    void KFComponentEx::StartSaveEntityTimer( EntityPtr entity, DataPtr data )
     {
         // 不需要保存
-        if ( !kfdata->HaveMask( KFDataDefine::DataMaskSave ) ||
+        if ( !data->HaveMask( KFDataDefine::DataMaskSave ) ||
                 !entity->HaveMask( KFDataDefine::DataMaskSave ) )
         {
             return;
         }
 
         // 正在保存中
-        if ( static_cast< KFEntityEx* >( entity )->_is_in_save )
+        if ( std::static_pointer_cast<KFEntityEx>( entity )->_is_in_save )
         {
             return;
         }
 
         // 启动定时器
-        static_cast< KFEntityEx* >( entity )->_is_in_save = true;
+        std::static_pointer_cast<KFEntityEx>( entity )->_is_in_save = true;
         __DELAY_TIMER_1__( entity->GetKeyID(), entity->_data_setting->_delay_save_time, &KFComponentEx::OnTimerSaveEntity );
     }
 
     __KF_TIMER_FUNCTION__( KFComponentEx::OnTimerSaveEntity )
     {
-        auto entity = FindEntity( objectid );
+        auto entity = FindEntity( object_id );
         if ( entity == nullptr )
         {
             return;
         }
 
-        static_cast< KFEntityEx* >( entity )->_is_in_save = false;
+        std::static_pointer_cast<KFEntityEx>( entity )->_is_in_save = false;
         SaveEntity( entity, KFSaveEnum::UpdateSave, __FUNC_LINE__ );
     }
 
@@ -804,25 +775,23 @@ namespace KFrame
         _entity_delete_function.Call( entity );
     }
 
-    void KFComponentEx::CallLogElementFunction( EntityPtr entity, const KFElementResult* kfresult )
+    void KFComponentEx::CallLogElementFunction( EntityPtr entity, const KFElementResult* result )
     {
-        auto kffunction = _log_element_function.Find( kfresult->_element->_data_name );
-        if ( kffunction == nullptr )
+        auto function = _log_element_function.Find( result->_element->_data_name );
+        if ( function != nullptr )
         {
-            return;
+            function->Call( entity, result );
         }
-
-        kffunction->Call( entity, kfresult );
     }
 
-    bool KFComponentEx::CallElementResultFunction( EntityPtr entity, const KFElementResult* kfresult )
+    bool KFComponentEx::CallElementResultFunction( EntityPtr entity, const KFElementResult* result )
     {
-        auto kffunction = _element_result_function.Find( kfresult->_module_name );
-        if ( kffunction == nullptr )
+        auto function = _element_result_function.Find( result->_module_name );
+        if ( function == nullptr )
         {
             return true;
         }
 
-        return kffunction->CallEx<bool>( entity, kfresult );
+        return function->CallEx<bool>( entity, result );
     }
 }

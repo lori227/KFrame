@@ -113,6 +113,7 @@ namespace KFrame
         // @data_name : 属性名
         std::string ToString( const std::string& parent_name, uint64 key, const std::string& data_name );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // 获得指针
         DataPtr GetDataPtr();
 
         // 重置
@@ -233,11 +234,6 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // array
-        template<class T> void GetLists( T& out_list );
-        template<class T> void GetLists( const std::string& data_name, T& out_list );
-        template<class T> void GetHashs( T& out_list );
-        template<class T> void GetHashs( const std::string& data_name, T& out_list );
-
         virtual DataPtr Insert( uint64 value );
         virtual uint32 GetEmpty();
         virtual uint32 GetIndex( uint64 value );

@@ -8,7 +8,7 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////////////////////////////////////
         _kf_component = _kf_kernel->FindComponent( __STRING__( team ) );
         _kf_component->RegisterEntityInitializeFunction( this, &KFTeamShardModule::InitTeam );
-        _kf_component->RegisterEntityUninitializeFunction( this, &KFTeamShardModule::UnInitTeam );
+        _kf_component->RegisterEntityRemoveFunction( this, &KFTeamShardModule::UnInitTeam );
 
         // 注册更新函数
         _kf_component->RegisterSyncAddFunction( this, &KFTeamShardModule::SendTeamAddDataToMember );
@@ -33,7 +33,7 @@ namespace KFrame
         _kf_route->UnRegisterConnectionFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         _kf_component->UnRegisterEntityInitializeFunction();
-        _kf_component->UnRegisterEntityUninitializeFunction();
+        _kf_component->UnRegisterEntityRemoveFunction();
 
         _kf_component->UnRegisterSyncAddFunction();
         _kf_component->UnRegisterSyncRemoveFunction();
@@ -131,7 +131,7 @@ namespace KFrame
 
         auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
         auto kfmember = kfteam->CreateData( kfmemberrecord );
-        _kf_kernel->ParseFromProto( kfmember, &kfmsg->pbcaptain() );
+        _kf_kernel->ParseFromMessage( kfmember, &kfmsg->pbcaptain() );
 
         // 设置队长
         SetTeamCaptain( kfteam, kfmember, false );
@@ -394,7 +394,7 @@ namespace KFrame
 
         auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
         auto kfmember = kfteam->CreateData( kfmemberrecord );
-        _kf_kernel->ParseFromProto( kfmember, &kfmsg->pbplayer() );
+        _kf_kernel->ParseFromMessage( kfmember, &kfmsg->pbplayer() );
 
         // 加入队伍中
         kfteam->AddRecord( kfmemberrecord, kfmember->GetKeyID(), kfmember );

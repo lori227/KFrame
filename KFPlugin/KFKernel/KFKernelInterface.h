@@ -12,37 +12,29 @@ namespace KFrame
     {
     public:
         /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
         // 查找组件
         virtual std::shared_ptr<KFComponent> FindComponent( const std::string& data_name ) = 0;
 
         // 查找实体
         virtual EntityPtr FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
-        // 创建数据
-        virtual DataPtr CreateData( const KFDataSetting* datasetting ) = 0;
-
-        // 释放数据
-        virtual void DestroyData( DataPtr kfdata ) = 0;
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
         // 反序列化
-        virtual bool ParseFromProto( DataPtr kfdata, const KFMsg::PBObject* proto ) = 0;
+        virtual bool ParseFromMessage( DataPtr object_data, const KFMsg::PBObject* proto ) = 0;
 
         // 序列化
-        virtual KFMsg::PBObject* Serialize( DataPtr kfdata ) = 0;
+        virtual KFMsg::PBObject* Serialize( DataPtr object_data ) = 0;
 
         // 序列化存储到数据库
-        virtual KFMsg::PBObject* SerializeToData( DataPtr kfdata ) = 0;
+        virtual KFMsg::PBObject* SerializeToData( DataPtr object_data ) = 0;
 
         // 序列化到观察者
-        virtual KFMsg::PBObject* SerializeToView( DataPtr kfdata ) = 0;
+        virtual KFMsg::PBObject* SerializeToView( DataPtr object_data ) = 0;
 
         // 序列化到客户端
-        virtual KFMsg::PBObject* SerializeToClient( DataPtr kfdata ) = 0;
+        virtual KFMsg::PBObject* SerializeToClient( DataPtr object_data ) = 0;
 
         // 序列化到客户端( 优化上线的数据量, 登录时才使用 )
-        virtual KFMsg::PBObject* SerializeToOnline( EntityPtr entity, uint32 delaytime = 0u ) = 0;
+        virtual KFMsg::PBObject* SerializeToOnline( EntityPtr entity, uint32 delay_time = 0u ) = 0;
         /////////////////////////////////////////////////////////////////////////////////////////////
     };
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////

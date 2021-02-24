@@ -30,83 +30,70 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     static std::string _global_class = "Global";
-    KFComponent* KFKernelModule::FindComponent( const std::string& data_name )
+    std::shared_ptr<KFComponent> KFKernelModule::FindComponent( const std::string& data_name )
     {
-        auto kfcomponent = _kf_component.Find( data_name );
-        if ( kfcomponent == nullptr )
+        auto component = _kf_component.Find( data_name );
+        if ( component == nullptr )
         {
-            kfcomponent = _kf_component.Create( data_name );
-            kfcomponent->_component_name = data_name;
-            kfcomponent->_data_setting = KFDataConfig::Instance()->FindDataSetting( _global_class, data_name );
+            component = _kf_component.Create( data_name );
+            component->_name = data_name;
+            component->_data_setting = KFDataConfig::Instance()->FindDataSetting( _global_class, data_name );
         }
 
-        return kfcomponent;
+        return component;
     }
 
     EntityPtr KFKernelModule::FindEntity( const std::string& data_name, uint64 key, const char* function, uint32 line )
     {
-        auto kfcomponet = FindComponent( data_name );
-        return kfcomponet->FindEntity( key, function, line );
+        auto component = FindComponent( data_name );
+        return component->FindEntity( key, function, line );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    DataPtr KFKernelModule::CreateData( const KFDataSetting* datasetting )
+    bool KFKernelModule::ParseFromMessage( DataPtr object_data, const KFMsg::PBObject* message )
     {
-        return KFDataFactory::Instance()->CreateData( datasetting, true );
-    }
-
-    void KFKernelModule::DestroyData( DataPtr kfdata )
-    {
-        KFDataFactory::Instance()->DestroyData( kfdata );
-    }
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFKernelModule::ParseFromProto( DataPtr kfdata, const KFMsg::PBObject* proto )
-    {
-        CopyFromObject( kfdata, proto );
+        CopyFromObject( object_data, message );
         return true;
     }
 
-    KFMsg::PBObject* KFKernelModule::Serialize( DataPtr kfdata )
+    KFMsg::PBObject* KFKernelModule::Serialize( DataPtr object_data )
     {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskNull, false, 0u );
+        return SerializeObject( object_data, KFDataDefine::DataMaskNull, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToData( DataPtr kfdata )
+    KFMsg::PBObject* KFKernelModule::SerializeToData( DataPtr object_data )
     {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskSave, false, 0u );
+        return SerializeObject( object_data, KFDataDefine::DataMaskSave, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToView( DataPtr kfdata )
+    KFMsg::PBObject* KFKernelModule::SerializeToView( DataPtr object_data )
     {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskView, false, 0u );
+        return SerializeObject( object_data, KFDataDefine::DataMaskView, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToClient( DataPtr kfdata )
+    KFMsg::PBObject* KFKernelModule::SerializeToClient( DataPtr object_data )
     {
-        return SerializeObject( kfdata, KFDataDefine::DataMaskSync, false, 0u );
+        return SerializeObject( object_data, KFDataDefine::DataMaskSync, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToOnline( EntityPtr entity, uint32 delaytime /* = 0u */ )
+    KFMsg::PBObject* KFKernelModule::SerializeToOnline( EntityPtr entity, uint32 delay_time /* = 0u */ )
     {
         // 把直接发送的数据返回给客户端
-        return SerializeObject( entity, KFDataDefine::DataMaskSync, true, delaytime );
+        return SerializeObject( entity, KFDataDefine::DataMaskSync, true, delay_time );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeObject( DataPtr kfdata, uint32 datamask, bool online, uint32 delaytime )
+    KFMsg::PBObject* KFKernelModule::SerializeObject( DataPtr object_data, uint32 data_mask, bool online, uint32 delay_time )
     {
         static KFMsg::PBObject proto_object;
         proto_object.Clear();
 
-        SaveToEntity( kfdata, &proto_object, datamask, online, delaytime );
+        SaveToEntity( object_data, &proto_object, data_mask, online, delay_time );
         return &proto_object;
     }
 
-#define __COPY_FROM_PROTO__( data, proto, pbdata ) \
+#define __COPY_FROM_PROTO__( data, data_mask, function_name ) \
     {\
-        auto proto_data = &(proto->pbdata());\
+        auto proto_data = &(data_mask->function_name());\
         for ( auto iter = proto_data->begin(); iter != proto_data->end(); ++iter )\
         {\
             auto child = data->Find( iter->first );\
@@ -121,155 +108,155 @@ namespace KFrame
         }\
     }\
 
-    void KFKernelModule::CopyFromObject( DataPtr parent_data, const KFMsg::PBObject* proto )
+    void KFKernelModule::CopyFromObject( DataPtr object_data, const KFMsg::PBObject* message )
     {
         // int32
-        __COPY_FROM_PROTO__( parent_data, proto, pbint32 );
+        __COPY_FROM_PROTO__( object_data, message, pbint32 );
 
         // uint32
-        __COPY_FROM_PROTO__( parent_data, proto, pbuint32 );
+        __COPY_FROM_PROTO__( object_data, message, pbuint32 );
 
         // int64
-        __COPY_FROM_PROTO__( parent_data, proto, pbint64 );
+        __COPY_FROM_PROTO__( object_data, message, pbint64 );
 
         // uint64
-        __COPY_FROM_PROTO__( parent_data, proto, proto_uint64 );
+        __COPY_FROM_PROTO__( object_data, message, pbuint64 );
 
         // double
-        __COPY_FROM_PROTO__( parent_data, proto, pbdouble );
+        __COPY_FROM_PROTO__( object_data, message, pbdouble );
 
         // string
-        __COPY_FROM_PROTO__( parent_data, proto, pbstring );
+        __COPY_FROM_PROTO__( object_data, message, pbstring );
 
         // array_data
-        auto proto_array = &proto->pbarray();
+        auto proto_array = &message->pbarray();
         for ( auto iter = proto_array->begin(); iter != proto_array->end(); ++iter )
         {
-            auto array_data = parent_data->Find( iter->first );
-            if ( array_data == nullptr )
+            auto child_array_data = object_data->Find( iter->first );
+            if ( child_array_data == nullptr )
             {
-                __LOG_CRITICAL__( "playerdata parent=[{}] not array=[{}]", parent_data->_data_setting->_name, iter->first );
+                __LOG_CRITICAL__( "playerdata parent=[{}] not array=[{}]", object_data->_data_setting->_name, iter->first );
                 continue;
             }
 
             // 数组列表
             auto proto_uint64 = &iter->second.pbuint64();
-            for ( auto citer = proto_uint64->begin(); citer != proto_uint64->end(); ++citer )
+            for ( auto value_iter = proto_uint64->begin(); value_iter != proto_uint64->end(); ++value_iter )
             {
-                auto child_data = array_data->Find( citer->first );
+                auto child_data = child_array_data->Find( value_iter->first );
                 if ( child_data == nullptr )
                 {
-                    child_data = KFDataFactory::Instance()->AddArray( array_data );
+                    child_data = KFDataFactory::Instance()->AddArray( child_array_data );
                 }
-                child_data->Set( citer->second );
+                child_data->Set( value_iter->second );
             }
         }
 
         // object_data
-        auto proto_object = &proto->pbobject();
+        auto proto_object = &message->pbobject();
         for ( auto iter = proto_object->begin(); iter != proto_object->end(); ++iter )
         {
-            auto object_data = parent_data->Find( iter->first );
-            if ( object_data == nullptr )
+            auto child_object_data = object_data->Find( iter->first );
+            if ( child_object_data == nullptr )
             {
-                __LOG_CRITICAL__( "playerdata parent=[{}] not object=[{}]", parent_data->_data_setting->_name, iter->first );
+                __LOG_CRITICAL__( "playerdata parent=[{}] not object=[{}]", object_data->_data_setting->_name, iter->first );
                 continue;
             }
 
-            CopyFromObject( object_data, &iter->second );
+            CopyFromObject( child_object_data, &iter->second );
         }
 
         // kfrecord
-        auto proto_record = &proto->pbrecord();
+        auto proto_record = &message->pbrecord();
         for ( auto iter = proto_record->begin(); iter != proto_record->end(); ++iter )
         {
-            auto record_data = parent_data->Find( iter->first );
-            if ( record_data == nullptr )
+            auto child_record_data = object_data->Find( iter->first );
+            if ( child_record_data == nullptr )
             {
-                __LOG_CRITICAL__( "playerdata parent=[{}] not record=[{}]", parent_data->_data_setting->_name, iter->first );
+                __LOG_CRITICAL__( "playerdata parent=[{}] not record=[{}]", object_data->_data_setting->_name, iter->first );
                 continue;
             }
 
             // 对象列表
             auto proto_object = &( iter->second.pbobject() );
-            for ( auto citer = proto_object->begin(); citer != proto_object->end(); ++citer )
+            for ( auto object_iter = proto_object->begin(); object_iter != proto_object->end(); ++object_iter )
             {
-                auto object_data = KFDataFactory::Instance()->CreateData( record_data->_data_setting, false );
-                CopyFromObject( object_data, &citer->second );
-                object_data->Add( citer->first, object_data );
+                auto child_object_data = KFDataFactory::Instance()->CreateData( child_record_data->_data_setting, false );
+                CopyFromObject( child_object_data, &object_iter->second );
+                object_data->Add( object_iter->first, child_object_data );
             }
         }
     }
 
-#define __SAVE_TO_PROTO__( datatype, pbdata, type )\
-case datatype:\
+#define __SAVE_TO_PROTO__( data_type, data_name, type )\
+case data_type:\
     {\
-        auto& pbdata = *(proto->mutable_##pbdata()); \
-        pbdata[ datasetting->_name ] = kfchild->Get<type>();\
+        auto& data_name = *(message->mutable_##data_name()); \
+        data_name[child_data_setting->_name] = child->Get<type>();\
         break; \
     }\
 
 
-    void KFKernelModule::SaveToEntity( DataPtr kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online, uint32 delaytime )
+    void KFKernelModule::SaveToEntity( DataPtr object_data, KFMsg::PBObject* message, uint32 data_mask, bool online, uint32 delay_time )
     {
-        auto datasetting = kfdata->_data_setting;
-        if ( !datasetting->HaveMask( datamask ) )
+        auto data_setting = object_data->_data_setting;
+        if ( !data_setting->HaveMask( data_mask ) )
         {
             return;
         }
 
-        SaveToObject( kfdata, proto, datamask, online, delaytime );
+        SaveToObject( object_data, message, data_mask, online, delay_time );
     }
 
-    void KFKernelModule::SaveToObject( DataPtr kfdata, KFMsg::PBObject* proto, uint32 datamask, bool online /* = false */, uint32 delaytime /* = 0u */ )
+    void KFKernelModule::SaveToObject( DataPtr object_data, KFMsg::PBObject* message, uint32 data_mask, bool online /* = false */, uint32 delay_time /* = 0u */ )
     {
-        for ( auto kfchild = kfdata->First(); kfchild != nullptr; kfchild = kfdata->Next() )
+        for ( auto child = object_data->First(); child != nullptr; child = object_data->Next() )
         {
-            auto datasetting = kfchild->_data_setting;
-            if ( !datasetting->HaveMask( datamask ) ||
-                    !kfchild->IsValid() ||
-                    ( online && datasetting->_delay_online_sync_time != delaytime ) )
+            auto child_data_setting = child->_data_setting;
+            if ( !child_data_setting->HaveMask( data_mask ) ||
+                    !child->IsValid() ||
+                    ( online && child_data_setting->_delay_online_sync_time != delay_time ) )
             {
                 continue;
             }
 
-            switch ( datasetting->_type )
+            switch ( child_data_setting->_type )
             {
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeInt32, pbint32, int32 );
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeUInt32, pbuint32, uint32 );
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeInt64, pbint64, int64 );
-                __SAVE_TO_PROTO__( KFDataDefine::DataTypeUInt64, proto_uint64, uint64 );
+                __SAVE_TO_PROTO__( KFDataDefine::DataTypeUInt64, pbuint64, uint64 );
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeDouble, pbdouble, double );
                 __SAVE_TO_PROTO__( KFDataDefine::DataTypeString, pbstring, std::string );
 
             case KFDataDefine::DataTypeArray:
             {
-                auto& pbarray = ( *proto->mutable_pbarray() )[ datasetting->_name ];
+                auto& proto_array = ( *message->mutable_pbarray() )[child_data_setting->_name];
 
-                auto maxsize = kfchild->MaxSize();
-                for ( uint32 i = KFGlobal::Instance()->_array_index; i < maxsize; ++i )
+                auto max_size = child->MaxSize();
+                for ( auto i = KFGlobal::Instance()->_array_index; i < max_size; ++i )
                 {
-                    auto kfuint64 = kfchild->Find( i );
-                    if ( kfuint64 != nullptr && kfuint64->IsValid() )
+                    auto value_data = child->Find( i );
+                    if ( value_data != nullptr && value_data->IsValid() )
                     {
-                        ( *pbarray.mutable_pbuint64() )[ i ] = kfuint64->Get<int64>();
+                        ( *proto_array.mutable_pbuint64() )[i] = value_data->Get();
                     }
                 }
                 break;
             }
             case KFDataDefine::DataTypeObject:
             {
-                auto& proto_object = ( *proto->mutable_pbobject() )[ datasetting->_name ];
-                SaveToObject( kfchild, &proto_object, datamask );
+                auto& proto_object = ( *message->mutable_pbobject() )[child_data_setting->_name];
+                SaveToObject( child, &proto_object, data_mask );
                 break;
             }
             case KFDataDefine::DataTypeRecord:
             {
-                auto& pbrecord = ( *proto->mutable_pbrecord() )[ datasetting->_name ];
-                for ( auto object_data = kfchild->First(); object_data != nullptr; object_data = kfchild->Next() )
+                auto& proto_record = ( *message->mutable_pbrecord() )[child_data_setting->_name];
+                for ( auto child_object_data = child->First(); child_object_data != nullptr; child_object_data = child->Next() )
                 {
-                    auto& proto_object = ( *pbrecord.mutable_pbobject() )[ object_data->GetKeyID() ];
-                    SaveToObject( object_data, &proto_object, datamask );
+                    auto& proto_object = ( *proto_record.mutable_pbobject() )[child_object_data->GetKeyID()];
+                    SaveToObject( child_object_data, &proto_object, data_mask );
                 }
                 break;
             }
