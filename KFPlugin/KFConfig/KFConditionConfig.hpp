@@ -49,13 +49,13 @@ namespace KFrame
 			{
 				auto setting = iter.second;
 
-				kfsetting->_condition._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->_condition._str_condition );
+				setting->_condition._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->_condition._str_condition );
 				if ( !setting->_condition._str_condition.empty() && setting->_condition._condition_define == nullptr )
 				{
 					__LOG_ERROR__( "condition=[{}] can't find define=[{}]", setting->_id, setting->_condition._str_condition );
 				}
 
-				kfsetting->_clean._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->_clean._str_condition );
+				setting->_clean._condition_define = KFConditionDefineConfig::Instance()->FindSetting( setting->_clean._str_condition );
 				if ( !setting->_clean._str_condition.empty() && setting->_clean._condition_define == nullptr )
 				{
 					__LOG_ERROR__( "condition=[{}] can't find define=[{}]", setting->_id, setting->_clean._str_condition );
