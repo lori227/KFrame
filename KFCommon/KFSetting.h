@@ -46,7 +46,7 @@ namespace KFrame
     {
     public:
         std::string _str_condition;
-        const KFConditionDefineSetting* _condition_define = nullptr;
+        std::shared_ptr<const KFConditionDefineSetting> _condition_define = nullptr;
     };
 
 

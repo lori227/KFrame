@@ -95,24 +95,24 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemReq, KFMsg::MsgRemoveItemReq )
     {
-        __LOG_INFO__( "player=[{}] remove item=[{}:{}]", kfentity->GetKeyID(), kfmsg->sourcename(), kfmsg->uuid() );
+        __LOG_INFO__( "player=[{}] remove item=[{}:{}]", entity->GetKeyID(), kfmsg->sourcename(), kfmsg->uuid() );
 
         if ( kfmsg->uuid() == 0u )
         {
-            kfentity->ClearRecord( kfmsg->sourcename() );
+            entity->ClearRecord( kfmsg->sourcename() );
         }
         else
         {
-            kfentity->RemoveRecord( kfmsg->sourcename(), kfmsg->uuid() );
+            entity->RemoveRecord( kfmsg->sourcename(), kfmsg->uuid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemCountReq, KFMsg::MsgRemoveItemCountReq )
     {
-        __LOG_INFO__( "player=[{}] remove itemcount=[{}:{}]", kfentity->GetKeyID(), kfmsg->itemid(), kfmsg->count() );
+        __LOG_INFO__( "player=[{}] remove itemcount=[{}:{}]", entity->GetKeyID(), kfmsg->itemid(), kfmsg->count() );
 
-        auto kfitemrecord = FindItemBag( kfentity, kfmsg->itemid() );
-        RemoveItem( kfentity, kfitemrecord, kfmsg->itemid(), kfmsg->count() );
+        auto kfitemrecord = FindItemBag( entity, kfmsg->itemid() );
+        RemoveItem( entity, kfitemrecord, kfmsg->itemid(), kfmsg->count() );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_GET_CONFIG_VALUE_FUNCTION__( KFItemModule::GetItemTotalCount )
@@ -378,7 +378,7 @@ namespace KFrame
     void KFItemModule::AddOverlayTimeItem( EntityPtr player, DataPtr kfparent, KFElementResult* kfresult,
                                            const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count, uint32 time )
     {
-        std::list< DataPtr > finditem;
+        std::list<DataPtr> finditem;
         kfparent->Find( __STRING__( id ), kfitemsetting->_id, finditem, false );
 
         DataPtr kfitem = nullptr;
@@ -776,7 +776,7 @@ namespace KFrame
         }
 
         auto findcount = 0u;
-        std::list< DataPtr > finditem;
+        std::list<DataPtr> finditem;
         for ( auto kfitem = kfitemrecord->First(); kfitem != nullptr; kfitem = kfitemrecord->Next() )
         {
             if ( itemid != kfitem->Get<uint32>( __STRING__( id ) ) )
@@ -925,40 +925,40 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleSellItemReq, KFMsg::MsgSellItemReq )
     {
-        auto kfitembag = kfentity->Find( kfmsg->name() );
+        auto kfitembag = entity->Find( kfmsg->name() );
         auto kfitem = kfitembag->Find( kfmsg->uuid() );
         if ( kfitem == nullptr )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::ItemDataNotExist );
+            return _kf_display->SendToClient( entity, KFMsg::ItemDataNotExist );
         }
 
         auto itemid = kfitem->Get<uint32>( __STRING__( id ) );
         auto setting = KFItemConfig::Instance()->FindSetting( itemid );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::ItemSettingNotExist );
+            return _kf_display->SendToClient( entity, KFMsg::ItemSettingNotExist );
         }
 
         if ( setting->_sell.IsEmpty() )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::ItemCanNotSell );
+            return _kf_display->SendToClient( entity, KFMsg::ItemCanNotSell );
         }
 
         auto count = kfitem->Get<uint32>( __STRING__( count ) );
         if ( kfmsg->count() == 0u || count < kfmsg->count() )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::ItemSellCountError );
+            return _kf_display->SendToClient( entity, KFMsg::ItemSellCountError );
         }
 
         // 更新道具数量
-        kfentity->UpdateObject( kfitem, __STRING__( count ), KFEnum::Dec, kfmsg->count() );
+        entity->UpdateObject( kfitem, __STRING__( count ), KFEnum::Dec, kfmsg->count() );
 
         // 添加道具
-        kfentity->AddElement( &setting->_sell, kfmsg->count(), __STRING__( sell ), itemid, __FUNC_LINE__ );
+        entity->AddElement( &setting->_sell, kfmsg->count(), __STRING__( sell ), itemid, __FUNC_LINE__ );
 
         KFMsg::MsgSellItemAck ack;
         ack.set_itemid( itemid );
         ack.set_count( kfmsg->count() );
-        _kf_player->SendToClient( kfentity, KFMsg::MSG_SELL_ITEM_ACK, &ack );
+        _kf_player->SendToClient( entity, KFMsg::MSG_SELL_ITEM_ACK, &ack );
     }
 }

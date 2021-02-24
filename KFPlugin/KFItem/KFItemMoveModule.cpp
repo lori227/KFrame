@@ -770,15 +770,15 @@ namespace KFrame
         uint32 result = KFMsg::Error;
         if ( kfmsg->sourcename() == kfmsg->targetname() )
         {
-            result = MoveTabItem( kfentity, kfmsg->sourcename(), kfmsg->tabname(), kfmsg->sourceuuid(), kfmsg->targetindex() );
+            result = MoveTabItem( entity, kfmsg->sourcename(), kfmsg->tabname(), kfmsg->sourceuuid(), kfmsg->targetindex() );
         }
         else
         {
-            result = MoveBagItem( kfentity, kfmsg->sourcename(), kfmsg->sourceuuid(), kfmsg->targetname(), kfmsg->targetindex() );
+            result = MoveBagItem( entity, kfmsg->sourcename(), kfmsg->sourceuuid(), kfmsg->targetname(), kfmsg->targetindex() );
         }
         if ( result != KFMsg::Ok )
         {
-            return _kf_display->SendToClient( kfentity, result );
+            return _kf_display->SendToClient( entity, result );
         }
     }
 
@@ -897,16 +897,16 @@ namespace KFrame
         auto kftargetbagsetting = KFItemBagConfig::Instance()->FindSetting( kfmsg->targetname() );
         if ( kfsourcebagsetting == nullptr || kftargetbagsetting == nullptr || !kfsourcebagsetting->_can_move_all )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::ItemBagCanNotMove );
+            return _kf_display->SendToClient( entity, KFMsg::ItemBagCanNotMove );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 全部拾取
-        auto kfsourcerecord = kfentity->Find( kfmsg->sourcename() );
-        auto kftargetrecord = kfentity->Find( kfmsg->targetname() );
+        auto kfsourcerecord = entity->Find( kfmsg->sourcename() );
+        auto kftargetrecord = entity->Find( kfmsg->targetname() );
         if ( kfsourcerecord == nullptr || kftargetrecord == nullptr )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::ItemBagNameError );
+            return _kf_display->SendToClient( entity, KFMsg::ItemBagNameError );
         }
 
         // 遍历出可以移动的道具
@@ -925,10 +925,10 @@ namespace KFrame
 
         for ( auto& iter : movelist )
         {
-            auto result = MoveItemDataLogic( kfentity, iter.second, kfsourcebagsetting, kfsourcerecord, iter.first, kftargetbagsetting, kftargetrecord );
+            auto result = MoveItemDataLogic( entity, iter.second, kfsourcebagsetting, kfsourcerecord, iter.first, kftargetbagsetting, kftargetrecord );
             if ( result != KFMsg::Ok )
             {
-                return _kf_display->SendToClient( kfentity, result );
+                return _kf_display->SendToClient( entity, result );
             }
         }
     }
@@ -993,7 +993,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFItemMoveModule::HandleSortItemReq, KFMsg::MsgSortItemReq )
     {
-        SortItem( kfentity, kfmsg->bagname(), kfmsg->tabname() );
+        SortItem( entity, kfmsg->bagname(), kfmsg->tabname() );
     }
 
     void KFItemMoveModule::SortItem( EntityPtr player, const std::string& bagname, const std::string& tabname )

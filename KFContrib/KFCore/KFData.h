@@ -14,7 +14,7 @@ namespace KFrame
     public:
     public:
         KFData() = default;
-        virtual ~KFData() = default;
+        virtual ~KFData();
 
         // 无效值
         template<class T> T InvalidValue();
@@ -115,6 +115,8 @@ namespace KFrame
         // @data_name : 属性名
         std::string ToString( const std::string& parent_name, uint64 key, const std::string& data_name );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        DataPtr GetDataPtr();
+
         // 重置
         virtual void Reset();
 

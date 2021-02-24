@@ -135,24 +135,24 @@ namespace KFrame
         auto filter = _kf_filter->CheckFilter( kfmsg->name() );
         if ( filter )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::NameFilterError );
+            return _kf_display->SendToClient( entity, KFMsg::NameFilterError );
         }
 
         // 发送到basic
         KFMsg::S2SQueryAttributeToBasicReq req;
         req.set_name( kfmsg->name() );
         req.set_zoneid( setting->_data_id );
-        _kf_route->SendToRand( kfentity->GetKeyID(), __ROUTE_NAME__, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
+        _kf_route->SendToRand( entity->GetKeyID(), __ROUTE_NAME__, KFMsg::S2S_QUERY_ATTRIBUTE_TO_BASIC_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleQueryAttributeToGameAck, KFMsg::S2SQueryAttributeToGameAck )
     {
         if ( kfmsg->result() != KFMsg::Ok )
         {
-            return _kf_display->SendToClient( kfentity, kfmsg->result(), kfmsg->name() );
+            return _kf_display->SendToClient( entity, kfmsg->result(), kfmsg->name() );
         }
 
-        auto kfbasic = kfentity->CreateData( __STRING__( basic ) );
+        auto kfbasic = entity->CreateData( __STRING__( basic ) );
         for ( auto iter = kfmsg->pbdata().begin(); iter != kfmsg->pbdata().end(); ++iter )
         {
             auto kfdata = kfbasic->Find( iter->first );
@@ -166,13 +166,13 @@ namespace KFrame
         // 发送给客户端
         KFMsg::MsgQueryBasicAck ack;
         ack.mutable_player()->CopyFrom( *player_data );
-        _kf_player->SendToClient( kfentity, KFMsg::MSG_QUERY_BASIC_ACK, &ack );
+        _kf_player->SendToClient( entity, KFMsg::MSG_QUERY_BASIC_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleSetSexReq, KFMsg::MsgSetSexReq )
     {
-        kfentity->UpdateObject( __STRING__( basic ), __STRING__( sex ), KFEnum::Set, kfmsg->sex() );
-        //_kf_display->SendToClient( kfentity, KFMsg::SexSetOK );
+        entity->UpdateObject( __STRING__( basic ), __STRING__( sex ), KFEnum::Set, kfmsg->sex() );
+        //_kf_display->SendToClient( entity, KFMsg::SexSetOK );
     }
 
     uint32 KFBasicClientModule::CheckNameValid( const std::string& name, uint32 maxlength )
@@ -196,21 +196,21 @@ namespace KFrame
     {
         if ( kfmsg->name().empty() )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::NameEmpty );
+            return _kf_display->SendToClient( entity, KFMsg::NameEmpty );
         }
 
-        auto kfname = kfentity->Find( __STRING__( basic ), __STRING__( name ) );
+        auto kfname = entity->Find( __STRING__( basic ), __STRING__( name ) );
         auto name = kfname->Get<std::string>();
         if ( !name.empty() )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::NameAlreadySet );
+            return _kf_display->SendToClient( entity, KFMsg::NameAlreadySet );
         }
 
         // 检查名字的有效性
         auto result = CheckNameValid( kfmsg->name(), kfname->_data_setting->_int_max_value );
         if ( result != KFMsg::Ok )
         {
-            return _kf_display->SendToClient( kfentity, result );
+            return _kf_display->SendToClient( entity, result );
         }
 
         auto setting = KFZoneConfig::Instance()->FindSetting( KFGlobal::Instance()->_app_id->GetZoneId() );
@@ -225,23 +225,23 @@ namespace KFrame
         req.set_newname( kfmsg->name() );
         req.set_costdata( _invalid_string );
         req.set_zoneid( setting->_data_id );
-        req.set_playerid( kfentity->GetKeyID() );
-        auto ok = _kf_route->SendToRand( kfentity->GetKeyID(), __ROUTE_NAME__, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &req );
+        req.set_playerid( entity->GetKeyID() );
+        auto ok = _kf_route->SendToRand( entity->GetKeyID(), __ROUTE_NAME__, KFMsg::S2S_SET_PLAYER_NAME_TO_BASIC_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( kfentity, KFMsg::PublicServerBusy );
+            _kf_display->SendToClient( entity, KFMsg::PublicServerBusy );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicClientModule::HandleSetPlayerNameToGameAck, KFMsg::S2SSetPlayerNameToGameAck )
     {
-        _kf_display->SendToClient( kfentity, kfmsg->result(), kfmsg->name() );
+        _kf_display->SendToClient( entity, kfmsg->result(), kfmsg->name() );
         if ( kfmsg->result() != KFMsg::NameSetOk )
         {
             return;
         }
 
-        kfentity->UpdateObject( __STRING__( basic ), __STRING__( name ), kfmsg->name() );
+        entity->UpdateObject( __STRING__( basic ), __STRING__( name ), kfmsg->name() );
 
         if ( kfmsg->costdata() != _invalid_string )
         {
@@ -249,7 +249,7 @@ namespace KFrame
             auto ok = elements.Parse( kfmsg->costdata(), __FUNC_LINE__ );
             if ( ok )
             {
-                kfentity->RemoveElement( &elements, _default_multiple, __STRING__( name ), 0u, __FUNC_LINE__ );
+                entity->RemoveElement( &elements, _default_multiple, __STRING__( name ), 0u, __FUNC_LINE__ );
             }
         }
     }

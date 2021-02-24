@@ -99,7 +99,7 @@ namespace KFrame
     {
         auto kftaskrecord = player->Find( __STRING__( task ) );
 
-        std::list< DataPtr > tasklist;
+        std::list<DataPtr> tasklist;
         kftaskrecord->Find( __STRING__( chain ), chainid, tasklist, true );
 
         for ( auto kftask : tasklist )

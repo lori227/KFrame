@@ -211,68 +211,68 @@ namespace KFrame
 
     uint64 KFLuaModule::LuaGetValue( uint64 objectid, const char* data_name )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfentity->Get( data_name );
+        return entity->Get( data_name );
     }
 
     uint64 KFLuaModule::LuaOperateValue( uint64 objectid, const char* data_name, uint32 operate, uint64 value )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfentity->UpdateData( data_name, operate, value );
+        return entity->UpdateData( data_name, operate, value );
     }
 
     uint64 KFLuaModule::LuaGetObjectValue( uint64 objectid, const char* parent_name, const char* data_name )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfentity->Get( parent_name, data_name );
+        return entity->Get( parent_name, data_name );
     }
 
     uint64 KFLuaModule::LuaOperateObjectValue( uint64 objectid, const char* parent_name, const char* data_name, uint32 operate, uint64 value )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfentity->UpdateObject( parent_name, data_name, operate, value );
+        return entity->UpdateObject( parent_name, data_name, operate, value );
     }
 
     uint64 KFLuaModule::LuaGetRecordValue( uint64 objectid, const char* parent_name, uint64 key, const char* data_name )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfentity->Get( parent_name, key, data_name );
+        return entity->Get( parent_name, key, data_name );
     }
 
     uint64 KFLuaModule::LuaOperateRecordValue( uint64 objectid, const char* parent_name, uint64 key, const char* data_name, uint32 operate, uint64 value )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfentity->UpdateRecord( parent_name, key, data_name, operate, value );
+        return entity->UpdateRecord( parent_name, key, data_name, operate, value );
     }
 
     uint32 KFLuaModule::LuaGetVariable( uint32 varid )
@@ -302,8 +302,8 @@ namespace KFrame
 
     void KFLuaModule::LuaAddData( uint64 objectid, const char* strelement, const char* modulename )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return;
         }
@@ -312,14 +312,14 @@ namespace KFrame
         auto ok = elements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->AddElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            entity->AddElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 
     void KFLuaModule::LuaSetData( uint64 objectid, const char* strelement, const char* modulename )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return;
         }
@@ -329,14 +329,14 @@ namespace KFrame
         if ( ok )
         {
             elements.SetOperate( KFEnum::Set );
-            kfentity->AddElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            entity->AddElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 
     void KFLuaModule::LuaDecData( uint64 objectid, const char* strelement, const char* modulename )
     {
-        auto kfentity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
-        if ( kfentity == nullptr )
+        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        if ( entity == nullptr )
         {
             return;
         }
@@ -345,7 +345,7 @@ namespace KFrame
         auto ok = elements.Parse( strelement, __FUNC_LINE__ );
         if ( ok )
         {
-            kfentity->RemoveElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
+            entity->RemoveElement( &elements, _default_multiple, modulename, 0u, __FUNC_LINE__ );
         }
     }
 

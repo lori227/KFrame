@@ -51,12 +51,12 @@ namespace KFrame
             }
 
             kfunlock = player->CreateData( kfunlockrecord );
-            auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );
-            _kf_condition->AddCondition( player, kfconditionobject, setting->_unlock_condition );
+            auto condition_object = kfunlock->Find( __STRING__( conditions ) );
+            _kf_condition->AddCondition( player, condition_object, setting->_unlock_condition );
             kfunlockrecord->Add( setting->_id, kfunlock );
 
             // 判断条件
-            auto complete = _kf_condition->InitCondition( player, kfconditionobject, false );
+            auto complete = _kf_condition->InitCondition( player, condition_object, false );
             if ( complete )
             {
                 kfunlockrecord->Remove( setting->_id );
@@ -151,7 +151,7 @@ namespace KFrame
         {\
             continue;\
         }\
-        auto kfconditionobject = kfunlock->Find( __STRING__( conditions ) );\
+        auto condition_object = kfunlock->Find( __STRING__( conditions ) );\
         auto complete = updatefunction;\
         if ( complete )\
         {\
@@ -162,17 +162,17 @@ namespace KFrame
 
     __KF_ADD_DATA_FUNCTION__( KFUnlockModule::OnAddDataUnlockModule )
     {
-        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateAddCondition( player, kfconditionobject, kfdata ) );
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateAddCondition( player, condition_object, kfdata ) );
     }
 
     __KF_REMOVE_DATA_FUNCTION__( KFUnlockModule::OnRemoveDataUnlockModule )
     {
-        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateRemoveCondition( player, kfconditionobject, kfdata ) );
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateRemoveCondition( player, condition_object, kfdata ) );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFUnlockModule::OnUpdateDataUnlockModule )
     {
-        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateUpdateCondition( player, kfconditionobject, kfdata, operate, value, newvalue ) );
+        __UPDATE_UNLOCK_LIST__( _kf_condition->UpdateUpdateCondition( player, condition_object, kfdata, operate, value, newvalue ) );
     }
 }
 

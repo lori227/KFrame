@@ -2,6 +2,11 @@
 
 namespace KFrame
 {
+    KFData::~KFData()
+    {
+        _data_setting = nullptr;
+    }
+
     // 父属性
     void KFData::SetParent( KFData* data )
     {
@@ -11,6 +16,11 @@ namespace KFrame
     KFData* KFData::GetParent()
     {
         return _parent;
+    }
+
+    DataPtr KFData::GetDataPtr()
+    {
+        return shared_from_this();
     }
 
     bool KFData::IsValid()

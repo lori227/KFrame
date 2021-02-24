@@ -20,16 +20,16 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleFriendChatReq, KFMsg::MsgFriendChatReq )
     {
-        if ( !CheckChatIntervalTime( kfentity ) )
+        if ( !CheckChatIntervalTime( entity ) )
         {
             return;
         }
 
         // 判断是否是好友
-        auto kfrelation = kfentity->Find( __STRING__( friend ), kfmsg->playerid() );
+        auto kfrelation = entity->Find( __STRING__( friend ), kfmsg->playerid() );
         if ( kfrelation == nullptr )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::ChatNotFriend );
+            return _kf_display->SendToClient( entity, KFMsg::ChatNotFriend );
         }
         auto kfbasic = kfrelation->Find( __STRING__( basic ) );
 
@@ -39,17 +39,17 @@ namespace KFrame
 
         KFMsg::MsgTellFriendChat chat;
         chat.set_content( content );
-        chat.set_playerid( kfentity->GetKeyID() );
-        auto ok = _kf_game->SendToPlayer( kfentity->GetKeyID(), kfbasic, KFMsg::MSG_TELL_FRIEND_CHAT, &chat );
+        chat.set_playerid( entity->GetKeyID() );
+        auto ok = _kf_game->SendToPlayer( entity->GetKeyID(), kfbasic, KFMsg::MSG_TELL_FRIEND_CHAT, &chat );
         if ( !ok )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::ChatFriendNotOnline );
+            return _kf_display->SendToClient( entity, KFMsg::ChatFriendNotOnline );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleServerChatReq, KFMsg::MsgServerChatReq )
     {
-        if ( !CheckChatIntervalTime( kfentity ) )
+        if ( !CheckChatIntervalTime( entity ) )
         {
             return;
         }
@@ -58,7 +58,7 @@ namespace KFrame
         std::string content = kfmsg->content();
         _kf_filter->CensorFilter( content );
 
-        auto kfbasic = kfentity->Find( __STRING__( basic ) );
+        auto kfbasic = entity->Find( __STRING__( basic ) );
         auto pbbasic = _kf_kernel->SerializeToView( kfbasic );
 
         KFMsg::MsgTellServerChat chat;

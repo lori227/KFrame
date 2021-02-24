@@ -54,7 +54,7 @@ namespace KFrame
         virtual KFMsg::PBObject* SerializeToClient( DataPtr kfdata );
 
         // 序列化到客户端( 优化上线的数据量, 登录时才使用 )
-        virtual KFMsg::PBObject* SerializeToOnline( EntityPtr kfentity, uint32 delaytime = 0u );
+        virtual KFMsg::PBObject* SerializeToOnline( EntityPtr entity, uint32 delaytime = 0u );
         /////////////////////////////////////////////////////////////////////////////////////////////
     public:
         // 初始化

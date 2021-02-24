@@ -1616,7 +1616,7 @@ namespace KFrame
     {\
         return;\
     }\
-    std::list< DataPtr > datahierarchy;\
+    std::list<DataPtr> datahierarchy;\
     datahierarchy.push_front( kfdata );\
     auto kfparent = kfdata->GetParent();\
     while ( kfparent != nullptr )\

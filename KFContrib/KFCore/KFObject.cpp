@@ -193,7 +193,6 @@ namespace KFrame
         return parent_data->Add( key, data );
     }
 
-
     bool KFObject::Add( const std::string& parent_name, const std::string& child_name, DataPtr& data )
     {
         auto parent_data = Find( parent_name );
@@ -208,7 +207,13 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     DataPtr KFObject::Remove( const std::string& data_name )
     {
-        return _data.Remove( data_name );
+        auto data = _data.Remove( data_name );
+        if ( data != nullptr )
+        {
+            data->SetParent(nullptr );
+        }
+
+        return data;
     }
 
     DataPtr KFObject::Remove( const std::string& data_name, uint64 key )

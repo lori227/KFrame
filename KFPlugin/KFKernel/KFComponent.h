@@ -43,7 +43,7 @@ namespace KFrame
         virtual EntityPtr CreateEntity( uint64 key, const KFMsg::PBObject* data ) = 0;
 
         // 添加实体
-        virtual void AddEntity( uint64 key, EntityPtr kfentity ) = 0;
+        virtual void AddEntity( uint64 key, EntityPtr entity ) = 0;
 
         // 查找实体
         virtual EntityPtr FindEntity( uint64 key ) = 0;
@@ -51,7 +51,7 @@ namespace KFrame
 
         // 删除实体, 保存数据库
         virtual bool RemoveEntity( uint64 key ) = 0;
-        virtual bool RemoveEntity( EntityPtr kfentity ) = 0;
+        virtual bool RemoveEntity( EntityPtr entity ) = 0;
 
         // 实体数量
         virtual uint32 GetEntityCount() = 0;

@@ -34,7 +34,7 @@ namespace KFrame
         std::string command = kfmsg->command();
         std::transform( command.begin(), command.end(), command.begin(), ::tolower );
 
-        __LOG_DEBUG__( "player=[{}] debug command[{}]", kfentity->GetKeyID(), command );
+        __LOG_DEBUG__( "player=[{}] debug command[{}]", entity->GetKeyID(), command );
 
         auto kffunction = _kf_command_function.Find( command );
         if ( kffunction != nullptr )
@@ -45,7 +45,7 @@ namespace KFrame
                 params.push_back( kfmsg->params( i ) );
             }
 
-            return kffunction->_function( kfentity, params );
+            return kffunction->_function( entity, params );
         }
     }
 }

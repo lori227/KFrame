@@ -89,10 +89,10 @@ namespace KFrame
         return SerializeObject( kfdata, KFDataDefine::DataMaskSync, false, 0u );
     }
 
-    KFMsg::PBObject* KFKernelModule::SerializeToOnline( EntityPtr kfentity, uint32 delaytime /* = 0u */ )
+    KFMsg::PBObject* KFKernelModule::SerializeToOnline( EntityPtr entity, uint32 delaytime /* = 0u */ )
     {
         // 把直接发送的数据返回给客户端
-        return SerializeObject( kfentity, KFDataDefine::DataMaskSync, true, delaytime );
+        return SerializeObject( entity, KFDataDefine::DataMaskSync, true, delaytime );
     }
 
     KFMsg::PBObject* KFKernelModule::SerializeObject( DataPtr kfdata, uint32 datamask, bool online, uint32 delaytime )

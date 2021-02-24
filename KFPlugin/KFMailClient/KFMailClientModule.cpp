@@ -74,12 +74,12 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleQueryMailReq, KFMsg::MsgQueryMailReq )
     {
-        SendQueryMailMessage( kfentity );
+        SendQueryMailMessage( entity );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleNoticeNewMailReq, KFMsg::S2SNoticeNewMailReq )
     {
-        SendQueryMailMessage( kfentity );
+        SendQueryMailMessage( entity );
     }
 
     uint64 KFMailClientModule::GetMaxMailId( EntityPtr player )
@@ -113,19 +113,19 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleQueryMailAck, KFMsg::S2SQueryMailAck )
     {
         // 将邮件保存到玩家属性中
-        auto kfmailrecord = kfentity->Find( __STRING__( mail ) );
+        auto kfmailrecord = entity->Find( __STRING__( mail ) );
         for ( auto i = 0; i < kfmsg->mail_size(); ++i )
         {
             auto pbmail = &kfmsg->mail( i );
             auto pbdata = &pbmail->data();
 
             // 初始化邮件内容
-            auto kfmail = kfentity->CreateData( kfmailrecord );
+            auto kfmail = entity->CreateData( kfmailrecord );
             for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
             {
                 kfmail->Set( iter->first, iter->second );
             }
-            kfentity->AddRecord( kfmailrecord, kfmail );
+            entity->AddRecord( kfmailrecord, kfmail );
         }
     }
 
@@ -141,15 +141,15 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleViewMailReq, KFMsg::MsgViewMailReq )
     {
-        auto kfmail = kfentity->Find( __STRING__( mail ), kfmsg->id() );
+        auto kfmail = entity->Find( __STRING__( mail ), kfmsg->id() );
         if ( kfmail == nullptr )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::MailNotExist );
+            return _kf_display->SendToClient( entity, KFMsg::MailNotExist );
         }
 
         if ( CheckMailTimeOut( kfmail ) )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::MailTimeOut );
+            return _kf_display->SendToClient( entity, KFMsg::MailTimeOut );
         }
 
         auto status = kfmail->Get( __STRING__( status ) );
@@ -159,15 +159,15 @@ namespace KFrame
         }
 
         // 更新状态
-        UpdateMailStatusToShard( kfentity, kfmail, KFMsg::DoneStatus );
+        UpdateMailStatusToShard( entity, kfmail, KFMsg::DoneStatus );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleDeleteMailReq, KFMsg::MsgDeleteMailReq )
     {
-        auto kfmail = kfentity->Find( __STRING__( mail ), kfmsg->id() );
+        auto kfmail = entity->Find( __STRING__( mail ), kfmsg->id() );
         if ( kfmail == nullptr )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::MailNotExist );
+            return _kf_display->SendToClient( entity, KFMsg::MailNotExist );
         }
 
         // 如果有奖励, 并且没有领取
@@ -175,39 +175,39 @@ namespace KFrame
         auto reward = kfmail->Get< std::string >( __STRING__( reward ) );
         if ( status != KFMsg::ReceiveStatus && !reward.empty() )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::MailDeleteFailed );
+            return _kf_display->SendToClient( entity, KFMsg::MailDeleteFailed );
         }
 
         // 更新到邮件集群
-        UpdateMailStatusToShard( kfentity, kfmail, KFMsg::Remove );
+        UpdateMailStatusToShard( entity, kfmail, KFMsg::Remove );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleMailReceiveReq, KFMsg::MsgMailRewardReq )
     {
-        auto kfmail = kfentity->Find( __STRING__( mail ), kfmsg->id() );
+        auto kfmail = entity->Find( __STRING__( mail ), kfmsg->id() );
         if ( kfmail == nullptr )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::MailNotExist );
+            return _kf_display->SendToClient( entity, KFMsg::MailNotExist );
         }
 
         auto status = kfmail->Get( __STRING__( status ) );
         if ( status == KFMsg::ReceiveStatus )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::MailAlreadyReceived );
+            return _kf_display->SendToClient( entity, KFMsg::MailAlreadyReceived );
         }
 
         auto reward = kfmail->Get< std::string >( __STRING__( reward ) );
         if ( reward.empty() )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::MailNotHaveReward );
+            return _kf_display->SendToClient( entity, KFMsg::MailNotHaveReward );
         }
 
         if ( CheckMailTimeOut( kfmail ) )
         {
-            return _kf_display->SendToClient( kfentity, KFMsg::MailTimeOut );
+            return _kf_display->SendToClient( entity, KFMsg::MailTimeOut );
         }
 
-        UpdateMailStatusToShard( kfentity, kfmail, KFMsg::ReceiveRemove );
+        UpdateMailStatusToShard( entity, kfmail, KFMsg::ReceiveRemove );
     }
 
     void KFMailClientModule::UpdateMailStatusToShard( EntityPtr player, DataPtr kfmail, uint32 status )
@@ -233,23 +233,23 @@ namespace KFrame
         {
         case KFMsg::DoneStatus:
         {
-            kfentity->UpdateRecord( __STRING__( mail ), kfmsg->id(), __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
+            entity->UpdateRecord( __STRING__( mail ), kfmsg->id(), __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
         }
         break;
         case KFMsg::Remove:
         {
-            kfentity->RemoveRecord( __STRING__( mail ), kfmsg->id() );
+            entity->RemoveRecord( __STRING__( mail ), kfmsg->id() );
         }
         break;
         case KFMsg::ReceiveStatus:
         {
-            ReceiveMailReward( kfentity, kfmsg->id() );
+            ReceiveMailReward( entity, kfmsg->id() );
         }
         break;
         case KFMsg::ReceiveRemove:
         {
-            ReceiveMailReward( kfentity, kfmsg->id() );
-            kfentity->RemoveRecord( __STRING__( mail ), kfmsg->id() );
+            ReceiveMailReward( entity, kfmsg->id() );
+            entity->RemoveRecord( __STRING__( mail ), kfmsg->id() );
         }
         break;
         default:
