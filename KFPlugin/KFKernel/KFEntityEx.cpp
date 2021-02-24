@@ -59,7 +59,7 @@ namespace KFrame
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-#define __SHARED_FROM_ENTITY__ std::enable_shared_from_this<KFEntityEx>::shared_from_this()
+#define __SHARED_FROM_ENTITY__ std::static_pointer_cast<KFEntityEx>( GetDataPtr() )
     void KFEntityEx::UpdateData( DataPtr data, const std::string& value, bool callback )
     {
         if ( data->IsArray() )
