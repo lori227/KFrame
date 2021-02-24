@@ -33,33 +33,33 @@ namespace KFrame
 
             // 创建数据执行器
             auto sort = setting->_sort;
-            auto kfexecute = _data_execute.Find( sort );
-            if ( kfexecute != nullptr )
+            auto execute_data = _data_execute.Find( sort );
+            if ( execute_data != nullptr )
             {
                 sort = _data_execute._objects.rbegin()->first + 1;
-                __LOG_WARN__( "dataexecute=[{}] sort=[{}] already exist", setting->_id, setting->_sort );
+                __LOG_WARN__( "data execute=[{}] sort=[{}] already exist", setting->_id, setting->_sort );
             }
 
             switch ( setting->_id )
             {
             case KFDatabaseEnum::Redis:
-                kfexecute = __KF_NEW__( KFRedisDataExecute );
+                execute_data = __MAKE_SHARED__( KFRedisDataExecute );
                 break;
             case KFDatabaseEnum::Mongo:
-                kfexecute = __KF_NEW__( KFMongoDataExecute );
+                execute_data = __MAKE_SHARED__( KFMongoDataExecute );
                 break;
             case KFDatabaseEnum::MySQL:
-                kfexecute = __KF_NEW__( KFMySQLDataExecute );
+                execute_data = __MAKE_SHARED__( KFMySQLDataExecute );
                 break;
             default:
-                __LOG_ERROR__( "dataexecute=[{}] not support", setting->_id );
+                __LOG_ERROR__( "data_execute=[{}] not support", setting->_id );
                 break;
             }
 
-            if ( kfexecute != nullptr )
+            if ( execute_data != nullptr )
             {
-                kfexecute->InitExecute( setting );
-                _data_execute.Insert( sort, kfexecute );
+                execute_data->InitExecute( setting );
+                _data_execute.Insert( sort, execute_data );
             }
         }
     }
@@ -76,7 +76,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleSavePlayerToDataReq, KFMsg::S2SSavePlayerToDataReq )
     {
-        auto ok = SavePlayerData( kfmsg->zone_id(), kfmsg->id(), &kfmsg->data(), kfmsg->flag() );
+        auto ok = SavePlayerData( kfmsg->zoneid(), kfmsg->id(), &kfmsg->data(), kfmsg->flag() );
         if ( ok )
         {
             KFMsg::S2SSavePlayerToGameAck ack;
@@ -87,11 +87,11 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleLoadPlayerToDataReq, KFMsg::S2SLoadPlayerToDataReq )
     {
-        auto pblogin = &kfmsg->pblogin();
+        auto login_data = &kfmsg->pblogin();
 
         KFMsg::S2SLoadPlayerToGameAck ack;
-        ack.mutable_pblogin()->CopyFrom( *pblogin );
-        bool ok = LoadPlayerData( pblogin->zone_id(), pblogin->player_id(), ack.mutable_playerdata() );
+        ack.mutable_pblogin()->CopyFrom( *login_data );
+        bool ok = LoadPlayerData( login_data->zoneid(), login_data->playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
             ack.set_result( KFMsg::Ok );
@@ -107,7 +107,7 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFDataShardModule::HandleQueryPlayerToDataReq, KFMsg::S2SQueryPlayerToDataReq )
     {
         KFMsg::S2SQueryPlayerToGameAck ack;
-        auto ok = LoadPlayerData( kfmsg->zone_id(), kfmsg->player_id(), ack.mutable_playerdata() );
+        auto ok = LoadPlayerData( kfmsg->zoneid(), kfmsg->playerid(), ack.mutable_playerdata() );
         if ( ok )
         {
             ack.set_result( KFMsg::Ok );
@@ -123,49 +123,49 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDataShardModule::LoadPlayerData( uint32 zone_id, uint64 player_id, KFMsg::PBObject* proto_object )
     {
-        auto loadok = false;
+        auto load_ok = false;
         for ( auto& iter : _data_execute._objects )
         {
-            loadok = false;
-            auto dataexecute = iter.second;
+            load_ok = false;
+            auto data_execute = iter.second;
 
             // 加载数据
-            auto kfresult = dataexecute->LoadPlayerData( zone_id, player_id );
-            if ( kfresult == nullptr )
+            auto result = data_execute->LoadPlayerData( zone_id, player_id );
+            if ( result == nullptr )
             {
                 continue;
             }
 
-            loadok = kfresult->IsOk();
-            if ( !kfresult->IsOk() || kfresult->_value.empty() )
+            load_ok = result->IsOk();
+            if ( !result->IsOk() || result->_value.empty() )
             {
                 continue;
             }
 
             // 反序列化数据
-            auto ok = KFProto::Parse( proto_object, kfresult->_value, dataexecute->_kf_setting->_compress_type, true );
+            auto ok = KFProto::Parse( proto_object, result->_value, data_execute->_data_save_setting->_compress_type, true );
             if ( !ok )
             {
-                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", dataexecute->_kf_setting->_id, zone_id, player_id );
+                __LOG_ERROR__( "database=[{}] player[{}:{}] parse failed", data_execute->_data_save_setting->_id, zone_id, player_id );
                 continue;
             }
             else
             {
-                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", dataexecute->_kf_setting->_id, zone_id, player_id );
+                __LOG_INFO__( "database=[{}] player[{}:{}] load ok", data_execute->_data_save_setting->_id, zone_id, player_id );
                 return true;
             }
         }
 
-        return loadok;
+        return load_ok;
     }
 
-    bool KFDataShardModule::SavePlayerData( uint32 zone_id, uint64 player_id, const KFMsg::PBObject* proto_object, uint32 saveflag )
+    bool KFDataShardModule::SavePlayerData( uint32 zone_id, uint64 player_id, const KFMsg::PBObject* player_object, uint32 save_flag )
     {
         // 保存数据
         for ( auto& iter : _data_execute._objects )
         {
-            auto dataexecute = iter.second;
-            dataexecute->SavePlayerData( zone_id, player_id, proto_object, saveflag );
+            auto data_execute = iter.second;
+            data_execute->SavePlayerData( zone_id, player_id, player_object, save_flag );
         }
 
         return true;

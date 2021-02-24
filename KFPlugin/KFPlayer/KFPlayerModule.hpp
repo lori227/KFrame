@@ -32,7 +32,7 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         // 创建玩家
-        virtual EntityPtr Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
+        virtual EntityPtr Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* player_data );
         virtual EntityPtr ReLogin( uint64 player_id, uint64 gateid );
 
         // 查找玩家

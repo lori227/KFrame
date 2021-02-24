@@ -59,24 +59,24 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 加载玩家数据
-        virtual bool LoadPlayerData( const KFMsg::PBLoginData* pblogin );
+        virtual bool LoadPlayerData( const KFMsg::PBLoginData* login_data );
         virtual void RemoveLoadData( uint64 player_id );
 
         // 保存玩家数据
-        virtual bool SavePlayerData( uint64 player_id, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
+        virtual bool SavePlayerData( uint64 player_id, const KFMsg::PBObject* player_data, uint32 save_flag );
 
         // 查询玩家数据
-        virtual bool QueryPlayerData( uint64 sendid, uint64 player_id );
+        virtual bool QueryPlayerData( uint64 send_id, uint64 player_id );
     protected:
         // 设置回调函数
-        virtual void SetLoadPlayerFunction( KFLoadPlayerFunction& function );
-        virtual void SetQueryPlayerFunction( KFQueryPlayerFunction& function );
+        virtual void SetLoadPlayerFunction( KFModule* module, KFLoadPlayerFunction& function );
+        virtual void SetQueryPlayerFunction( KFModule* module, KFQueryPlayerFunction& function );
 
         // 保存数据
-        void SaveKeeperData( uint32 zone_id, uint64 player_id, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
+        void SaveKeeperData( uint32 zone_id, uint64 player_id, const KFMsg::PBObject* player_data, uint32 save_flag );
 
         // 加载数据
-        void LoadKeeperData( const KFMsg::PBLoginData* pblogin );
+        void LoadKeeperData( const KFMsg::PBLoginData* login_data );
 
         // 计算小区id
         uint32 CalcZoneId( uint64 player_id );
@@ -92,14 +92,14 @@ namespace KFrame
 
 
     private:
-        KFLoadPlayerFunction _load_player_function = nullptr;
-        KFQueryPlayerFunction _query_player_function = nullptr;
+        KFModuleFunction<KFLoadPlayerFunction> _load_player_function;
+        KFModuleFunction<KFQueryPlayerFunction> _query_player_function;
 
         // 数据保存
-        KFHashMap< uint64, KFDataKeeper > _data_keeper;
+        KFHashMap<uint64, KFDataKeeper> _data_keeper;
 
         // 数据加载
-        KFHashMap< uint64, KFLoadKeeper > _load_keeper;
+        KFHashMap<uint64, KFLoadKeeper> _load_keeper;
     };
 
 

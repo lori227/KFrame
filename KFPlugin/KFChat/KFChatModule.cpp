@@ -26,7 +26,7 @@ namespace KFrame
         }
 
         // 判断是否是好友
-        auto kfrelation = kfentity->Find( __STRING__( friend ), kfmsg->player_id() );
+        auto kfrelation = kfentity->Find( __STRING__( friend ), kfmsg->playerid() );
         if ( kfrelation == nullptr )
         {
             return _kf_display->SendToClient( kfentity, KFMsg::ChatNotFriend );

@@ -304,7 +304,7 @@ namespace KFrame
         auto strrankdata = KFProto::Serialize( pbrankdata, KFCompressEnum::None, 0u, true );
 
         _rank_redis_driver->WriteMulti();
-        _rank_redis_driver->HSet( rankdatakey, kfmsg->player_id(), strrankdata );
+        _rank_redis_driver->HSet( rankdatakey, kfmsg->playerid(), strrankdata );
 
         // 判断最低的分数
         // if ( IsNeedUpdateRankData( kfmsg->rankid(), kfmsg->zone_id(), kfmsg->rankscore() ) )
@@ -313,7 +313,7 @@ namespace KFrame
             _rank_redis_driver->SAdd(  __DATABASE_KEY_2__( __STRING__( ranksortlist ), kfmsg->rankid() ), kfmsg->zone_id() );
 
             // 积分排行列表
-            _rank_redis_driver->ZAdd( ranksortkey, kfmsg->player_id(), pbrankdata->rankscore() );
+            _rank_redis_driver->ZAdd( ranksortkey, kfmsg->playerid(), pbrankdata->rankscore() );
         }
 
         _rank_redis_driver->WriteExec();

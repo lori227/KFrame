@@ -35,10 +35,10 @@ void Parse( int argc, char* argv[] )
     }
 
     std::string excelfile = argv[ 1 ];
-    uint32 saveflag = atoi( argv[ 2 ] );
+    uint32 save_flag = atoi( argv[ 2 ] );
     std::cout << "Start Parse Excel File = " << excelfile << "" << std::endl;
 
-    bool load = _kf_parse->LoadFromExcel( excelfile.c_str(), true, saveflag );
+    bool load = _kf_parse->LoadFromExcel( excelfile.c_str(), true, save_flag );
     if ( !load )
     {
         std::cout << "Load File = " << excelfile << " Failed" << std::endl;

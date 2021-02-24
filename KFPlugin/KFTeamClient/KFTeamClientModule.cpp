@@ -366,7 +366,7 @@ namespace KFrame
             return _kf_display->SendToClient( kfentity, KFMsg::TeamIsFull );
         }
 
-        SendTeamInviteToTarget( kfentity, kfteam, kfmsg->server_id(), kfmsg->player_id() );
+        SendTeamInviteToTarget( kfentity, kfteam, kfmsg->server_id(), kfmsg->playerid() );
     }
 
     void KFTeamClientModule::SendTeamInviteToTarget( EntityPtr player, DataPtr kfteam, uint64 server_id, uint64 player_id )
@@ -416,7 +416,7 @@ namespace KFrame
 
         KFMsg::S2STeamTellApplyToGameAck tell;
         tell.mutable_pbplayer()->CopyFrom( *pbbasic );
-        auto ok = _kf_route->SendToEntity( kfentity->GetKeyID(), kfmsg->server_id(), kfmsg->player_id(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
+        auto ok = _kf_route->SendToEntity( kfentity->GetKeyID(), kfmsg->server_id(), kfmsg->playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
         if ( !ok )
         {
             _kf_display->SendToClient( kfentity, KFMsg::RouteServerBusy );

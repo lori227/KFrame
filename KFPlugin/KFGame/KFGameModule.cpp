@@ -74,11 +74,11 @@ namespace KFrame
         __LOG_INFO__( "shutdown save player data finish=[{}]", param );
     }
 
-    void KFGameModule::SavePlayer( EntityPtr player, uint32 saveflag )
+    void KFGameModule::SavePlayer( EntityPtr player, uint32 save_flag )
     {
         // 保存数据库
-        auto pbplayerdata = _kf_kernel->SerializeToData( player );
-        _kf_data_client->SavePlayerData( player->GetKeyID(), pbplayerdata, saveflag );
+        auto player_data = _kf_kernel->SerializeToData( player );
+        _kf_data_client->SavePlayerData( player->GetKeyID(), player_data, save_flag );
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -308,30 +308,30 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginToGameReq, KFMsg::S2SLoginToGameReq )
     {
         auto pblogin = &kfmsg->pblogin();
-        __LOG_DEBUG__( "player[{}:{}:{}] login game req", pblogin->account(), pblogin->account_id(), pblogin->player_id() );
+        __LOG_DEBUG__( "player[{}:{}:{}] login game req", pblogin->account(), pblogin->account_id(), pblogin->playerid() );
 
         // 踢掉在线玩家
-        KickPlayer( pblogin->player_id(), KFMsg::KickEnum::KickByLogin, __FUNC_LINE__ );
+        KickPlayer( pblogin->playerid(), KFMsg::KickEnum::KickByLogin, __FUNC_LINE__ );
 
         // 加载玩家数据
         auto ok = _kf_data_client->LoadPlayerData( pblogin );
         if ( ok )
         {
-            __LOG_DEBUG__( "player[{}:{}:{}] login game ok", pblogin->account(), pblogin->account_id(), pblogin->player_id() );
+            __LOG_DEBUG__( "player[{}:{}:{}] login game ok", pblogin->account(), pblogin->account_id(), pblogin->playerid() );
         }
         else
         {
-            __LOG_ERROR__( "player[{}:{}:{}] login game failed", pblogin->account(), pblogin->account_id(), pblogin->player_id() );
+            __LOG_ERROR__( "player[{}:{}:{}] login game failed", pblogin->account(), pblogin->account_id(), pblogin->playerid() );
         }
     }
 
-    void KFGameModule::OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
+    void KFGameModule::OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* player_data )
     {
-        __LOG_DEBUG__( "player[{}:{}:{}] load data[{}] ack", pblogin->account(), pblogin->account_id(), pblogin->player_id(), result );
+        __LOG_DEBUG__( "player[{}:{}:{}] load data[{}] ack", pblogin->account(), pblogin->account_id(), pblogin->playerid(), result );
 
         if ( result == KFMsg::Ok )
         {
-            auto player = _kf_player->Login( pblogin, pbplayerdata );
+            auto player = _kf_player->Login( pblogin, player_data );
             if ( player != nullptr )
             {
                 if ( !pblogin->loginbycrash() )
@@ -354,7 +354,7 @@ namespace KFrame
                     auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
                     if ( !ok )
                     {
-                        __LOG_ERROR__( "player[{}:{}] send failed", pblogin->account_id(), pblogin->player_id() );
+                        __LOG_ERROR__( "player[{}:{}] send failed", pblogin->account_id(), pblogin->playerid() );
                     }
                 }
             }
@@ -378,13 +378,13 @@ namespace KFrame
         auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}] load [{}] failed", pblogin->account_id(), pblogin->player_id(), result );
+            __LOG_ERROR__( "player[{}:{}] load [{}] failed", pblogin->account_id(), pblogin->playerid(), result );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleReLoginToGameReq, KFMsg::S2SReLoginToGameReq )
     {
-        auto player = _kf_player->ReLogin( kfmsg->player_id(), __ROUTE_RECV_ID__ );
+        auto player = _kf_player->ReLogin( kfmsg->playerid(), __ROUTE_RECV_ID__ );
         if ( player != nullptr )
         {
             KFMsg::S2SEnterToGateAck ack;
@@ -392,7 +392,7 @@ namespace KFrame
 
             auto pblogin = ack.mutable_pblogin();
             pblogin->set_token( kfmsg->token() );
-            pblogin->set_playerid( kfmsg->player_id() );
+            pblogin->set_playerid( kfmsg->playerid() );
             pblogin->set_sessionid( kfmsg->sessionid() );
             pblogin->set_accountid( kfmsg->account_id() );
 
@@ -401,20 +401,20 @@ namespace KFrame
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
             if ( !ok )
             {
-                __LOG_ERROR__( "player[{}:{}] relogin failed", kfmsg->account_id(), kfmsg->player_id() );
+                __LOG_ERROR__( "player[{}:{}] relogin failed", kfmsg->account_id(), kfmsg->playerid() );
             }
         }
         else
         {
             KFMsg::S2SReLoginToGateAck ack;
             ack.set_token( kfmsg->token() );
-            ack.set_playerid( kfmsg->player_id() );
+            ack.set_playerid( kfmsg->playerid() );
             ack.set_sessionid( kfmsg->sessionid() );
             ack.set_accountid( kfmsg->account_id() );
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_RELOGIN_TO_GATE_ACK, &ack );
             if ( !ok )
             {
-                __LOG_ERROR__( "player[{}:{}] ack failed", kfmsg->account_id(), kfmsg->player_id() );
+                __LOG_ERROR__( "player[{}:{}] ack failed", kfmsg->account_id(), kfmsg->playerid() );
             }
         }
     }
@@ -424,7 +424,7 @@ namespace KFrame
         for ( auto i = 0; i < kfmsg->pblogin_size(); ++i )
         {
             auto pblogin = &kfmsg->pblogin( i );
-            auto player = _kf_player->FindPlayer( pblogin->player_id() );
+            auto player = _kf_player->FindPlayer( pblogin->playerid() );
             if ( player == nullptr )
             {
                 _kf_data_client->LoadPlayerData( pblogin );
@@ -435,32 +435,32 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleDisconnectToGameReq, KFMsg::S2SDisconnectToGameReq )
     {
         __FIND_PLAYER_BY_ID__;
-        __LOG_INFO__( "player=[{}] disconnect", kfmsg->player_id() );
+        __LOG_INFO__( "player=[{}] disconnect", kfmsg->playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLeaveToGameReq, KFMsg::S2SLeaveToGameReq )
     {
-        __LOG_DEBUG__( "player[{}] lost", kfmsg->player_id() );
+        __LOG_DEBUG__( "player[{}] lost", kfmsg->playerid() );
 
-        _kf_player->RemovePlayer( kfmsg->player_id() );
-        _kf_data_client->RemoveLoadData( kfmsg->player_id() );
+        _kf_player->RemovePlayer( kfmsg->playerid() );
+        _kf_data_client->RemoveLoadData( kfmsg->playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLogoutToGameReq, KFMsg::S2SLogoutToGameReq )
     {
         __FIND_PLAYER_BY_ID__;
-        __LOG_DEBUG__( "player[{}] logout", kfmsg->player_id() );
+        __LOG_DEBUG__( "player[{}] logout", kfmsg->playerid() );
 
         // 设置不在线, 后续不发送消息
         player->Set( __STRING__( gateid ), _invalid_int );
 
         // 删除玩家
-        _kf_player->RemovePlayer( kfmsg->player_id() );
+        _kf_player->RemovePlayer( kfmsg->playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleKickPlayerToGameReq, KFMsg::S2SKickPlayerToGameReq )
     {
-        KickPlayer( kfmsg->player_id(), kfmsg->type(), __FUNC_LINE__ );
+        KickPlayer( kfmsg->playerid(), kfmsg->type(), __FUNC_LINE__ );
     }
 
     bool KFGameModule::KickPlayer( uint64 player_id, uint32 type, const char* function, uint32 line )
@@ -488,20 +488,20 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleQueryPlayerReq, KFMsg::MsgQueryPlayerReq )
     {
         // 不能查询自己的数据，客户端本地可以获取到
-        if ( kfentity->GetKeyID() == kfmsg->player_id() )
+        if ( kfentity->GetKeyID() == kfmsg->playerid() )
         {
             return;
         }
 
         //查询玩家数据
-        auto ok = _kf_data_client->QueryPlayerData( kfentity->GetKeyID(), kfmsg->player_id() );
+        auto ok = _kf_data_client->QueryPlayerData( kfentity->GetKeyID(), kfmsg->playerid() );
         if ( !ok )
         {
             _kf_display->SendToClient( kfentity, KFMsg::DataServerBusy );
         }
     }
 
-    void KFGameModule::OnAfterQueryPlayerData( uint32 result, uint64 player_id, const KFMsg::PBObject* pbplayerdata )
+    void KFGameModule::OnAfterQueryPlayerData( uint32 result, uint64 player_id, const KFMsg::PBObject* player_data )
     {
         auto player = _kf_player->FindPlayer( player_id );
         if ( player == nullptr )
@@ -517,7 +517,7 @@ namespace KFrame
 
 
         KFMsg::MsgQueryPlayerAck ack;
-        ack.mutable_player()->CopyFrom( *pbplayerdata );
+        ack.mutable_player()->CopyFrom( *player_data );
         _kf_player->SendToClient( player, KFMsg::MSG_QUERY_PLAYER_ACK, &ack );
     }
 

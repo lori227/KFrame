@@ -64,14 +64,14 @@ namespace KFrame
         }
 
         RelationListType relationlist;
-        _kf_relation_database->QueryRelationList( setting->_data_list_name, setting->_id, kfmsg->player_id(), relationlist );
+        _kf_relation_database->QueryRelationList( setting->_data_list_name, setting->_id, kfmsg->playerid(), relationlist );
         if ( relationlist.empty() )
         {
             return;
         }
 
         KFMsg::S2SQueryRelationToGameAck ack;
-        ack.set_playerid( kfmsg->player_id() );
+        ack.set_playerid( kfmsg->playerid() );
         ack.set_relationname( kfmsg->relationname() );
         for ( auto& iter : relationlist )
         {
@@ -99,14 +99,14 @@ namespace KFrame
         }
 
         RelationListType invitelist;
-        _kf_relation_database->QueryInviteList( setting->_invite_list_name, setting->_invite_data_name, kfmsg->player_id(), invitelist );
+        _kf_relation_database->QueryInviteList( setting->_invite_list_name, setting->_invite_data_name, kfmsg->playerid(), invitelist );
         if ( invitelist.empty() )
         {
             return;
         }
 
         KFMsg::S2SQueryRelationInviteToGameAck ack;
-        ack.set_playerid( kfmsg->player_id() );
+        ack.set_playerid( kfmsg->playerid() );
         ack.set_relationname( setting->_invite_data_name );
         for ( auto& iter : invitelist )
         {
@@ -133,38 +133,38 @@ namespace KFrame
             return __LOG_ERROR__( "relation=[{}] no setting", kfmsg->relationname() );
         }
 
-        auto name = _kf_basic_database->QueryBasicStrValue( kfmsg->player_id(), __STRING__( name ) );
+        auto name = _kf_basic_database->QueryBasicStrValue( kfmsg->playerid(), __STRING__( name ) );
         if ( name.empty() )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RoleNotExist, kfmsg->playername() );
         }
 
         // 是否已经设置拒绝
-        auto refuseinvite = _kf_relation_database->IsRefuse( setting->_refuse_name, kfmsg->player_id() );
+        auto refuseinvite = _kf_relation_database->IsRefuse( setting->_refuse_name, kfmsg->playerid() );
         if ( refuseinvite )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationRefuseInvite, kfmsg->playername() );
         }
 
         // 查找对方申请列表是否有自己
-        bool isrelationexist = _kf_relation_database->RelationExist( setting->_invite_list_name, kfmsg->player_id(), selfid );
+        bool isrelationexist = _kf_relation_database->RelationExist( setting->_invite_list_name, kfmsg->playerid(), selfid );
         if ( isrelationexist )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationInviteAlready, kfmsg->playername() );
         }
 
         // 查找对方申请列表数量
-        auto invitecount = _kf_relation_database->RelationCount( setting->_invite_list_name, kfmsg->player_id() );
+        auto invitecount = _kf_relation_database->RelationCount( setting->_invite_list_name, kfmsg->playerid() );
         if ( invitecount >= setting->_invite_list_count )
         {
             return _kf_display->SendToPlayer( route, KFMsg::RelationInviteLimit, kfmsg->playername() );
         }
 
-        _kf_relation_database->AddInvite( setting->_invite_list_name, setting->_invite_data_name, kfmsg->player_id(), selfid, kfmsg->message(), setting->_invite_keep_time );
+        _kf_relation_database->AddInvite( setting->_invite_list_name, setting->_invite_data_name, kfmsg->playerid(), selfid, kfmsg->message(), setting->_invite_keep_time );
         _kf_display->SendToPlayer( route, KFMsg::RelationInviteOk, kfmsg->playername() );
 
         // 判断对方是否在线, 如果在线直接发送消息
-        auto server_id = _kf_basic_database->QueryBasicServerId( kfmsg->player_id() );
+        auto server_id = _kf_basic_database->QueryBasicServerId( kfmsg->playerid() );
         if ( server_id == _invalid_int )
         {
             return;
@@ -182,10 +182,10 @@ namespace KFrame
         invitedata[ __STRING__( time ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
 
         KFMsg::S2SApplyAddRelationToGameAck ack;
-        ack.set_playerid( kfmsg->player_id() );
+        ack.set_playerid( kfmsg->playerid() );
         ack.set_relationname( setting->_invite_data_name );
         MapStringToPBRelation( selfid, ack.mutable_pbinvite(), selfbasicdata, invitedata );
-        _kf_route->RepeatToEntity( selfid, server_id, kfmsg->player_id(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack );
+        _kf_route->RepeatToEntity( selfid, server_id, kfmsg->playerid(), KFMsg::S2S_APPLY_ADD_RELATION_TO_GAME_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleDelRelationInviteToRelationReq, KFMsg::S2SDelRelationInviteToRelationReq )
@@ -218,7 +218,7 @@ namespace KFrame
         // 判断对方关系的数量
         if ( setting->_both_way )
         {
-            auto targetcount = _kf_relation_database->RelationCount( setting->_data_list_name, kfmsg->player_id() );
+            auto targetcount = _kf_relation_database->RelationCount( setting->_data_list_name, kfmsg->playerid() );
             if ( targetcount >= setting->_max_count )
             {
                 return _kf_display->SendToPlayer( route, KFMsg::RelationTargetLimit, kfmsg->playername() );
@@ -226,10 +226,10 @@ namespace KFrame
         }
 
         // 添加关系
-        AddRelation( selfid, kfmsg->player_id(), setting );
+        AddRelation( selfid, kfmsg->playerid(), setting );
         if ( setting->_both_way )
         {
-            AddRelation( kfmsg->player_id(), selfid, setting );
+            AddRelation( kfmsg->playerid(), selfid, setting );
         }
     }
 
@@ -276,10 +276,10 @@ namespace KFrame
         }
 
         // 删除关系
-        DelRelation( selfid, kfmsg->player_id(), setting );
+        DelRelation( selfid, kfmsg->playerid(), setting );
         if ( setting->_both_way )
         {
-            DelRelation( kfmsg->player_id(), selfid, setting );
+            DelRelation( kfmsg->playerid(), selfid, setting );
         }
     }
 
@@ -302,7 +302,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleRefuseRelationToRelationReq, KFMsg::S2SRefuseRelationToRelationReq )
     {
-        _kf_relation_database->SetRefuse( kfmsg->refusename(), kfmsg->player_id(), kfmsg->refusevalue() );
+        _kf_relation_database->SetRefuse( kfmsg->refusename(), kfmsg->playerid(), kfmsg->refusevalue() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationShardModule::HandleUpdateFriendLinessToRelationReq, KFMsg::S2SUpdateFriendLinessToRelationReq )
@@ -371,7 +371,7 @@ namespace KFrame
     //    static auto _recent_keep_time = _kf_option->FindOption( __STRING__( recentkeeptime ) );
     //    static auto _recent_max_count = _kf_option->FindOption( __STRING__( recentmaxcount ) );
 
-    //    auto strbattlerecored = __FORMAT__( "{}:{}:{}", __STRING__( battlerecored ), kfmsg->player_id(), kfmsg->roomid() );
+    //    auto strbattlerecored = __FORMAT__( "{}:{}:{}", __STRING__( battlerecored ), kfmsg->playerid(), kfmsg->roomid() );
 
     //    // 先保存战斗数据, 设置有效时间默认7天
     //    auto& strdata = KFProto::Serialize( &kfmsg->pbdata(), KFCompressEnum::Convert );
@@ -383,7 +383,7 @@ namespace KFrame
     //    for ( auto i = 0; i < kfmsg->members_size(); ++i )
     //    {
     //        auto strrecentplayer = __FORMAT__( "{}:{}", __STRING__( recentplayer ), kfmsg->members( i ) );
-    //        _relation_redis_driver->Execute( "zadd {} {} {}", strrecentplayer, kfmsg->roomid(), kfmsg->player_id() );
+    //        _relation_redis_driver->Execute( "zadd {} {} {}", strrecentplayer, kfmsg->roomid(), kfmsg->playerid() );
 
     //        // 判断数量, 超过限制数量, 删除最久远的记录
     //        // 战场id是按时间生成的, 所以最新的都是最大的
@@ -400,10 +400,10 @@ namespace KFrame
     //    __PROTO_PARSE__( KFMsg::S2SQueryRecentListReq );
 
     //    KFMsg::S2SQueryRecentListAck ack;
-    //    ack.set_playerid( kfmsg->player_id() );
+    //    ack.set_playerid( kfmsg->playerid() );
 
     //    // 查询列表
-    //    auto queryrecentlist = _relation_redis_driver->QueryMap( "zrange {}:{} 0 -1 withscores", __STRING__( recentplayer ), kfmsg->player_id() );
+    //    auto queryrecentlist = _relation_redis_driver->QueryMap( "zrange {}:{} 0 -1 withscores", __STRING__( recentplayer ), kfmsg->playerid() );
     //    for ( auto& iter : queryrecentlist->_value )
     //    {
     //        // 查询记录
@@ -419,7 +419,7 @@ namespace KFrame
     //        // 找不到了 删除列表
     //        if ( querydata->_value.empty() )
     //        {
-    //            _relation_redis_driver->Execute( "zrem {}:{} {}", __STRING__( recentplayer ), kfmsg->player_id(), player_id );
+    //            _relation_redis_driver->Execute( "zrem {}:{} {}", __STRING__( recentplayer ), kfmsg->playerid(), player_id );
     //            continue;
     //        }
 

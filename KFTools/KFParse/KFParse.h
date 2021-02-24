@@ -11,7 +11,7 @@ namespace KFrame
     class KFParse : public KFSingleton< KFParse >
     {
     public:
-        bool LoadFromExcel( const char* file, bool utf8, uint32 saveflag );
+        bool LoadFromExcel( const char* file, bool utf8, uint32 save_flag );
         bool SaveToHpp( const char* file );
         bool SaveToCpp( const char* file );
 
@@ -26,7 +26,7 @@ namespace KFrame
         std::string changeString( std::string& oldstring );
 
     private:
-        bool LoadFromExcel( KFExcelSheet* sheet, uint32 saveflag );
+        bool LoadFromExcel( KFExcelSheet* sheet, uint32 save_flag );
 
         KFFile* AddFile( std::string& name );
 

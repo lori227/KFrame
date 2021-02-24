@@ -301,16 +301,16 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    EntityPtr KFPlayerModule::Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
+    EntityPtr KFPlayerModule::Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* player_data )
     {
-        auto player = _kf_component->CreateEntity( pblogin->player_id(), pbplayerdata );
+        auto player = _kf_component->CreateEntity( pblogin->playerid(), player_data );
         if ( player == nullptr )
         {
             return nullptr;
         }
 
         // 创建玩家
-        OnEnterCreatePlayer( player, pblogin->player_id() );
+        OnEnterCreatePlayer( player, pblogin->playerid() );
 
         // 玩家账号信息
         player->Set( __STRING__( ip ), pblogin->ip() );

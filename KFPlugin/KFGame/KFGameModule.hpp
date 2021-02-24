@@ -115,10 +115,10 @@ namespace KFrame
         __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveGame );
 
         // 加载玩家数据
-        void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
+        void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* player_data );
 
         // 保存玩家
-        void SavePlayer( EntityPtr player, uint32 saveflag );
+        void SavePlayer( EntityPtr player, uint32 save_flag );
 
         // 查询玩家数据
         void OnAfterQueryPlayerData( uint32 result, uint64 player_id, const KFMsg::PBObject* playerdata );

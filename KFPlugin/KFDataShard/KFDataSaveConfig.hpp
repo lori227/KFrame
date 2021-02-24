@@ -29,7 +29,7 @@ namespace KFrame
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    class KFDataSaveConfig : public KFConfigT<KFDataSaveSetting>, public KFInstance< KFDataSaveConfig >
+    class KFDataSaveConfig : public KFConfigT<KFDataSaveSetting>, public KFInstance<KFDataSaveConfig>
     {
     public:
         KFDataSaveConfig()
@@ -39,11 +39,11 @@ namespace KFrame
         }
 
     public:
-        virtual void ReadSetting( KFXmlNode& xml_node, KFDataSaveSetting* setting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFDataSaveSetting> setting )
         {
             setting->_is_open = xml_node.ReadUInt32( "open" );
             setting->_sort = xml_node.ReadUInt32( "sort" );
-            setting->_save_flag = xml_node.ReadUInt32( "saveflag" );
+            setting->_save_flag = xml_node.ReadUInt32( "save_flag" );
             setting->_cache_time = xml_node.ReadUInt32( "cachetime" );
             setting->_compress_type = xml_node.ReadUInt32( "compresstype" );
             setting->_compress_level = xml_node.ReadUInt32( "compresslevel" );

@@ -10,7 +10,7 @@ namespace KFrame
         return &_files[ name ];
     }
 
-    bool KFParse::LoadFromExcel( const char* file, bool utf8, uint32 saveflag )
+    bool KFParse::LoadFromExcel( const char* file, bool utf8, uint32 save_flag )
     {
         _utf8 = utf8;
         _files.clear();
@@ -24,7 +24,7 @@ namespace KFrame
 
         for ( auto sheet : excelfile._sheets )
         {
-            auto ok = LoadFromExcel( sheet, saveflag );
+            auto ok = LoadFromExcel( sheet, save_flag );
             if ( !ok )
             {
                 return false;
@@ -34,7 +34,7 @@ namespace KFrame
         return true;
     }
 
-    bool KFParse::LoadFromExcel( KFExcelSheet* sheet, uint32 saveflag )
+    bool KFParse::LoadFromExcel( KFExcelSheet* sheet, uint32 save_flag )
     {
         // 第1行 第2列为文件名
         auto kfname = sheet->FindCell( 1, 2 );
@@ -77,7 +77,7 @@ namespace KFrame
             attribute._type = KFUtility::SplitString( strname, ")" );
             std::transform( attribute._type.begin(), attribute._type.end(), attribute._type.begin(), ::tolower );
 
-            // saveflag
+            // save_flag
             auto kfsave = sheet->FindCell( _begin_row - 1, i );
             if ( kfsave != nullptr && !kfsave->_value.empty() )
             {
@@ -100,7 +100,7 @@ namespace KFrame
             for ( auto j = _begin_col; j <= sheet->_dimension._last_col; ++j )
             {
                 auto attribute = kffile->_class.GetAttribute( j );
-                if ( attribute == nullptr || !KFUtility::HaveBitMask( attribute->_flag, saveflag ) )
+                if ( attribute == nullptr || !KFUtility::HaveBitMask( attribute->_flag, save_flag ) )
                 {
                     continue;
                 }

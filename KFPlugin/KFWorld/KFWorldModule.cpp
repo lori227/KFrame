@@ -106,13 +106,13 @@ namespace KFrame
     {
         auto loginid = __ROUTE_SERVER_ID__;
         auto pblogin = &kfmsg->pblogin();
-        __LOG_DEBUG__( "player[{}:{}:{}] login world req", pblogin->account(), pblogin->account_id(), pblogin->player_id() );
+        __LOG_DEBUG__( "player[{}:{}:{}] login world req", pblogin->account(), pblogin->account_id(), pblogin->playerid() );
 
         // 踢掉已经在线的玩家
-        KickOnlineToGame( KFMsg::KickByLogin, pblogin->player_id(), _invalid_int, __FUNC_LINE__ );
+        KickOnlineToGame( KFMsg::KickByLogin, pblogin->playerid(), _invalid_int, __FUNC_LINE__ );
 
         // 选择Game服务器
-        auto gameid = FindLoginGame( pblogin->gateid(), pblogin->player_id() );
+        auto gameid = FindLoginGame( pblogin->gateid(), pblogin->playerid() );
         if ( gameid == _invalid_int )
         {
             return SendLoginAckToLogin( KFMsg::LoginNoGameServer, loginid, pblogin->gateid(), pblogin->account_id(), pblogin->sessionid() );
@@ -124,7 +124,7 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_LOGIN_TO_GAME_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}] login game failed", pblogin->account_id(), pblogin->player_id() );
+            __LOG_ERROR__( "player[{}:{}] login game failed", pblogin->account_id(), pblogin->playerid() );
             SendLoginAckToLogin( KFMsg::LoginGameServerBusy, loginid, pblogin->gateid(), pblogin->account_id(), pblogin->sessionid() );
         }
     }
@@ -145,12 +145,12 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerEnterToWorldReq, KFMsg::S2SPlayerEnterToWorldReq )
     {
-        UpdatePlayerOnline( kfmsg->account_id(), kfmsg->player_id(), KFGlobal::Instance()->_app_id->GetId(), __ROUTE_SERVER_ID__ );
+        UpdatePlayerOnline( kfmsg->account_id(), kfmsg->playerid(), KFGlobal::Instance()->_app_id->GetId(), __ROUTE_SERVER_ID__ );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerLeaveToWorldReq, KFMsg::S2SPlayerLeaveToWorldReq )
     {
-        UpdatePlayerOnline( kfmsg->account_id(), kfmsg->player_id(), _invalid_int, _invalid_int );
+        UpdatePlayerOnline( kfmsg->account_id(), kfmsg->playerid(), _invalid_int, _invalid_int );
     }
 
     void KFWorldModule::UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 worldid, uint64 gameid )

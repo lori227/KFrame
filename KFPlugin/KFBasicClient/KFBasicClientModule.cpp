@@ -161,11 +161,11 @@ namespace KFrame
                 kfdata->Set< std::string >( iter->second );
             }
         }
-        auto pbplayerdata = _kf_kernel->SerializeToView( kfbasic );
+        auto player_data = _kf_kernel->SerializeToView( kfbasic );
 
         // 发送给客户端
         KFMsg::MsgQueryBasicAck ack;
-        ack.mutable_player()->CopyFrom( *pbplayerdata );
+        ack.mutable_player()->CopyFrom( *player_data );
         _kf_player->SendToClient( kfentity, KFMsg::MSG_QUERY_BASIC_ACK, &ack );
     }
 
