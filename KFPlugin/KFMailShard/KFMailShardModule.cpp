@@ -71,10 +71,10 @@ namespace KFrame
             auto strplayerid = __JSON_GET_STRING__( request, __STRING__( playerid ) );
             while ( !strplayerid.empty() )
             {
-                auto playerid = KFUtility::SplitValue( strplayerid, "," );
-                if ( playerid != _invalid_int )
+                auto player_id = KFUtility::SplitValue( strplayerid, "," );
+                if ( player_id != _invalid_int )
                 {
-                    playerlist.insert( playerid );
+                    playerlist.insert( player_id );
                 }
             }
             __JSON_REMOVE__( request, __STRING__( playerid ) );
@@ -82,9 +82,9 @@ namespace KFrame
 
         // 小区列表
         UInt64Set zonelist;
-        if ( __JSON_HAS_MEMBER__( request, __STRING__( zone_id ) ) )
+        if ( __JSON_HAS_MEMBER__( request, __STRING__( zoneid ) ) )
         {
-            auto strzoneid = __JSON_GET_STRING__( request, __STRING__( zone_id ) );
+            auto strzoneid = __JSON_GET_STRING__( request, __STRING__( zoneid ) );
             while ( !strzoneid.empty() )
             {
                 auto zone_id = KFUtility::SplitValue( strzoneid, "," );
@@ -93,7 +93,7 @@ namespace KFrame
                     zonelist.insert( zone_id );
                 }
             }
-            __JSON_REMOVE__( request, __STRING__( zone_id ) );
+            __JSON_REMOVE__( request, __STRING__( zoneid ) );
         }
 
         // 邮件内容
@@ -109,9 +109,9 @@ namespace KFrame
         }
         else
         {
-            for ( auto playerid : playerlist )
+            for ( auto player_id : playerlist )
             {
-                AddMail( KFMsg::PersonMail, playerid, values );
+                AddMail( KFMsg::PersonMail, player_id, values );
             }
         }
 
@@ -145,20 +145,20 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleQueryMailReq, KFMsg::S2SQueryMailReq )
     {
         // 全局邮件信息
-        _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), _invalid_int );
+        _mail_database_logic->LoadGlobalMailToPerson( kfmsg->player_id(), _invalid_int );
 
         // 小区邮件
-        _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), kfmsg->zone_id() );
+        _mail_database_logic->LoadGlobalMailToPerson( kfmsg->player_id(), kfmsg->zone_id() );
 
         // 查询邮件列表
-        auto kfmailist = _mail_database_logic->QueryMailList( kfmsg->playerid(), kfmsg->maxid() );
+        auto kfmailist = _mail_database_logic->QueryMailList( kfmsg->player_id(), kfmsg->maxid() );
         if ( kfmailist == nullptr || kfmailist->_value.empty() )
         {
             return;
         }
 
         KFMsg::S2SQueryMailAck ack;
-        ack.set_playerid( kfmsg->playerid() );
+        ack.set_playerid( kfmsg->player_id() );
         for ( auto& maildata : kfmailist->_value )
         {
             auto& pbmail = *( ack.add_mail()->mutable_data() );
@@ -214,14 +214,14 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleUpdateMailStatusReq, KFMsg::S2SUpdateMailStatusReq )
     {
-        auto ok = _mail_database_logic->UpdateMailStatus( kfmsg->flag(), kfmsg->playerid(), kfmsg->id(), kfmsg->status() );
+        auto ok = _mail_database_logic->UpdateMailStatus( kfmsg->flag(), kfmsg->player_id(), kfmsg->id(), kfmsg->status() );
         if ( !ok )
         {
             return;
         }
 
         KFMsg::S2SUpdateMailStatusAck ack;
-        ack.set_playerid( kfmsg->playerid() );
+        ack.set_playerid( kfmsg->player_id() );
         ack.set_id( kfmsg->id() );
         ack.set_status( kfmsg->status() );
         _kf_route->SendToRoute( route, KFMsg::S2S_UPDATE_MAIL_STATUS_ACK, &ack );
@@ -230,6 +230,6 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleNewPlayerMailReq, KFMsg::S2SNewPlayerMailReq )
     {
         // 设置最大的gm邮件id
-        _mail_database_logic->InitNewPlayerMail( kfmsg->playerid(), kfmsg->zone_id() );
+        _mail_database_logic->InitNewPlayerMail( kfmsg->player_id(), kfmsg->zone_id() );
     }
 }

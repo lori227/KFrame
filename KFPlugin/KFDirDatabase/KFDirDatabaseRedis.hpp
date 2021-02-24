@@ -17,7 +17,7 @@ namespace KFrame
         virtual bool ZoneRegister( uint32 zone_id, KFJson& zonedata );
 
         // 更新小区gate在线人数
-        virtual bool ZoneUpdate( uint64 appid, uint32 zone_id, uint32 count, const std::string& ip, uint32 port, uint32 expiretime );
+        virtual bool ZoneUpdate( uint64 appid, uint32 zone_id, uint32 count, const std::string& ip, uint32 port, uint32 expire_time );
 
         // 查询小区列表
         virtual StringMapList QueryZoneList( const std::string& flag );
@@ -47,7 +47,7 @@ namespace KFrame
         virtual std::string GetWorldUrl( uint64 worldid );
 
         // 更新masterip
-        virtual bool UpdateMasterIp( const std::string& appname, uint64 appid, uint32 zone_id, const std::string& ip, uint32 port, uint32 expiretime );
+        virtual bool UpdateMasterIp( const std::string& appname, uint64 appid, uint32 zone_id, const std::string& ip, uint32 port, uint32 expire_time );
 
         // 查询masterip
         virtual StringMap QueryMasterIp( const std::string& appname, uint32 zone_id );

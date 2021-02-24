@@ -85,7 +85,7 @@ namespace KFrame
         uint64 GetMaxMailId( EntityPtr player );
 
         // 发送消息到邮件
-        bool SendMessageToMail( uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message );
+        bool SendMessageToMail( uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送查询邮件消息
         void SendQueryMailMessage( EntityPtr player );

@@ -80,16 +80,16 @@ namespace KFrame
         }
 
         // 查询创建账号
-        auto accountdata = _kf_account->QueryCreateAccount( account, channel );
-        auto accountid = __TO_UINT64__( accountdata[ __STRING__( accountid ) ] );
-        if ( accountid == 0 )
+        auto account_data = _kf_account->QueryCreateAccount( account, channel );
+        auto account_id = __TO_UINT64__( account_data[ __STRING__( accountid ) ] );
+        if ( account_id == 0 )
         {
             return _kf_http_server->SendCode( KFMsg::AuthServerBusy );
         }
 
         // 验证账号黑名单
         {
-            auto time = _kf_account->CheckAccountInBlackList( accountid );
+            auto time = _kf_account->CheckAccountInBlackList( account_id );
             if ( time > KFGlobal::Instance()->_real_time )
             {
                 __JSON_OBJECT_DOCUMENT__( response );
@@ -99,28 +99,28 @@ namespace KFrame
         }
 
         // 踢掉在线玩家
-        KickAccount( KFMsg::KickByLogin, accountid, accountdata );
+        KickAccount( KFMsg::KickByLogin, account_id, account_data );
 
         // 保存渠道的数据
-        _kf_account->SaveChannelData( accountid, authjson );
+        _kf_account->SaveChannelData( account_id, authjson );
 
         // 保存token
-        auto token = _kf_account->MakeAccountToken( account, channel, accountid );
+        auto token = _kf_account->MakeAccountToken( account, channel, account_id );
 
         // 查询小区信息, 返回给客户端
         auto zoneflag = __JSON_GET_STRING__( request, __STRING__( flag ) );
-        auto zone_id = __TO_UINT32__( accountdata[ __STRING__( zone_id ) ] );
+        auto zone_id = __TO_UINT32__( account_data[ __STRING__( zoneid ) ] );
         auto zonedata = _kf_dir_database->AllocPlayerZone( zoneflag, zone_id );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( token ), token );
-        __JSON_SET_VALUE__( response, __STRING__( accountid ), accountid );
+        __JSON_SET_VALUE__( response, __STRING__( accountid ), account_id );
 
         __JSON_OBJECT__( kfzone );
         __JSON_SET_VALUE__( kfzone, __STRING__( name ), zonedata[ __STRING__( name ) ] );
         __JSON_SET_VALUE__( kfzone, __STRING__( ip ), zonedata[ __STRING__( ip ) ] );
         __JSON_SET_VALUE__( kfzone, __STRING__( port ), __TO_UINT32__( zonedata[ __STRING__( port ) ] ) );
-        __JSON_SET_VALUE__( kfzone, __STRING__( zone_id ), __TO_UINT32__( zonedata[ __STRING__( zone_id ) ] ) );
+        __JSON_SET_VALUE__( kfzone, __STRING__( zoneid ), __TO_UINT32__( zonedata[ __STRING__( zoneid ) ] ) );
         __JSON_SET_VALUE__( response, __STRING__( zone ), kfzone );
         return _kf_http_server->SendResponse( response );
     }
@@ -131,8 +131,8 @@ namespace KFrame
 
         auto loginip = __JSON_GET_STRING__( request, __STRING__( ip ) );
         auto token = __JSON_GET_STRING__( request, __STRING__( token ) );
-        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zone_id ) );
-        auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
+        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
+        auto account_id = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
 
         // 查询小区服务器状态
         auto status = _kf_dir_database->QueryZoneStatus( zone_id );
@@ -144,7 +144,7 @@ namespace KFrame
         // 验证账号,ip白名单
         if ( status == KFMsg::ServerTestStatus )
         {
-            if ( !_kf_account->CheckAccountInWhiteList( accountid ) )
+            if ( !_kf_account->CheckAccountInWhiteList( account_id ) )
             {
                 if ( !_kf_account->CheckIpInWhiteList( loginip ) )
                 {
@@ -154,17 +154,17 @@ namespace KFrame
         }
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
-        auto accountdata = _kf_account->VerifyAccountToken( accountid, token );
-        if ( accountdata.empty() )
+        auto account_data = _kf_account->VerifyAccountToken( account_id, token );
+        if ( account_data.empty() )
         {
             return _kf_http_server->SendCode( KFMsg::LoginTokenError );
         }
 
         // 查询玩家角色
         auto datazoneid = __JSON_GET_UINT32__( request, __STRING__( datazoneid ) );
-        auto playerdata = _kf_account->QueryCreatePlayer( accountid, datazoneid );
-        auto playerid = std::get<0>( playerdata );
-        if ( playerid == _invalid_int )
+        auto playerdata = _kf_account->QueryCreatePlayer( account_id, datazoneid );
+        auto player_id = std::get<0>( playerdata );
+        if ( player_id == _invalid_int )
         {
             return _kf_http_server->SendCode( KFMsg::LoginCreatePlayerError );
         }
@@ -177,11 +177,11 @@ namespace KFrame
         }
 
         // 保存登录ip
-        _kf_account->SaveLoginData( accountid, loginip, zone_id );
+        _kf_account->SaveLoginData( account_id, loginip, zone_id );
 
         // 获得账号和渠道 小区信息
-        auto account = accountdata[ __STRING__( account ) ];
-        auto channel = __TO_UINT32__( accountdata[ __STRING__( channel ) ] );
+        auto account = account_data[ __STRING__( account ) ];
+        auto channel = __TO_UINT32__( account_data[ __STRING__( channel ) ] );
 
         // 返回结果
         __JSON_OBJECT_DOCUMENT__( response );
@@ -189,16 +189,16 @@ namespace KFrame
         __JSON_SET_VALUE__( response, __STRING__( token ), token );
         __JSON_SET_VALUE__( response, __STRING__( channel ), channel );
         __JSON_SET_VALUE__( response, __STRING__( account ), account );
-        __JSON_SET_VALUE__( response, __STRING__( playerid ), playerid );
-        __JSON_SET_VALUE__( response, __STRING__( accountid ), accountid );
+        __JSON_SET_VALUE__( response, __STRING__( playerid ), player_id );
+        __JSON_SET_VALUE__( response, __STRING__( accountid ), account_id );
 
         // 渠道数据
-        auto channeldata = _kf_account->QueryChannelData( accountid );
-        if ( !channeldata.empty() )
+        auto channel_data = _kf_account->QueryChannelData( account_id );
+        if ( !channel_data.empty() )
         {
             KFJson kfchanneljson;
-            __JSON_FROM_MAP__( kfchanneljson, channeldata );
-            __JSON_SET_VALUE__( response, __STRING__( channeldata ), kfchanneljson );
+            __JSON_FROM_MAP__( kfchanneljson, channel_data );
+            __JSON_SET_VALUE__( response, __STRING__( channel_data ), kfchanneljson );
         }
 
         return _kf_http_server->SendResponse( response );
@@ -207,22 +207,22 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFAuthModule::HandleAccountOnline )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
-        auto playerid = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
+        auto account_id = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
+        auto player_id = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
         auto worldid = __JSON_GET_UINT64__( request, __STRING__( world ) );
         auto gameid = __JSON_GET_UINT64__( request, __STRING__( game ) );
 
-        auto ok = _kf_account->UpdateOnline( accountid, playerid, worldid, gameid );
+        auto ok = _kf_account->UpdateOnline( account_id, player_id, worldid, gameid );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
     // 踢掉在线玩家
-    void KFAuthModule::KickAccount( uint32 type, uint64 accountid, StringMap& accountdata )
+    void KFAuthModule::KickAccount( uint32 type, uint64 account_id, StringMap& account_data )
     {
-        auto worldid = __TO_UINT64__( accountdata[ __STRING__( world ) ] );
-        auto gameid = __TO_UINT64__( accountdata[ __STRING__( game ) ] );
-        auto playerid = __TO_UINT64__( accountdata[ __STRING__( playerid ) ] );
-        if ( worldid == _invalid_int || gameid == _invalid_int || playerid == _invalid_int )
+        auto worldid = __TO_UINT64__( account_data[ __STRING__( world ) ] );
+        auto gameid = __TO_UINT64__( account_data[ __STRING__( game ) ] );
+        auto player_id = __TO_UINT64__( account_data[ __STRING__( playerid ) ] );
+        if ( worldid == _invalid_int || gameid == _invalid_int || player_id == _invalid_int )
         {
             return;
         }
@@ -238,7 +238,7 @@ namespace KFrame
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( type ), type );
         __JSON_SET_VALUE__( kfjson, __STRING__( game ), gameid );
-        __JSON_SET_VALUE__( kfjson, __STRING__( playerid ), playerid );
+        __JSON_SET_VALUE__( kfjson, __STRING__( playerid ), player_id );
         _kf_http_client->MTGet<KFAuthModule>( url, kfjson );
     }
 
@@ -340,12 +340,12 @@ namespace KFrame
 
         // 验证请求ip
 
-        auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
+        auto account_id = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
         auto account = __JSON_GET_STRING__( request, __STRING__( account ) );
         auto channel = __JSON_GET_UINT32__( request, __STRING__( channel ) );
         auto time = __JSON_GET_UINT64__( request, __STRING__( time ) );
         auto comment = __JSON_GET_STRING__( request, __STRING__( comment ) );
-        auto ok = _kf_account->AddAccountBlackList( accountid, account, channel, time, comment );
+        auto ok = _kf_account->AddAccountBlackList( account_id, account, channel, time, comment );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -355,8 +355,8 @@ namespace KFrame
 
         // 验证请求ip
 
-        auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
-        auto ok = _kf_account->RemoveAccountBlackList( accountid );
+        auto account_id = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
+        auto ok = _kf_account->RemoveAccountBlackList( account_id );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -388,12 +388,12 @@ namespace KFrame
 
         // 验证请求ip
 
-        auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
+        auto account_id = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
         auto account = __JSON_GET_STRING__( request, __STRING__( account ) );
         auto channel = __JSON_GET_UINT32__( request, __STRING__( channel ) );
         auto time = __JSON_GET_UINT64__( request, __STRING__( time ) );
         auto comment = __JSON_GET_STRING__( request, __STRING__( comment ) );
-        auto ok = _kf_account->AddAccountWhiteList( accountid, account, channel, time, comment );
+        auto ok = _kf_account->AddAccountWhiteList( account_id, account, channel, time, comment );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 
@@ -403,8 +403,8 @@ namespace KFrame
 
         // 验证请求ip
 
-        auto accountid = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
-        auto ok = _kf_account->RemoveAccountWhiteList( accountid );
+        auto account_id = __JSON_GET_UINT64__( request, __STRING__( accountid ) );
+        auto ok = _kf_account->RemoveAccountWhiteList( account_id );
         return _kf_http_server->SendCode( ok ? KFMsg::Ok : KFMsg::Error );
     }
 

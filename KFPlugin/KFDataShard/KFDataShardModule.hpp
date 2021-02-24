@@ -48,10 +48,10 @@ namespace KFrame
 
     protected:
         // 加载数据
-        bool LoadPlayerData( uint32 zone_id, uint64 playerid, KFMsg::PBObject* proto_object );
+        bool LoadPlayerData( uint32 zone_id, uint64 player_id, KFMsg::PBObject* proto_object );
 
         // 保存数据
-        bool SavePlayerData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* proto_object, uint32 saveflag );
+        bool SavePlayerData( uint32 zone_id, uint64 player_id, const KFMsg::PBObject* proto_object, uint32 saveflag );
     private:
         // 数据库逻辑
         KFMap< uint32, KFDataExecute > _data_execute;

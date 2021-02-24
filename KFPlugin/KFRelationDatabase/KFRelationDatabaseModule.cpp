@@ -23,48 +23,48 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRelationDatabaseModule::QueryRelationList( const std::string& listname, const std::string& relationname, uint64 playerid, RelationListType& relationlist )
+    void KFRelationDatabaseModule::QueryRelationList( const std::string& listname, const std::string& relationname, uint64 player_id, RelationListType& relationlist )
     {
-        return _relation_database_logic->QueryRelationList( listname, relationname, playerid, relationlist );
+        return _relation_database_logic->QueryRelationList( listname, relationname, player_id, relationlist );
     }
 
-    void KFRelationDatabaseModule::QueryInviteList( const std::string& listname, const std::string& relationname, uint64 playerid, RelationListType& relationlist )
+    void KFRelationDatabaseModule::QueryInviteList( const std::string& listname, const std::string& relationname, uint64 player_id, RelationListType& relationlist )
     {
-        return _relation_database_logic->QueryInviteList( listname, relationname, playerid, relationlist );
+        return _relation_database_logic->QueryInviteList( listname, relationname, player_id, relationlist );
     }
 
-    bool KFRelationDatabaseModule::RelationExist( const std::string& listname, uint64 playerid, uint64 targetid )
+    bool KFRelationDatabaseModule::RelationExist( const std::string& listname, uint64 player_id, uint64 targetid )
     {
-        return _relation_database_logic->RelationExist( listname, playerid, targetid );
+        return _relation_database_logic->RelationExist( listname, player_id, targetid );
     }
 
-    uint32 KFRelationDatabaseModule::RelationCount( const std::string& listname, uint64 playerid )
+    uint32 KFRelationDatabaseModule::RelationCount( const std::string& listname, uint64 player_id )
     {
-        return _relation_database_logic->RelationCount( listname, playerid );
+        return _relation_database_logic->RelationCount( listname, player_id );
     }
 
-    void KFRelationDatabaseModule::AddRelation( const std::string& listname, const std::string& relationname, uint64 playerid, uint64 targetid, bool bothway )
+    void KFRelationDatabaseModule::AddRelation( const std::string& listname, const std::string& relationname, uint64 player_id, uint64 targetid, bool bothway )
     {
-        return _relation_database_logic->AddRelation( listname, relationname, playerid, targetid, bothway );
+        return _relation_database_logic->AddRelation( listname, relationname, player_id, targetid, bothway );
     }
 
-    void KFRelationDatabaseModule::RemoveRelation( const std::string& listname, const std::string& relationname, uint64 playerid, uint64 targetid, bool bothway )
+    void KFRelationDatabaseModule::RemoveRelation( const std::string& listname, const std::string& relationname, uint64 player_id, uint64 targetid, bool bothway )
     {
-        return _relation_database_logic->RemoveRelation( listname, relationname, playerid, targetid, bothway );
+        return _relation_database_logic->RemoveRelation( listname, relationname, player_id, targetid, bothway );
     }
 
-    void KFRelationDatabaseModule::AddInvite( const std::string& listname, const std::string& relationname, uint64 playerid, uint64 targetid, const std::string& message, uint64 keeptime )
+    void KFRelationDatabaseModule::AddInvite( const std::string& listname, const std::string& relationname, uint64 player_id, uint64 targetid, const std::string& message, uint64 keeptime )
     {
-        return _relation_database_logic->AddInvite( listname, relationname, playerid, targetid, message, keeptime );
+        return _relation_database_logic->AddInvite( listname, relationname, player_id, targetid, message, keeptime );
     }
 
-    bool KFRelationDatabaseModule::IsRefuse( const std::string& refusename, uint64 playerid )
+    bool KFRelationDatabaseModule::IsRefuse( const std::string& refusename, uint64 player_id )
     {
-        return _relation_database_logic->IsRefuse( refusename, playerid );
+        return _relation_database_logic->IsRefuse( refusename, player_id );
     }
 
-    void KFRelationDatabaseModule::SetRefuse( const std::string& refusename, uint64 playerid, uint32 refusevalue )
+    void KFRelationDatabaseModule::SetRefuse( const std::string& refusename, uint64 player_id, uint32 refusevalue )
     {
-        return _relation_database_logic->SetRefuse( refusename, playerid, refusevalue );
+        return _relation_database_logic->SetRefuse( refusename, player_id, refusevalue );
     }
 }

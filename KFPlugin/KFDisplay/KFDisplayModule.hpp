@@ -26,7 +26,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
     private:
         // Gate/Proxy ==> Client
-        virtual void SendToClient( uint64 playerid, uint32 result, StringList& params );
+        virtual void SendToClient( uint64 player_id, uint32 result, StringList& params );
 
         // Game ==> Client
         virtual void SendToClient( EntityPtr player, uint32 result, StringList& params );
@@ -35,7 +35,7 @@ namespace KFrame
         // Route ==> Player
         virtual void SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params );
         virtual void SendToPlayer( const Route& route, uint32 result, StringList& params );
-        virtual void SendToPlayer( uint64 server_id, uint64 playerid, uint32 result, StringList& params );
+        virtual void SendToPlayer( uint64 server_id, uint64 player_id, uint32 result, StringList& params );
 
         // Game ==> Client
         virtual void SendToGroup( EntityPtr player, uint32 result, StringList& params );

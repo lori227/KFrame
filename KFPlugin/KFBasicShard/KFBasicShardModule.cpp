@@ -58,12 +58,12 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleSetPlayerNameToBasicReq, KFMsg::S2SSetPlayerNameToBasicReq )
     {
-        auto result = _kf_basic_database->SetPlayerName( kfmsg->zone_id(), kfmsg->playerid(), kfmsg->oldname(), kfmsg->newname() );
+        auto result = _kf_basic_database->SetPlayerName( kfmsg->zone_id(), kfmsg->player_id(), kfmsg->oldname(), kfmsg->newname() );
 
         KFMsg::S2SSetPlayerNameToGameAck ack;
         ack.set_result( result );
         ack.set_name( kfmsg->newname() );
-        ack.set_playerid( kfmsg->playerid() );
+        ack.set_playerid( kfmsg->player_id() );
         ack.set_costdata( kfmsg->costdata() );
         _kf_route->SendToRoute( route, KFMsg::S2S_SET_PLAYER_NAME_TO_GAME_ACK, &ack );
     }

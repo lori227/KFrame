@@ -13,7 +13,7 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
-    void KFDisplayModule::SendToClient( uint64 playerid, uint32 result, StringList& params )
+    void KFDisplayModule::SendToClient( uint64 player_id, uint32 result, StringList& params )
     {
         if ( _kf_tcp_server == nullptr )
         {
@@ -21,7 +21,7 @@ namespace KFrame
         }
 
         __DISPLAY_MESSAGE__();
-        _kf_tcp_server->SendNetMessage( playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
+        _kf_tcp_server->SendNetMessage( player_id, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
     void KFDisplayModule::SendToClient( EntityPtr player, uint32 result, StringList& params )
@@ -46,7 +46,7 @@ namespace KFrame
         _kf_game->SendToClient( player, KFMsg::MSG_RESULT_DISPLAY, &display, 1u );
     }
 
-    void KFDisplayModule::SendToPlayer( uint64 server_id, uint64 playerid, uint32 result, StringList& params )
+    void KFDisplayModule::SendToPlayer( uint64 server_id, uint64 player_id, uint32 result, StringList& params )
     {
         if ( _kf_route == nullptr )
         {
@@ -54,7 +54,7 @@ namespace KFrame
         }
 
         __DISPLAY_MESSAGE__();
-        _kf_route->RepeatToEntity( 0u, server_id, playerid, KFMsg::MSG_RESULT_DISPLAY, &display );
+        _kf_route->RepeatToEntity( 0u, server_id, player_id, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
     void KFDisplayModule::SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params )

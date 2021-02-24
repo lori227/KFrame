@@ -60,26 +60,26 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         // 加载玩家数据
         virtual bool LoadPlayerData( const KFMsg::PBLoginData* pblogin );
-        virtual void RemoveLoadData( uint64 playerid );
+        virtual void RemoveLoadData( uint64 player_id );
 
         // 保存玩家数据
-        virtual bool SavePlayerData( uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
+        virtual bool SavePlayerData( uint64 player_id, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
 
         // 查询玩家数据
-        virtual bool QueryPlayerData( uint64 sendid, uint64 playerid );
+        virtual bool QueryPlayerData( uint64 sendid, uint64 player_id );
     protected:
         // 设置回调函数
         virtual void SetLoadPlayerFunction( KFLoadPlayerFunction& function );
         virtual void SetQueryPlayerFunction( KFQueryPlayerFunction& function );
 
         // 保存数据
-        void SaveKeeperData( uint32 zone_id, uint64 playerid, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
+        void SaveKeeperData( uint32 zone_id, uint64 player_id, const KFMsg::PBObject* pbplayerdata, uint32 saveflag );
 
         // 加载数据
         void LoadKeeperData( const KFMsg::PBLoginData* pblogin );
 
         // 计算小区id
-        uint32 CalcZoneId( uint64 playerid );
+        uint32 CalcZoneId( uint64 player_id );
     protected:
         // 保存玩家
         __KF_MESSAGE_FUNCTION__( HandleSavePlayerToGameAck, KFMsg::S2SSavePlayerToGameAck );

@@ -6,25 +6,25 @@ namespace KFrame
 
     bool KFDirDatabaseRedis::ZoneRegister( uint32 zone_id, KFJson& zonedata )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto redis_driver = __DIR_REDIS_DRIVER__;
 
         StringMap values;
         __JSON_TO_MAP__( zonedata, values );
 
-        redisdriver->WriteMulti();
-        redisdriver->ZIncrby( __STRING__( zonelist ), zone_id, 0 );
-        redisdriver->HMSet( __DATABASE_KEY_2__(  __STRING__( zone ), zone_id ), values );
-        auto kfresult = redisdriver->WriteExec();
+        redis_driver->WriteMulti();
+        redis_driver->ZIncrby( __STRING__( zonelist ), zone_id, 0 );
+        redis_driver->HMSet( __DATABASE_KEY_2__(  __STRING__( zone ), zone_id ), values );
+        auto kfresult = redis_driver->WriteExec();
         return kfresult->IsOk();
     }
 
-    bool KFDirDatabaseRedis::ZoneUpdate( uint64 appid, uint32 zone_id, uint32 count, const std::string& ip, uint32 port, uint32 expiretime )
+    bool KFDirDatabaseRedis::ZoneUpdate( uint64 appid, uint32 zone_id, uint32 count, const std::string& ip, uint32 port, uint32 expire_time )
     {
         // 判断最小负载
-        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto redis_driver = __DIR_REDIS_DRIVER__;
         auto strkey = __DATABASE_KEY_2__( __STRING__( gate ), zone_id );
 
-        auto kfquery = redisdriver->HGetAll( strkey );
+        auto kfquery = redis_driver->HGetAll( strkey );
         if ( !kfquery->_value.empty() )
         {
             auto lastappid = __TO_UINT64__( kfquery->_value[ __STRING__( appid ) ] );
@@ -41,49 +41,49 @@ namespace KFrame
         values[ __STRING__( count ) ] = __TO_STRING__( count );
         values[ __STRING__( appid ) ] = __TO_STRING__( appid );
 
-        redisdriver->WriteMulti();
-        redisdriver->HMSet( strkey, values );
-        redisdriver->Expire( strkey, expiretime );
-        auto kfresult = redisdriver->WriteExec();
+        redis_driver->WriteMulti();
+        redis_driver->HMSet( strkey, values );
+        redis_driver->Expire( strkey, expire_time );
+        auto kfresult = redis_driver->WriteExec();
         return kfresult->IsOk();
     }
 
     uint32 KFDirDatabaseRedis::QueryZoneStatus( uint32 zone_id )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfresult = redisdriver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( zone ), zone_id ), __STRING__( status ) );
+        auto redis_driver = __DIR_REDIS_DRIVER__;
+        auto kfresult = redis_driver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( zone ), zone_id ), __STRING__( status ) );
         return kfresult->_value;
     }
 
     bool KFDirDatabaseRedis::UpdateZoneStatus( uint32 zone_id, uint32 status )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto redis_driver = __DIR_REDIS_DRIVER__;
         if ( zone_id != 0u )
         {
-            auto kfresult = redisdriver->HSet( __DATABASE_KEY_2__( __STRING__( zone ), zone_id ), __STRING__( status ), status );
+            auto kfresult = redis_driver->HSet( __DATABASE_KEY_2__( __STRING__( zone ), zone_id ), __STRING__( status ), status );
             return kfresult->IsOk();
         }
 
-        auto kflist = redisdriver->ZRange( __STRING__( zonelist ), 0, -1 );
+        auto kflist = redis_driver->ZRange( __STRING__( zonelist ), 0, -1 );
         if ( kflist->_value.empty() )
         {
             return false;
         }
 
-        redisdriver->WriteMulti();
+        redis_driver->WriteMulti();
         for ( auto& zonepair : kflist->_value )
         {
-            redisdriver->HSet( __DATABASE_KEY_2__( __STRING__( zone ), zonepair.first ), __STRING__( status ), status );
+            redis_driver->HSet( __DATABASE_KEY_2__( __STRING__( zone ), zonepair.first ), __STRING__( status ), status );
         }
-        auto kfresult = redisdriver->WriteExec();
+        auto kfresult = redis_driver->WriteExec();
         return kfresult->IsOk();
     }
 
     StringMapList KFDirDatabaseRedis::QueryZoneList( const std::string& flag )
     {
         StringMapList zonedatalist;
-        auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfquerylist = redisdriver->ZRange( __STRING__( zonelist ), 0, -1 );
+        auto redis_driver = __DIR_REDIS_DRIVER__;
+        auto kfquerylist = redis_driver->ZRange( __STRING__( zonelist ), 0, -1 );
         for ( auto& zonepair : kfquerylist->_value )
         {
             auto zone_id = __TO_UINT32__( zonepair.first );
@@ -103,15 +103,15 @@ namespace KFrame
     StringMap KFDirDatabaseRedis::QueryZoneIp( uint32 zone_id )
     {
         StringMap zonedata;
-        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto redis_driver = __DIR_REDIS_DRIVER__;
 
-        auto kfqueryloginid = redisdriver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( zone ), zone_id ), __STRING__( loginzoneid ) );
+        auto kfqueryloginid = redis_driver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( zone ), zone_id ), __STRING__( loginzoneid ) );
         if ( kfqueryloginid->_value == 0u )
         {
             return zonedata;
         }
 
-        auto kfresult = redisdriver->HGetAll( __DATABASE_KEY_2__( __STRING__( gate ), kfqueryloginid->_value ) );
+        auto kfresult = redis_driver->HGetAll( __DATABASE_KEY_2__( __STRING__( gate ), kfqueryloginid->_value ) );
         zonedata.swap( kfresult->_value );
         return zonedata;
     }
@@ -119,15 +119,15 @@ namespace KFrame
     StringMap KFDirDatabaseRedis::QueryZoneData( uint32 zone_id )
     {
         StringMap zonedata;
-        auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfzonedata = redisdriver->HGetAll( __DATABASE_KEY_2__( __STRING__( zone ), zone_id ) );
+        auto redis_driver = __DIR_REDIS_DRIVER__;
+        auto kfzonedata = redis_driver->HGetAll( __DATABASE_KEY_2__( __STRING__( zone ), zone_id ) );
         if ( kfzonedata->_value.empty() )
         {
             return zonedata;
         }
 
         auto loginzoneid = kfzonedata->_value[ __STRING__( loginzoneid ) ];
-        auto kfgatedata = redisdriver->HGetAll( __DATABASE_KEY_2__( __STRING__( gate ), loginzoneid ) );
+        auto kfgatedata = redis_driver->HGetAll( __DATABASE_KEY_2__( __STRING__( gate ), loginzoneid ) );
         if ( kfgatedata->_value.empty() )
         {
             return zonedata;
@@ -143,24 +143,24 @@ namespace KFrame
 
     bool KFDirDatabaseRedis::ZoneBalance( uint32 zone_id, uint32 count )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfresult = redisdriver->ZIncrby( __STRING__( zonelist ), zone_id, count );
+        auto redis_driver = __DIR_REDIS_DRIVER__;
+        auto kfresult = redis_driver->ZIncrby( __STRING__( zonelist ), zone_id, count );
         return kfresult->IsOk();
     }
 
     bool KFDirDatabaseRedis::SetZoneRecommend( const std::string& flag, uint32 zone_id, bool isrecommend )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto redis_driver = __DIR_REDIS_DRIVER__;
 
         auto ok = false;
         if ( isrecommend )
         {
-            auto kfresult = redisdriver->SAdd(  __DATABASE_KEY_2__( __STRING__( zonerecommendlist ), flag ), zone_id );
+            auto kfresult = redis_driver->SAdd(  __DATABASE_KEY_2__( __STRING__( zonerecommendlist ), flag ), zone_id );
             ok = kfresult->IsOk();
         }
         else
         {
-            auto kfresult = redisdriver->SRem( __DATABASE_KEY_2__( __STRING__( zonerecommendlist ), flag ), zone_id );
+            auto kfresult = redis_driver->SRem( __DATABASE_KEY_2__( __STRING__( zonerecommendlist ), flag ), zone_id );
             ok = kfresult->IsOk();
         }
 
@@ -169,8 +169,8 @@ namespace KFrame
 
     uint32 KFDirDatabaseRedis::GetZoneRecommend( const std::string& flag )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfresult = redisdriver->SRandMember( __DATABASE_KEY_2__( __STRING__( zonerecommendlist ), flag ) );
+        auto redis_driver = __DIR_REDIS_DRIVER__;
+        auto kfresult = redis_driver->SRandMember( __DATABASE_KEY_2__( __STRING__( zonerecommendlist ), flag ) );
         return KFUtility::ToValue<uint32>( kfresult->_value );
     }
 
@@ -184,8 +184,8 @@ namespace KFrame
         }
 
         // 选择一个最小人数的分区
-        auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto zonelist = redisdriver->ZRange( __STRING__( zonelist ), 0, -1 );
+        auto redis_driver = __DIR_REDIS_DRIVER__;
+        auto zonelist = redis_driver->ZRange( __STRING__( zonelist ), 0, -1 );
         if ( zonelist->_value.empty() )
         {
             return _invalid_int;
@@ -193,13 +193,13 @@ namespace KFrame
 
         for ( auto& zonepair : zonelist->_value )
         {
-            auto kfloginzoneid = redisdriver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( zone ), zonepair.first ), __STRING__( loginzoneid ) );
+            auto kfloginzoneid = redis_driver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( zone ), zonepair.first ), __STRING__( loginzoneid ) );
             if ( kfloginzoneid->_value == 0u )
             {
                 continue;
             }
 
-            auto kfqueryip = redisdriver->HGet( __DATABASE_KEY_2__( __STRING__( gate ), kfloginzoneid->_value ), __STRING__( ip ) );
+            auto kfqueryip = redis_driver->HGet( __DATABASE_KEY_2__( __STRING__( gate ), kfloginzoneid->_value ), __STRING__( ip ) );
             if ( !kfqueryip->_value.empty() )
             {
                 return __TO_UINT32__( zonepair.first );
@@ -227,22 +227,22 @@ namespace KFrame
 
     bool KFDirDatabaseRedis::SetWorldUrl( uint64 worldid, const std::string& url )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfresult = redisdriver->Set( __DATABASE_KEY_2__( __STRING__( worldurl ), worldid ), url );
+        auto redis_driver = __DIR_REDIS_DRIVER__;
+        auto kfresult = redis_driver->Set( __DATABASE_KEY_2__( __STRING__( worldurl ), worldid ), url );
         return kfresult->IsOk();
     }
 
     std::string KFDirDatabaseRedis::GetWorldUrl( uint64 worldid )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
-        auto kfresult = redisdriver->Get( __DATABASE_KEY_2__( __STRING__( worldurl ), worldid ) );
+        auto redis_driver = __DIR_REDIS_DRIVER__;
+        auto kfresult = redis_driver->Get( __DATABASE_KEY_2__( __STRING__( worldurl ), worldid ) );
         return kfresult->_value;
     }
 
     // 更新masterip
-    bool KFDirDatabaseRedis::UpdateMasterIp( const std::string& appname, uint64 appid, uint32 zone_id, const std::string& ip, uint32 port, uint32 expiretime )
+    bool KFDirDatabaseRedis::UpdateMasterIp( const std::string& appname, uint64 appid, uint32 zone_id, const std::string& ip, uint32 port, uint32 expire_time )
     {
-        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto redis_driver = __DIR_REDIS_DRIVER__;
         auto strmasterkey = __DATABASE_KEY_2__( __STRING__( master ), appid );
 
         StringMap values;
@@ -250,24 +250,24 @@ namespace KFrame
         values[ __STRING__( appid ) ] = __TO_STRING__( appid );
         values[ __STRING__( port ) ] = __TO_STRING__( port );
 
-        redisdriver->WriteMulti();
-        redisdriver->HMSet( strmasterkey, values );
-        redisdriver->Expire( strmasterkey, expiretime );
-        redisdriver->SAdd( __DATABASE_KEY_3__( __STRING__( master ), appname, zone_id ), appid );
-        auto kfresult = redisdriver->WriteExec();
+        redis_driver->WriteMulti();
+        redis_driver->HMSet( strmasterkey, values );
+        redis_driver->Expire( strmasterkey, expire_time );
+        redis_driver->SAdd( __DATABASE_KEY_3__( __STRING__( master ), appname, zone_id ), appid );
+        auto kfresult = redis_driver->WriteExec();
         return kfresult->IsOk();
     }
 
     StringMap KFDirDatabaseRedis::QueryMasterIp( const std::string& appname, uint32 zone_id )
     {
         StringMap zonedata;
-        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto redis_driver = __DIR_REDIS_DRIVER__;
         auto strmasternamekey = __DATABASE_KEY_3__( __STRING__( master ), appname, zone_id );
 
-        auto kfappid = redisdriver->SRandMember( strmasternamekey );
+        auto kfappid = redis_driver->SRandMember( strmasternamekey );
         if ( !kfappid->_value.empty() )
         {
-            auto kfmasterdata = redisdriver->HGetAll( __DATABASE_KEY_2__( __STRING__( master ), kfappid->_value ) );
+            auto kfmasterdata = redis_driver->HGetAll( __DATABASE_KEY_2__( __STRING__( master ), kfappid->_value ) );
             if ( !kfmasterdata->_value.empty() )
             {
                 zonedata.swap( kfmasterdata->_value );
@@ -277,7 +277,7 @@ namespace KFrame
                 if ( kfmasterdata->IsOk() )
                 {
                     // 执行正常, 说明master数据过期了
-                    redisdriver->SRem( strmasternamekey, kfappid->_value );
+                    redis_driver->SRem( strmasternamekey, kfappid->_value );
                 }
             }
         }
@@ -288,13 +288,13 @@ namespace KFrame
     StringMapList KFDirDatabaseRedis::QueryMasterList( const std::string& appname, uint32 zone_id )
     {
         StringMapList masterdatalist;
-        auto redisdriver = __DIR_REDIS_DRIVER__;
+        auto redis_driver = __DIR_REDIS_DRIVER__;
         auto strmasternamekey = __DATABASE_KEY_3__( __STRING__( master ), appname, zone_id );
 
-        auto kfappidlist = redisdriver->SMembers( strmasternamekey );
+        auto kfappidlist = redis_driver->SMembers( strmasternamekey );
         for ( auto& appid : kfappidlist->_value )
         {
-            auto kfmasterdata = redisdriver->HGetAll( __DATABASE_KEY_2__( __STRING__( master ), appid ) );
+            auto kfmasterdata = redis_driver->HGetAll( __DATABASE_KEY_2__( __STRING__( master ), appid ) );
             if ( !kfmasterdata->_value.empty() )
             {
                 StringMap masterdata;
@@ -306,7 +306,7 @@ namespace KFrame
                 if ( kfmasterdata->IsOk() )
                 {
                     // 执行正常, 说明master数据过期了
-                    redisdriver->SRem( strmasternamekey, appid );
+                    redis_driver->SRem( strmasternamekey, appid );
                 }
             }
         }

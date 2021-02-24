@@ -15,32 +15,32 @@ namespace KFrame
         virtual StringMap QueryCreateAccount( const std::string& account, uint32 channel ) = 0;
 
         // 保存账号的渠道信息
-        virtual void SaveChannelData( uint64 accountid, KFJson& channeldata ) = 0;
+        virtual void SaveChannelData( uint64 account_id, KFJson& channel_data ) = 0;
 
         // 查询账号的渠道信息
-        virtual StringMap QueryChannelData( uint64 accountid ) = 0;
+        virtual StringMap QueryChannelData( uint64 account_id ) = 0;
 
         // 创建账号token, 默认保存3600秒
-        virtual std::string MakeAccountToken( const std::string& account, uint32 channel, uint64 accountid, uint32 expiretime );
+        virtual std::string MakeAccountToken( const std::string& account, uint32 channel, uint64 account_id, uint32 expire_time );
 
         // 验证账号token
-        virtual StringMap VerifyAccountToken( uint64 accountid, const std::string& token ) = 0;
+        virtual StringMap VerifyAccountToken( uint64 account_id, const std::string& token ) = 0;
 
         // 保存小区token, 默认保存一个月
-        virtual void SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zone_id, const std::string& token, uint32 expiretime ) = 0;
+        virtual void SaveZoneToken( const std::string& account, uint32 channel, uint64 account_id, uint32 zone_id, const std::string& token, uint32 expire_time ) = 0;
 
         // 查询小区token
-        virtual StringMap VerifyZoneToken( uint64 accountid, uint32 zone_id, const std::string& token ) = 0;
+        virtual StringMap VerifyZoneToken( uint64 account_id, uint32 zone_id, const std::string& token ) = 0;
 
         // 保存登录的ip和zoneid
-        virtual void SaveLoginData( uint64 accountid, const std::string& ip, uint32 zone_id ) = 0;
+        virtual void SaveLoginData( uint64 account_id, const std::string& ip, uint32 zone_id ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 创建账号角色id
-        virtual std::tuple<uint64, bool> QueryCreatePlayer( uint64 accountid, uint32 zone_id ) = 0;
+        virtual std::tuple<uint64, bool> QueryCreatePlayer( uint64 account_id, uint32 zone_id ) = 0;
 
         // 更新玩家在线信息
-        virtual bool UpdateOnline( uint64 accountid, uint64 playerid, uint64 worldid, uint64 gameid ) = 0;
+        virtual bool UpdateOnline( uint64 account_id, uint64 player_id, uint64 world_id, uint64 game_id ) = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 检查ip是否在黑名单
         virtual uint64 CheckIpInBlackList( const std::string& ip ) = 0;
@@ -68,13 +68,13 @@ namespace KFrame
 
 
         // 检查账号是否在黑名单
-        virtual uint64 CheckAccountInBlackList( uint64 accountid ) = 0;
+        virtual uint64 CheckAccountInBlackList( uint64 account_id ) = 0;
 
         // 添加ip黑名单
-        virtual bool AddAccountBlackList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment ) = 0;
+        virtual bool AddAccountBlackList( uint64 account_id, const std::string& account, uint32 channel, uint64 time, const std::string& comment ) = 0;
 
         // 删除ip黑名单
-        virtual bool RemoveAccountBlackList( uint64 accountid ) = 0;
+        virtual bool RemoveAccountBlackList( uint64 account_id ) = 0;
 
         // 查询账号黑名单列表
         virtual StringMapList QueryAccountBlackList() = 0;
@@ -82,30 +82,30 @@ namespace KFrame
 
 
         // 检查账号是否在白名单
-        virtual bool CheckAccountInWhiteList( uint64 accountid ) = 0;
+        virtual bool CheckAccountInWhiteList( uint64 account_id ) = 0;
 
         // 添加ip黑名单
-        virtual bool AddAccountWhiteList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment ) = 0;
+        virtual bool AddAccountWhiteList( uint64 account_id, const std::string& account, uint32 channel, uint64 time, const std::string& comment ) = 0;
 
         // 删除ip黑名单
-        virtual bool RemoveAccountWhiteList( uint64 accountid ) = 0;
+        virtual bool RemoveAccountWhiteList( uint64 account_id ) = 0;
 
         // 查询账号白名单列表
         virtual StringMapList QueryAccountWhiteList() = 0;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 保存微信token
-        virtual void SaveWeiXinAccessToken( const std::string& machinecode, const std::string& openid,
-                                            const std::string& scope, const std::string& accesstoken, uint32 expirestime ) = 0;
+        virtual void SaveWeiXinAccessToken( const std::string& machine_code, const std::string& openid,
+                                            const std::string& scope, const std::string& access_token, uint32 expire_time ) = 0;
 
         // 查询微信token
-        virtual StringMap QueryWeiXinAccessToken( const std::string& machinecode ) = 0;
+        virtual StringMap QueryWeiXinAccessToken( const std::string& machine_code ) = 0;
 
         // 保存微信刷新token
-        virtual void SaveWeiXinRefreshToken( const std::string& machinecode, const std::string& refreshtoken ) = 0;
+        virtual void SaveWeiXinRefreshToken( const std::string& machine_code, const std::string& refresh_token ) = 0;
 
         // 查询微信的刷新token
-        virtual std::string QueryWeiXinRefreshToken( const std::string& machinecode ) = 0;
+        virtual std::string QueryWeiXinRefreshToken( const std::string& machine_code ) = 0;
     private:
         // token序列号
         uint32 _token_serial = 0;

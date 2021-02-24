@@ -7,9 +7,9 @@ namespace KFrame
 
     bool KFChannel::SavePayData( const std::string& order, StringMap& values )
     {
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
+        auto redis_driver = __AUTH_REDIS_DRIVER__;
 
-        auto kforderdata = redisdriver->HGetAll( __DATABASE_KEY_2__( __STRING__( payorder ), order ) );
+        auto kforderdata = redis_driver->HGetAll( __DATABASE_KEY_2__( __STRING__( payorder ), order ) );
         if ( kforderdata->_value.empty() )
         {
             __LOG_ERROR__( "order=[{}] no record", order );
@@ -17,11 +17,11 @@ namespace KFrame
         }
 
         auto payid = kforderdata->_value[ __STRING__( payid ) ];
-        auto playerid = kforderdata->_value[ __STRING__( playerid ) ];
+        auto player_id = kforderdata->_value[ __STRING__( playerid ) ];
         auto queryorder = kforderdata->_value[ __STRING__( payorder ) ];
-        if ( payid.empty() || playerid.empty() || queryorder != order )
+        if ( payid.empty() || player_id.empty() || queryorder != order )
         {
-            __LOG_ERROR__( "order=[{}] payid=[{}] playerid=[{}] error", order, payid, playerid );
+            __LOG_ERROR__( "order=[{}] payid=[{}] player_id=[{}] error", order, payid, player_id );
             return false;
         }
 
@@ -29,21 +29,21 @@ namespace KFrame
         {
             values[ __STRING__( payid ) ] = payid;
             values[ __STRING__( payorder ) ] = order;
-            values[ __STRING__( playerid ) ] = playerid;
+            values[ __STRING__( playerid ) ] = player_id;
         }
 
         // 纪录充值信息
         StringMap payvalues = kforderdata->_value;
         payvalues[ __STRING__( flag ) ] = "0";
 
-        redisdriver->WriteMulti();
-        redisdriver->HMSet( __DATABASE_KEY_2__( __STRING__( pay ), order ), payvalues );
-        redisdriver->SAdd( __DATABASE_KEY_2__( __STRING__( paydata ), playerid ), order );
-        auto kfresult = redisdriver->WriteExec();
+        redis_driver->WriteMulti();
+        redis_driver->HMSet( __DATABASE_KEY_2__( __STRING__( pay ), order ), payvalues );
+        redis_driver->SAdd( __DATABASE_KEY_2__( __STRING__( paydata ), player_id ), order );
+        auto kfresult = redis_driver->WriteExec();
         if ( kfresult->IsOk() )
         {
             // 删除订单信息
-            redisdriver->Del( __DATABASE_KEY_2__( __STRING__( payorder ), order ) );
+            redis_driver->Del( __DATABASE_KEY_2__( __STRING__( payorder ), order ) );
         }
 
         return kfresult->IsOk();

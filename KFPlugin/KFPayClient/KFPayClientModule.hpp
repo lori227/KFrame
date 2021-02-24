@@ -52,7 +52,7 @@ namespace KFrame
         __KF_TIMER_FUNCTION__( OnTimerQueryPayData );
 
         // 查询充值信息
-        void QueryPayData( uint64 playerid );
+        void QueryPayData( uint64 player_id );
 
         // 生成订单回调
         __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpApplyOrderCallBack );

@@ -223,8 +223,8 @@ namespace KFrame
     {
         __ROBOT_PROTO_PARSE__( KFMsg::MsgLoginAck );
 
-        robot->_player_id = kfmsg.playerid();
-        robot->_player = robot->_kf_component->CreateEntity( kfmsg.playerid(), &kfmsg.playerdata() );
+        robot->_player_id = kfmsg.player_id();
+        robot->_player = robot->_kf_component->CreateEntity( kfmsg.player_id(), &kfmsg.playerdata() );
 
         if ( KFRobotConfig::Instance()->_open_data_log )
         {

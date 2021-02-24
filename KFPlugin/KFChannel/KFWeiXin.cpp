@@ -8,11 +8,11 @@ namespace KFrame
 {
     std::string KFWeiXin::RequestLogin( KFJson& json, const KFChannelSetting* setting )
     {
-        auto machinecode = __JSON_GET_STRING__( json, __STRING__( machine ) );
+        auto machine_code = __JSON_GET_STRING__( json, __STRING__( machine ) );
         auto weixincode = __JSON_GET_STRING__( json, __STRING__( code ) );
 
         std::string openid = "";
-        std::string accesstoken = "";
+        std::string access_token = "";
 
         if ( !weixincode.empty() )
         {
@@ -33,36 +33,36 @@ namespace KFrame
             }
 
             openid = __JSON_GET_STRING__( accessjson, __STRING__( openid ) );
-            accesstoken = __JSON_GET_STRING__( accessjson, __STRING__( access_token ) );
+            access_token = __JSON_GET_STRING__( accessjson, __STRING__( access_token ) );
 
             // 保存访问token
-            SaveAccessToken( machinecode, openid, accesstoken, accessjson );
+            SaveAccessToken( machine_code, openid, access_token, accessjson );
 
             // 保存刷新token
-            auto refreshtoken = __JSON_GET_STRING__( accessjson, __STRING__( refresh_token ) );
-            _kf_account->SaveWeiXinRefreshToken( machinecode, refreshtoken );
+            auto refresh_token = __JSON_GET_STRING__( accessjson, __STRING__( refresh_token ) );
+            _kf_account->SaveWeiXinRefreshToken( machine_code, refresh_token );
         }
         else
         {
             // 机器码获得账号的access_token
-            auto weixindata = _kf_account->QueryWeiXinAccessToken( machinecode );
+            auto weixindata = _kf_account->QueryWeiXinAccessToken( machine_code );
             if ( !weixindata.empty() )
             {
                 openid = weixindata[ __STRING__( openid ) ];
-                accesstoken = weixindata[ __STRING__( token ) ];
+                access_token = weixindata[ __STRING__( token ) ];
             }
             else
             {
                 // 获得refresh_token
-                auto refreshtoken = _kf_account->QueryWeiXinRefreshToken( machinecode );
-                if ( refreshtoken.empty() )
+                auto refresh_token = _kf_account->QueryWeiXinRefreshToken( machine_code );
+                if ( refresh_token.empty() )
                 {
                     return _kf_http_server->SendCode( KFMsg::WeiXinTokenTimeout );
                 }
 
                 // 刷新access_token
                 auto urldata = __FORMAT__( "{}/sns/oauth2/refresh_token?grant_type=refresh_token&appid={}&refresh_token={}",
-                                           setting->_login_url, setting->_app_id, refreshtoken );
+                                           setting->_login_url, setting->_app_id, refresh_token );
 
                 auto accessdata = _kf_http_client->STGet( urldata, _invalid_string );
                 if ( accessdata.empty() )
@@ -77,13 +77,13 @@ namespace KFrame
                 }
 
                 openid = __JSON_GET_STRING__( accessjson, __STRING__( openid ) );
-                accesstoken = __JSON_GET_STRING__( accessjson, __STRING__( access_token ) );
-                SaveAccessToken( machinecode, openid, accesstoken, accessjson );
+                access_token = __JSON_GET_STRING__( accessjson, __STRING__( access_token ) );
+                SaveAccessToken( machine_code, openid, access_token, accessjson );
             }
         }
 
         // 获取用户资料
-        auto urldata = __FORMAT__( "{}/sns/userinfo?access_token={}&openid={}", setting->_login_url, accesstoken, openid );
+        auto urldata = __FORMAT__( "{}/sns/userinfo?access_token={}&openid={}", setting->_login_url, access_token, openid );
         auto userdata = _kf_http_client->STGet( urldata, _invalid_string );
         if ( userdata.empty() )
         {
@@ -111,11 +111,11 @@ namespace KFrame
         return _kf_http_server->SendResponse( response );
     }
 
-    void KFWeiXin::SaveAccessToken( const std::string& machinecode, const std::string& openid, const std::string& accesstoken, KFJson& kfjson )
+    void KFWeiXin::SaveAccessToken( const std::string& machine_code, const std::string& openid, const std::string& access_token, KFJson& kfjson )
     {
         auto scope = __JSON_GET_STRING__( kfjson, __STRING__( scope ) );
-        auto expirestime = __JSON_GET_UINT32__( kfjson, __STRING__( expires_in ) );
-        _kf_account->SaveWeiXinAccessToken( machinecode, openid, scope, accesstoken, expirestime - 200 );
+        auto expire_time = __JSON_GET_UINT32__( kfjson, __STRING__( expires_in ) );
+        _kf_account->SaveWeiXinAccessToken( machine_code, openid, scope, access_token, expire_time - 200 );
     }
 
     std::string KFWeiXin::RequestPay( const std::string& data, const KFChannelSetting* setting )

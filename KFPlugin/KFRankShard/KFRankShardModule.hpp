@@ -101,13 +101,13 @@ namespace KFrame
         bool RefreshRankData( const KFRankSetting* setting, uint32 zone_id, const KFTimeData* time_data );
 
         // 计算zoneid
-        uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* setting );
+        uint32 CalcRankZoneId( uint64 player_id, const KFRankSetting* setting );
 
         // 删除数据
         void ClearRankData( const std::string& rankdatakey, const std::string&  ranksortkey, const KFRankSetting* setting );
 
         // 查询玩家排名
-        uint32 QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zone_id );
+        uint32 QueryPlayerRank( uint64 player_id, uint32 rankid, uint32 zone_id );
     private:
         // 排行榜
         KFRedisDriver* _rank_redis_driver = nullptr;

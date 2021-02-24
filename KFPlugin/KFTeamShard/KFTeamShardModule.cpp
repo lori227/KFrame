@@ -188,7 +188,7 @@ namespace KFrame
             return;
         }
 
-        RemoveTeamMember( kfteam, kfmsg->playerid() );
+        RemoveTeamMember( kfteam, kfmsg->player_id() );
     }
 
     void KFTeamShardModule::RemoveTeamMember( EntityPtr kfteam, uint64 memberid )
@@ -223,7 +223,7 @@ namespace KFrame
             return;
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->playerid() );
+        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->player_id() );
         if ( kfmember == nullptr )
         {
             return;
@@ -246,7 +246,7 @@ namespace KFrame
         }
 
         auto captainid = kfteam->Get( __STRING__( captainid ) );
-        if ( captainid != kfmsg->playerid() )
+        if ( captainid != kfmsg->player_id() )
         {
             return;
         }
@@ -266,7 +266,7 @@ namespace KFrame
         }
 
         auto captainid = kfteam->Get( __STRING__( captainid ) );
-        if ( captainid != kfmsg->playerid() )
+        if ( captainid != kfmsg->player_id() )
         {
             return;
         }
@@ -285,7 +285,7 @@ namespace KFrame
             return;
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->playerid() );
+        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->player_id() );
         if ( kfmember == nullptr )
         {
             return;
@@ -315,7 +315,7 @@ namespace KFrame
             return;
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->playerid() );
+        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->player_id() );
         if ( kfmember == nullptr )
         {
             return;
@@ -342,7 +342,7 @@ namespace KFrame
         _kf_route->RepeatToRoute( route, KFMsg::S2S_TEAM_LEAVE_TO_GAME_ACK, &ack );
 
         // 删除玩家
-        RemoveTeamMember( kfteam, kfmsg->playerid() );
+        RemoveTeamMember( kfteam, kfmsg->player_id() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamKickToTeamReq, KFMsg::S2STeamKickToTeamReq )

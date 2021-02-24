@@ -19,7 +19,7 @@ namespace KFrame
 
     protected:
         // 保存访问token
-        void SaveAccessToken( const std::string& machinecode, const std::string& openid, const std::string& accesstoken, KFJson& kfjson );
+        void SaveAccessToken( const std::string& machine_code, const std::string& openid, const std::string& access_token, KFJson& kfjson );
     };
 }
 

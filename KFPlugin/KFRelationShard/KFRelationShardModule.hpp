@@ -58,16 +58,16 @@ namespace KFrame
 
     protected:
         // 信息转换成关系信息
-        void MapStringToPBRelation( uint64 playerid, KFMsg::PBRelation* pbrelation, StringMap& basicdata, StringMap& relationdata );
+        void MapStringToPBRelation( uint64 player_id, KFMsg::PBRelation* pbrelation, StringMap& basicdata, StringMap& relationdata );
 
         // 格式化好友key
         std::string FormatRelationKey( uint64 firstid, uint64 secondid, const KFRelationSetting* setting );
 
         // 添加关系
-        void AddRelation( uint64 playerid, uint64 targetid, const KFRelationSetting* setting );
+        void AddRelation( uint64 player_id, uint64 targetid, const KFRelationSetting* setting );
 
         // 删除关系
-        void DelRelation( uint64 playerid, uint64 targetid, const KFRelationSetting* setting );
+        void DelRelation( uint64 player_id, uint64 targetid, const KFRelationSetting* setting );
 
         // 发送更新好友度
         void SendAddFriendLinessToPlayer( uint64 selfid, uint64 targetid, uint32 friendliness );

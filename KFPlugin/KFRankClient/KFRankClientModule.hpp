@@ -54,7 +54,7 @@ namespace KFrame
         uint64 CalcRankDataScore( EntityPtr player, const KFRankSetting* setting );
 
         // 计算zoneid
-        uint32 CalcRankZoneId( uint64 playerid, const KFRankSetting* setting );
+        uint32 CalcRankZoneId( uint64 player_id, const KFRankSetting* setting );
 
     private:
         // 玩家组件

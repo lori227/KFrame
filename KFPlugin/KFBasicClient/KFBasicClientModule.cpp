@@ -53,25 +53,25 @@ namespace KFrame
         _kf_route->RepeatToRand( __ROUTE_NAME__, KFMsg::S2S_CLEAR_ONLINE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, StringUInt64& values )
+    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 player_id, StringUInt64& values )
     {
         KFMsg::S2SUpdateIntValueToBasicReq req;
         req.mutable_pbdata()->insert( values.begin(), values.end() );
-        _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, &req );
+        _kf_route->RepeatToRand( player_id, __ROUTE_NAME__, KFMsg::S2S_UPDATE_INT_VALUE_TO_BASIC_REQ, &req );
     }
 
-    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 playerid, const std::string& data_name, uint64 data_value )
+    void KFBasicClientModule::UpdateBasicIntValueToBasic( uint64 player_id, const std::string& data_name, uint64 data_value )
     {
         StringUInt64 values;
         values[ data_name ] = data_value;
-        UpdateBasicIntValueToBasic( playerid, values );
+        UpdateBasicIntValueToBasic( player_id, values );
     }
 
-    void KFBasicClientModule::UpdateBasicStrValueToBasic( uint64 playerid, const std::string& data_name, const std::string& data_value )
+    void KFBasicClientModule::UpdateBasicStrValueToBasic( uint64 player_id, const std::string& data_name, const std::string& data_value )
     {
         KFMsg::S2SUpdateStrValueToBasicReq req;
         ( *req.mutable_pbdata() )[ data_name ] = data_value;
-        _kf_route->RepeatToRand( playerid, __ROUTE_NAME__, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &req );
+        _kf_route->RepeatToRand( player_id, __ROUTE_NAME__, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_PLAYER_ENTER_FUNCTION__( KFBasicClientModule::OnEnterUpdateBasicAttribute )

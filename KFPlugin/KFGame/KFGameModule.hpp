@@ -43,12 +43,12 @@ namespace KFrame
         virtual bool SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送消息到客户端
-        virtual bool SendToClient( uint64 gateid, uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
+        virtual bool SendToClient( uint64 gateid, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
         virtual bool SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
 
         // 发送到玩家
         virtual bool SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msg_id, ::google::protobuf::Message* message );
-        virtual bool SendToPlayer( uint64 sendid, uint64 server_id, uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToPlayer( uint64 sendid, uint64 server_id, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 广播消息到客户端
         virtual void BroadcastToGate( uint32 msg_id, ::google::protobuf::Message* message );
@@ -59,7 +59,7 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 踢掉角色
-        virtual bool KickPlayer( uint64 playerid, uint32 type, const char* function, uint32 line );
+        virtual bool KickPlayer( uint64 player_id, uint32 type, const char* function, uint32 line );
     protected:
         // 登录token
         __KF_MESSAGE_FUNCTION__( HandleLoginToGameReq, KFMsg::S2SLoginToGameReq );
@@ -121,7 +121,7 @@ namespace KFrame
         void SavePlayer( EntityPtr player, uint32 saveflag );
 
         // 查询玩家数据
-        void OnAfterQueryPlayerData( uint32 result, uint64 playerid, const KFMsg::PBObject* playerdata );
+        void OnAfterQueryPlayerData( uint32 result, uint64 player_id, const KFMsg::PBObject* playerdata );
 
         // 发送登陆失败消息
         void SendLoginToGateAck( uint32 result, const KFMsg::PBLoginData* pblogin );

@@ -11,11 +11,11 @@ namespace KFrame
         // 发送结果提示到客户端
         // Gate/Proxy ==> Client
         template< class...Args >
-        inline void SendToClient( uint64 playerid, uint32 result, Args&& ... args )
+        inline void SendToClient( uint64 player_id, uint32 result, Args&& ... args )
         {
             StringList params;
             FormatParam( params, std::forward< Args >( args )... );
-            SendToClient( playerid, result, params );
+            SendToClient( player_id, result, params );
         }
 
         // 发送结果提示到客户端
@@ -41,11 +41,11 @@ namespace KFrame
         // 发送结果提示到客户端
         // Route ==> Player
         template< class...Args >
-        inline void SendToPlayer( uint64 server_id, uint64 playerid, uint32 result, Args&& ... args )
+        inline void SendToPlayer( uint64 server_id, uint64 player_id, uint32 result, Args&& ... args )
         {
             StringList params;
             FormatParam( params, std::forward< Args >( args )... );
-            SendToPlayer( server_id, playerid, result, params );
+            SendToPlayer( server_id, player_id, result, params );
         }
 
         // 发送结果提示到客户端
@@ -91,7 +91,7 @@ namespace KFrame
 
     private:
         // Gate/Proxy ==> Client
-        virtual void SendToClient( uint64 playerid, uint32 result, StringList& params ) = 0;
+        virtual void SendToClient( uint64 player_id, uint32 result, StringList& params ) = 0;
 
         // Game ==> Client
         virtual void SendToClient( EntityPtr player, uint32 result, StringList& params ) = 0;
@@ -102,7 +102,7 @@ namespace KFrame
 
         // Game ==> Route ==> Game
         virtual void SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params ) = 0;
-        virtual void SendToPlayer( uint64 server_id, uint64 playerid, uint32 result, StringList& params ) = 0;
+        virtual void SendToPlayer( uint64 server_id, uint64 player_id, uint32 result, StringList& params ) = 0;
         virtual void SendToPlayer( const Route& route, uint32 result, StringList& params ) = 0;
 
     };

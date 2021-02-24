@@ -36,21 +36,21 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFMailClientModule::SendMessageToMail( uint64 playerid, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFMailClientModule::SendMessageToMail( uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        return _kf_route->SendToRand( playerid, __STRING__( mail ), msg_id, message );
+        return _kf_route->SendToRand( player_id, __STRING__( mail ), msg_id, message );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_PLAYER_ENTER_FUNCTION__( KFMailClientModule::OnEnterMailModule )
     {
-        auto playerid = player->GetKeyID();
-        __LOOP_TIMER_1__( playerid, KFTimeEnum::OneMinuteMicSecond * 5, 1, &KFMailClientModule::OnTimerQueryMail );
+        auto player_id = player->GetKeyID();
+        __LOOP_TIMER_1__( player_id, KFTimeEnum::OneMinuteMicSecond * 5, 1, &KFMailClientModule::OnTimerQueryMail );
     }
 
     __KF_PLAYER_LEAVE_FUNCTION__( KFMailClientModule::OnLeaveMailModule )
     {
-        auto playerid = player->GetKeyID();
-        __UN_TIMER_1__( playerid );
+        auto player_id = player->GetKeyID();
+        __UN_TIMER_1__( player_id );
     }
 
     __KF_NEW_PLAYER_FUNCTION__( KFMailClientModule::OnNewPlayerMailModule )

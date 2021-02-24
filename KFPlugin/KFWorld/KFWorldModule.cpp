@@ -91,7 +91,7 @@ namespace KFrame
         }
     }
 
-    uint64 KFWorldModule::FindLoginGame( uint64 gateid, uint64 playerid )
+    uint64 KFWorldModule::FindLoginGame( uint64 gateid, uint64 player_id )
     {
         auto kfconhash = _gate_conhash.Find( gateid );
         if ( kfconhash == nullptr )
@@ -99,23 +99,23 @@ namespace KFrame
             return _invalid_int;
         }
 
-        return kfconhash->FindHashNode( playerid );
+        return kfconhash->FindHashNode( player_id );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleLoginToWorldReq, KFMsg::S2SLoginToWorldReq )
     {
         auto loginid = __ROUTE_SERVER_ID__;
         auto pblogin = &kfmsg->pblogin();
-        __LOG_DEBUG__( "player[{}:{}:{}] login world req", pblogin->account(), pblogin->accountid(), pblogin->playerid() );
+        __LOG_DEBUG__( "player[{}:{}:{}] login world req", pblogin->account(), pblogin->account_id(), pblogin->player_id() );
 
         // 踢掉已经在线的玩家
-        KickOnlineToGame( KFMsg::KickByLogin, pblogin->playerid(), _invalid_int, __FUNC_LINE__ );
+        KickOnlineToGame( KFMsg::KickByLogin, pblogin->player_id(), _invalid_int, __FUNC_LINE__ );
 
         // 选择Game服务器
-        auto gameid = FindLoginGame( pblogin->gateid(), pblogin->playerid() );
+        auto gameid = FindLoginGame( pblogin->gateid(), pblogin->player_id() );
         if ( gameid == _invalid_int )
         {
-            return SendLoginAckToLogin( KFMsg::LoginNoGameServer, loginid, pblogin->gateid(), pblogin->accountid(), pblogin->sessionid() );
+            return SendLoginAckToLogin( KFMsg::LoginNoGameServer, loginid, pblogin->gateid(), pblogin->account_id(), pblogin->sessionid() );
         }
 
         // 登录请求到game服务器
@@ -124,54 +124,54 @@ namespace KFrame
         auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_LOGIN_TO_GAME_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}] login game failed", pblogin->accountid(), pblogin->playerid() );
-            SendLoginAckToLogin( KFMsg::LoginGameServerBusy, loginid, pblogin->gateid(), pblogin->accountid(), pblogin->sessionid() );
+            __LOG_ERROR__( "player[{}:{}] login game failed", pblogin->account_id(), pblogin->player_id() );
+            SendLoginAckToLogin( KFMsg::LoginGameServerBusy, loginid, pblogin->gateid(), pblogin->account_id(), pblogin->sessionid() );
         }
     }
 
-    void KFWorldModule::SendLoginAckToLogin( uint32 result, uint64 loginid, uint64 gateid, uint64 accountid, uint64 sessionid )
+    void KFWorldModule::SendLoginAckToLogin( uint32 result, uint64 loginid, uint64 gateid, uint64 account_id, uint64 sessionid )
     {
         KFMsg::S2SLoginToLoginAck ack;
         ack.set_result( result );
         ack.set_gateid( gateid );
-        ack.set_accountid( accountid );
+        ack.set_accountid( account_id );
         ack.set_sessionid( sessionid );
         auto ok = _kf_tcp_server->SendNetMessage( loginid, KFMsg::S2S_LOGIN_TO_LOGIN_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}] world verify result[{}] failed", accountid, result );
+            __LOG_ERROR__( "player[{}] world verify result[{}] failed", account_id, result );
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerEnterToWorldReq, KFMsg::S2SPlayerEnterToWorldReq )
     {
-        UpdatePlayerOnline( kfmsg->accountid(), kfmsg->playerid(), KFGlobal::Instance()->_app_id->GetId(), __ROUTE_SERVER_ID__ );
+        UpdatePlayerOnline( kfmsg->account_id(), kfmsg->player_id(), KFGlobal::Instance()->_app_id->GetId(), __ROUTE_SERVER_ID__ );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerLeaveToWorldReq, KFMsg::S2SPlayerLeaveToWorldReq )
     {
-        UpdatePlayerOnline( kfmsg->accountid(), kfmsg->playerid(), _invalid_int, _invalid_int );
+        UpdatePlayerOnline( kfmsg->account_id(), kfmsg->player_id(), _invalid_int, _invalid_int );
     }
 
-    void KFWorldModule::UpdatePlayerOnline( uint64 accountid, uint64 playerid, uint64 worldid, uint64 gameid )
+    void KFWorldModule::UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 worldid, uint64 gameid )
     {
         static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( online );
 
         __JSON_OBJECT_DOCUMENT__( sendjson );
-        __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), accountid );
-        __JSON_SET_VALUE__( sendjson, __STRING__( playerid ), playerid );
+        __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), account_id );
+        __JSON_SET_VALUE__( sendjson, __STRING__( playerid ), player_id );
         __JSON_SET_VALUE__( sendjson, __STRING__( world ), worldid );
         __JSON_SET_VALUE__( sendjson, __STRING__( game ), gameid );
         _kf_http_client->MTGet<KFWorldModule>( _url, sendjson );
     }
 
-    void KFWorldModule::KickOnlineToGame( uint32 type, uint64 playerid, uint64 gameid, const char* function, uint32 line )
+    void KFWorldModule::KickOnlineToGame( uint32 type, uint64 player_id, uint64 gameid, const char* function, uint32 line )
     {
-        __LOG_INFO_FUNCTION__( function, line, "kick=[{}] player=[{}]", type, playerid );
+        __LOG_INFO_FUNCTION__( function, line, "kick=[{}] player=[{}]", type, player_id );
 
         KFMsg::S2SKickPlayerToGameReq req;
         req.set_type( type );
-        req.set_playerid( playerid );
+        req.set_playerid( player_id );
         if ( gameid != _invalid_int )
         {
             _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &req );
@@ -188,8 +188,8 @@ namespace KFrame
 
         auto type = __JSON_GET_UINT32__( request, __STRING__( type ) );
         auto gameid = __JSON_GET_UINT64__( request, __STRING__( game ) );
-        auto playerid = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
-        KickOnlineToGame( type, playerid, gameid, __FUNC_LINE__ );
+        auto player_id = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
+        KickOnlineToGame( type, player_id, gameid, __FUNC_LINE__ );
         return _invalid_string;
     }
 

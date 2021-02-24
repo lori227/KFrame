@@ -33,14 +33,14 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         // 创建玩家
         virtual EntityPtr Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata );
-        virtual EntityPtr ReLogin( uint64 playerid, uint64 gateid );
+        virtual EntityPtr ReLogin( uint64 player_id, uint64 gateid );
 
         // 查找玩家
-        virtual EntityPtr FindPlayer( uint64 playerid );
+        virtual EntityPtr FindPlayer( uint64 player_id );
 
         // 删除玩家
         virtual void RemovePlayer();
-        virtual void RemovePlayer( uint64 playerid );
+        virtual void RemovePlayer( uint64 player_id );
         virtual void RemovePlayer( EntityPtr player );
         ////////////////////////////////////////////////////////////////////////////////
         virtual bool SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0 );
@@ -89,7 +89,7 @@ namespace KFrame
         void AfterRunPlayer( EntityPtr player );
 
         // 创建角色
-        void OnEnterCreatePlayer( EntityPtr player, uint64 playerid );
+        void OnEnterCreatePlayer( EntityPtr player, uint64 player_id );
 
         // 启动上线同步数据定时器
         void StartSyncOnlineTimer( EntityPtr player );

@@ -24,20 +24,20 @@ namespace KFrame
         virtual void ClearOverdueGlobalMail();
 
         // 把全局邮件列表加到玩家列表中
-        virtual void LoadGlobalMailToPerson( uint64 playerid, uint32 zone_id );
+        virtual void LoadGlobalMailToPerson( uint64 player_id, uint32 zone_id );
 
         // 查询邮件列表
-        virtual KFResult<StringMapList>::UniqueType QueryMailList( uint64 playerid, uint64 lastmailid );
+        virtual KFResult<StringMapList>::UniqueType QueryMailList( uint64 player_id, uint64 lastmailid );
 
         // 更新邮件状态
-        virtual bool UpdateMailStatus( uint32 flag, uint64 playerid, uint64 mailid, uint32 status );
+        virtual bool UpdateMailStatus( uint32 flag, uint64 player_id, uint64 mailid, uint32 status );
 
         // 初始化新玩家邮件数据
-        virtual void InitNewPlayerMail( uint64 playerid, uint32 zone_id );
+        virtual void InitNewPlayerMail( uint64 player_id, uint32 zone_id );
 
     protected:
         // 初始化全局邮件id
-        void InitNewPlayerGlobalMail( uint64 playerid, uint32 zone_id );
+        void InitNewPlayerGlobalMail( uint64 player_id, uint32 zone_id );
     private:
         KFRedisDriver* _redis_driver = nullptr;
     };

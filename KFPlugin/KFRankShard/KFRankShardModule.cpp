@@ -99,7 +99,7 @@ namespace KFrame
 
         StringMap rankdata;
         rankdata[ __STRING__( id ) ] = __TO_STRING__( kfrankdata->_rank_id );
-        rankdata[ __STRING__( zone_id ) ] = __TO_STRING__( kfrankdata->_zone_id );
+        rankdata[ __STRING__( zoneid ) ] = __TO_STRING__( kfrankdata->_zone_id );
         rankdata[ __STRING__( time ) ] = __TO_STRING__( kfrankdata->_next_refresh_time );
         rankdata[ __STRING__( minrankscore ) ] = __TO_STRING__( kfrankdata->_min_rank_score );
         rankdata[ __STRING__( rankdata ) ] = strrankdata;
@@ -219,15 +219,15 @@ namespace KFrame
         for ( auto& idpair : queryidlist->_value )
         {
             // 读取排行榜信息
-            auto playerid = __TO_UINT64__( idpair.first );
-            auto queryrankdata = _rank_redis_driver->HGet( rankdatakey, playerid );
+            auto player_id = __TO_UINT64__( idpair.first );
+            auto queryrankdata = _rank_redis_driver->HGet( rankdatakey, player_id );
             if ( queryrankdata->_value.empty() )
             {
                 continue;
             }
 
             StringMap basicdata;
-            _kf_basic_database->QueryBasicAttribute( playerid, basicdata );
+            _kf_basic_database->QueryBasicAttribute( player_id, basicdata );
             if ( basicdata.empty() )
             {
                 continue;
@@ -265,9 +265,9 @@ namespace KFrame
         case KFRankEnum::DataClearRank:
         {
             // 最小积分
-            //auto playerid = idlist.back();
+            //auto player_id = idlist.back();
             //std::string minscore = "";
-            //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __STRING__( ranksort ), rankid, zone_id, playerid );
+            //_rank_driver->StringExecute( minscore, "zscore {}:{}:{} {}", __STRING__( ranksort ), rankid, zone_id, player_id );
             //kfrankdata->_min_rank_score = __TO_UINT64__( minscore );
 
             // 删除指定数量以后的排序
@@ -304,7 +304,7 @@ namespace KFrame
         auto strrankdata = KFProto::Serialize( pbrankdata, KFCompressEnum::None, 0u, true );
 
         _rank_redis_driver->WriteMulti();
-        _rank_redis_driver->HSet( rankdatakey, kfmsg->playerid(), strrankdata );
+        _rank_redis_driver->HSet( rankdatakey, kfmsg->player_id(), strrankdata );
 
         // 判断最低的分数
         // if ( IsNeedUpdateRankData( kfmsg->rankid(), kfmsg->zone_id(), kfmsg->rankscore() ) )
@@ -313,7 +313,7 @@ namespace KFrame
             _rank_redis_driver->SAdd(  __DATABASE_KEY_2__( __STRING__( ranksortlist ), kfmsg->rankid() ), kfmsg->zone_id() );
 
             // 积分排行列表
-            _rank_redis_driver->ZAdd( ranksortkey, kfmsg->playerid(), pbrankdata->rankscore() );
+            _rank_redis_driver->ZAdd( ranksortkey, kfmsg->player_id(), pbrankdata->rankscore() );
         }
 
         _rank_redis_driver->WriteExec();
@@ -365,10 +365,10 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::MSG_QUERY_RANK_LIST_ACK, &ack );
     }
 
-    uint32 KFRankShardModule::QueryPlayerRank( uint64 playerid, uint32 rankid, uint32 zone_id )
+    uint32 KFRankShardModule::QueryPlayerRank( uint64 player_id, uint32 rankid, uint32 zone_id )
     {
         auto& ranksortkey = FormatRankSortKey( rankid, zone_id );
-        auto kfresult = _rank_redis_driver->ZRank( ranksortkey, playerid );
+        auto kfresult = _rank_redis_driver->ZRank( ranksortkey, player_id );
         return ( uint32 )kfresult->_value;
     }
 
@@ -405,12 +405,12 @@ namespace KFrame
         _kf_route->SendToRoute( route, KFMsg::MSG_QUERY_FRIEND_RANK_LIST_ACK, &ack );
     }
 
-    uint32 KFRankShardModule::CalcRankZoneId( uint64 playerid, const KFRankSetting* setting )
+    uint32 KFRankShardModule::CalcRankZoneId( uint64 player_id, const KFRankSetting* setting )
     {
         auto zone_id = _invalid_int;
         if ( setting->_zone_type == KFMsg::ZoneRank )
         {
-            zone_id = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
+            zone_id = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), player_id );
         }
 
         return zone_id;

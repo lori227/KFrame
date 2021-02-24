@@ -58,7 +58,7 @@ namespace KFrame
 
     protected:
         // 发送登录验证结果消息
-        void SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime );
+        void SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 account_id, uint64 bantime );
     private:
         // 世界服务器id
         KFHash _world_hash;

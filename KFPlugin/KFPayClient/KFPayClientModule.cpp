@@ -54,7 +54,7 @@ namespace KFrame
             return _kf_display->SendToClient( player, KFMsg::PayIdError );
         }
 
-        auto source = __FORMAT__( "{}-{}-{}", playerid, kfmsg->payid(), KFGlobal::Instance()->STMakeUuid() );
+        auto source = __FORMAT__( "{}-{}-{}", player_id, kfmsg->payid(), KFGlobal::Instance()->STMakeUuid() );
         auto order = KFCrypto::Md5Encode( source );
 
         // 发送给auth服务器
@@ -62,7 +62,7 @@ namespace KFrame
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
         __JSON_SET_VALUE__( kfjson, __STRING__( payorder ), order );
-        __JSON_SET_VALUE__( kfjson, __STRING__( playerid ), playerid );
+        __JSON_SET_VALUE__( kfjson, __STRING__( playerid ), player_id );
         __JSON_SET_VALUE__( kfjson, __STRING__( payid ), setting->_id );
         __JSON_SET_VALUE__( kfjson, __STRING__( price ), setting->_price );
         _kf_http_client->MTGet( _url, kfjson, this, &KFPayClientModule::OnHttpApplyOrderCallBack );
@@ -72,8 +72,8 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( kfjson, recvdata );
 
-        auto playerid = __JSON_GET_UINT64__( kfjson, __STRING__( playerid ) );
-        auto player = _kf_player->FindPlayer( playerid, __FUNC_LINE__ );
+        auto player_id = __JSON_GET_UINT64__( kfjson, __STRING__( playerid ) );
+        auto player = _kf_player->FindPlayer( player_id, __FUNC_LINE__ );
         if ( player == nullptr )
         {
             return;
@@ -108,7 +108,7 @@ namespace KFrame
             StartQueryPayTimer( player );
             player->UpdateData( __STRING__( payorder ), kfmsg->order() );
 
-            __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] pay ok", playerid, kfmsg->payid(), kfmsg->order() );
+            __LOG_INFO__( "player=[{}] payid=[{}] order=[{}] pay ok", player_id, kfmsg->payid(), kfmsg->order() );
         }
         else
         {
@@ -125,7 +125,7 @@ namespace KFrame
         __CLIENT_PROTO_PARSE__( KFMsg::MsgQueryPayReq );
 
         // 如果出现异常, 客户端可以通过这个消息来查询充值信息
-        QueryPayData( playerid );
+        QueryPayData( player_id );
     }
 
     void KFPayClientModule::StartQueryPayTimer( EntityPtr player )
@@ -141,12 +141,12 @@ namespace KFrame
         QueryPayData( objectid );
     }
 
-    void KFPayClientModule::QueryPayData( uint64 playerid )
+    void KFPayClientModule::QueryPayData( uint64 player_id )
     {
         static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( querypay );
 
         __JSON_OBJECT_DOCUMENT__( kfjson );
-        __JSON_SET_VALUE__( kfjson, __STRING__( playerid ), playerid );
+        __JSON_SET_VALUE__( kfjson, __STRING__( playerid ), player_id );
         _kf_http_client->MTGet( _url, kfjson, this, &KFPayClientModule::OnHttpQueryPayCallBack );
     }
 
@@ -158,12 +158,12 @@ namespace KFrame
             return;
         }
 
-        auto playerid = __JSON_GET_UINT64__( kfjson, __STRING__( playerid ) );
-        auto player = _kf_player->FindPlayer( playerid );
+        auto player_id = __JSON_GET_UINT64__( kfjson, __STRING__( playerid ) );
+        auto player = _kf_player->FindPlayer( player_id );
         if ( player == nullptr )
         {
             // 应该重置订单状态
-            return __LOG_WARN__( "player=[{}] not online", playerid );
+            return __LOG_WARN__( "player=[{}] not online", player_id );
         }
 
         const auto& paydata = __JSON_GET_ARRRY__( kfjson, __STRING__( paydata ) );
@@ -176,7 +176,7 @@ namespace KFrame
             auto order = __JSON_GET_STRING__( kfpay, __STRING__( payorder ) );
             if ( payid.empty() || order.empty() )
             {
-                __LOG_ERROR__( "player=[{}] payid=[{}] order=[{}] empty", playerid, payid, order );
+                __LOG_ERROR__( "player=[{}] payid=[{}] order=[{}] empty", player_id, payid, order );
                 continue;
             }
 
@@ -184,7 +184,7 @@ namespace KFrame
         }
 
         // 停止定时器
-        __UN_TIMER_1__( playerid );
+        __UN_TIMER_1__( player_id );
     }
 
     void KFPayClientModule::ProcessPay( EntityPtr player, const std::string& payid, const std::string& order )

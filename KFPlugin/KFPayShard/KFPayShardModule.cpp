@@ -35,8 +35,8 @@ namespace KFrame
 
         auto order = __JSON_GET_STRING__( request, __STRING__( payorder ) );
         auto payid = __JSON_GET_STRING__( request, __STRING__( payid ) );
-        auto playerid = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
-        if ( playerid == _invalid_int || payid.empty() || order.empty() )
+        auto player_id = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
+        if ( player_id == _invalid_int || payid.empty() || order.empty() )
         {
             return _kf_http_server->SendCode( KFMsg::PayDataError );
         }
@@ -46,17 +46,17 @@ namespace KFrame
         auto orderkey = __FORMAT__( "{}:{}", __STRING__( payorder ), order );
 
         // 保存到数据库
-        auto redisdriver = __PAY_REDIS_DRIVER__;
+        auto redis_driver = __PAY_REDIS_DRIVER__;
 
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_SET_VALUE__( response, __STRING__( playerid ), playerid );
+        __JSON_SET_VALUE__( response, __STRING__( playerid ), player_id );
 
         // 保存订单信息
         StringMap values;
         __JSON_TO_MAP__( request, values );
-        redisdriver->Append( values, "hmset {}", orderkey );
-        redisdriver->Append( "expire {} {}", orderkey, _order_expire_time );
-        auto kfresult = redisdriver->Pipeline();
+        redis_driver->Append( values, "hmset {}", orderkey );
+        redis_driver->Append( "expire {} {}", orderkey, _order_expire_time );
+        auto kfresult = redis_driver->Pipeline();
         if ( kfresult->IsOk() )
         {
             __JSON_SET_VALUE__( response, __STRING__( payid ), payid );
@@ -78,8 +78,8 @@ namespace KFrame
         // 删除订单
         auto order = __JSON_GET_STRING__( request, __STRING__( payorder ) );
 
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
-        redisdriver->Execute( "del {}:{}", __STRING__( payorder ), order );
+        auto redis_driver = __AUTH_REDIS_DRIVER__;
+        redis_driver->Execute( "del {}:{}", __STRING__( payorder ), order );
 
         return _kf_http_server->SendCode( KFMsg::Ok );
     }
@@ -87,20 +87,20 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFPayShardModule::HandleQueryPay )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto playerid = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
+        auto player_id = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
 
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_SET_VALUE__( response, __STRING__( playerid ), playerid );
+        __JSON_SET_VALUE__( response, __STRING__( playerid ), player_id );
 
         // 查询玩家充值列表
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
-        auto kfresult = redisdriver->QueryList( "smembers {}:{}", __STRING__( paydata ), playerid );
+        auto redis_driver = __AUTH_REDIS_DRIVER__;
+        auto kfresult = redis_driver->QueryList( "smembers {}:{}", __STRING__( paydata ), player_id );
         if ( !kfresult->_value.empty() )
         {
             __JSON_ARRAY__( payarray );
             for ( auto& order : kfresult->_value )
             {
-                auto kfpaydata = redisdriver->QueryMap( "hgetall {}:{}", __STRING__( pay ), order );
+                auto kfpaydata = redis_driver->QueryMap( "hgetall {}:{}", __STRING__( pay ), order );
                 if ( !kfpaydata->_value.empty() )
                 {
                     auto flag = __TO_UINT32__( kfpaydata->_value[ __STRING__( flag ) ] );
@@ -113,10 +113,10 @@ namespace KFrame
                         __JSON_ADD_VALUE__( payarray, payjson );
 
                         // 更新状态
-                        auto updataresult = redisdriver->Execute( "hset {}:{} {} {}", __STRING__( pay ), order, __STRING__( flag ), 1 );
+                        auto updataresult = redis_driver->Execute( "hset {}:{} {} {}", __STRING__( pay ), order, __STRING__( flag ), 1 );
                         if ( !updataresult->IsOk() )
                         {
-                            __LOG_ERROR__( "update player=[{}] pay=[{}] flag failed", playerid, order );
+                            __LOG_ERROR__( "update player=[{}] pay=[{}] flag failed", player_id, order );
                         }
                     }
                 }
@@ -137,16 +137,16 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
         auto order = __JSON_GET_STRING__( request, __STRING__( payorder ) );
-        auto playerid = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
+        auto player_id = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
 
         // 删除充值信息
-        auto redisdriver = __AUTH_REDIS_DRIVER__;
-        redisdriver->Append( "del {}:{}", __STRING__( pay ), order );
-        redisdriver->Append( "srem {}:{} {}", __STRING__( paydata ), playerid, order );
-        auto kfresult = redisdriver->Pipeline();
+        auto redis_driver = __AUTH_REDIS_DRIVER__;
+        redis_driver->Append( "del {}:{}", __STRING__( pay ), order );
+        redis_driver->Append( "srem {}:{} {}", __STRING__( paydata ), player_id, order );
+        auto kfresult = redis_driver->Pipeline();
         if ( !kfresult->IsOk() )
         {
-            __LOG_WARN__( "player=[{}] finish pay=[{}] failed", playerid, order );
+            __LOG_WARN__( "player=[{}] finish pay=[{}] failed", player_id, order );
         }
 
         return _kf_http_server->SendCode( KFMsg::Ok );

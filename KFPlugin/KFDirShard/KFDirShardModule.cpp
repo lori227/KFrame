@@ -56,7 +56,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zone_id ) );
+        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto status = __JSON_GET_UINT32__( request, __STRING__( status ) );
         auto ok = _kf_dir_database->UpdateZoneStatus( zone_id, status );
         return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
@@ -74,7 +74,7 @@ namespace KFrame
         for ( auto& zonedata : zonedatalist )
         {
             __JSON_OBJECT__( kfzone );
-            __JSON_SET_VALUE__( kfzone, __STRING__( zone_id ), __TO_UINT32__( zonedata[ __STRING__( zone_id ) ] ) );
+            __JSON_SET_VALUE__( kfzone, __STRING__( zoneid ), __TO_UINT32__( zonedata[ __STRING__( zoneid ) ] ) );
             __JSON_SET_VALUE__( kfzone, __STRING__( name ), zonedata[ __STRING__( name ) ] );
             __JSON_SET_VALUE__( kfzone, __STRING__( ip ), zonedata[ __STRING__( ip ) ] );
             __JSON_SET_VALUE__( kfzone, __STRING__( port ), __TO_UINT32__( zonedata[ __STRING__( port ) ] ) );
@@ -87,11 +87,11 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryZoneIp )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zone_id ) );
+        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto zonedata = _kf_dir_database->QueryZoneIp( zone_id );
 
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_SET_VALUE__( response, __STRING__( zone_id ), zone_id );
+        __JSON_SET_VALUE__( response, __STRING__( zoneid ), zone_id );
         __JSON_SET_VALUE__( response, __STRING__( ip ), zonedata[ __STRING__( ip ) ] );
         __JSON_SET_VALUE__( response, __STRING__( port ), __TO_UINT32__( zonedata[ __STRING__( port ) ] ) );
         return _kf_http_server->SendResponse( response );
@@ -100,7 +100,7 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleZoneBalance )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zone_id ) );
+        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto count = __JSON_GET_UINT64__( request, __STRING__( count ) );
 
         auto ok = _kf_dir_database->ZoneBalance( zone_id, count );
@@ -111,7 +111,7 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
         auto flag = __JSON_GET_STRING__( request, __STRING__( flag ) );
-        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zone_id ) );
+        auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
         auto recommend = __JSON_GET_UINT32__( request, __STRING__( recommend ) );
         auto ok = _kf_dir_database->SetZoneRecommend( flag, zone_id, recommend == 1u );
         return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );

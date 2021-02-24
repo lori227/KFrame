@@ -79,7 +79,7 @@ namespace KFrame
 
     private:
         // 踢掉在线玩家
-        void KickAccount( uint32 type, uint64 accountid, StringMap& accountdata );
+        void KickAccount( uint32 type, uint64 account_id, StringMap& account_data );
     };
 }
 

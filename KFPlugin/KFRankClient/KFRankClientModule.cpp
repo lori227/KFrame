@@ -61,12 +61,12 @@ namespace KFrame
         _update_rank_list.clear();
     }
 
-    uint32 KFRankClientModule::CalcRankZoneId( uint64 playerid, const KFRankSetting* setting )
+    uint32 KFRankClientModule::CalcRankZoneId( uint64 player_id, const KFRankSetting* setting )
     {
         auto zone_id = _invalid_int;
         if ( setting->_zone_type == KFMsg::ZoneRank )
         {
-            zone_id = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), playerid );
+            zone_id = KFGlobal::Instance()->STUuidZoneId( __STRING__( player ), player_id );
         }
 
         return zone_id;
@@ -75,8 +75,8 @@ namespace KFrame
     void KFRankClientModule::UpdateRankDataToShard( EntityPtr player, const KFRankSetting* setting )
     {
         // 计算分区id
-        auto playerid = player->GetKeyID();
-        auto zone_id = CalcRankZoneId( playerid, setting );
+        auto player_id = player->GetKeyID();
+        auto zone_id = CalcRankZoneId( player_id, setting );
 
         // 计算排行榜积分
         auto rankscore = CalcRankDataScore( player, setting );
@@ -84,11 +84,11 @@ namespace KFrame
         // 更新到排行榜
         KFMsg::S2SUpdateRankDataReq req;
         req.set_zoneid( zone_id );
-        req.set_playerid( playerid );
+        req.set_playerid( player_id );
         req.set_rankid( setting->_id );
 
         auto pbrankdata = req.mutable_pbrankdata();
-        pbrankdata->set_playerid( playerid );
+        pbrankdata->set_playerid( player_id );
         pbrankdata->set_rankscore( rankscore );
 
         // 显示的数据
@@ -107,7 +107,7 @@ namespace KFrame
             }
         }
 
-        _kf_route->RepeatToRand( playerid, __STRING__( rank ), KFMsg::S2S_UPDATE_RANK_DATA_REQ, &req );
+        _kf_route->RepeatToRand( player_id, __STRING__( rank ), KFMsg::S2S_UPDATE_RANK_DATA_REQ, &req );
     }
 
     uint64 KFRankClientModule::CalcRankDataScore( EntityPtr player, const KFRankSetting* setting )

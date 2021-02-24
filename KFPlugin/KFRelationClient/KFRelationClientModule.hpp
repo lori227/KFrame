@@ -103,11 +103,11 @@ namespace KFrame
 
         // 好友申请操作
         void ReplyRelationAllInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate );
-        void ReplyRelationInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate, uint64 playerid );
+        void ReplyRelationInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate, uint64 player_id );
         uint64 ReplyInvite( EntityPtr player, const KFRelationSetting* setting, uint32 operate, DataPtr kfinvite );
 
         // 添加关系
-        void AddRelationToRelation( EntityPtr player, uint64 playerid, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* setting );
+        void AddRelationToRelation( EntityPtr player, uint64 player_id, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* setting );
 
         // 通过邀请名查找关系属性配置
         const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name );

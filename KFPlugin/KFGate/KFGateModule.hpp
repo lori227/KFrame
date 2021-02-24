@@ -83,7 +83,7 @@ namespace KFrame
 
     protected:
         // 登录到登录服务器
-        void LoginToLogin( uint64 sessionid, uint64 accountid, const std::string& token );
+        void LoginToLogin( uint64 sessionid, uint64 account_id, const std::string& token );
 
         // 发送登录失败消息
         void SendLoginAckMessage( uint64 sessionid, uint32 result, uint64 bantime );

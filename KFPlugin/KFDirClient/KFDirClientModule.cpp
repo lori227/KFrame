@@ -11,7 +11,7 @@ namespace KFrame
     {
     }
 
-    void KFDirClientModule::UpdateGateToDir( uint64 appid, const std::string& ip, uint32 port, uint32 count, uint32 expiretime )
+    void KFDirClientModule::UpdateGateToDir( uint64 appid, const std::string& ip, uint32 port, uint32 count, uint32 expire_time )
     {
         static auto _url = _kf_ip_address->GetDirUrl() + __STRING__( zoneupdate );
 
@@ -27,7 +27,7 @@ namespace KFrame
         __JSON_SET_VALUE__( kfjson, __STRING__( ip ), ip );
         __JSON_SET_VALUE__( kfjson, __STRING__( port ), port );
         __JSON_SET_VALUE__( kfjson, __STRING__( count ), count );
-        __JSON_SET_VALUE__( kfjson, __STRING__( time ), expiretime );
+        __JSON_SET_VALUE__( kfjson, __STRING__( time ), expire_time );
         _kf_http_client->MTGet< KFDirClientModule >( _url, kfjson );
     }
 
@@ -46,7 +46,7 @@ namespace KFrame
             // 推荐小区
             static auto _recommend_url = _kf_ip_address->GetDirUrl() + __STRING__( zonerecommend );
             __JSON_OBJECT_DOCUMENT__( kfjson );
-            __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), setting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), setting->_id );
             __JSON_SET_VALUE__( kfjson, __STRING__( flag ), setting->_flag );
             __JSON_SET_VALUE__( kfjson, __STRING__( recommend ), setting->_recommend );
             _kf_http_client->MTGet<KFDirClientModule>( _recommend_url, kfjson );
@@ -61,7 +61,7 @@ namespace KFrame
 
             __JSON_OBJECT_DOCUMENT__( kfjson );
             __JSON_SET_VALUE__( kfjson, __STRING__( name ), zonename );
-            __JSON_SET_VALUE__( kfjson, __STRING__( zone_id ), setting->_id );
+            __JSON_SET_VALUE__( kfjson, __STRING__( zoneid ), setting->_id );
             __JSON_SET_VALUE__( kfjson, __STRING__( flag ), setting->_flag );
             __JSON_SET_VALUE__( kfjson, __STRING__( loginzoneid ), setting->_login_id );
 
@@ -92,7 +92,7 @@ namespace KFrame
 
         __JSON_OBJECT_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __STRING__( count ), count );
-        __JSON_SET_VALUE__( sendjson, __STRING__( zone_id ), zone_id );
+        __JSON_SET_VALUE__( sendjson, __STRING__( zoneid ), zone_id );
         _kf_http_client->MTGet< KFDirClientModule >( _update_url, sendjson );
     }
 

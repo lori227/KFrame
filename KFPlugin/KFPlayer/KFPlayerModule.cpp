@@ -217,9 +217,9 @@ namespace KFrame
         }
     }
 
-    void KFPlayerModule::RemovePlayer( uint64 playerid )
+    void KFPlayerModule::RemovePlayer( uint64 player_id )
     {
-        _kf_component->RemoveEntity( playerid );
+        _kf_component->RemoveEntity( player_id );
     }
 
     void KFPlayerModule::RemovePlayer( EntityPtr player )
@@ -295,29 +295,29 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    EntityPtr KFPlayerModule::FindPlayer( uint64 playerid )
+    EntityPtr KFPlayerModule::FindPlayer( uint64 player_id )
     {
-        return _kf_component->FindEntity( playerid );
+        return _kf_component->FindEntity( player_id );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     EntityPtr KFPlayerModule::Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata )
     {
-        auto player = _kf_component->CreateEntity( pblogin->playerid(), pbplayerdata );
+        auto player = _kf_component->CreateEntity( pblogin->player_id(), pbplayerdata );
         if ( player == nullptr )
         {
             return nullptr;
         }
 
         // 创建玩家
-        OnEnterCreatePlayer( player, pblogin->playerid() );
+        OnEnterCreatePlayer( player, pblogin->player_id() );
 
         // 玩家账号信息
         player->Set( __STRING__( ip ), pblogin->ip() );
         player->Set( __STRING__( gateid ), pblogin->gateid() );
         player->Set( __STRING__( channel ), pblogin->channel() );
         player->Set( __STRING__( account ), pblogin->account() );
-        player->Set( __STRING__( accountid ), pblogin->accountid() );
+        player->Set( __STRING__( accountid ), pblogin->account_id() );
 
         auto kfbasic = player->Find( __STRING__( basic ) );
         kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::OnlineStatus );
@@ -325,7 +325,7 @@ namespace KFrame
         kfbasic->Set( __STRING__( server_id ), KFGlobal::Instance()->_app_id->GetId() );
 
         // 渠道数据
-        auto pbchanneldata = &pblogin->channeldata();
+        auto pbchanneldata = &pblogin->channel_data();
         for ( auto iter = pbchanneldata->begin(); iter != pbchanneldata->end(); ++iter )
         {
             auto& name = iter->first;
@@ -375,9 +375,9 @@ namespace KFrame
         return player;
     }
 
-    EntityPtr KFPlayerModule::ReLogin( uint64 playerid, uint64 gateid )
+    EntityPtr KFPlayerModule::ReLogin( uint64 player_id, uint64 gateid )
     {
-        auto player = FindPlayer( playerid );
+        auto player = FindPlayer( player_id );
         if ( player == nullptr )
         {
             return nullptr;
@@ -436,12 +436,12 @@ namespace KFrame
         }
     }
 
-    void KFPlayerModule::OnEnterCreatePlayer( EntityPtr player, uint64 playerid )
+    void KFPlayerModule::OnEnterCreatePlayer( EntityPtr player, uint64 player_id )
     {
         // 判断新玩家
         auto global = KFGlobal::Instance();
         auto basicid = player->Get( __STRING__( basic ), __STRING__( id ) );
-        if ( basicid == playerid )
+        if ( basicid == player_id )
         {
             return;
         }
@@ -449,7 +449,7 @@ namespace KFrame
         player->InitData();
         player->SetNew( true );
         player->Set( __STRING__( birthday ), global->_real_time );
-        player->Set( __STRING__( basic ), __STRING__( id ), playerid );
+        player->Set( __STRING__( basic ), __STRING__( id ), player_id );
 
         for ( auto& iter : _new_player_function._objects )
         {

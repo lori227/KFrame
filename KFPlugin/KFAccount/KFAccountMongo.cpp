@@ -7,403 +7,401 @@ namespace KFrame
 
     StringMap KFAccountMongo::QueryCreateAccount( const std::string& account, uint32 channel )
     {
-        StringMap accountdata;
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        StringMap account_data;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
 
         // 先查询是否存在
         auto table = __FORMAT__( "{}:{}", __STRING__( account ), channel );
-        auto kfquery = mongodriver->QueryUInt64( table, account, __STRING__( accountid ) );
-        if ( kfquery->_value != _invalid_int )
+        auto query_account_id = mongo_driver->QueryUInt64( table, account, __STRING__( accountid ) );
+        if ( query_account_id->_value != _invalid_int )
         {
-            auto kfaccountdata = mongodriver->QueryRecord( __STRING__( accountid ), kfquery->_value );
-            __DBVALUE_TO_MAP__( kfaccountdata->_value, accountdata );
-            return accountdata;
+            auto query_account_data = mongo_driver->QueryRecord( __STRING__( accountid ), query_account_id->_value );
+            __DBVALUE_TO_MAP__( query_account_data->_value, account_data );
+            return account_data;
         }
 
-        auto accountid = KFGlobal::Instance()->MTMakeUuid( __STRING__( account ) );
-        if ( !mongodriver->Insert( table, account, __STRING__( accountid ), accountid ) )
+        auto account_id = KFGlobal::Instance()->MTMakeUuid( __STRING__( account ) );
+        if ( !mongo_driver->Insert( table, account, __STRING__( accountid ), account_id ) )
         {
             __LOG_DEBUG__( "account[{}] channel[{}] save account failed", account, channel );
-            return accountdata;
+            return account_data;
         }
 
         // 创建账号id
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( account ), account );
-        dbvalue.AddValue( __STRING__( channel ), channel );
-        dbvalue.AddValue( __STRING__( accountid ), accountid );
-        if ( !mongodriver->Insert( __STRING__( accountid ), accountid, dbvalue ) )
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( account ), account );
+        db_value.AddValue( __STRING__( channel ), channel );
+        db_value.AddValue( __STRING__( accountid ), account_id );
+        if ( !mongo_driver->Insert( __STRING__( accountid ), account_id, db_value ) )
         {
-            __LOG_DEBUG__( "account[{}] channel[{}] save accountid failed", account, channel );
-            return accountdata;
+            __LOG_DEBUG__( "account[{}] channel[{}] save account_id failed", account, channel );
+            return account_data;
         }
 
-        __DBVALUE_TO_MAP__( dbvalue, accountdata );
-        __LOG_DEBUG__( "create account successfully, account[{}] accountid[{}] channel[{}] ", account, accountid, channel );
-        return accountdata;
+        __DBVALUE_TO_MAP__( db_value, account_data );
+        __LOG_DEBUG__( "create account successfully, account=[{}] account_id=[{}] channel=[{}] ", account, account_id, channel );
+        return account_data;
     }
 
-    void KFAccountMongo::SaveChannelData( uint64 accountid, KFJson& channeldata )
+    void KFAccountMongo::SaveChannelData( uint64 account_id, KFJson& channel_data )
     {
-        if ( !__JSON_HAS_MEMBER__( channeldata, __STRING__( extend ) ) )
+        if ( !__JSON_HAS_MEMBER__( channel_data, __STRING__( extend ) ) )
         {
             return;
         }
 
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
 
-        auto& kfextend = channeldata[ __STRING__( extend ) ];
-        KFDBValue dbvalue;
-        __JSON_TO_DBVALUE__( kfextend, dbvalue );
-        mongodriver->Insert( __STRING__( extend ), accountid, dbvalue );
+        auto& extend_data = channel_data[ __STRING__( extend ) ];
+        KFDBValue db_value;
+        __JSON_TO_DBVALUE__( extend_data, db_value );
+        mongo_driver->Insert( __STRING__( extend ), account_id, db_value );
     }
 
-    StringMap KFAccountMongo::QueryChannelData( uint64 accountid )
+    StringMap KFAccountMongo::QueryChannelData( uint64 account_id )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryRecord( __STRING__( extend ), accountid );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryRecord( __STRING__( extend ), account_id );
 
-        StringMap channeldata;
-        __DBVALUE_TO_MAP__( kfresult->_value, channeldata );
-        return channeldata;
+        StringMap channel_data;
+        __DBVALUE_TO_MAP__( result->_value, channel_data );
+        return channel_data;
     }
 
-    std::string KFAccountMongo::MakeAccountToken( const std::string& account, uint32 channel, uint64 accountid, uint32 expiretime )
+    std::string KFAccountMongo::MakeAccountToken( const std::string& account, uint32 channel, uint64 account_id, uint32 expire_time )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        mongodriver->CreateIndex( __STRING__( token ), MongoKeyword::_expire );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        mongo_driver->CreateIndex( __STRING__( token ), MongoKeyword::_expire );
 
-        auto token = KFAccountLogic::MakeAccountToken( account, channel, accountid, expiretime );
+        auto token = KFAccountLogic::MakeAccountToken( account, channel, account_id, expire_time );
 
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( token ), token );
-        dbvalue.AddValue( __STRING__( account ), account );
-        dbvalue.AddValue( __STRING__( channel ), channel );
-        dbvalue.AddValue( MongoKeyword::_expire, expiretime );
-        mongodriver->Insert( __STRING__( token ), accountid, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( token ), token );
+        db_value.AddValue( __STRING__( account ), account );
+        db_value.AddValue( __STRING__( channel ), channel );
+        db_value.AddValue( MongoKeyword::_expire, expire_time );
+        mongo_driver->Insert( __STRING__( token ), account_id, db_value );
         return token;
     }
 
-    StringMap KFAccountMongo::VerifyAccountToken( uint64 accountid, const std::string& token )
+    StringMap KFAccountMongo::VerifyAccountToken( uint64 account_id, const std::string& token )
     {
-        StringMap accountdata;
+        StringMap account_data;
 
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kftokenresult = mongodriver->QueryRecord( __STRING__( token ), accountid );
-        if ( !kftokenresult->_value.IsEmpty() )
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryRecord( __STRING__( token ), account_id );
+        if ( !result->_value.IsEmpty() )
         {
-            auto querytoken = kftokenresult->_value.FindStrValue( __STRING__( token ) );
-            if ( querytoken == token )
+            auto query_token = result->_value.FindStrValue( __STRING__( token ) );
+            if ( query_token == token )
             {
-                __DBVALUE_TO_MAP__( kftokenresult->_value, accountdata );
+                __DBVALUE_TO_MAP__( result->_value, account_data );
             }
         }
 
-        return accountdata;
+        return account_data;
     }
 
-    void KFAccountMongo::SaveZoneToken( const std::string& account, uint32 channel, uint64 accountid, uint32 zone_id, const std::string& token, uint32 expiretime )
+    void KFAccountMongo::SaveZoneToken( const std::string& account, uint32 channel, uint64 account_id, uint32 zone_id, const std::string& token, uint32 expire_time )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
 
         auto table = __FORMAT__( "{}:{}", __STRING__( zonetoken ), zone_id );
-        mongodriver->CreateIndex( table, MongoKeyword::_expire );
+        mongo_driver->CreateIndex( table, MongoKeyword::_expire );
 
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( token ), token );
-        dbvalue.AddValue( __STRING__( account ), account );
-        dbvalue.AddValue( __STRING__( channel ), channel );
-        dbvalue.AddValue( __STRING__( accountid ), accountid );
-        dbvalue.AddValue( MongoKeyword::_expire, expiretime );
-        mongodriver->Insert( table, accountid, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( token ), token );
+        db_value.AddValue( __STRING__( account ), account );
+        db_value.AddValue( __STRING__( channel ), channel );
+        db_value.AddValue( __STRING__( accountid ), account_id );
+        db_value.AddValue( MongoKeyword::_expire, expire_time );
+        mongo_driver->Insert( table, account_id, db_value );
     }
 
-    StringMap KFAccountMongo::VerifyZoneToken( uint64 accountid, uint32 zone_id, const std::string& token )
+    StringMap KFAccountMongo::VerifyZoneToken( uint64 account_id, uint32 zone_id, const std::string& token )
     {
-        StringMap accountdata;
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        StringMap account_data;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
 
         auto table = __FORMAT__( "{}:{}", __STRING__( zonetoken ), zone_id );
-        auto kftokenresult = mongodriver->QueryRecord( table, accountid );
-        if ( kftokenresult->IsOk() )
+        auto result = mongo_driver->QueryRecord( table, account_id );
+        if ( result->IsOk() )
         {
-            auto querytoken = kftokenresult->_value.FindStrValue( __STRING__( token ) );
-            if ( querytoken == token )
+            auto query_token = result->_value.FindStrValue( __STRING__( token ) );
+            if ( query_token == token )
             {
-                __DBVALUE_TO_MAP__( kftokenresult->_value, accountdata );
+                __DBVALUE_TO_MAP__( result->_value, account_data );
             }
         }
 
-        return accountdata;
+        return account_data;
     }
 
-    void KFAccountMongo::SaveLoginData( uint64 accountid, const std::string& ip, uint32 zone_id )
+    void KFAccountMongo::SaveLoginData( uint64 account_id, const std::string& ip, uint32 zone_id )
     {
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( ip ), ip );
-        dbvalue.AddValue( __STRING__( zone_id ), zone_id );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( ip ), ip );
+        db_value.AddValue( __STRING__( zoneid ), zone_id );
 
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        mongodriver->Insert( __STRING__( accountid ), accountid, dbvalue );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        mongo_driver->Insert( __STRING__( accountid ), account_id, db_value );
     }
 
-    std::tuple<uint64, bool> KFAccountMongo::QueryCreatePlayer( uint64 accountid, uint32 zone_id )
+    std::tuple<uint64, bool> KFAccountMongo::QueryCreatePlayer( uint64 account_id, uint32 zone_id )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
 
         // 查询是否存在
-        auto strkey = __FORMAT__( "{}:{}", __STRING__( zone ), zone_id );
-        auto queryplayerid = mongodriver->QueryUInt64( __STRING__( accountid ), accountid, strkey );
-        if ( !queryplayerid->IsOk() )
+        auto zone_key = __FORMAT__( "{}:{}", __STRING__( zone ), zone_id );
+        auto query_player_id = mongo_driver->QueryUInt64( __STRING__( accountid ), account_id, zone_key );
+        if ( !query_player_id->IsOk() )
         {
             return std::make_tuple( _invalid_int, false );
         }
 
         // 存在playerid, 直接返回
-        if ( queryplayerid->_value != _invalid_int )
+        if ( query_player_id->_value != _invalid_int )
         {
-            return std::make_tuple( queryplayerid->_value, false );
+            return std::make_tuple( query_player_id->_value, false );
         }
 
         // 创建playerid
-        auto playerid = KFGlobal::Instance()->MTMakeUuid( __STRING__( player ), zone_id );
-        mongodriver->Insert( __STRING__( player ), playerid, __STRING__( accountid ), accountid );
-        if ( !mongodriver->Insert( __STRING__( accountid ), accountid, strkey, playerid ) )
+        auto player_id = KFGlobal::Instance()->MTMakeUuid( __STRING__( player ), zone_id );
+        mongo_driver->Insert( __STRING__( player ), player_id, __STRING__( accountid ), account_id );
+        if ( !mongo_driver->Insert( __STRING__( accountid ), account_id, zone_key, player_id ) )
         {
             return std::make_tuple( _invalid_int, false );
         }
 
-        return std::make_tuple( playerid, true );
+        return std::make_tuple( player_id, true );
     }
 
-    bool KFAccountMongo::UpdateOnline( uint64 accountid, uint64 playerid, uint64 worldid, uint64 gameid )
+    bool KFAccountMongo::UpdateOnline( uint64 account_id, uint64 player_id, uint64 world_id, uint64 game_id )
     {
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( playerid ), playerid );
-        dbvalue.AddValue( __STRING__( world ), worldid );
-        dbvalue.AddValue( __STRING__( game ), gameid );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( playerid ), player_id );
+        db_value.AddValue( __STRING__( world ), world_id );
+        db_value.AddValue( __STRING__( game ), game_id );
 
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        return mongodriver->Insert( __STRING__( accountid ), accountid, dbvalue );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        return mongo_driver->Insert( __STRING__( accountid ), account_id, db_value );
     }
 
-    void KFAccountMongo::SaveWeiXinAccessToken( const std::string& machinecode, const std::string& openid,
-            const std::string& scope, const std::string& accesstoken, uint32 expirestime )
+    void KFAccountMongo::SaveWeiXinAccessToken( const std::string& machine_code, const std::string& open_id,
+            const std::string& scope, const std::string& access_token, uint32 expire_time )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        mongodriver->CreateIndex( __STRING__( access_token ), MongoKeyword::_expire );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        mongo_driver->CreateIndex( __STRING__( access_token ), MongoKeyword::_expire );
 
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( token ), accesstoken );
-        dbvalue.AddValue( __STRING__( openid ), openid );
-        dbvalue.AddValue( __STRING__( scope ), scope );
-        dbvalue.AddValue( MongoKeyword::_expire, expirestime - 200 );
-        mongodriver->Insert( __STRING__( access_token ), machinecode, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( token ), access_token );
+        db_value.AddValue( __STRING__( openid ), open_id );
+        db_value.AddValue( __STRING__( scope ), scope );
+        db_value.AddValue( MongoKeyword::_expire, expire_time - 200 );
+        mongo_driver->Insert( __STRING__( access_token ), machine_code, db_value );
     }
 
-    StringMap KFAccountMongo::QueryWeiXinAccessToken( const std::string& machinecode )
+    StringMap KFAccountMongo::QueryWeiXinAccessToken( const std::string& machine_code )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryRecord( __STRING__( access_token ), machinecode );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryRecord( __STRING__( access_token ), machine_code );
 
-        StringMap tokendata;
-        __DBVALUE_TO_MAP__( kfresult->_value, tokendata );
-        return tokendata;
+        StringMap token_data;
+        __DBVALUE_TO_MAP__( result->_value, token_data );
+        return token_data;
     }
 
-    void KFAccountMongo::SaveWeiXinRefreshToken( const std::string& machinecode, const std::string& refreshtoken )
+    void KFAccountMongo::SaveWeiXinRefreshToken( const std::string& machine_code, const std::string& refresh_token )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        mongodriver->CreateIndex( __STRING__( refresh_token ), MongoKeyword::_expire );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        mongo_driver->CreateIndex( __STRING__( refresh_token ), MongoKeyword::_expire );
 
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( token ), refreshtoken );
-        dbvalue.AddValue( MongoKeyword::_expire, 2590000 );
-        mongodriver->Insert( __STRING__( refresh_token ), machinecode, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( token ), refresh_token );
+        db_value.AddValue( MongoKeyword::_expire, 2590000 );
+        mongo_driver->Insert( __STRING__( refresh_token ), machine_code, db_value );
     }
 
-    std::string KFAccountMongo::QueryWeiXinRefreshToken( const std::string& machinecode )
+    std::string KFAccountMongo::QueryWeiXinRefreshToken( const std::string& machine_code )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryString( __STRING__( refresh_token ), machinecode, __STRING__( token ) );
-        return kfresult->_value;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryString( __STRING__( refresh_token ), machine_code, __STRING__( token ) );
+        return result->_value;
     }
 
     uint64 KFAccountMongo::CheckIpInBlackList( const std::string& ip )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryUInt64( __STRING__( ipblacklist ), ip, __STRING__( endtime ) );
-        return kfresult->_value;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryUInt64( __STRING__( ipblacklist ), ip, __STRING__( endtime ) );
+        return result->_value;
     }
 
     bool KFAccountMongo::AddIpBlackList( const std::string& ip, uint64 time, const std::string& comment )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        mongodriver->CreateIndex( __STRING__( ipblacklist ), MongoKeyword::_expire );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        mongo_driver->CreateIndex( __STRING__( ipblacklist ), MongoKeyword::_expire );
 
-
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
-        dbvalue.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
-        dbvalue.AddValue( __STRING__( ip ), ip );
-        dbvalue.AddValue( __STRING__( comment ), comment );
-        dbvalue.AddValue( MongoKeyword::_expire, time );
-        return mongodriver->Insert( __STRING__( ipblacklist ), ip, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
+        db_value.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
+        db_value.AddValue( __STRING__( ip ), ip );
+        db_value.AddValue( __STRING__( comment ), comment );
+        db_value.AddValue( MongoKeyword::_expire, time );
+        return mongo_driver->Insert( __STRING__( ipblacklist ), ip, db_value );
     }
 
     bool KFAccountMongo::RemoveIpBlackList( const std::string& ip )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        return mongodriver->Delete( __STRING__( ipblacklist ), ip );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        return mongo_driver->Delete( __STRING__( ipblacklist ), ip );
     }
 
     StringMapList KFAccountMongo::QueryIpBlackList()
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryListRecord( __STRING__( ipblacklist ) );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryListRecord( __STRING__( ipblacklist ) );
 
-        StringMapList stringmaplist;
-        for ( auto& dbvalue : kfresult->_value )
+        StringMapList ip_black_list;
+        for ( auto& db_value : result->_value )
         {
             StringMap values;
-            __DBVALUE_TO_MAP__( dbvalue, values );
-            stringmaplist.emplace_back( values );
+            __DBVALUE_TO_MAP__( db_value, values );
+            ip_black_list.emplace_back( values );
         }
 
-        return stringmaplist;
+        return ip_black_list;
     }
 
     bool KFAccountMongo::CheckIpInWhiteList( const std::string& ip )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryUInt64( __STRING__( ipwhitelist ), ip, __STRING__( endtime ) );
-        return kfresult->_value > 0u;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryUInt64( __STRING__( ipwhitelist ), ip, __STRING__( endtime ) );
+        return result->_value > 0u;
     }
 
     bool KFAccountMongo::AddIpWhiteList( const std::string& ip, uint64 time, const std::string& comment )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        mongodriver->CreateIndex( __STRING__( ipwhitelist ), MongoKeyword::_expire );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        mongo_driver->CreateIndex( __STRING__( ipwhitelist ), MongoKeyword::_expire );
 
-
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
-        dbvalue.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
-        dbvalue.AddValue( __STRING__( ip ), ip );
-        dbvalue.AddValue( __STRING__( comment ), comment );
-        dbvalue.AddValue( MongoKeyword::_expire, time );
-        return mongodriver->Insert( __STRING__( ipwhitelist ), ip, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
+        db_value.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
+        db_value.AddValue( __STRING__( ip ), ip );
+        db_value.AddValue( __STRING__( comment ), comment );
+        db_value.AddValue( MongoKeyword::_expire, time );
+        return mongo_driver->Insert( __STRING__( ipwhitelist ), ip, db_value );
     }
 
     bool KFAccountMongo::RemoveIpWhiteList( const std::string& ip )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        return mongodriver->Delete( __STRING__( ipwhitelist ), ip );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        return mongo_driver->Delete( __STRING__( ipwhitelist ), ip );
     }
 
     StringMapList KFAccountMongo::QueryIpWhiteList()
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryListRecord( __STRING__( ipwhitelist ) );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryListRecord( __STRING__( ipwhitelist ) );
 
-        StringMapList stringmaplist;
-        for ( auto& dbvalue : kfresult->_value )
+        StringMapList ip_white_list;
+        for ( auto& db_value : result->_value )
         {
             StringMap values;
-            __DBVALUE_TO_MAP__( dbvalue, values );
-            stringmaplist.emplace_back( values );
+            __DBVALUE_TO_MAP__( db_value, values );
+            ip_white_list.emplace_back( values );
         }
 
-        return stringmaplist;
+        return ip_white_list;
     }
 
-    uint64 KFAccountMongo::CheckAccountInBlackList( uint64 accountid )
+    uint64 KFAccountMongo::CheckAccountInBlackList( uint64 account_id )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryUInt64( __STRING__( accountblacklist ), accountid, __STRING__( endtime ) );
-        return kfresult->_value;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryUInt64( __STRING__( accountblacklist ), account_id, __STRING__( endtime ) );
+        return result->_value;
     }
 
-    bool KFAccountMongo::AddAccountBlackList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
+    bool KFAccountMongo::AddAccountBlackList( uint64 account_id, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        mongodriver->CreateIndex( __STRING__( accountblacklist ), MongoKeyword::_expire );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        mongo_driver->CreateIndex( __STRING__( accountblacklist ), MongoKeyword::_expire );
 
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
-        dbvalue.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
-        dbvalue.AddValue( __STRING__( account ), account );
-        dbvalue.AddValue( __STRING__( channel ), channel );
-        dbvalue.AddValue( __STRING__( accountid ), accountid );
-        dbvalue.AddValue( __STRING__( comment ), comment );
-        dbvalue.AddValue( MongoKeyword::_expire, time );
-        return mongodriver->Insert( __STRING__( accountblacklist ), accountid, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
+        db_value.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
+        db_value.AddValue( __STRING__( account ), account );
+        db_value.AddValue( __STRING__( channel ), channel );
+        db_value.AddValue( __STRING__( accountid ), account_id );
+        db_value.AddValue( __STRING__( comment ), comment );
+        db_value.AddValue( MongoKeyword::_expire, time );
+        return mongo_driver->Insert( __STRING__( accountblacklist ), account_id, db_value );
     }
 
-    bool KFAccountMongo::RemoveAccountBlackList( uint64 accountid )
+    bool KFAccountMongo::RemoveAccountBlackList( uint64 account_id )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        return mongodriver->Delete( __STRING__( accountblacklist ), accountid );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        return mongo_driver->Delete( __STRING__( accountblacklist ), account_id );
     }
 
     StringMapList KFAccountMongo::QueryAccountBlackList()
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryListRecord( __STRING__( accountblacklist ) );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryListRecord( __STRING__( accountblacklist ) );
 
-        StringMapList stringmaplist;
-        for ( auto& dbvalue : kfresult->_value )
+        StringMapList account_black_list;
+        for ( auto& db_value : result->_value )
         {
             StringMap values;
-            __DBVALUE_TO_MAP__( dbvalue, values );
-            stringmaplist.emplace_back( values );
+            __DBVALUE_TO_MAP__( db_value, values );
+            account_black_list.emplace_back( values );
         }
 
-        return stringmaplist;
+        return account_black_list;
     }
 
-    bool KFAccountMongo::CheckAccountInWhiteList( uint64 accountid )
+    bool KFAccountMongo::CheckAccountInWhiteList( uint64 account_id )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryUInt64( __STRING__( accountwhitelist ), accountid, __STRING__( endtime ) );
-        return kfresult->_value > 0u;
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryUInt64( __STRING__( accountwhitelist ), account_id, __STRING__( endtime ) );
+        return result->_value > 0u;
     }
 
-    bool KFAccountMongo::AddAccountWhiteList( uint64 accountid, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
+    bool KFAccountMongo::AddAccountWhiteList( uint64 account_id, const std::string& account, uint32 channel, uint64 time, const std::string& comment )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        mongodriver->CreateIndex( __STRING__( accountwhitelist ), MongoKeyword::_expire );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        mongo_driver->CreateIndex( __STRING__( accountwhitelist ), MongoKeyword::_expire );
 
-        KFDBValue dbvalue;
-        dbvalue.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
-        dbvalue.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
-        dbvalue.AddValue( __STRING__( account ), account );
-        dbvalue.AddValue( __STRING__( channel ), channel );
-        dbvalue.AddValue( __STRING__( accountid ), accountid );
-        dbvalue.AddValue( __STRING__( comment ), comment );
-        dbvalue.AddValue( MongoKeyword::_expire, time );
-        return mongodriver->Insert( __STRING__( accountwhitelist ), accountid, dbvalue );
+        KFDBValue db_value;
+        db_value.AddValue( __STRING__( starttime ), KFGlobal::Instance()->_real_time );
+        db_value.AddValue( __STRING__( endtime ), KFGlobal::Instance()->_real_time + time );
+        db_value.AddValue( __STRING__( account ), account );
+        db_value.AddValue( __STRING__( channel ), channel );
+        db_value.AddValue( __STRING__( accountid ), account_id );
+        db_value.AddValue( __STRING__( comment ), comment );
+        db_value.AddValue( MongoKeyword::_expire, time );
+        return mongo_driver->Insert( __STRING__( accountwhitelist ), account_id, db_value );
     }
 
-    bool KFAccountMongo::RemoveAccountWhiteList( uint64 accountid )
+    bool KFAccountMongo::RemoveAccountWhiteList( uint64 account_id )
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        return mongodriver->Delete( __STRING__( accountwhitelist ), accountid );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        return mongo_driver->Delete( __STRING__( accountwhitelist ), account_id );
     }
 
     StringMapList KFAccountMongo::QueryAccountWhiteList()
     {
-        auto mongodriver = __ACCOUNT_MONGO_DRIVER__;
-        auto kfresult = mongodriver->QueryListRecord( __STRING__( accountwhitelist ) );
+        auto mongo_driver = __ACCOUNT_MONGO_DRIVER__;
+        auto result = mongo_driver->QueryListRecord( __STRING__( accountwhitelist ) );
 
-        StringMapList stringmaplist;
-        for ( auto& dbvalue : kfresult->_value )
+        StringMapList account_white_list;
+        for ( auto& db_value : result->_value )
         {
             StringMap values;
-            __DBVALUE_TO_MAP__( dbvalue, values );
-            stringmaplist.emplace_back( values );
+            __DBVALUE_TO_MAP__( db_value, values );
+            account_white_list.emplace_back( values );
         }
 
-        return stringmaplist;
+        return account_white_list;
     }
 }

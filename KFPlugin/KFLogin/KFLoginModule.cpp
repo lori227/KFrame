@@ -75,11 +75,11 @@ namespace KFrame
         }
 
         auto& token = kfmsg->token();
-        auto accountid = kfmsg->accountid();
+        auto account_id = kfmsg->account_id();
         auto sessionid = kfmsg->sessionid();
         static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( verify );
 
-        __LOG_DEBUG__( "accountid[{}] login verify", accountid );
+        __LOG_DEBUG__( "account_id[{}] login verify", account_id );
 
         // 认证服务器, 验证token
         __JSON_OBJECT_DOCUMENT__( sendjson );
@@ -87,8 +87,8 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __STRING__( gateid ), gateid );
         __JSON_SET_VALUE__( sendjson, __STRING__( token ), kfmsg->token() );
         __JSON_SET_VALUE__( sendjson, __STRING__( sessionid ), sessionid );
-        __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), kfmsg->accountid() );
-        __JSON_SET_VALUE__( sendjson, __STRING__( zone_id ), setting->_id );
+        __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), kfmsg->account_id() );
+        __JSON_SET_VALUE__( sendjson, __STRING__( zoneid ), setting->_id );
         __JSON_SET_VALUE__( sendjson, __STRING__( datazoneid ), setting->_data_id );
         _kf_http_client->MTGet( _url, sendjson, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
     }
@@ -101,7 +101,7 @@ namespace KFrame
 
         auto ip = __JSON_GET_STRING__( sendjson, __STRING__( ip ) );
         auto gateid = __JSON_GET_UINT64__( sendjson, __STRING__( gateid ) );
-        auto accountid = __JSON_GET_UINT64__( sendjson, __STRING__( accountid ) );
+        auto account_id = __JSON_GET_UINT64__( sendjson, __STRING__( accountid ) );
         auto sessionid = __JSON_GET_UINT64__( sendjson, __STRING__( sessionid ) );
 
         // 验证失败
@@ -109,16 +109,16 @@ namespace KFrame
         if ( retcode != KFMsg::Ok )
         {
             auto bantime = __JSON_GET_UINT64__( recvjson, __STRING__( bantime ) );
-            return SendLoginAckToGate( retcode, gateid, sessionid, accountid, bantime );
+            return SendLoginAckToGate( retcode, gateid, sessionid, account_id, bantime );
         }
 
         auto token = __JSON_GET_STRING__( recvjson, __STRING__( token ) );
         auto account = __JSON_GET_STRING__( recvjson, __STRING__( account ) );
         auto channel = __JSON_GET_UINT32__( recvjson, __STRING__( channel ) );
-        auto playerid = __JSON_GET_UINT64__( recvjson, __STRING__( playerid ) );
-        if ( accountid == _invalid_int || token.empty() || channel == _invalid_int || playerid == _invalid_int )
+        auto player_id = __JSON_GET_UINT64__( recvjson, __STRING__( playerid ) );
+        if ( account_id == _invalid_int || token.empty() || channel == _invalid_int || player_id == _invalid_int )
         {
-            return SendLoginAckToGate( KFMsg::HttpDataError, gateid, sessionid, accountid, _invalid_int );
+            return SendLoginAckToGate( KFMsg::HttpDataError, gateid, sessionid, account_id, _invalid_int );
         }
 
         KFMsg::PBLoginData pblogin;
@@ -127,16 +127,16 @@ namespace KFrame
         pblogin.set_gateid( gateid );
         pblogin.set_channel( channel );
         pblogin.set_account( account );
-        pblogin.set_accountid( accountid );
+        pblogin.set_accountid( account_id );
         pblogin.set_sessionid( sessionid );
-        pblogin.set_playerid( playerid );
+        pblogin.set_playerid( player_id );
 
         // 渠道数据
-        if ( __JSON_HAS_MEMBER__( recvjson, __STRING__( channeldata ) ) )
+        if ( __JSON_HAS_MEMBER__( recvjson, __STRING__( channel_data ) ) )
         {
             auto pbchanneldata = pblogin.mutable_channeldata();
-            auto& channeldata = recvjson[ __STRING__( channeldata ) ];
-            for ( auto iter = channeldata.MemberBegin(); iter != channeldata.MemberEnd(); ++iter )
+            auto& channel_data = recvjson[ __STRING__( channel_data ) ];
+            for ( auto iter = channel_data.MemberBegin(); iter != channel_data.MemberEnd(); ++iter )
             {
                 ( *pbchanneldata )[ iter->name.GetString() ] = iter->value.GetString();
             }
@@ -147,31 +147,31 @@ namespace KFrame
         auto ok = SendToWorld( KFMsg::S2S_LOGIN_TO_WORLD_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}:{}] send world failed", account, channel, accountid );
-            SendLoginAckToGate( KFMsg::LoginWorldSystemBusy, gateid, sessionid, accountid, _invalid_int );
+            __LOG_ERROR__( "player[{}:{}:{}] send world failed", account, channel, account_id );
+            SendLoginAckToGate( KFMsg::LoginWorldSystemBusy, gateid, sessionid, account_id, _invalid_int );
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginAck, KFMsg::S2SLoginToLoginAck )
     {
-        __LOG_DEBUG__( "player[{}] login result[{}] ack", kfmsg->accountid(), kfmsg->result() );
+        __LOG_DEBUG__( "player[{}] login result[{}] ack", kfmsg->account_id(), kfmsg->result() );
 
         // 通知客户端
-        SendLoginAckToGate( kfmsg->result(), kfmsg->gateid(), kfmsg->sessionid(), kfmsg->accountid(), _invalid_int );
+        SendLoginAckToGate( kfmsg->result(), kfmsg->gateid(), kfmsg->sessionid(), kfmsg->account_id(), _invalid_int );
     }
 
-    void KFLoginModule::SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 accountid, uint64 bantime )
+    void KFLoginModule::SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 account_id, uint64 bantime )
     {
         KFMsg::S2SLoginToGateAck ack;
         ack.set_result( result );
-        ack.set_accountid( accountid );
+        ack.set_accountid( account_id );
         ack.set_sessionid( sessionid );
         ack.set_bantime( bantime );
         auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}] login verify result[{}] failed", accountid, result );
+            __LOG_ERROR__( "player[{}] login verify result[{}] failed", account_id, result );
         }
     }
 }

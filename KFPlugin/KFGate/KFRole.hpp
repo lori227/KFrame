@@ -20,7 +20,7 @@ namespace KFrame
         bool SendToGame( uint32 msg_id, const char* data, uint32 length );
         bool SendToGame( uint32 msg_id, ::google::protobuf::Message* message );
     public:
-        // 角色id( playerid )
+        // 角色id( player_id )
         uint64 _id = _invalid_int;
 
         // game游戏服务器id

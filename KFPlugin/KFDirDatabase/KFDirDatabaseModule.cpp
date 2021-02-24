@@ -26,7 +26,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     bool KFDirDatabaseModule::ZoneRegister( KFJson& zonedata )
     {
-        auto zone_id = __JSON_GET_UINT32__( zonedata, __STRING__( zone_id ) );
+        auto zone_id = __JSON_GET_UINT32__( zonedata, __STRING__( zoneid ) );
         return _dir_database_logic->ZoneRegister( zone_id, zonedata );
     }
 
@@ -90,7 +90,7 @@ namespace KFrame
     {
         auto appname = __JSON_GET_STRING__( masterdata, __STRING__( appname ) );
         auto appid = __JSON_GET_UINT64__( masterdata, __STRING__( appid ) );
-        auto zone_id = __JSON_GET_UINT32__( masterdata, __STRING__( zone_id ) );
+        auto zone_id = __JSON_GET_UINT32__( masterdata, __STRING__( zoneid ) );
         auto ip = __JSON_GET_STRING__( masterdata, __STRING__( ip ) );
         auto port = __JSON_GET_UINT32__( masterdata, __STRING__( port ) );
         auto time = __JSON_GET_UINT32__( masterdata, __STRING__( time ) );
@@ -100,14 +100,14 @@ namespace KFrame
     StringMap KFDirDatabaseModule::QueryMasterIp( KFJson& masterdata )
     {
         auto appname = __JSON_GET_STRING__( masterdata, __STRING__( appname ) );
-        auto zone_id = __JSON_GET_UINT32__( masterdata, __STRING__( zone_id ) );
+        auto zone_id = __JSON_GET_UINT32__( masterdata, __STRING__( zoneid ) );
         return _dir_database_logic->QueryMasterIp( appname, zone_id );
     }
 
     StringMapList KFDirDatabaseModule::QueryMasterList( KFJson& masterdata )
     {
         auto appname = __JSON_GET_STRING__( masterdata, __STRING__( appname ) );
-        auto zone_id = __JSON_GET_UINT32__( masterdata, __STRING__( zone_id ) );
+        auto zone_id = __JSON_GET_UINT32__( masterdata, __STRING__( zoneid ) );
         return _dir_database_logic->QueryMasterList( appname, zone_id );
     }
 }

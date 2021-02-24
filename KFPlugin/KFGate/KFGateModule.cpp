@@ -110,13 +110,13 @@ namespace KFrame
 #define __KF_MAX_CLIENT_MSG_ID__ 10000
     __KF_FORWARD_MESSAGE_FUNCTION__( KFGateModule::ForwardToClient )
     {
-        auto playerid = __ROUTE_RECV_ID__;
-        if ( playerid == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )
+        auto player_id = __ROUTE_RECV_ID__;
+        if ( player_id == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             return false;
         }
 
-        auto kfrole = FindRole( playerid );
+        auto kfrole = FindRole( player_id );
         if ( kfrole != nullptr )
         {
             kfrole->SendToClient( msg_id, data, length );
@@ -127,8 +127,8 @@ namespace KFrame
 
     __KF_FORWARD_MESSAGE_FUNCTION__( KFGateModule::TranspondToGame )
     {
-        auto playerid = __ROUTE_SEND_ID__;
-        if ( playerid == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )
+        auto player_id = __ROUTE_SEND_ID__;
+        if ( player_id == _invalid_int || msg_id >= __KF_MAX_CLIENT_MSG_ID__ )
         {
             return false;
         }
@@ -138,7 +138,7 @@ namespace KFrame
             return true;
         }
 
-        auto kfrole = FindRole( playerid );
+        auto kfrole = FindRole( player_id );
         if ( kfrole != nullptr )
         {
             kfrole->SendToGame( msg_id, data, length );
@@ -247,17 +247,17 @@ namespace KFrame
         auto sessionid = __ROUTE_SERVER_ID__;
 
         auto& token = kfmsg->token();
-        auto accountid = kfmsg->accountid();
+        auto account_id = kfmsg->account_id();
 
-        __LOG_DEBUG__( "session[{}] accountid[{}] version[{}] token[{}] login req", sessionid, accountid, kfmsg->version(), token );
+        __LOG_DEBUG__( "session[{}] account_id[{}] version[{}] token[{}] login req", sessionid, account_id, kfmsg->version(), token );
         // 注册连接器
         if ( !_kf_tcp_server->RegisteNetHandle( sessionid, sessionid, _invalid_int ) )
         {
-            return __LOG_ERROR__( "accountid[{}] register[{}] failed", accountid, sessionid );
+            return __LOG_ERROR__( "account_id[{}] register[{}] failed", account_id, sessionid );
         }
 
         // 消息是否有效
-        if ( accountid == 0u || token.empty() )
+        if ( account_id == 0u || token.empty() )
         {
             return SendLoginAckMessage( sessionid, KFMsg::LoginTokenError, 0 );
         }
@@ -279,7 +279,7 @@ namespace KFrame
         if ( kfrole != nullptr )
         {
             // 判断token
-            if ( kfrole->_token != token || kfrole->_account_id != accountid )
+            if ( kfrole->_token != token || kfrole->_account_id != account_id )
             {
                 return SendLoginAckMessage( sessionid, KFMsg::LoginTokenError, 0 );
             }
@@ -293,11 +293,11 @@ namespace KFrame
             req.set_token( token );
             req.set_playerid( kfrole->_id );
             req.set_sessionid( sessionid );
-            req.set_accountid( accountid );
+            req.set_accountid( account_id );
             auto ok = kfrole->SendToGame( KFMsg::S2S_RELOGIN_TO_GAME_REQ, &req );
             if ( !ok )
             {
-                __LOG_ERROR__( "session[{}] accountid[{}] relogin failed", sessionid, accountid );
+                __LOG_ERROR__( "session[{}] account_id[{}] relogin failed", sessionid, account_id );
 
                 // 发送错误
                 SendLoginAckMessage( sessionid, KFMsg::LoginSystemBusy, 0 );
@@ -305,11 +305,11 @@ namespace KFrame
         }
         else
         {
-            LoginToLogin( sessionid, accountid, token );
+            LoginToLogin( sessionid, account_id, token );
         }
     }
 
-    void KFGateModule::LoginToLogin( uint64 sessionid, uint64 accountid, const std::string& token )
+    void KFGateModule::LoginToLogin( uint64 sessionid, uint64 account_id, const std::string& token )
     {
         // 没有可用的login
         if ( _login_server_id == _invalid_int )
@@ -324,12 +324,12 @@ namespace KFrame
         KFMsg::S2SLoginToLoginReq req;
         req.set_ip( ip );
         req.set_token( token );
-        req.set_accountid( accountid );
+        req.set_accountid( account_id );
         req.set_sessionid( sessionid );
         auto ok = _kf_tcp_client->SendNetMessage( _login_server_id, KFMsg::S2S_LOGIN_TO_LOGIN_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "session[{}] accountid[{}] send login failed", sessionid, accountid );
+            __LOG_ERROR__( "session[{}] account_id[{}] send login failed", sessionid, account_id );
 
             // 发送错误
             SendLoginAckMessage( sessionid, KFMsg::LoginSystemBusy, 0 );
@@ -338,31 +338,31 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLoginToGateAck, KFMsg::S2SLoginToGateAck )
     {
-        __LOG_DEBUG__( "player[{}] login result[{}]", kfmsg->accountid(), kfmsg->result() );
+        __LOG_DEBUG__( "player[{}] login result[{}]", kfmsg->account_id(), kfmsg->result() );
         SendLoginAckMessage( kfmsg->sessionid(), kfmsg->result(), kfmsg->bantime() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleReLoginToGateAck, KFMsg::S2SReLoginToGateAck )
     {
 
-        __LOG_DEBUG__( "player[{}:{}] relogin ack", kfmsg->accountid(), kfmsg->playerid() );
+        __LOG_DEBUG__( "player[{}:{}] relogin ack", kfmsg->account_id(), kfmsg->player_id() );
 
         // game server上没有角色了, 重新登录
-        LoginToLogin( kfmsg->sessionid(), kfmsg->accountid(), kfmsg->token() );
+        LoginToLogin( kfmsg->sessionid(), kfmsg->account_id(), kfmsg->token() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleEnterToGateAck, KFMsg::S2SEnterToGateAck )
     {
         auto pblogin = &kfmsg->pblogin();
-        __LOG_DEBUG__( "player[{}:{}] session[{}] enter game", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
+        __LOG_DEBUG__( "player[{}:{}] session[{}] enter game", pblogin->account_id(), pblogin->player_id(), pblogin->sessionid() );
 
-        auto kfrole = FindRole( pblogin->playerid() );
+        auto kfrole = FindRole( pblogin->player_id() );
         if ( kfrole != nullptr )
         {
             // 如果已经掉线
             if ( kfrole->_session_id == _invalid_int )
             {
-                return __LOG_DEBUG__( "player=[{}] disconnect", pblogin->playerid() );
+                return __LOG_DEBUG__( "player=[{}] disconnect", pblogin->player_id() );
             }
 
             // 已经在线, 应该是Game宕机后重新加载的逻辑
@@ -371,37 +371,37 @@ namespace KFrame
         else
         {
             // 绑定角色id
-            if ( !_kf_tcp_server->BindObjectId( pblogin->sessionid(), pblogin->playerid() ) )
+            if ( !_kf_tcp_server->BindObjectId( pblogin->sessionid(), pblogin->player_id() ) )
             {
                 // 发送消息给game, 踢掉玩家
                 KFMsg::S2SLeaveToGameReq req;
-                req.set_playerid( pblogin->playerid() );
+                req.set_playerid( pblogin->player_id() );
                 _kf_tcp_client->SendNetMessage( __ROUTE_SERVER_ID__, KFMsg::S2S_LEAVE_TO_GAME_REQ, &req );
-                return __LOG_ERROR__( "player[{}:{}] session[{}] failed", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
+                return __LOG_ERROR__( "player[{}:{}] session[{}] failed", pblogin->account_id(), pblogin->player_id(), pblogin->sessionid() );
             }
 
             // 删除掉线定时器
-            __UN_TIMER_1__( pblogin->playerid() );
+            __UN_TIMER_1__( pblogin->player_id() );
 
             // 创建角色
             kfrole = __KF_NEW__( KFRole );
-            kfrole->_id = pblogin->playerid();
+            kfrole->_id = pblogin->player_id();
             kfrole->_token = pblogin->token();
             kfrole->_game_id = __ROUTE_SERVER_ID__;
             kfrole->_session_id = pblogin->sessionid();
-            kfrole->_account_id = pblogin->accountid();
+            kfrole->_account_id = pblogin->account_id();
             AddRole( kfrole );
         }
 
         // 通知进入游戏
         KFMsg::MsgLoginAck ack;
-        ack.set_playerid( pblogin->playerid() );
+        ack.set_playerid( pblogin->player_id() );
         ack.set_servertime( kfmsg->servertime() );
         ack.mutable_playerdata()->CopyFrom( kfmsg->playerdata() );
         auto ok = kfrole->SendToClient( KFMsg::MSG_LOGIN_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}] session[{}] enter failed", pblogin->accountid(), pblogin->playerid(), pblogin->sessionid() );
+            __LOG_ERROR__( "player[{}:{}] session[{}] enter failed", pblogin->account_id(), pblogin->player_id(), pblogin->sessionid() );
         }
     }
 
@@ -444,7 +444,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleKickPlayerToGateReq, KFMsg::S2SKickPlayerToGateReq )
     {
-        auto kfrole = FindRole( kfmsg->playerid() );
+        auto kfrole = FindRole( kfmsg->player_id() );
         if ( kfrole == nullptr )
         {
             return;
@@ -461,14 +461,14 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleLogoutReq, KFMsg::MsgLogoutReq )
     {
-        auto playerid = __ROUTE_SEND_ID__;
-        auto kfrole = FindRole( playerid );
+        auto player_id = __ROUTE_SEND_ID__;
+        auto kfrole = FindRole( player_id );
         if ( kfrole != nullptr )
         {
-            __LOG_DEBUG__( "player[{}] login out", playerid );
+            __LOG_DEBUG__( "player[{}] login out", player_id );
 
             KFMsg::S2SLogoutToGameReq req;
-            req.set_playerid( playerid );
+            req.set_playerid( player_id );
             kfrole->SendToGame( KFMsg::S2S_LOGOUT_TO_GAME_REQ, &req );
 
             // 删除玩家

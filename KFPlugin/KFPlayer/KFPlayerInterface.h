@@ -174,14 +174,14 @@ namespace KFrame
         virtual EntityPtr Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* pbplayerdata ) = 0;
 
         // 重新登录
-        virtual EntityPtr ReLogin( uint64 playerid, uint64 gateid ) = 0;
+        virtual EntityPtr ReLogin( uint64 player_id, uint64 gateid ) = 0;
 
         // 查找玩家
-        virtual EntityPtr FindPlayer( uint64 playerid ) = 0;
+        virtual EntityPtr FindPlayer( uint64 player_id ) = 0;
 
         // 删除玩家
         virtual void RemovePlayer() = 0;
-        virtual void RemovePlayer( uint64 playerid ) = 0;
+        virtual void RemovePlayer( uint64 player_id ) = 0;
         virtual void RemovePlayer( EntityPtr player ) = 0;
 
         // 发送消息
@@ -226,8 +226,8 @@ namespace KFrame
     __KF_INTERFACE__( _kf_player, KFPlayerInterface );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __FIND_PLAYER_BY_ID__ \
-    auto playerid = kfmsg->playerid(); \
-    auto player = _kf_player->FindPlayer( playerid );\
+    auto player_id = kfmsg->player_id(); \
+    auto player = _kf_player->FindPlayer( player_id );\
     if ( player == nullptr )\
     {\
         return;\

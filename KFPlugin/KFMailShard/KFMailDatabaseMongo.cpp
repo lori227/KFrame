@@ -82,13 +82,13 @@ namespace KFrame
 
     }
 
-    void KFMailDatabaseMongo::LoadGlobalMailToPerson( uint64 playerid, uint32 zone_id )
+    void KFMailDatabaseMongo::LoadGlobalMailToPerson( uint64 player_id, uint32 zone_id )
     {
         // 查询全局邮件列表
         auto tablename = __DATABASE_KEY_2__( __STRING__( globalmail ), zone_id );
 
         // 获取玩家已经加载的最近一封全局邮件id
-        auto kfmailid = _mongo_driver->QueryUInt64( __STRING__( mailinfo ), playerid, tablename );
+        auto kfmailid = _mongo_driver->QueryUInt64( __STRING__( mailinfo ), player_id, tablename );
         if ( !kfmailid->IsOk() )
         {
             return;
@@ -113,7 +113,7 @@ namespace KFrame
 
             auto time = dbvalue.FindValue( __STRING__( time ) );
             auto validtime = dbvalue.FindValue( MongoKeyword::_expire );
-            auto tablename = __DATABASE_KEY_2__( __STRING__( maillist ), playerid );
+            auto tablename = __DATABASE_KEY_2__( __STRING__( maillist ), player_id );
 
             KFDBValue dbvalue;
             dbvalue.AddValue( MongoKeyword::_id, mailid );
@@ -127,12 +127,12 @@ namespace KFrame
         }
 
         // 更新最大邮件id
-        _mongo_driver->Insert( __STRING__( mailinfo ), playerid, tablename, maxmailid );
+        _mongo_driver->Insert( __STRING__( mailinfo ), player_id, tablename, maxmailid );
     }
 
-    KFResult<StringMapList>::UniqueType KFMailDatabaseMongo::QueryMailList( uint64 playerid, uint64 lastmailid )
+    KFResult<StringMapList>::UniqueType KFMailDatabaseMongo::QueryMailList( uint64 player_id, uint64 lastmailid )
     {
-        auto tablename = __DATABASE_KEY_2__( __STRING__( maillist ), playerid );
+        auto tablename = __DATABASE_KEY_2__( __STRING__( maillist ), player_id );
 
         KFMongoSelector selector;
         selector._document.AddExpression( MongoKeyword::_id, MongoKeyword::_gt, lastmailid );
@@ -167,9 +167,9 @@ namespace KFrame
         return kfresult;
     }
 
-    bool KFMailDatabaseMongo::UpdateMailStatus( uint32 flag, uint64 playerid, uint64 mailid, uint32 status )
+    bool KFMailDatabaseMongo::UpdateMailStatus( uint32 flag, uint64 player_id, uint64 mailid, uint32 status )
     {
-        auto tablename = __DATABASE_KEY_2__( __STRING__( maillist ), playerid );
+        auto tablename = __DATABASE_KEY_2__( __STRING__( maillist ), player_id );
         auto kfquery = _mongo_driver->QueryUInt64( tablename, mailid, MongoKeyword::_id );
         if ( !kfquery->IsOk() || kfquery->_value == _invalid_int )
         {
@@ -203,16 +203,16 @@ namespace KFrame
         return ok;
     }
 
-    void KFMailDatabaseMongo::InitNewPlayerMail( uint64 playerid, uint32 zone_id )
+    void KFMailDatabaseMongo::InitNewPlayerMail( uint64 player_id, uint32 zone_id )
     {
         // 全区的邮件
-        InitNewPlayerGlobalMail( playerid, 0u );
+        InitNewPlayerGlobalMail( player_id, 0u );
 
         // 本小区的邮件
-        InitNewPlayerGlobalMail( playerid, zone_id );
+        InitNewPlayerGlobalMail( player_id, zone_id );
     }
 
-    void KFMailDatabaseMongo::InitNewPlayerGlobalMail( uint64 playerid, uint32 zone_id )
+    void KFMailDatabaseMongo::InitNewPlayerGlobalMail( uint64 player_id, uint32 zone_id )
     {
         KFMongoSelector selector;
         selector._limit_count = 1u;
@@ -226,7 +226,7 @@ namespace KFrame
             auto mailid = dbvalue.FindValue( MongoKeyword::_id );
             if ( mailid > 0u )
             {
-                _mongo_driver->Insert( __STRING__( mailinfo ), playerid, tablename, mailid );
+                _mongo_driver->Insert( __STRING__( mailinfo ), player_id, tablename, mailid );
             }
         }
     }

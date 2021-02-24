@@ -17,7 +17,7 @@ namespace KFrame
         // 上线时间
         player->Set( __STRING__( logintime ), KFGlobal::Instance()->_real_time );
         ////////////////////////////////////////////////////////////////////////////////
-        auto playerid = player->GetKeyID();
+        auto player_id = player->GetKeyID();
         auto kfnoterecord = player->Find( __STRING__( note ) );
         for ( auto& iter : KFEnterConfig::Instance()->_setting_list._objects )
         {
@@ -35,7 +35,7 @@ namespace KFrame
             }
 
             // 调用脚本
-            _kf_lua->Call( setting->_lua_file, setting->_lua_function, playerid );
+            _kf_lua->Call( setting->_lua_file, setting->_lua_function, player_id );
         }
     }
 }
