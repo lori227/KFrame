@@ -74,10 +74,10 @@ namespace KFrame
         uint64 FindLoginGame( uint64 gateid, uint64 player_id );
 
         // 广播消息
-        void BroadCastToGame( uint32 msg_id, const std::string& msgdata, uint32 serial, uint64 worldid );
+        void BroadCastToGame( uint32 msg_id, const std::string& msgdata, uint32 serial, uint64 world_id );
 
         // 更新玩家在线信息
-        void UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 worldid, uint64 gameid );
+        void UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 world_id, uint64 gameid );
 
     private:
         // 游戏服务列表

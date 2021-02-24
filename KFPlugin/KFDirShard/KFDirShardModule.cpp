@@ -67,17 +67,17 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         auto flag = __JSON_GET_STRING__( request, __STRING__( flag ) );
-        auto zonedatalist = _kf_dir_database->QueryZoneList( flag );
+        auto zone_data_list = _kf_dir_database->QueryZoneList( flag );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_ARRAY__( array_data );
-        for ( auto& zonedata : zonedatalist )
+        for ( auto& zone_data : zone_data_list )
         {
             __JSON_OBJECT__( kfzone );
-            __JSON_SET_VALUE__( kfzone, __STRING__( zoneid ), __TO_UINT32__( zonedata[ __STRING__( zoneid ) ] ) );
-            __JSON_SET_VALUE__( kfzone, __STRING__( name ), zonedata[ __STRING__( name ) ] );
-            __JSON_SET_VALUE__( kfzone, __STRING__( ip ), zonedata[ __STRING__( ip ) ] );
-            __JSON_SET_VALUE__( kfzone, __STRING__( port ), __TO_UINT32__( zonedata[ __STRING__( port ) ] ) );
+            __JSON_SET_VALUE__( kfzone, __STRING__( zoneid ), __TO_UINT32__( zone_data[ __STRING__( zoneid ) ] ) );
+            __JSON_SET_VALUE__( kfzone, __STRING__( name ), zone_data[ __STRING__( name ) ] );
+            __JSON_SET_VALUE__( kfzone, __STRING__( ip ), zone_data[ __STRING__( ip ) ] );
+            __JSON_SET_VALUE__( kfzone, __STRING__( port ), __TO_UINT32__( zone_data[ __STRING__( port ) ] ) );
             __JSON_ADD_VALUE__( array_data, kfzone );
         }
         __JSON_SET_VALUE__( response, __STRING__( zonelist ), array_data );
@@ -88,12 +88,12 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
         auto zone_id = __JSON_GET_UINT32__( request, __STRING__( zoneid ) );
-        auto zonedata = _kf_dir_database->QueryZoneIp( zone_id );
+        auto zone_data = _kf_dir_database->QueryZoneIp( zone_id );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_SET_VALUE__( response, __STRING__( zoneid ), zone_id );
-        __JSON_SET_VALUE__( response, __STRING__( ip ), zonedata[ __STRING__( ip ) ] );
-        __JSON_SET_VALUE__( response, __STRING__( port ), __TO_UINT32__( zonedata[ __STRING__( port ) ] ) );
+        __JSON_SET_VALUE__( response, __STRING__( ip ), zone_data[ __STRING__( ip ) ] );
+        __JSON_SET_VALUE__( response, __STRING__( port ), __TO_UINT32__( zone_data[ __STRING__( port ) ] ) );
         return _kf_http_server->SendResponse( response );
     }
 
@@ -121,10 +121,10 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        auto worldid = __JSON_GET_UINT64__( request, __STRING__( world ) );
+        auto world_id = __JSON_GET_UINT64__( request, __STRING__( world ) );
         auto url = __JSON_GET_STRING__( request, __STRING__( url ) );
 
-        auto ok = _kf_dir_database->SetWorldUrl( worldid, url );
+        auto ok = _kf_dir_database->SetWorldUrl( world_id, url );
         return _kf_http_server->SendCode( ok ? KFEnum::Ok : KFEnum::Error );
     }
 
@@ -138,24 +138,24 @@ namespace KFrame
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryMasterIp )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto masterdata = _kf_dir_database->QueryMasterIp( request );
+        auto master_data = _kf_dir_database->QueryMasterIp( request );
 
         __JSON_OBJECT_DOCUMENT__( response );
-        __JSON_FROM_MAP__( response, masterdata );
+        __JSON_FROM_MAP__( response, master_data );
         return _kf_http_server->SendResponse( response );
     }
 
     __KF_HTTP_FUNCTION__( KFDirShardModule::HandleQueryMasterList )
     {
         __JSON_PARSE_STRING__( request, data );
-        auto masterdatalist = _kf_dir_database->QueryMasterList( request );
+        auto master_data_list = _kf_dir_database->QueryMasterList( request );
 
         __JSON_OBJECT_DOCUMENT__( response );
         __JSON_ARRAY__( array_data );
-        for ( auto& masterdata : masterdatalist )
+        for ( auto& master_data : master_data_list )
         {
             __JSON_OBJECT__( masterjson );
-            __JSON_FROM_MAP__( masterjson, masterdata );
+            __JSON_FROM_MAP__( masterjson, master_data );
             __JSON_ADD_VALUE__( array_data, masterjson );
         }
         __JSON_SET_VALUE__( response, __STRING__( masterlist ), array_data );

@@ -153,14 +153,14 @@ namespace KFrame
         UpdatePlayerOnline( kfmsg->account_id(), kfmsg->playerid(), _invalid_int, _invalid_int );
     }
 
-    void KFWorldModule::UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 worldid, uint64 gameid )
+    void KFWorldModule::UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 world_id, uint64 gameid )
     {
         static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( online );
 
         __JSON_OBJECT_DOCUMENT__( sendjson );
         __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), account_id );
         __JSON_SET_VALUE__( sendjson, __STRING__( playerid ), player_id );
-        __JSON_SET_VALUE__( sendjson, __STRING__( world ), worldid );
+        __JSON_SET_VALUE__( sendjson, __STRING__( world ), world_id );
         __JSON_SET_VALUE__( sendjson, __STRING__( game ), gameid );
         _kf_http_client->MTGet<KFWorldModule>( _url, sendjson );
     }
@@ -195,13 +195,13 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
-    void KFWorldModule::BroadCastToGame( uint32 msg_id, const std::string& msgdata, uint32 serial, uint64 worldid )
+    void KFWorldModule::BroadCastToGame( uint32 msg_id, const std::string& msgdata, uint32 serial, uint64 world_id )
     {
         KFMsg::S2SBroadcastToGameAck ack;
         ack.set_msgid( msg_id );
         ack.set_msgdata( msgdata );
         ack.set_serial( serial );
-        ack.set_worldid( worldid );
+        ack.set_worldid( world_id );
         _kf_tcp_server->SendMessageToType( __STRING__( game ), KFMsg::S2S_BROADCAST_TO_GAME_ACK, &ack );
     }
 
@@ -225,6 +225,6 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastToWorldAck, KFMsg::S2SBroadcastToWorldAck )
     {
-        BroadCastToGame( kfmsg->msg_id(), kfmsg->msgdata(), kfmsg->serial(), kfmsg->worldid() );
+        BroadCastToGame( kfmsg->msg_id(), kfmsg->msgdata(), kfmsg->serial(), kfmsg->world_id() );
     }
 }

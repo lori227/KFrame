@@ -30,9 +30,9 @@ namespace KFrame
         robot->_login_token = __JSON_GET_STRING__( kfresult, __STRING__( token ) );
         robot->_account_id = __JSON_GET_UINT64__( kfresult, __STRING__( accountid ) );
 
-        auto& zonedata = __JSON_GET_OBJECT__( kfresult, __STRING__( zone ) );
-        auto ip = __JSON_GET_STRING__( zonedata, __STRING__( ip ) );
-        auto port = __JSON_GET_UINT32__( zonedata, __STRING__( port ) );
+        auto& zone_data = __JSON_GET_OBJECT__( kfresult, __STRING__( zone ) );
+        auto ip = __JSON_GET_STRING__( zone_data, __STRING__( ip ) );
+        auto port = __JSON_GET_UINT32__( zone_data, __STRING__( port ) );
         if ( ip.empty() || port == 0u )
         {
             return __LOG_ERROR__( "robot=[{}] ipport empty!", robot->_account );

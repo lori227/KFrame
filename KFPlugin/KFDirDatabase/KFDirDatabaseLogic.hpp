@@ -13,10 +13,10 @@ namespace KFrame
 
     public:
         // 注册小区信息
-        virtual bool ZoneRegister( uint32 zone_id, KFJson& zonedata ) = 0;
+        virtual bool ZoneRegister( uint32 zone_id, KFJson& zone_data ) = 0;
 
         // 更新小区gate在线人数
-        virtual bool ZoneUpdate( uint64 appid, uint32 zone_id, uint32 count, const std::string& ip, uint32 port, uint32 expire_time ) = 0;
+        virtual bool ZoneUpdate( uint64 app_id, uint32 zone_id, uint32 count, const std::string& ip, uint32 port, uint32 expire_time ) = 0;
 
         // 查询小区列表
         virtual StringMapList QueryZoneList( const std::string& flag ) = 0;
@@ -28,7 +28,7 @@ namespace KFrame
         virtual bool ZoneBalance( uint32 zone_id, uint32 count ) = 0;
 
         // 设置推荐小区
-        virtual bool SetZoneRecommend( const std::string& flag, uint32 zone_id, bool isrecommend ) = 0;
+        virtual bool SetZoneRecommend( const std::string& flag, uint32 zone_id, bool is_recommend ) = 0;
 
         // 分配玩家小区
         virtual StringMap AllocPlayerZone( const std::string& flag, uint32 zone_id ) = 0;
@@ -40,19 +40,19 @@ namespace KFrame
         virtual bool UpdateZoneStatus( uint32 zone_id, uint32 status ) = 0;
 
         // world http地址注册
-        virtual bool SetWorldUrl( uint64 worldid, const std::string& url ) = 0;
+        virtual bool SetWorldUrl( uint64 world_id, const std::string& url ) = 0;
 
         // 获得world http地址
-        virtual std::string GetWorldUrl( uint64 worldid ) = 0;
+        virtual std::string GetWorldUrl( uint64 world_id ) = 0;
 
         // 更新masterip
-        virtual bool UpdateMasterIp( const std::string& appname, uint64 appid, uint32 zone_id, const std::string& ip, uint32 port, uint32 expire_time ) = 0;
+        virtual bool UpdateMasterIp( const std::string& app_name, uint64 app_id, uint32 zone_id, const std::string& ip, uint32 port, uint32 expire_time ) = 0;
 
         // 查询masterip
-        virtual StringMap QueryMasterIp( const std::string& appname, uint32 zone_id ) = 0;
+        virtual StringMap QueryMasterIp( const std::string& app_name, uint32 zone_id ) = 0;
 
         // 查询masterlist
-        virtual StringMapList QueryMasterList( const std::string& appname, uint32 zone_id ) = 0;
+        virtual StringMapList QueryMasterList( const std::string& app_name, uint32 zone_id ) = 0;
     public:
         // 分配一个小区
         virtual uint32 BalanceAllocZone( const std::string& flag ) = 0;

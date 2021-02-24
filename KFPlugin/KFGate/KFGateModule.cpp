@@ -149,10 +149,10 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGateModule::HandleBroadcastToGateReq, KFMsg::S2SBroadcastToGateReq )
     {
-        if ( kfmsg->worldid() != _invalid_int )
+        if ( kfmsg->world_id() != _invalid_int )
         {
             // 检查是否重复广播
-            auto iter = _broadcast_list.find( kfmsg->worldid() );
+            auto iter = _broadcast_list.find( kfmsg->world_id() );
             if ( iter != _broadcast_list.end() )
             {
                 if ( iter->second >= kfmsg->serial() )

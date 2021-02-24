@@ -282,7 +282,7 @@ namespace KFrame
         req.set_msgid( kfmsg->msg_id() );
         req.set_msgdata( kfmsg->msgdata() );
         req.set_serial( kfmsg->serial() );
-        req.set_worldid( kfmsg->worldid() );
+        req.set_worldid( kfmsg->world_id() );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_GATE_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////

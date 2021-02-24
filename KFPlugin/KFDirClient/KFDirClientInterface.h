@@ -12,10 +12,10 @@ namespace KFrame
         virtual bool ZoneRegisterToDir() = 0;
 
         // 注册world到目录服务器
-        virtual bool WorldRegisterToDir( uint64 worldid, const std::string& url ) = 0;
+        virtual bool WorldRegisterToDir( uint64 world_id, const std::string& url ) = 0;
 
         // 更新gate的在线数量
-        virtual void UpdateGateToDir( uint64 appid, const std::string& ip, uint32 port, uint32 count, uint32 expire_time ) = 0;
+        virtual void UpdateGateToDir( uint64 app_id, const std::string& ip, uint32 port, uint32 count, uint32 expire_time ) = 0;
 
         // 更新小区的负载均衡
         virtual void ZoneBalanceToDir( uint32 zone_id, uint32 count ) = 0;
