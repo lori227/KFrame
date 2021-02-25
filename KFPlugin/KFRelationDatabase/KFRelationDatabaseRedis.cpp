@@ -58,7 +58,7 @@ namespace KFrame
             return;
         }
 
-        StringList removelist;
+        StringList remove_list;
         for ( auto& strid : queryidlist->_value )
         {
             auto relationid = __TO_UINT64__( strid );
@@ -68,7 +68,7 @@ namespace KFrame
             auto kfinvitedata = redis_driver->HGetAll( relationkey );
             if ( kfinvitedata->_value.empty() )
             {
-                removelist.push_back( strid );
+                remove_list.push_back( strid );
                 continue;
             }
 
@@ -83,10 +83,10 @@ namespace KFrame
             relationlist.emplace( relationid, relationdata );
         }
 
-        if ( !removelist.empty() )
+        if ( !remove_list.empty() )
         {
             // 删除已经过期的邀请信息
-            redis_driver->SRem( __DATABASE_KEY_2__( listname, player_id ), removelist );
+            redis_driver->SRem( __DATABASE_KEY_2__( listname, player_id ), remove_list );
         }
     }
 

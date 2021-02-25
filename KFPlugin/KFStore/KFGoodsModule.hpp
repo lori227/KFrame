@@ -31,7 +31,7 @@ namespace KFrame
         virtual void BeforeShut();
 
         // 购买商品
-        virtual uint32 BuyGoods( EntityPtr player, uint32 storeid, uint32 goodsid, uint32 buycount );
+        virtual uint32 BuyGoods( EntityPtr player, uint32 store_id, uint32 goods_id, uint32 buy_count );
 
     protected:
         // 刷新限购商品
@@ -39,7 +39,7 @@ namespace KFrame
 
     protected:
         // 获得购买价格
-        const KFElements* CalcBuyPrice( const KFGoodsSetting* setting, uint64 now_time );
+        const KFElements* CalcBuyPrice( std::shared_ptr<const KFGoodsSetting> setting, uint64 now_time );
 
     };
 

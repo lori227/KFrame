@@ -41,7 +41,7 @@ namespace KFrame
         auto mongo_driver = __RELATION_MONGO_DRIVER__;
         auto kfresult = mongo_driver->QueryListUInt64( __RELATION_TABLE_NAME__, player_id, listname );
 
-        UInt64List removelist;
+        UInt64List remove_list;
         for ( auto relationid : kfresult->_value )
         {
             // 邀请信息
@@ -51,7 +51,7 @@ namespace KFrame
             auto kfinvitedata = mongo_driver->QueryRecord( relationname, relationkey );
             if ( kfinvitedata->_value.IsEmpty() )
             {
-                removelist.push_back( relationid );
+                remove_list.push_back( relationid );
                 continue;
             }
 
@@ -60,10 +60,10 @@ namespace KFrame
             relationlist.emplace( relationid, relationdata );
         }
 
-        if ( !removelist.empty() )
+        if ( !remove_list.empty() )
         {
             // 删除已经过期的邀请信息
-            mongo_driver->Pull( __RELATION_TABLE_NAME__, player_id, listname, removelist );
+            mongo_driver->Pull( __RELATION_TABLE_NAME__, player_id, listname, remove_list );
         }
     }
 

@@ -41,7 +41,7 @@ namespace KFrame
         void CalcSignDay( EntityPtr player );
 
         // 计算连续签到
-        void CalcContinuousSign( EntityPtr player, uint64 lastresettime, uint64 nowresettime );
+        void CalcContinuousSign( EntityPtr player, uint64 last_reset_time, uint64 now_reset_time );
     };
 }
 

@@ -15,24 +15,24 @@ namespace KFrame
     __KF_PLAYER_LEAVE_FUNCTION__( KFLeaveModule::LeaveGameWorld )
     {
         // 更新总时间
-        auto logintime = player->Get( __STRING__( logintime ) );
-        player->Operate( __STRING__( totaltime ), KFEnum::Add, KFGlobal::Instance()->_real_time - logintime );
+        auto login_time = player->Get( __STRING__( logintime ) );
+        player->Operate( __STRING__( totaltime ), KFEnum::Add, KFGlobal::Instance()->_real_time - login_time );
         ///////////////////////////////////////////////////////////////////////////////////////////
         auto player_id = player->GetKeyID();
-        auto kfnoteparent = player->Find( __STRING__( note ) );
+        auto note_record = player->Find( __STRING__( note ) );
         for ( auto& iter : KFLeaveConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
             if ( setting->_id != _invalid_int )
             {
-                auto notevalue = kfnoteparent->Get( setting->_id, __STRING__( value ) );
-                if ( notevalue != _invalid_int )
+                auto note_value = note_record->Get( setting->_id, __STRING__( value ) );
+                if ( note_value != _invalid_int )
                 {
                     continue;
                 }
 
                 // 设置属性
-                player->UpdateRecord( kfnoteparent, setting->_id, __STRING__( value ), KFEnum::Set, 1 );
+                player->UpdateRecord( note_record, setting->_id, __STRING__( value ), KFEnum::Set, 1 );
             }
 
             // 调用脚本

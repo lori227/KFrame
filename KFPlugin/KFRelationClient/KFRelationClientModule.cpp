@@ -450,18 +450,18 @@ namespace KFrame
 
     void KFRelationClientModule::ReplyRelationAllInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate )
     {
-        UInt64Set removelist;
+        UInt64Set remove_list;
         for ( auto kfinvite = kfinviterecord->First(); kfinvite != nullptr; kfinvite = kfinviterecord->Next() )
         {
             auto removeid = ReplyInvite( player, setting, operate, kfinvite );
             if ( removeid != _invalid_int )
             {
-                removelist.insert( removeid );
+                remove_list.insert( removeid );
             }
         }
 
         // 删除申请id
-        for ( auto removeid : removelist )
+        for ( auto removeid : remove_list )
         {
             player->RemoveRecord( kfinviterecord, removeid );
         }

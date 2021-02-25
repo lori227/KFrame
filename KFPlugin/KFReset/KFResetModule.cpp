@@ -17,26 +17,26 @@ namespace KFrame
         __UN_PLAYER_ENTER__();
     }
 
-    void KFResetModule::AddResetFunction( const std::string& functionname, uint32 count, KFResetFunction& function )
+    void KFResetModule::AddResetFunction( const std::string& function_name, uint32 count, KFModule* module, KFResetFunction& function )
     {
-        auto kfresetdata = _reset_logic_list.Create( functionname );
-        kfresetdata->_count = count;
-        kfresetdata->_function = function;
+        auto reset_logic_data = _reset_logic_list.Create( function_name );
+        reset_logic_data->_count = count;
+        reset_logic_data->_function.SetFunction( module, function );
     }
 
-    void KFResetModule::RemoveResetFunction( const std::string& functionname )
+    void KFResetModule::RemoveResetFunction( const std::string& function_name )
     {
-        _reset_logic_list.Remove( functionname );
+        _reset_logic_list.Remove( function_name );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_PLAYER_ENTER_FUNCTION__( KFResetModule::OnEnterResetModule )
     {
         // 把列表中不存在的时间数据删除掉
         UInt32List removes;
-        auto kftimerecord = player->Find( __STRING__( time ) );
-        for ( auto kftime = kftimerecord->First(); kftime != nullptr; kftime = kftimerecord->Next() )
+        auto time_record = player->Find( __STRING__( time ) );
+        for ( auto time_data = time_record->First(); time_data != nullptr; time_data = time_record->Next() )
         {
-            auto id = kftime->GetKeyID();
+            auto id = time_data->GetKeyID();
             auto setting = KFTimeLoopConfig::Instance()->FindSetting( id );
             if ( setting == nullptr )
             {
@@ -46,11 +46,11 @@ namespace KFrame
 
         for ( auto id : removes )
         {
-            kftimerecord->Remove( id );
+            time_record->Remove( id );
         }
     }
 
-    UInt64Map& KFResetModule::UpdateAllResetTime( EntityPtr player, DataPtr kftimerecord )
+    UInt64Map& KFResetModule::UpdateAllResetTime( EntityPtr player, DataPtr time_record )
     {
         static UInt64Map _time_id_list;
         _time_id_list.clear();
@@ -60,7 +60,7 @@ namespace KFrame
             auto setting = iter.second;
             auto ok = false;
             auto last_time = _invalid_int;
-            std::tie( ok, last_time ) = UpdateResetTime( player, kftimerecord, setting );
+            std::tie( ok, last_time ) = UpdateResetTime( player, time_record, setting );
             if ( ok )
             {
                 _time_id_list[ iter.first ] = last_time;
@@ -70,51 +70,51 @@ namespace KFrame
         return _time_id_list;
     }
 
-    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( EntityPtr player, DataPtr kftimerecord, const KFTimeLoopSetting* setting )
+    std::tuple<bool, uint64> KFResetModule::UpdateResetTime( EntityPtr player, DataPtr time_record, std::shared_ptr<const KFTimeLoopSetting> setting )
     {
-        auto kftime = kftimerecord->Find( setting->_id );
-        if ( kftime == nullptr )
+        auto time_data = time_record->Find( setting->_id );
+        if ( time_data == nullptr )
         {
-            kftime = player->CreateData( kftimerecord );
-            kftimerecord->Add( setting->_id, kftime );
+            time_data = player->CreateData( time_record );
+            time_record->Add( setting->_id, time_data );
         }
 
-        auto nexttime = kftime->Get<uint64>( __STRING__( value ) );
-        auto ok = KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, nexttime );
+        auto next_time = time_data->Get<uint64>( __STRING__( value ) );
+        auto ok = KFDate::CheckPassTime( KFGlobal::Instance()->_real_time, next_time );
         if ( ok )
         {
-            auto newtime = KFDate::CalcTimeData( &setting->_time_data, KFGlobal::Instance()->_real_time, 1 );
-            kftime->Set( __STRING__( value ), newtime );
+            auto new_time = KFDate::CalcTimeData( &setting->_time_data, KFGlobal::Instance()->_real_time, 1 );
+            time_data->Operate( __STRING__( value ), KFEnum::Set, new_time );
         }
 
-        return std::make_tuple( ok, nexttime );
+        return std::make_tuple( ok, next_time );
     }
 
-    uint64 KFResetModule::CalcNextResetTime( EntityPtr player, uint32 timeid )
+    uint64 KFResetModule::CalcNextResetTime( EntityPtr player, uint32 time_id )
     {
-        return player->Get( __STRING__( time ), timeid, __STRING__( value ) );
+        return player->Get( __STRING__( time ), time_id, __STRING__( value ) );
     }
 
-    void KFResetModule::SetResetTime( EntityPtr player, uint32 timeid, uint64 now_time )
+    void KFResetModule::SetResetTime( EntityPtr player, uint32 time_id, uint64 now_time )
     {
-        if ( timeid == 0u )
+        if ( time_id == 0u )
         {
             return;
         }
 
-        auto kftimerecord = player->Find( __STRING__( time ) );
-        player->UpdateRecord( kftimerecord, timeid, kftimerecord->_data_setting->_value_key_name, KFEnum::Set, now_time );
+        auto time_record = player->Find( __STRING__( time ) );
+        player->UpdateRecord( time_record, time_id, time_record->_data_setting->_value_key_name, KFEnum::Set, now_time );
     }
 
     __KF_PLAYER_RUN_FUNCTION__( KFResetModule::RunResetPlayerData )
     {
-        auto kfresetdata = player->Find( __STRING__( resettime ) );
-        auto resettime = kfresetdata->Get();
-        if ( resettime > KFGlobal::Instance()->_game_time )
+        auto reset_time_data = player->Find( __STRING__( resettime ) );
+        auto reset_time = reset_time_data->Get();
+        if ( reset_time > KFGlobal::Instance()->_game_time )
         {
             return;
         }
-        kfresetdata->Set( KFGlobal::Instance()->_game_time + KFTimeEnum::OneMinuteMicSecond );
+        reset_time_data->Set( KFGlobal::Instance()->_game_time + KFTimeEnum::OneMinuteMicSecond );
 
         // 玩家重置逻辑
         ResetPlayerData( player );
@@ -123,9 +123,9 @@ namespace KFrame
     __KF_PLAYER_RESET_FUNCTION__( KFResetModule::ResetPlayerData )
     {
         // 判断所有时间id, 是否有需要更新
-        auto kftimerecord = player->Find( __STRING__( time ) );
-        auto& timeidlist = UpdateAllResetTime( player, kftimerecord );
-        for ( auto& iter  : timeidlist )
+        auto time_record = player->Find( __STRING__( time ) );
+        auto& time_id_list = UpdateAllResetTime( player, time_record );
+        for ( auto& iter  : time_id_list )
         {
             auto setting = KFResetConfig::Instance()->FindSetting( iter.first );
             if ( setting == nullptr )
@@ -133,88 +133,88 @@ namespace KFrame
                 continue;
             }
 
-            for ( auto& resetdata : setting->_reset_data )
+            for ( auto& reset_data : setting->_reset_data )
             {
-                if ( resetdata._function_name.empty() )
+                if ( reset_data._function_name.empty() )
                 {
-                    ResetPlayerData( player, &resetdata );
+                    ResetPlayerData( player, &reset_data );
                 }
                 else
                 {
-                    ResetPlayerLogic( player, iter.first, iter.second, resetdata._function_name );
+                    ResetPlayerLogic( player, iter.first, iter.second, reset_data._function_name );
                 }
             }
         }
     }
 
-    void KFResetModule::ResetPlayerData( EntityPtr player, const ResetData* resetdata )
+    void KFResetModule::ResetPlayerData( EntityPtr player, const ResetData* reset_data )
     {
-        if ( resetdata->_parent_name.empty() )
+        if ( reset_data->_parent_name.empty() )
         {
-            player->UpdateData( resetdata->_data_name, resetdata->_operate, resetdata->_value );
+            player->UpdateData( reset_data->_data_name, reset_data->_operate, reset_data->_value );
         }
-        else if ( resetdata->_data_name.empty() )
+        else if ( reset_data->_data_name.empty() )
         {
-            if ( resetdata->_key == 0u )
+            if ( reset_data->_key == 0u )
             {
-                player->ClearRecord( resetdata->_parent_name );
+                player->ClearRecord( reset_data->_parent_name );
             }
             else
             {
-                player->RemoveRecord( resetdata->_parent_name, resetdata->_key );
+                player->RemoveRecord( reset_data->_parent_name, reset_data->_key );
             }
         }
-        else if ( resetdata->_key == 0u )
+        else if ( reset_data->_key == 0u )
         {
-            player->UpdateObject( resetdata->_parent_name, resetdata->_data_name, resetdata->_operate, resetdata->_value );
+            player->UpdateObject( reset_data->_parent_name, reset_data->_data_name, reset_data->_operate, reset_data->_value );
         }
         else
         {
-            player->UpdateRecord( resetdata->_parent_name, resetdata->_key, resetdata->_data_name, resetdata->_operate, resetdata->_value );
+            player->UpdateRecord( reset_data->_parent_name, reset_data->_key, reset_data->_data_name, reset_data->_operate, reset_data->_value );
         }
     }
 
-    void KFResetModule::ResetPlayerLogic( EntityPtr player, uint32 timeid, uint64 lastresettime, const std::string& functionname )
+    void KFResetModule::ResetPlayerLogic( EntityPtr player, uint32 time_id, uint64 last_reset_time, const std::string& function_name )
     {
-        auto resetlogicdata = _reset_logic_list.Find( functionname );
-        if ( resetlogicdata == nullptr )
+        auto reset_logic_data = _reset_logic_list.Find( function_name );
+        if ( reset_logic_data == nullptr )
         {
             return;
         }
 
-        auto kftimesetting = KFTimeLoopConfig::Instance()->FindSetting( timeid );
-        if ( kftimesetting == nullptr )
+        auto time_setting = KFTimeLoopConfig::Instance()->FindSetting( time_id );
+        if ( time_setting == nullptr )
         {
             return;
         }
-        auto time_data = &kftimesetting->_time_data;
-        auto nowresettime = KFDate::CalcTimeData( time_data, KFGlobal::Instance()->_real_time );
+        auto time_data = &time_setting->_time_data;
+        auto now_reset_time = KFDate::CalcTimeData( time_data, KFGlobal::Instance()->_real_time );
 
         // 如果只计算一次
-        if ( resetlogicdata->_count <= 1u || player->IsInited() || lastresettime == 0u )
+        if ( reset_logic_data->_count <= 1u || player->IsInited() || last_reset_time == 0u )
         {
-            return resetlogicdata->_function( player, timeid, lastresettime, nowresettime );
+            return reset_logic_data->_function.Call( player, time_id, last_reset_time, now_reset_time );
         }
 
         // 计算多次
         // 计算出n周期前的时间
-        auto calcresettime = KFDate::CalcTimeData( time_data, nowresettime, 0 - ( int32 )resetlogicdata->_count );
+        auto calc_reset_time = KFDate::CalcTimeData( time_data, now_reset_time, 0 - ( int32 )reset_logic_data->_count );
 
         // 上次重置时间
-        lastresettime = KFDate::CalcTimeData( time_data, lastresettime, -1 );
-        lastresettime = __MAX__( lastresettime, calcresettime );
+        last_reset_time = KFDate::CalcTimeData( time_data, last_reset_time, -1 );
+        last_reset_time = __MAX__( last_reset_time, calc_reset_time );
 
-        for ( auto i = 0u; i < resetlogicdata->_count; ++i )
+        for ( auto i = 0u; i < reset_logic_data->_count; ++i )
         {
-            auto resettime = KFDate::CalcTimeData( time_data, lastresettime, 1 );
-            if ( resettime > nowresettime )
+            auto reset_time = KFDate::CalcTimeData( time_data, last_reset_time, 1 );
+            if ( reset_time > now_reset_time )
             {
                 break;
             }
 
             // 重置函数
-            resetlogicdata->_function( player, timeid, lastresettime, resettime );
-            lastresettime = resettime;
+            reset_logic_data->_function.Call( player, time_id, last_reset_time, reset_time );
+            last_reset_time = reset_time;
         }
 
     }

@@ -39,9 +39,9 @@ namespace KFrame
             return _kf_display->SendToClient( entity, KFMsg::SignInCanNotFind );
         }
 
-        auto sevenflag = entity->Get<uint32>( __STRING__( sevenreward ) );
+        auto seven_flag = entity->Get<uint32>( __STRING__( sevenreward ) );
         auto flag = 1u << kfmsg->day();
-        if ( KFUtility::HaveBitMask<uint32>( sevenflag, flag ) )
+        if ( KFUtility::HaveBitMask<uint32>( seven_flag, flag ) )
         {
             return _kf_display->SendToClient( entity, KFMsg::SignInRewardAlready );
         }
@@ -67,7 +67,7 @@ namespace KFrame
         CalcSignDay( player );
 
         // 计算连续签到
-        CalcContinuousSign( player, lastresettime, nowresettime );
+        CalcContinuousSign( player, last_reset_time, now_reset_time );
     }
 
     void KFSignModule::CalcSignDay( EntityPtr player )
@@ -76,9 +76,9 @@ namespace KFrame
         auto day = player->Get<uint32>( __STRING__( sevenday ) );
         if ( day > 0u )
         {
-            auto sevenflag = player->Get<uint32>( __STRING__( sevenreward ) );
+            auto seven_flag = player->Get<uint32>( __STRING__( sevenreward ) );
             auto flag = 1u << day;
-            if ( !KFUtility::HaveBitMask<uint32>( sevenflag, flag ) )
+            if ( !KFUtility::HaveBitMask<uint32>( seven_flag, flag ) )
             {
                 return;
             }
@@ -87,13 +87,13 @@ namespace KFrame
         player->UpdateData( __STRING__( sevenday ), KFEnum::Add, 1u );
     }
 
-    void KFSignModule::CalcContinuousSign( EntityPtr player, uint64 lastresettime, uint64 nowresettime )
+    void KFSignModule::CalcContinuousSign( EntityPtr player, uint64 last_reset_time, uint64 now_reset_time )
     {
-        auto kfsignintime = player->Find( __STRING__( signtime ) );
+        auto sign_time = player->Find( __STRING__( signtime ) );
 
         // 判断连续签到
-        auto lastsignintime = kfsignintime->Get();
-        if ( lastsignintime == lastresettime )
+        auto last_sign_time = sign_time->Get();
+        if ( last_sign_time == last_reset_time )
         {
             player->UpdateData( __STRING__( continuoussign ), KFEnum::Add, 1u );
         }
@@ -103,6 +103,6 @@ namespace KFrame
         }
 
         // 更新本次签到
-        player->UpdateData( kfsignintime, KFEnum::Set, nowresettime );
+        player->UpdateData( sign_time, KFEnum::Set, now_reset_time );
     }
 }
