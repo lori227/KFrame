@@ -106,7 +106,7 @@ namespace KFrame
             return;
         }
 
-        UpdateBasicIntValueToBasic( player->GetKeyID(), data->_data_setting->_name, newvalue );
+        UpdateBasicIntValueToBasic( player->GetKeyID(), data->_data_setting->_name, new_value );
     }
 
     __KF_UPDATE_STRING_FUNCTION__( KFBasicClientModule::OnUpdateStringCallBack )
