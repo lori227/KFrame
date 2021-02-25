@@ -46,10 +46,10 @@ namespace KFrame
         uint32 _reset_data_type = 0u;
 
         // 计算属性
-        std::vector< KFRandCalcData > _calc_data;
+        std::vector<KFRandCalcData> _calc_data;
     };
 
-    class KFRankConfig : public KFConfigT< KFRankSetting >, public KFInstance< KFRankConfig >
+    class KFRankConfig : public KFConfigT<KFRankSetting>, public KFInstance<KFRankConfig>
     {
     public:
         KFRankConfig()
@@ -58,12 +58,12 @@ namespace KFrame
         }
 
         // 获得排行榜列表
-        std::vector< KFRankSetting* >& FindRankSetting( const std::string& parent_name, uint64 key, const std::string& child_name )
+        std::vector<std::shared_ptr<const KFRankSetting>>& FindRankSetting( const std::string& parent_name, uint64 key, const std::string& child_name )
         {
-            static std::vector< KFRankSetting* > _empty_list;
-            auto strkey = __FORMAT__( "{}:{}:{}", parent_name, key, child_name );
-            auto iter = _kf_rank_data_list.find( strkey );
-            if ( iter == _kf_rank_data_list.end() )
+            static std::vector<std::shared_ptr<const KFRankSetting>> _empty_list;
+            auto key_name = __FORMAT__( "{}:{}:{}", parent_name, key, child_name );
+            auto iter = _rank_data_list.find( key_name );
+            if ( iter == _rank_data_list.end() )
             {
                 return _empty_list;
             }
@@ -76,33 +76,33 @@ namespace KFrame
         virtual void ClearSetting()
         {
             _show_data_list.clear();
-            _kf_rank_data_list.clear();
+            _rank_data_list.clear();
             KFConfigT<KFRankSetting>::ClearSetting();
         }
 
         // 读取配置
-        virtual void ReadSetting( KFXmlNode& xml_node, KFRankSetting* kfsetting )
+        virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFRankSetting> setting )
         {
-            kfsetting->_zone_type = xml_node.ReadUInt32( "zonetype", true );
-            kfsetting->_max_count = xml_node.ReadUInt32( "maxcount", true );
-            kfsetting->_refresh_time_id = xml_node.ReadUInt32( "refreshtimeid", true );
-            kfsetting->_reset_data_type = xml_node.ReadUInt32( "refreshreset", true );
+            setting->_zone_type = xml_node.ReadUInt32( "zonetype", true );
+            setting->_max_count = xml_node.ReadUInt32( "maxcount", true );
+            setting->_refresh_time_id = xml_node.ReadUInt32( "refreshtimeid", true );
+            setting->_reset_data_type = xml_node.ReadUInt32( "refreshreset", true );
 
-            auto strcalcdata = xml_node.ReadString( "calcdata", true );
-            while ( !strcalcdata.empty() )
+            auto calc_data = xml_node.ReadString( "calcdata", true );
+            while ( !calc_data.empty() )
             {
-                auto strdata = KFUtility::SplitString( strcalcdata, __SPLIT_STRING__ );
-                if ( !strdata.empty() )
+                auto data = KFUtility::SplitString( calc_data, __SPLIT_STRING__ );
+                if ( !data.empty() )
                 {
-                    KFRandCalcData calcdata;
-                    calcdata._parent_name = KFUtility::SplitString( strdata, __DOMAIN_STRING__ );
-                    calcdata._key = KFUtility::SplitValue<uint64>( strdata, __DOMAIN_STRING__ );
-                    calcdata._child_name = KFUtility::SplitString( strdata, __DOMAIN_STRING__ );
-                    calcdata._max_value = KFUtility::SplitValue<uint32>( strdata, __DOMAIN_STRING__ );
-                    kfsetting->_calc_data.emplace_back( calcdata );
+                    KFRandCalcData rank_calc_data;
+                    rank_calc_data._parent_name = KFUtility::SplitString( data, __DOMAIN_STRING__ );
+                    rank_calc_data._key = KFUtility::SplitValue<uint64>( data, __DOMAIN_STRING__ );
+                    rank_calc_data._child_name = KFUtility::SplitString( data, __DOMAIN_STRING__ );
+                    rank_calc_data._max_value = KFUtility::SplitValue<uint32>( data, __DOMAIN_STRING__ );
+                    setting->_calc_data.emplace_back( rank_calc_data );
 
-                    auto strkey = __FORMAT__( "{}:{}:{}", calcdata._parent_name, calcdata._key, calcdata._child_name );
-                    _kf_rank_data_list[ strkey ].push_back( kfsetting );
+                    auto key_name = __FORMAT__( "{}:{}:{}", rank_calc_data._parent_name, rank_calc_data._key, rank_calc_data._child_name );
+                    _rank_data_list[key_name].push_back( setting );
                 }
             }
 
@@ -117,7 +117,7 @@ namespace KFrame
         StringSet _show_data_list;
 
     private:
-        std::map< std::string, std::vector< KFRankSetting* > > _kf_rank_data_list;
+        std::map<std::string, std::vector<std::shared_ptr<const KFRankSetting>>> _rank_data_list;
     };
 }
 

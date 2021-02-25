@@ -22,15 +22,15 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_UPDATE_DATA_FUNCTION__( KFRankClientModule::OnDataUpdateCallBack )
     {
-        auto kfparent = kfdata->GetParent();
-        if ( !kfdata->HaveMask( KFDataDefine::DataMaskRank ) ||
-                !kfparent->HaveMask( KFDataDefine::DataMaskRank ) )
+        auto parent_data = data->GetParent();
+        if ( !data->HaveMask( KFDataDefine::DataMaskRank ) ||
+                !parent_data->HaveMask( KFDataDefine::DataMaskRank ) )
         {
             return;
         }
 
-        auto& ranksettinglist = KFRankConfig::Instance()->FindRankSetting( kfparent->_data_setting->_name, key, kfdata->_data_setting->_name );
-        for ( auto setting : ranksettinglist )
+        auto& rank_setting_list = KFRankConfig::Instance()->FindRankSetting( parent_data->_data_setting->_name, key, data->_data_setting->_name );
+        for ( auto setting : rank_setting_list )
         {
             // 属性更新顺序无法保证, 所以先保存到一个列表中, 在AfterRun中更新排行榜数据
             _update_rank_list[ player->GetKeyID() ].insert( setting );
@@ -61,7 +61,7 @@ namespace KFrame
         _update_rank_list.clear();
     }
 
-    uint32 KFRankClientModule::CalcRankZoneId( uint64 player_id, const KFRankSetting* setting )
+    uint32 KFRankClientModule::CalcRankZoneId( uint64 player_id, std::shared_ptr<const KFRankSetting> setting )
     {
         auto zone_id = _invalid_int;
         if ( setting->_zone_type == KFMsg::ZoneRank )
@@ -72,14 +72,14 @@ namespace KFrame
         return zone_id;
     }
 
-    void KFRankClientModule::UpdateRankDataToShard( EntityPtr player, const KFRankSetting* setting )
+    void KFRankClientModule::UpdateRankDataToShard( EntityPtr player, std::shared_ptr<const KFRankSetting> setting )
     {
         // 计算分区id
         auto player_id = player->GetKeyID();
         auto zone_id = CalcRankZoneId( player_id, setting );
 
         // 计算排行榜积分
-        auto rankscore = CalcRankDataScore( player, setting );
+        auto rank_score = CalcRankDataScore( player, setting );
 
         // 更新到排行榜
         KFMsg::S2SUpdateRankDataReq req;
@@ -87,53 +87,53 @@ namespace KFrame
         req.set_playerid( player_id );
         req.set_rankid( setting->_id );
 
-        auto pbrankdata = req.mutable_pbrankdata();
-        pbrankdata->set_playerid( player_id );
-        pbrankdata->set_rankscore( rankscore );
+        auto rank_data = req.mutable_pbrankdata();
+        rank_data->set_playerid( player_id );
+        rank_data->set_rankscore( rank_score );
 
         // 显示的数据
-        auto pbdatas = pbrankdata->mutable_pbdata();
-        for ( auto& calcdata : setting->_calc_data )
+        auto data_list = rank_data->mutable_pbdata();
+        for ( auto& calc_data : setting->_calc_data )
         {
-            auto kfdata = player->Find( calcdata._parent_name, calcdata._child_name );
-            if ( kfdata == nullptr )
+            auto data = player->Find( calc_data._parent_name, calc_data._child_name );
+            if ( data == nullptr )
             {
-                kfdata = player->Find( calcdata._child_name );
+                data = player->Find( calc_data._child_name );
             }
 
-            if ( kfdata != nullptr )
+            if ( data != nullptr )
             {
-                ( *pbdatas )[ calcdata._child_name ] = kfdata->ToString();
+                ( *data_list )[calc_data._child_name] = data->ToString();
             }
         }
 
         _kf_route->RepeatToRand( player_id, __STRING__( rank ), KFMsg::S2S_UPDATE_RANK_DATA_REQ, &req );
     }
 
-    uint64 KFRankClientModule::CalcRankDataScore( EntityPtr player, const KFRankSetting* setting )
+    uint64 KFRankClientModule::CalcRankDataScore( EntityPtr player, std::shared_ptr<const KFRankSetting> setting )
     {
         // 排行榜积分
-        uint64 rankscore = 0u;
+        uint64 rank_score = 0u;
 
         // 倍率系数
         uint64 coefficient = 1u;
         for ( auto iter = setting->_calc_data.rbegin(); iter != setting->_calc_data.rend(); ++iter )
         {
-            auto& calcdata = *iter;
+            auto& calc_data = *iter;
 
-            auto kfdata = player->Find( calcdata._parent_name, calcdata._child_name );
-            if ( kfdata != nullptr )
+            auto data = player->Find( calc_data._parent_name, calc_data._child_name );
+            if ( data != nullptr )
             {
-                rankscore += kfdata->Get() * coefficient;
+                rank_score += data->Get() * coefficient;
             }
 
-            if ( calcdata._max_value > 0u )
+            if ( calc_data._max_value > 0u )
             {
-                coefficient = coefficient * calcdata._max_value;
+                coefficient = coefficient * calc_data._max_value;
             }
         }
 
-        return rankscore;
+        return rank_score;
     }
 
     __KF_MESSAGE_FUNCTION__( KFRankClientModule::HandleQueryRankListReq, KFMsg::MsgQueryRankListReq )
@@ -167,13 +167,12 @@ namespace KFrame
         KFMsg::S2SQueryFriendRankListReq req;
         req.set_rankid( kfmsg->rankid() );
 
-        auto kffriendrecord = entity->Find( __STRING__( friend ) );
-        auto kffriend = kffriendrecord->First();
-        while ( kffriend != nullptr )
+        auto friend_record = entity->Find( __STRING__( friend ) );
+        auto friend_data = friend_record->First();
+        while ( friend_data != nullptr )
         {
-            req.add_friendid( kffriend->GetKeyID() );
-
-            kffriend = kffriendrecord->Next();
+            req.add_friendid( friend_data->GetKeyID() );
+            friend_data = friend_record->Next();
         }
 
         auto ok = _kf_route->SendToRand( entity->GetKeyID(), __STRING__( rank ), KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );

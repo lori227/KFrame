@@ -48,20 +48,20 @@ namespace KFrame
 
     protected:
         // 更新排行榜数据
-        void UpdateRankDataToShard( EntityPtr player, const KFRankSetting* setting );
+        void UpdateRankDataToShard( EntityPtr player, std::shared_ptr<const KFRankSetting> setting );
 
         // 计算排行榜的打榜分值
-        uint64 CalcRankDataScore( EntityPtr player, const KFRankSetting* setting );
+        uint64 CalcRankDataScore( EntityPtr player, std::shared_ptr<const KFRankSetting> setting );
 
         // 计算zoneid
-        uint32 CalcRankZoneId( uint64 player_id, const KFRankSetting* setting );
+        uint32 CalcRankZoneId( uint64 player_id, std::shared_ptr<const KFRankSetting> setting );
 
     private:
         // 玩家组件
         std::shared_ptr<KFComponent> _component = nullptr;
 
         // 更新的排行榜操作
-        std::unordered_map< uint64, std::set< KFRankSetting* > > _update_rank_list;
+        std::unordered_map<uint64, std::set<std::shared_ptr<const KFRankSetting>>> _update_rank_list;
     };
 }
 

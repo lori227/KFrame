@@ -76,48 +76,48 @@ namespace KFrame
         //////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////
         // 开启刷新定时器
-        void StartRefreshRankDataTimer( const KFRankSetting* setting );
+        void StartRefreshRankDataTimer( std::shared_ptr<const KFRankSetting> setting );
 
         // 刷新排行榜定时器
         __KF_TIMER_FUNCTION__( OnTimerRefreshRankData );
         //////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////
         // 格式化排行榜数据key
-        std::string& FormatRankDataKey( uint32 rankid, uint32 zone_id );
-        std::string& FormatRankSortKey( uint32 rankid, uint32 zone_id );
+        std::string& FormatRankDataKey( uint32 rank_id, uint32 zone_id );
+        std::string& FormatRankSortKey( uint32 rank_id, uint32 zone_id );
 
         // 判断是否需要更新排行榜数据
-        bool IsNeedUpdateRankData( uint32 rankid, uint32 zone_id, uint64 rankscore );
+        bool IsNeedUpdateRankData( uint32 rank_id, uint32 zone_id, uint64 rank_score );
 
         // 读取排行榜数据
-        KFRankData* LoadRankData( uint32 rankid, uint32 zone_id );
+        std::shared_ptr<KFRankData> LoadRankData( uint32 rank_id, uint32 zone_id );
 
         // 保存
-        void SaveRankData( KFRankData* kfrankdata );
+        void SaveRankData( std::shared_ptr<KFRankData> rank_data );
 
         // 刷新排行榜
-        void SyncRefreshRankData( uint32 rankid );
-        bool RefreshRankData( uint32 rankid );
-        bool RefreshRankData( const KFRankSetting* setting, uint32 zone_id, const KFTimeData* time_data );
+        void SyncRefreshRankData( uint32 rank_id );
+        bool RefreshRankData( uint32 rank_id );
+        bool RefreshRankData( std::shared_ptr<const KFRankSetting> setting, uint32 zone_id, const KFTimeData* time_data );
 
         // 计算zoneid
-        uint32 CalcRankZoneId( uint64 player_id, const KFRankSetting* setting );
+        uint32 CalcRankZoneId( uint64 player_id, std::shared_ptr<const KFRankSetting> setting );
 
         // 删除数据
-        void ClearRankData( const std::string& rankdatakey, const std::string&  ranksortkey, const KFRankSetting* setting );
+        void ClearRankData( const std::string& rank_data_key, const std::string&  rank_sort_key, std::shared_ptr<const KFRankSetting> setting );
 
         // 查询玩家排名
-        uint32 QueryPlayerRank( uint64 player_id, uint32 rankid, uint32 zone_id );
+        uint32 QueryPlayerRank( uint64 player_id, uint32 rank_id, uint32 zone_id );
     private:
         // 排行榜
-        KFRedisDriver* _rank_redis_driver = nullptr;
+        std::shared_ptr<KFRedisDriver> _redis_driver = nullptr;
 
         // 最大的rank worker id
         uint32 _max_rank_worker_id = 0u;
 
         // 排行榜列表
-        typedef std::pair< uint32, uint32 > RankKey;
-        KFMap< RankKey, KFRankData > _kf_rank_data;
+        typedef std::pair<uint32, uint32> RankKey;
+        KFMap<RankKey, KFRankData> _kf_rank_data;
 
         // 需要刷新的排行榜id列表
         UInt32Vector _refresh_rank_id_list;
