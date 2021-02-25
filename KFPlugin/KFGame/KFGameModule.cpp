@@ -70,7 +70,7 @@ namespace KFrame
     __KF_DEPLOY_FUNCTION__( KFGameModule::OnDeployShutDownServer )
     {
         __LOG_INFO__( "shutdown save player data start=[{}]", param );
-        _kf_player->RemovePlayer();
+        _kf_player->Logout();
         __LOG_INFO__( "shutdown save player data finish=[{}]", param );
     }
 
@@ -442,7 +442,7 @@ namespace KFrame
     {
         __LOG_DEBUG__( "player[{}] lost", kfmsg->playerid() );
 
-        _kf_player->RemovePlayer( kfmsg->playerid() );
+        _kf_player->Logout( kfmsg->playerid() );
         _kf_data_client->RemoveLoadData( kfmsg->playerid() );
     }
 
@@ -455,7 +455,7 @@ namespace KFrame
         player->Operate( __STRING__( gateid ), KFEnum::Set, _invalid_int );
 
         // 删除玩家
-        _kf_player->RemovePlayer( kfmsg->playerid() );
+        _kf_player->Logout( kfmsg->playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleKickPlayerToGameReq, KFMsg::S2SKickPlayerToGameReq )
@@ -481,7 +481,7 @@ namespace KFrame
 
         // 删除玩家
         player->Operate( __STRING__( gateid ), KFEnum::Set, _invalid_int );
-        _kf_player->RemovePlayer( player_id );
+        _kf_player->Logout( player_id );
         return true;
     }
 

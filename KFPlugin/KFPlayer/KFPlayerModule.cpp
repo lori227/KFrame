@@ -18,8 +18,6 @@ namespace KFrame
 
         // 注册逻辑函数
         _component = _kf_kernel->FindComponent( __STRING__( player ) );
-        _component->RegisterEntityInitializeFunction( this, &KFPlayerModule::InitPlayer );
-        _component->RegisterEntityRemoveFunction( this, &KFPlayerModule::UnInitPlayer );
         _component->RegisterEntityRunFunction( this, &KFPlayerModule::RunPlayer );
         _component->RegisterEntityAfterRunFunction( this, &KFPlayerModule::AfterRunPlayer );
 
@@ -81,150 +79,142 @@ namespace KFrame
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFPlayerModule::AddInitDataFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddRunDataFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_init_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _player_run_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveInitDataFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveRunDataFunction( KFModule* module )
     {
-        _player_init_function.Remove( moudle );
+        _player_run_function.Remove( module );
     }
 
-    void KFPlayerModule::AddUnInitDataFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddAfterRunDataFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_init_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _player_after_run_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveUnInitDataFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveAfterRunDataFunction( KFModule* module )
     {
-        _player_init_function.Remove( moudle );
+        _player_after_run_function.Remove( module );
     }
 
-    void KFPlayerModule::AddRunDataFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddResetFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_run_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _player_reset_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveRunDataFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveResetFunction( KFModule* module )
     {
-        _player_run_function.Remove( moudle );
+        _player_reset_function.Remove( module );
     }
 
-    void KFPlayerModule::AddAfterRunDataFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddBeforeEnterFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_after_run_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _player_before_enter_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveAfterRunDataFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveBeforeEnterFunction( KFModule* module )
     {
-        _player_after_run_function.Remove( moudle );
+        _player_before_enter_function.Remove( module );
     }
 
-    void KFPlayerModule::AddResetFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddEnterFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_reset_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _player_enter_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveResetFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveEnterFunction( KFModule* module )
     {
-        _player_reset_function.Remove( moudle );
+        _player_enter_function.Remove( module );
     }
 
-    void KFPlayerModule::AddBeforeEnterFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddAfterEnterFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_before_enter_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _player_after_enter_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveBeforeEnterFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveAfterEnterFunction( KFModule* module )
     {
-        _player_before_enter_function.Remove( moudle );
+        _player_after_enter_function.Remove( module );
     }
 
-    void KFPlayerModule::AddEnterFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddLeaveFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_enter_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _player_leave_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveEnterFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveLeaveFunction( KFModule* module )
     {
-        _player_enter_function.Remove( moudle );
+        _player_leave_function.Remove( module );
     }
 
-    void KFPlayerModule::AddAfterEnterFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddNewPlayerFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_after_enter_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _new_player_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveAfterEnterFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveNewPlayerFunction( KFModule* module )
     {
-        _player_after_enter_function.Remove( moudle );
+        _new_player_function.Remove( module );
     }
 
-    void KFPlayerModule::AddLeaveFunction( const std::string& moudle, KFEntityFunction& function )
+    void KFPlayerModule::AddCreateRoleFunction( KFModule* module, KFEntityFunction& function )
     {
-        auto kffunction = _player_leave_function.Create( moudle );
-        kffunction->_function = function;
+        auto function_data = _create_role_function.Create( module );
+        function_data->SetFunction( module, function );
     }
 
-    void KFPlayerModule::RemoveLeaveFunction( const std::string& moudle )
+    void KFPlayerModule::RemoveCreateRoleFunction( KFModule* module )
     {
-        _player_leave_function.Remove( moudle );
-    }
-
-    void KFPlayerModule::AddNewPlayerFunction( const std::string& moudle, KFEntityFunction& function )
-    {
-        auto kffunction = _new_player_function.Create( moudle );
-        kffunction->_function = function;
-    }
-
-    void KFPlayerModule::RemoveNewPlayerFunction( const std::string& moudle )
-    {
-        _new_player_function.Remove( moudle );
-    }
-
-    void KFPlayerModule::AddCreateRoleFunction( const std::string& moudle, KFEntityFunction& function )
-    {
-        auto kffunction = _create_role_function.Create( moudle );
-        kffunction->_function = function;
-    }
-
-    void KFPlayerModule::RemoveCreateRoleFunction( const std::string& moudle )
-    {
-        _create_role_function.Remove( moudle );
+        _create_role_function.Remove( module );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////3
-    void KFPlayerModule::RemovePlayer()
+    void KFPlayerModule::Logout()
     {
-        std::list< EntityPtr > playerlist;
+        std::list<EntityPtr> player_list;
         for ( auto player = _component->FirstEntity(); player != nullptr; player = _component->NextEntity() )
         {
-            playerlist.push_back( player );
+            player_list.push_back( player );
         }
 
-        for ( auto player : playerlist )
+        for ( auto player : player_list )
         {
-            _component->RemoveEntity( player );
+            Logout( player );
         }
     }
 
-    void KFPlayerModule::RemovePlayer( uint64 player_id )
+    void KFPlayerModule::Logout( uint64 player_id )
     {
-        _component->RemoveEntity( player_id );
+        auto player = FindPlayer( player_id );
+        if ( player != nullptr )
+        {
+            Logout( player );
+        }
     }
 
-    void KFPlayerModule::RemovePlayer( EntityPtr player )
+    void KFPlayerModule::Logout( EntityPtr player )
     {
-        _component->RemoveEntity( player );
+        auto basic_data = player->Find( __STRING__( basic ) );
+        basic_data->Operate( __STRING__( serverid ), KFEnum::Set, 0 );
+        basic_data->Operate( __STRING__( status ), KFEnum::Set, ( uint32 )KFMsg::OfflineStatus );
+        basic_data->Operate( __STRING__( statustime ), KFEnum::Set, KFGlobal::Instance()->_real_time );
+
+        // 调用函数, 处理离开游戏的一些事务逻辑
+        for ( auto& iter : _player_leave_function._objects )
+        {
+            auto function_data = iter.second;
+            function_data->Call( player );
+        }
     }
 
     bool KFPlayerModule::SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
@@ -234,54 +224,22 @@ namespace KFrame
             return false;
         }
 
-        auto gateid = player->Get( __STRING__( gateid ) );
-        if ( gateid == _invalid_int )
+        auto gate_id = player->Get( __STRING__( gateid ) );
+        if ( gate_id == _invalid_int )
         {
             return false;
         }
 
-        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msg_id, message, delay );
+        return _kf_tcp_server->SendNetMessage( gate_id, player->GetKeyID(), msg_id, message, delay );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFPlayerModule::InitPlayer( EntityPtr player )
-    {
-        // 初始化个模块数据
-        for ( auto& iter : _player_init_function._objects )
-        {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
-        }
-    }
-
-    void KFPlayerModule::UnInitPlayer( EntityPtr player )
-    {
-        auto basic_data = player->Find( __STRING__( basic ) );
-        basic_data->Set( __STRING__( server_id ), 0 );
-        basic_data->Set( __STRING__( status ), ( uint32 )KFMsg::OfflineStatus );
-        basic_data->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
-
-        // 调用函数, 处理离开游戏的一些事务逻辑
-        for ( auto& iter : _player_leave_function._objects )
-        {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
-        }
-
-        // 卸载
-        for ( auto& iter : _player_uninit_function._objects )
-        {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
-        }
-    }
-
     void KFPlayerModule::RunPlayer( EntityPtr player )
     {
         // 逻辑更新
         for ( auto& iter : _player_run_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
+            auto function_data = iter.second;
+            function_data->Call( player );
         }
     }
 
@@ -289,8 +247,8 @@ namespace KFrame
     {
         for ( auto& iter : _player_after_run_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
+            auto function_data = iter.second;
+            function_data->Call( player );
         }
     }
 
@@ -301,81 +259,81 @@ namespace KFrame
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    EntityPtr KFPlayerModule::Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* player_data )
+    EntityPtr KFPlayerModule::Login( const KFMsg::PBLoginData* login_data, const KFMsg::PBObject* player_data )
     {
-        auto player = _component->CreateEntity( pblogin->playerid(), player_data );
+        auto player = _component->CreateEntity( login_data->playerid(), player_data );
         if ( player == nullptr )
         {
             return nullptr;
         }
 
         // 创建玩家
-        OnEnterCreatePlayer( player, pblogin->playerid() );
+        OnEnterCreatePlayer( player, login_data->playerid() );
 
         // 玩家账号信息
-        player->Set( __STRING__( ip ), pblogin->ip() );
-        player->Set( __STRING__( gateid ), pblogin->gateid() );
-        player->Set( __STRING__( channel ), pblogin->channel() );
-        player->Set( __STRING__( account ), pblogin->account() );
-        player->Set( __STRING__( accountid ), pblogin->account_id() );
+        player->Operate( __STRING__( ip ), KFEnum::Set, login_data->ip() );
+        player->Operate( __STRING__( gateid ), KFEnum::Set, login_data->gateid() );
+        player->Operate( __STRING__( channel ), KFEnum::Set, login_data->channel() );
+        player->Operate( __STRING__( account ), KFEnum::Set, login_data->account() );
+        player->Operate( __STRING__( accountid ), KFEnum::Set, login_data->accountid() );
 
         auto basic_data = player->Find( __STRING__( basic ) );
-        basic_data->Set( __STRING__( status ), ( uint32 )KFMsg::OnlineStatus );
-        basic_data->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
-        basic_data->Set( __STRING__( server_id ), KFGlobal::Instance()->_app_id->GetId() );
+        basic_data->Operate( __STRING__( status ), KFEnum::Set, ( uint32 )KFMsg::OnlineStatus );
+        basic_data->Operate( __STRING__( statustime ), KFEnum::Set, KFGlobal::Instance()->_real_time );
+        basic_data->Operate( __STRING__( serverid ), KFEnum::Set, KFGlobal::Instance()->_app_id->GetId() );
 
         // 渠道数据
-        auto pbchanneldata = &pblogin->channel_data();
-        for ( auto iter = pbchanneldata->begin(); iter != pbchanneldata->end(); ++iter )
+        auto channel_data = &login_data->channeldata();
+        for ( auto iter = channel_data->begin(); iter != channel_data->end(); ++iter )
         {
             auto& name = iter->first;
             auto& value = iter->second;
 
-            auto kfdata = player->Find( __STRING__( basic ), name );
-            if ( kfdata == nullptr )
+            auto data = player->Find( __STRING__( basic ), name );
+            if ( data == nullptr )
             {
-                kfdata = player->Find( name );
-                if ( kfdata == nullptr )
+                data = player->Find( name );
+                if ( data == nullptr )
                 {
                     continue;
                 }
             }
 
-            kfdata->Set( value );
+            data->Set( value );
         }
 
         // 调用重置函数
         for ( auto& iter : _player_reset_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
+            auto function_data = iter.second;
+            function_data->Call( player );
         }
         // 调用函数, 处理进入游戏的一些事务逻辑
         for ( auto& iter : _player_before_enter_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
+            auto function_data = iter.second;
+            function_data->Call( player );
         }
         for ( auto& iter : _player_enter_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
+            auto function_data = iter.second;
+            function_data->Call( player );
         }
         for ( auto& iter : _player_after_enter_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
+            auto function_data = iter.second;
+            function_data->Call( player );
         }
 
         player->SetInited();
-        player->SetNew( false );
+        player->SetNewEntity( false );
 
         // 启动延迟上线数据同步
         StartSyncOnlineTimer( player );
         return player;
     }
 
-    EntityPtr KFPlayerModule::ReLogin( uint64 player_id, uint64 gateid )
+    EntityPtr KFPlayerModule::ReLogin( uint64 player_id, uint64 gate_id )
     {
         auto player = FindPlayer( player_id );
         if ( player == nullptr )
@@ -383,7 +341,7 @@ namespace KFrame
             return nullptr;
         }
 
-        player->Set( __STRING__( gateid ), gateid );
+        player->Operate( __STRING__( gateid ), KFEnum::Set, gate_id );
 
         // 启动延迟上线数据同步
         StartSyncOnlineTimer( player );
@@ -392,46 +350,48 @@ namespace KFrame
 
     void KFPlayerModule::StartSyncOnlineTimer( EntityPtr player )
     {
-        for ( auto delaytime : player->_data_setting->_class_setting->_online_sync_time )
+        for ( auto delay_time : player->_data_setting->_class_setting->_online_sync_time )
         {
-            if ( delaytime > 0u )
+            if ( delay_time > 0u )
             {
-                __COUNT_TIMER_2__( player->GetKeyID(), delaytime, delaytime, 1u, &KFPlayerModule::OnTimerSyncEntityToOnline );
+                __COUNT_TIMER_2__( player->GetKeyID(), delay_time, delay_time, 1u, &KFPlayerModule::OnTimerSyncEntityToOnline );
             }
         }
     }
 
     __KF_TIMER_FUNCTION__( KFPlayerModule::OnTimerSyncEntityToOnline )
     {
-        auto player = FindPlayer( objectid );
+        auto player = FindPlayer( object_id );
         if ( player == nullptr )
         {
             return;
         }
 
         KFMsg::MsgSyncOnlineData sync;
-        auto playerdata = _kf_kernel->SerializeToOnline( player, subid );
-        sync.mutable_pbdata()->CopyFrom( *playerdata );
+        auto player_data = _kf_kernel->SerializeToOnline( player, data_id );
+        sync.mutable_pbdata()->CopyFrom( *player_data );
         SendToClient( player, KFMsg::MSG_SYNC_ONLINE_DATA, &sync );
     }
 
     __KF_UPDATE_STRING_FUNCTION__( KFPlayerModule::OnUpdateNameCallBack )
     {
-        if ( oldvalue == _invalid_string )
+        if ( old_value != _invalid_string )
         {
-            for ( auto& iter : _create_role_function._objects )
-            {
-                auto kffunction = iter.second;
-                kffunction->_function( player );
-            }
+            return;
+        }
 
-            for ( auto& iter : KFPlayerConfig::Instance()->_setting_list._objects )
+        for ( auto& iter : _create_role_function._objects )
+        {
+            auto function_data = iter.second;
+            function_data->Call( player );
+        }
+
+        for ( auto& iter : KFPlayerConfig::Instance()->_setting_list._objects )
+        {
+            auto setting = iter.second;
+            if ( setting->_type == NewPlayerEnum::NewRole )
             {
-                auto setting = iter.second;
-                if ( setting->_type == NewPlayerEnum::NewRole )
-                {
-                    player->AddElement( &setting->_reward, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
-                }
+                player->AddElement( &setting->_reward, _default_multiple, __STRING__( newrole ), 0u, __FUNC_LINE__ );
             }
         }
     }
@@ -440,21 +400,21 @@ namespace KFrame
     {
         // 判断新玩家
         auto global = KFGlobal::Instance();
-        auto basicid = player->Get( __STRING__( basic ), __STRING__( id ) );
-        if ( basicid == player_id )
+        auto basic_id = player->Get( __STRING__( basic ), __STRING__( id ) );
+        if ( basic_id == player_id )
         {
             return;
         }
 
         player->InitData();
-        player->SetNew( true );
-        player->Set( __STRING__( birthday ), global->_real_time );
-        player->Set( __STRING__( basic ), __STRING__( id ), player_id );
+        player->SetNewEntity( true );
+        player->Operate( __STRING__( birthday ), KFEnum::Set, global->_real_time );
+        player->Operate( __STRING__( basic ), __STRING__( id ), KFEnum::Set, player_id );
 
         for ( auto& iter : _new_player_function._objects )
         {
-            auto kffunction = iter.second;
-            kffunction->_function( player );
+            auto function_data = iter.second;
+            function_data->Call( player );
         }
 
         // 新玩家添加道具
@@ -469,7 +429,6 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     __KF_COMMAND_FUNCTION__( KFPlayerModule::OnCommandAddData )
     {
         if ( params.size() < 1 )
@@ -477,10 +436,9 @@ namespace KFrame
             return;
         }
 
-        auto& strdata = params[ 0 ];
-
         KFElements elements;
-        auto ok = elements.Parse( strdata, __FUNC_LINE__ );
+        elements._str_parse = params[0];
+        auto ok = KFGlobal::Instance()->ParseElement( elements, __FILE__, __LINE__ );
         if ( ok )
         {
             elements.SetOperate( KFEnum::Add );
@@ -495,10 +453,9 @@ namespace KFrame
             return;
         }
 
-        auto& strdata = params[ 0 ];
-
         KFElements elements;
-        auto ok = elements.Parse( strdata, __FUNC_LINE__ );
+        elements._str_parse = params[0];
+        auto ok = KFGlobal::Instance()->ParseElement( elements, __FILE__, __LINE__ );
         if ( ok )
         {
             elements.SetOperate( KFEnum::Set );
@@ -513,10 +470,9 @@ namespace KFrame
             return;
         }
 
-        auto& stragent = params[ 0 ];
-
         KFElements elements;
-        auto ok = elements.Parse( stragent, __FUNC_LINE__ );
+        elements._str_parse = params[0];
+        auto ok = KFGlobal::Instance()->ParseElement( elements, __FILE__, __LINE__ );
         if ( ok )
         {
             elements.SetOperate( KFEnum::Dec );
@@ -527,55 +483,55 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
     static uint32 _print = 0u;
-    void KFPlayerModule::SendUpdateDataToClient( EntityPtr player, KFMsg::PBObject& proto_object )
+    void KFPlayerModule::SendUpdateDataToClient( EntityPtr player, KFMsg::PBObject& message )
     {
 #ifdef __KF_DEBUG__
         if ( _print == 1u )
         {
-            auto temp = proto_object.DebugString();
+            auto temp = message.DebugString();
             __LOG_DEBUG__( "player=[{}], data={}", player->GetKeyID(), temp );
         }
 #endif
 
         KFMsg::MsgSyncUpdateData sync;
-        sync.mutable_pbdata()->Swap( &proto_object );
+        sync.mutable_pbdata()->Swap( &message );
         SendToClient( player, KFMsg::MSG_SYNC_UPDATE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendAddDataToClient( EntityPtr player, KFMsg::PBObject& proto_object )
+    void KFPlayerModule::SendAddDataToClient( EntityPtr player, KFMsg::PBObject& message )
     {
 #ifdef __KF_DEBUG__
         if ( _print == 1 )
         {
-            auto temp = proto_object.DebugString();
+            auto temp = message.DebugString();
             __LOG_DEBUG__( "player=[{}], data={}", player->GetKeyID(), temp );
         }
 #endif
 
         KFMsg::MsgSyncAddData sync;
-        sync.mutable_pbdata()->Swap( &proto_object );
+        sync.mutable_pbdata()->Swap( &message );
         SendToClient( player, KFMsg::MSG_SYNC_ADD_DATA, &sync );
     }
 
-    void KFPlayerModule::SendRemoveDataToClient( EntityPtr player, KFMsg::PBObject& proto_object )
+    void KFPlayerModule::SendRemoveDataToClient( EntityPtr player, KFMsg::PBObject& message )
     {
 #ifdef __KF_DEBUG__
         if ( _print == 1 )
         {
-            auto temp = proto_object.DebugString();
+            auto temp = message.DebugString();
             __LOG_DEBUG__( "player=[{}], data={}", player->GetKeyID(), temp );
         }
 #endif
 
         KFMsg::MsgSyncRemoveData sync;
-        sync.mutable_pbdata()->Swap( &proto_object );
+        sync.mutable_pbdata()->Swap( &message );
         SendToClient( player, KFMsg::MSG_SYNC_REMOVE_DATA, &sync );
     }
 
-    void KFPlayerModule::SendElementToClient( EntityPtr player, KFMsg::PBShowElements& pbelements )
+    void KFPlayerModule::SendElementToClient( EntityPtr player, KFMsg::PBShowElements& show_elements )
     {
         KFMsg::MsgShowElement show;
-        show.mutable_elements()->Swap( &pbelements );
+        show.mutable_elements()->Swap( &show_elements );
         SendToClient( player, KFMsg::MSG_SHOW_ELEMENT, &show );
     }
 
@@ -589,20 +545,20 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleRequestSyncReq, KFMsg::MsgRequestSyncReq )
     {
-        auto kfdata = entity->Find( kfmsg->data_name() );
-        if ( kfdata == nullptr )
+        auto data = entity->Find( kfmsg->data_name() );
+        if ( data == nullptr )
         {
             return;
         }
 
-        kfdata->AddMask( KFDataDefine::DataMaskSync );
-        switch (  kfdata->_data_setting->_type )
+        data->AddMask( KFDataDefine::DataMaskSync );
+        switch ( data->_data_setting->_type )
         {
         case KFDataDefine::DataTypeObject:
-            entity->SyncUpdateDataToClient( kfdata, kfdata->GetKeyID() );
+            entity->SyncUpdateDataToClient( data, data->GetKeyID() );
             break;
         case KFDataDefine::DataTypeRecord:
-            entity->SynAddRecordDataToClient( kfdata );
+            entity->SynAddRecordDataToClient( data );
             break;
         default:
             break;
@@ -611,13 +567,13 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleCancelSyncReq, KFMsg::MsgCancelSyncReq )
     {
-        auto kfdata = entity->Find( kfmsg->data_name() );
-        if ( kfdata == nullptr )
+        auto data = entity->Find( kfmsg->data_name() );
+        if ( data == nullptr )
         {
             return;
         }
 
-        kfdata->RemoveMask( KFDataDefine::DataMaskSync );
+        data->RemoveMask( KFDataDefine::DataMaskSync );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateIntReq, KFMsg::MsgUpdateIntReq )
@@ -625,10 +581,10 @@ namespace KFrame
         // 1级属性
         if ( kfmsg->parent_name().empty() )
         {
-            auto kfdata = entity->Find( kfmsg->data_name() );
-            if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
+            auto data = entity->Find( kfmsg->data_name() );
+            if ( data != nullptr && data->HaveMask( KFDataDefine::DataMaskClient ) )
             {
-                entity->UpdateData( kfdata, kfmsg->operate(), kfmsg->value() );
+                entity->UpdateData( data, kfmsg->operate(), kfmsg->value() );
             }
 
             return;
@@ -637,29 +593,29 @@ namespace KFrame
         // 2级object属性
         if ( kfmsg->key() == 0u )
         {
-            auto kfdata = entity->Find( kfmsg->parent_name(), kfmsg->data_name() );
-            if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
+            auto data = entity->Find( kfmsg->parent_name(), kfmsg->data_name() );
+            if ( data != nullptr && data->HaveMask( KFDataDefine::DataMaskClient ) )
             {
-                entity->UpdateData( kfdata, kfmsg->operate(), kfmsg->value() );
+                entity->UpdateData( data, kfmsg->operate(), kfmsg->value() );
             }
 
             return;
         }
 
         // 3级record属性
-        auto kfparent = entity->Find( kfmsg->parent_name() );
-        if ( kfparent == nullptr || !kfparent->_data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
+        auto parent_data = entity->Find( kfmsg->parent_name() );
+        if ( parent_data == nullptr || !parent_data->_data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
 
-        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg->data_name() );
-        if ( kfdatasetting == nullptr || !kfdatasetting->HaveMask( KFDataDefine::DataMaskClient ) )
+        auto data_setting = parent_data->_data_setting->_class_setting->FindSetting( kfmsg->data_name() );
+        if ( data_setting == nullptr || !data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }
 
-        entity->UpdateRecord( kfparent, kfmsg->key(), kfmsg->data_name(), kfmsg->operate(), kfmsg->value() );
+        entity->UpdateRecord( parent_data, kfmsg->key(), kfmsg->data_name(), kfmsg->operate(), kfmsg->value() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFPlayerModule::HandleUpdateStrReq, KFMsg::MsgUpdateStrReq )
@@ -667,10 +623,10 @@ namespace KFrame
         // 1级属性
         if ( kfmsg->parent_name().empty() )
         {
-            auto kfdata = entity->Find( kfmsg->data_name() );
-            if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
+            auto data = entity->Find( kfmsg->data_name() );
+            if ( data != nullptr && data->HaveMask( KFDataDefine::DataMaskClient ) )
             {
-                entity->UpdateData( kfdata, kfmsg->value() );
+                entity->UpdateData( data, kfmsg->value() );
             }
 
             return;
@@ -679,24 +635,24 @@ namespace KFrame
         // 2级object属性
         if ( kfmsg->key() == 0u )
         {
-            auto kfdata = entity->Find( kfmsg->parent_name(), kfmsg->data_name() );
-            if ( kfdata != nullptr && kfdata->HaveMask( KFDataDefine::DataMaskClient ) )
+            auto data = entity->Find( kfmsg->parent_name(), kfmsg->data_name() );
+            if ( data != nullptr && data->HaveMask( KFDataDefine::DataMaskClient ) )
             {
-                entity->UpdateData( kfdata, kfmsg->value() );
+                entity->UpdateData( data, kfmsg->value() );
             }
 
             return;
         }
 
         // 3级record属性
-        auto kfparent = entity->Find( kfmsg->parent_name() );
-        if ( kfparent == nullptr )
+        auto parent_data = entity->Find( kfmsg->parent_name() );
+        if ( parent_data == nullptr )
         {
             return;
         }
 
-        auto kfdatasetting = kfparent->_data_setting->_class_setting->FindSetting( kfmsg->data_name() );
-        if ( kfdatasetting == nullptr || !kfdatasetting->HaveMask( KFDataDefine::DataMaskClient ) )
+        auto data_setting = parent_data->_data_setting->_class_setting->FindSetting( kfmsg->data_name() );
+        if ( data_setting == nullptr || !data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
         {
             return;
         }

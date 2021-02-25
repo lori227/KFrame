@@ -10,17 +10,6 @@ namespace KFrame
         _sync_entity_list.clear();
     }
 
-    void KFComponentEx::OnInitEntity( EntityPtr entity )
-    {
-        // 初始化
-        _entity_init_function.Call( entity );
-    }
-
-    void KFComponentEx::OnRemoveEntity( EntityPtr entity )
-    {
-        entity_remove_function.Call( entity );
-    }
-
     void KFComponentEx::Run()
     {
         if ( _entity_run_function.IsOpen() )
@@ -129,7 +118,6 @@ namespace KFrame
         if ( ok )
         {
             entity->SetKeyID( key );
-            OnInitEntity( entity );
         }
         else
         {
@@ -184,7 +172,6 @@ namespace KFrame
         // 释放资源, 保存
         if ( entity->IsInited() )
         {
-            OnRemoveEntity( entity );
             DeleteSaveEntity( entity );
         }
 
@@ -415,26 +402,6 @@ namespace KFrame
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFComponentEx::BindEntityInitializeFunction( KFModule* module, KFEntityFunction& function )
-    {
-        _entity_init_function.SetFunction( module, function );
-    }
-
-    void KFComponentEx::UnRegisterEntityInitializeFunction()
-    {
-        _entity_init_function.Reset();
-    }
-
-    void KFComponentEx::BindEntityRemoveFunction( KFModule* module, KFEntityFunction& function )
-    {
-        entity_remove_function.SetFunction( module, function );
-    }
-
-    void KFComponentEx::UnRegisterEntityRemoveFunction()
-    {
-        entity_remove_function.Reset();
-    }
-
     void KFComponentEx::BindEntityRunFunction( KFModule* module, KFEntityFunction& function )
     {
         _entity_run_function.SetFunction( module, function );

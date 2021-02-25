@@ -284,22 +284,6 @@ namespace KFrame
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         template<class T>
-        void RegisterEntityInitializeFunction( T* module, void ( T::*handle )( EntityPtr ) )
-        {
-            KFEntityFunction function = std::bind( handle, module, std::placeholders::_1 );
-            BindEntityInitializeFunction( module, function );
-        }
-        virtual void UnRegisterEntityInitializeFunction() = 0;
-
-        template<class T>
-        void RegisterEntityRemoveFunction( T* module, void ( T::*handle )( EntityPtr ) )
-        {
-            KFEntityFunction function = std::bind( handle, module, std::placeholders::_1 );
-            BindEntityRemoveFunction( module, function );
-        }
-        virtual void UnRegisterEntityRemoveFunction() = 0;
-
-        template<class T>
         void RegisterEntityRunFunction( T* module, void ( T::*handle )( EntityPtr ) )
         {
             KFEntityFunction function = std::bind( handle, module, std::placeholders::_1 );
@@ -434,9 +418,6 @@ namespace KFrame
         virtual void BindUpdateStringFunction( KFModule* module, const std::string& parent_name, const std::string& data_name, KFUpdateStringFunction& function ) = 0;
         virtual void UnBindUpdateStringFunction( KFModule* module, const std::string& parent_name, const std::string& data_name ) = 0;
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        virtual void BindEntityInitializeFunction( KFModule* module, KFEntityFunction& function ) = 0;
-        virtual void BindEntityRemoveFunction( KFModule* module, KFEntityFunction& function ) = 0;
         virtual void BindEntityAfterRunFunction( KFModule* module, KFEntityFunction& function ) = 0;
         virtual void BindEntityRunFunction( KFModule* module, KFEntityFunction& function ) = 0;
         virtual void BindEntityDeleteFunction( KFModule* module, KFEntityFunction& function ) = 0;

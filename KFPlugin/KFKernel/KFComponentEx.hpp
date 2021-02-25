@@ -111,12 +111,6 @@ namespace KFrame
         virtual void BindUpdateStringFunction( KFModule* module, const std::string& parent_name, const std::string& data_name, KFUpdateStringFunction& function );
         virtual void UnBindUpdateStringFunction( KFModule* module, const std::string& parent_name, const std::string& data_name );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void BindEntityInitializeFunction( KFModule* module, KFEntityFunction& function );
-        virtual void UnRegisterEntityInitializeFunction();
-
-        virtual void BindEntityRemoveFunction( KFModule* module, KFEntityFunction& function );
-        virtual void UnRegisterEntityRemoveFunction();
-
         virtual void BindEntityRunFunction( KFModule* module, KFEntityFunction& function );
         virtual void UnRegisterEntityRunFunction();
 
@@ -156,12 +150,6 @@ namespace KFrame
     protected:
         // 保存数据到数据库
         __KF_TIMER_FUNCTION__( OnTimerSaveEntity );
-
-        // 初始化
-        void OnInitEntity( EntityPtr entity );
-
-        // 卸载
-        void OnRemoveEntity( EntityPtr entity );
 
         // 保存
         void SaveEntity( EntityPtr entity, uint32 flag, const char* function, uint32 line );
@@ -210,8 +198,6 @@ namespace KFrame
         // 更新数据的回调函数
         KFMap<DataKeyType, KFDataFunction<KFUpdateStringFunction>> _update_string_function;
         /////////////////////////////////////////////////////////////////////////////////////////////
-        KFModuleFunction<KFEntityFunction> _entity_init_function;
-        KFModuleFunction<KFEntityFunction> entity_remove_function;
         KFModuleFunction<KFEntityFunction> _entity_run_function;
         KFModuleFunction<KFEntityFunction> _entity_after_run_function;
         KFModuleFunction<KFEntityFunction> _entity_delete_function;
