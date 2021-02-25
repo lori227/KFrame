@@ -30,7 +30,7 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFLuaScript* KFLuaModule::FindLuaScript( const std::string& lua_file )
+    std::shared_ptr<KFLuaScript> KFLuaModule::FindLuaScript( const std::string& lua_file )
     {
         auto lua_script = _lua_script.Create( lua_file );
         if ( !lua_script->_is_initialized )
@@ -385,7 +385,7 @@ namespace KFrame
 
         __JSON_PARSE_STRING__( kfjson, pass_back_data );
 
-        auto lua_file = __JSON_GET_STRING__( kfjson, __STRING__( lua_file ) );
+        auto lua_file = __JSON_GET_STRING__( kfjson, __STRING__( luafile ) );
         auto lua_function = __JSON_GET_STRING__( kfjson, __STRING__( luafunction ) );
         if ( lua_file.empty() || lua_function.empty() )
         {

@@ -53,9 +53,9 @@ namespace KFrame
         {
             auto gate_id = kfmsg->gateid( i );
             auto hash_data = _gate_hash.Create( gate_id );
-            hash_data->AddHashNode( __STRING__( game ), kfmsg->game_id(), 50 );
+            hash_data->AddHashNode( __STRING__( game ), kfmsg->gameid(), 50 );
 
-            __LOG_INFO__( "add gate=[{}] game=[{}]", KFAppId::ToString( gate_id ), KFAppId::ToString( kfmsg->game_id() ) );
+            __LOG_INFO__( "add gate=[{}] game=[{}]", KFAppId::ToString( gate_id ), KFAppId::ToString( kfmsg->gameid() ) );
         }
     }
 
@@ -67,9 +67,9 @@ namespace KFrame
             return;
         }
 
-        hash_data->RemoveHashNode( kfmsg->game_id() );
+        hash_data->RemoveHashNode( kfmsg->gameid() );
 
-        __LOG_ERROR__( "remove gate=[{}] game=[{}]", KFAppId::ToString( kfmsg->gateid() ), KFAppId::ToString( kfmsg->game_id() ) );
+        __LOG_ERROR__( "remove gate=[{}] game=[{}]", KFAppId::ToString( kfmsg->gateid() ), KFAppId::ToString( kfmsg->gameid() ) );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFWorldModule::OnServerLostGame )

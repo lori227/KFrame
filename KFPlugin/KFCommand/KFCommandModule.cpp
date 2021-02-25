@@ -13,10 +13,10 @@ namespace KFrame
     }
 
     /////////////////////////////////////////////////////////////////
-    void KFCommandModule::BindFunction( const std::string& command, KFCommandFunction& function )
+    void KFCommandModule::BindFunction( const std::string& command, KFModule* module, KFCommandFunction& function )
     {
-        auto kffunction = _kf_command_function.Create( command );
-        kffunction->_function = function;
+        auto function_data = _kf_command_function.Create( command );
+        function_data->SetFunction( module, function );
     }
 
     void KFCommandModule::UnRegisterFunction( const std::string& command )
@@ -36,8 +36,8 @@ namespace KFrame
 
         __LOG_DEBUG__( "player=[{}] debug command[{}]", entity->GetKeyID(), command );
 
-        auto kffunction = _kf_command_function.Find( command );
-        if ( kffunction != nullptr )
+        auto function_data = _kf_command_function.Find( command );
+        if ( function_data != nullptr )
         {
             StringVector params;
             for ( auto i = 0; i < kfmsg->params_size(); ++i )
@@ -45,7 +45,7 @@ namespace KFrame
                 params.push_back( kfmsg->params( i ) );
             }
 
-            return kffunction->_function( entity, params );
+            return function_data->Call( entity, params );
         }
     }
 }

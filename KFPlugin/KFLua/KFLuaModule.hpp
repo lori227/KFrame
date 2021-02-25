@@ -132,7 +132,7 @@ namespace KFrame
         __KF_DEPLOY_FUNCTION__( LoadScript );
         ////////////////////////////////////////////////////////////////////////////////
         // 查找lua脚本
-        KFLuaScript* FindLuaScript( const std::string& lua_file );
+        std::shared_ptr<KFLuaScript> FindLuaScript( const std::string& lua_file );
 
         // 注册lua导出函数
         void RegisterLuaFunction( std::shared_ptr<KFLuaScript> lua_script );

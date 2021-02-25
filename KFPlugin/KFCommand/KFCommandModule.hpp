@@ -34,14 +34,14 @@ namespace KFrame
 
     protected:
         // 绑定调试函数
-        virtual void BindFunction( const std::string& command, KFCommandFunction& function );
+        virtual void BindFunction( const std::string& command, KFModule* module, KFCommandFunction& function );
 
     protected:
         // 处理客户端命令请求
         __KF_MESSAGE_FUNCTION__( HandleCommandReq, KFMsg::MsgCommandReq );
 
     protected:
-        KFMapFunction< std::string, KFCommandFunction > _kf_command_function;
+        KFMapModuleFunction<std::string, KFCommandFunction> _kf_command_function;
     };
 }
 
