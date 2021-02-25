@@ -10,34 +10,34 @@ namespace KFrame
 	class KFRelationSetting : public KFStrSetting
 	{
 	public:
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ×î´óÊıÁ¿
 		uint32 _max_count = 0u;
 
-		// ï¿½Ç·ï¿½ï¿½ï¿½Ë«ï¿½ï¿½ï¿½
+		// ÊÇ·ñÊÇË«ÏòµÄ
 		bool _both_way = false;
 
-		// ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ÊÇ·ñĞèÒª¸üĞÂÊôĞÔ
 		bool _need_update = false;
 
-		// ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ÊÇ·ñĞèÒªÖ÷¶¯¼ÓÔØ
 		bool _online_load = false;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ÑûÇëÁĞ±í×î´óÊıÁ¿
 		uint32 _invite_list_count = 0u;
 
-		// ï¿½ï¿½ï¿½ë±£ï¿½ï¿½Ê±ï¿½ï¿½(ï¿½ï¿½)
+		// ÑûÇë±£ÁôÊ±¼ä(Ãë)
 		uint32 _invite_keep_time = 0u;
 
-		// ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½,ï¿½ï¿½ï¿½)
+		// Êı¾İ¿âÁĞ±íÃû×Ö(·şÎñÆ÷Ê¹ÓÃ,Îğ¸Ä)
 		std::string _data_list_name;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Õ¾ï¿½ï¿½Ç²ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½)
+		// ÑûÇëÁĞ±íÊôĞÔÃû×Ö(¿Õ¾ÍÊÇ²»ĞèÒªÑûÇë)
 		std::string _invite_data_name;
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½,ï¿½ï¿½ï¿½)
+		// ÑûÇëÁĞ±íÊôĞÔÃû×Ö(·şÎñÆ÷Ê¹ÓÃ,Îğ¸Ä)
 		std::string _invite_list_name;
 
-		// ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½)
+		// ¾Ü¾øÉêÇë(·şÎñÆ÷Ê¹ÓÃ)
 		std::string _refuse_name;
 
 	};
@@ -58,7 +58,7 @@ namespace KFrame
 		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFRelationSetting> setting )
 		{
 			setting->_max_count = xml_node.ReadUInt32( "maxcount", true );
-			setting->_both_way = xml_node.ReadBool( "is_both_way", true );
+			setting->_both_way = xml_node.ReadBool( "bothway", true );
 			setting->_need_update = xml_node.ReadBool( "needupdate", true );
 			setting->_online_load = xml_node.ReadBool( "onlineload", true );
 			setting->_invite_list_count = xml_node.ReadUInt32( "invitelistcount", true );

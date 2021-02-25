@@ -1,44 +1,44 @@
 <root>
-	<node name="achieveclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
-	<node name="compound" version="18a848107c539da5e6510ec70b29ee52"/>
+	<node name="sign" version="1ff2472bb132760d73ae30e3d4e6f3c8"/>
+	<node name="channel" version="839a87a99fb21f10cf910bace7466ea6"/>
 	<node name="taskclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
 	<node name="achieve" version="7a74ccc8379280e028427c0ee00edaac"/>
 	<node name="dropdata" version="acd1c86cd8d4338bb563ce1a1bcc5d7f"/>
-	<node name="sign" version="1ff2472bb132760d73ae30e3d4e6f3c8"/>
-	<node name="channel" version="839a87a99fb21f10cf910bace7466ea6"/>
-	<node name="relation" version="5d9331f4f85c88a0d2aeca78cfcf1c93"/>
+	<node name="achieveclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
+	<node name="compound" version="18a848107c539da5e6510ec70b29ee52"/>
 	<node name="countcost" version="a5a6192a93fd058def8e155b5c804f35"/>
+	<node name="relation" version="5d9331f4f85c88a0d2aeca78cfcf1c93"/>
 	<node name="dropgroup" version="acd1c86cd8d4338bb563ce1a1bcc5d7f"/>
 	<node name="reward" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
-	<node name="taskchain" version="031aabd747f18bf65e87a8cd91f5c55b"/>
 	<node name="unlock" version="bee850fc501eb61c7e6d6abd497f7b87"/>
+	<node name="taskchain" version="031aabd747f18bf65e87a8cd91f5c55b"/>
 	<node name="timeloop" version="e8c104728c156caeb1290dad8b3335bf"/>
-	<node name="frameconstant" version="26230a675935caa816f4034dd7755339"/>
 	<node name="condition" version="88848a085ee5b6a0c36c6f256b6b9992"/>
+	<node name="frameconstant" version="26230a675935caa816f4034dd7755339"/>
 	<node name="timesection" version="e8c104728c156caeb1290dad8b3335bf"/>
-	<node name="framefilter" version="4f3c8869de1f5a39b08c2b1106aabc9c"/>
-	<node name="frameconfig" version="0430ec162766733e7b757f5214bfaf0c"/>
-	<node name="leave" version="e52d2af6524888af17fcbf3087eab5ee"/>
 	<node name="player" version="a96c6078b3f43dc301a0f195ea47c0ff"/>
+	<node name="leave" version="e52d2af6524888af17fcbf3087eab5ee"/>
+	<node name="frameconfig" version="0430ec162766733e7b757f5214bfaf0c"/>
+	<node name="framefilter" version="4f3c8869de1f5a39b08c2b1106aabc9c"/>
 	<node name="execute" version="8d8ccf8f9f7ec6568af2de65d0b51448"/>
-	<node name="goods" version="ba75db42b68b1f84c2f9f29f60e39c4a"/>
 	<node name="conditiondefine" version="e49534e87e516d902e03e821e3a0b949"/>
-	<node name="task" version="7c3a01cd21f92c8bd4c785d3acaab45c"/>
+	<node name="goods" version="ba75db42b68b1f84c2f9f29f60e39c4a"/>
 	<node name="signclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
+	<node name="task" version="7c3a01cd21f92c8bd4c785d3acaab45c"/>
 	<node name="enter" version="e52d2af6524888af17fcbf3087eab5ee"/>
-	<node name="template" version="d3f6e2668b7968a91cf92a5660a62b72"/>
-	<node name="taskexecute" version="26230a675935caa816f4034dd7755339"/>
 	<node name="relationclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
+	<node name="taskexecute" version="26230a675935caa816f4034dd7755339"/>
+	<node name="template" version="d3f6e2668b7968a91cf92a5660a62b72"/>
 	<node name="team" version="e207c80f1f950a6e021b6a8ef6596d1e"/>
 	<node name="reset" version="6cd18c1ffd46b787e982d9b8f2e298db"/>
-	<node name="frameclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
 	<node name="itemclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
-	<node name="storeclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
+	<node name="frameclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
 	<node name="mail" version="26d2fc2aed81ea547ed1cc0e134a74e3"/>
-	<node name="store" version="cd8805a627bb1f810e994cdaffda718e"/>
+	<node name="storeclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
 	<node name="mailclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
-	<node name="teamclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
+	<node name="store" version="cd8805a627bb1f810e994cdaffda718e"/>
 	<node name="dropclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
+	<node name="teamclass" version="4c2c8be0c025893b2d3d9524d23e1c25"/>
 	<node name="rank" version="a07bf02d42cd98d7c862815aabb24e08"/>
 	<node name="weightpool" version="b23436e3e9f4daa80e38a6dcab7724c8"/>
 	<node name="pay" version="de0032c144ccb766776057d821700dba"/>
