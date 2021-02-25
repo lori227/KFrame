@@ -36,10 +36,10 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 移动道具
-        virtual uint32 MoveItem( EntityPtr player, DataPtr kfsourcerecord, DataPtr kfsourceitem, DataPtr kftargetrecord, uint32 targetindex );
+        virtual uint32 MoveItem( EntityPtr player, DataPtr source_record, DataPtr source_item, DataPtr target_record, uint32 target_index );
 
         // 查找索引的道具
-        virtual DataPtr FindIndexItem( EntityPtr player, DataPtr kfitemrecord, uint32 index );
+        virtual DataPtr FindIndexItem( EntityPtr player, DataPtr item_record, uint32 index );
 
     protected:
         // 移动道具(从背包到仓库 或者从仓库到背包)
@@ -67,82 +67,82 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////
     protected:
         // 初始化道具格子信息
-        void InitItemEmptyIndexData( EntityPtr player, DataPtr kfitembag, const KFItemBagSetting* kfbagsetting );
+        void InitItemEmptyIndexData( EntityPtr player, DataPtr item_record, std::shared_ptr<const KFItemBagSetting> item_bag_setting );
 
         // 删除格子信息
         void UnInitItemEmptyIndexData( EntityPtr player, const std::string& name );
 
         // 清空格子信息
-        void AddItemEmptyIndex( EntityPtr player, DataPtr kfitembag, DataPtr kfitem );
+        void AddItemEmptyIndex( EntityPtr player, DataPtr item_record, DataPtr item_data );
 
         // 最大索引
-        uint32 GetItemMaxIndex( EntityPtr player, DataPtr kfitembag );
+        uint32 GetItemMaxIndex( EntityPtr player, DataPtr item_record );
 
         // 添加最大索引
-        void AddItemMaxIndex( EntityPtr player, DataPtr kfitembag, uint32 count );
+        void AddItemMaxIndex( EntityPtr player, DataPtr item_record, uint32 count );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 计算可以叠加物品数量
-        uint32 CalcItemAddCount( uint32 sourcecount, uint32 targetcount, uint32 maxcount );
+        uint32 CalcItemAddCount( uint32 source_count, uint32 target_count, uint32 max_count );
 
         // 判断是否能移动道具
-        bool CheckItemCanMove( const KFItemSetting* setting, const std::string& sourcename, const std::string& targetname );
+        bool CheckItemCanMove( std::shared_ptr<const KFItemSetting> setting, const std::string& source_name, const std::string& target_name );
 
         // 找到可以移动的背包
-        DataPtr FindCanMoveItemBag( EntityPtr player, const KFItemSetting* setting, const std::string& sourcename, const std::string& excludename );
+        DataPtr FindCanMoveItemBag( EntityPtr player, std::shared_ptr<const KFItemSetting> setting, const std::string& source_name, const std::string& exclude_name );
 
         // 判断是否能合并
-        bool CheckItemCanMerge( const KFItemSetting* kfsourcesetting, DataPtr kfsourceitem, const KFItemSetting* kftargetsetting, DataPtr kftargetitem );
+        bool CheckItemCanMerge( std::shared_ptr<const KFItemSetting> source_item_setting, DataPtr source_item, std::shared_ptr<const KFItemSetting> target_item_setting, DataPtr target_item );
 
         // 拆分道具
-        uint32 SplitItemLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
-                               const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem, uint32 splitcount,
-                               const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord, uint32 splitindex );
+        uint32 SplitItemLogic( EntityPtr player, std::shared_ptr<const KFItemSetting> item_setting,
+                               std::shared_ptr<const KFItemBagSetting> source_bag_setting, DataPtr source_record, DataPtr source_item, uint32 split_count,
+                               std::shared_ptr<const KFItemBagSetting> target_bag_setting, DataPtr target_record, uint32 split_index );
 
         // 移动道具逻辑
-        uint32 MoveItemDataLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
-                                  const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem,
-                                  const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord );
+        uint32 MoveItemDataLogic( EntityPtr player, std::shared_ptr<const KFItemSetting> item_setting,
+                                  std::shared_ptr<const KFItemBagSetting> source_bag_setting, DataPtr source_record, DataPtr source_item,
+                                  std::shared_ptr<const KFItemBagSetting> target_bag_setting, DataPtr target_record );
         // 移动堆叠道具数量
-        void MoveItemCountLogic( EntityPtr player,  const KFItemSetting* kfitemsetting,
-                                 const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourceitem, uint32 movecount,
-                                 const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetitem );
+        void MoveItemCountLogic( EntityPtr player,  std::shared_ptr<const KFItemSetting> item_setting,
+                                 std::shared_ptr<const KFItemBagSetting> source_bag_setting, DataPtr source_item, uint32 move_count,
+                                 std::shared_ptr<const KFItemBagSetting> target_bag_setting, DataPtr target_item );
 
         // 移动道具
-        uint32 MoveItemLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
-                              const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem,
-                              const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord, uint32 targetindex );
+        uint32 MoveItemLogic( EntityPtr player, std::shared_ptr<const KFItemSetting> item_setting,
+                              std::shared_ptr<const KFItemBagSetting> source_bag_setting, DataPtr source_record, DataPtr source_item,
+                              std::shared_ptr<const KFItemBagSetting> target_bag_setting, DataPtr target_record, uint32 target_index );
 
         // 交换道具
         uint32 ExchangeItemLogic( EntityPtr player,
-                                  const KFItemSetting* kfsourcesetting, const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourcerecord, DataPtr kfsourceitem,
-                                  const KFItemSetting* kftargetsetting, const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetrecord, DataPtr kftargetitem );
+                                  std::shared_ptr<const KFItemSetting> source_item_setting, std::shared_ptr<const KFItemBagSetting> source_bag_setting, DataPtr source_record, DataPtr source_item,
+                                  std::shared_ptr<const KFItemSetting> target_item_setting, std::shared_ptr<const KFItemBagSetting> target_bag_setting, DataPtr target_record, DataPtr target_item );
 
         // 合并道具
-        uint32 MergeItemLogic( EntityPtr player, const KFItemSetting* kfitemsetting,
-                               const KFItemBagSetting* kfsourcebagsetting, DataPtr kfsourceitem, uint32 mergecount,
-                               const KFItemBagSetting* kftargetbagsetting, DataPtr kftargetitem );
+        uint32 MergeItemLogic( EntityPtr player, std::shared_ptr<const KFItemSetting> item_setting,
+                               std::shared_ptr<const KFItemBagSetting> source_bag_setting, DataPtr source_item, uint32 merge_count,
+                               std::shared_ptr<const KFItemBagSetting> target_bag_setting, DataPtr target_item );
 
         // 排序道具
-        void SortItem( EntityPtr player, const std::string& bagname, const std::string& tabname );
-        void SortItem( EntityPtr player, const KFItemSetting* kfitemsetting, const KFItemBagSetting* kfbagsetting, KFItemTabIndex* kftabindex, DataPtr kfitemrecord, std::set<DataPtr>& itemlist );
+        void SortItem( EntityPtr player, const std::string& bag_name, const std::string& tab_name );
+        void SortItem( EntityPtr player, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemBagSetting> item_bag_setting, std::shared_ptr<KFItemTabIndex> tab_index, DataPtr item_record, std::set<DataPtr>& item_list );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动物品显示
-        void MoveItemDataToShow( EntityPtr player, const KFItemSetting* setting, DataPtr kfsourcerecord, DataPtr kftargetrecord, DataPtr kfitem );
-        void MoveItemDataToShow( EntityPtr player, const KFItemSetting* setting, DataPtr kfsourcerecord, DataPtr kftargetrecord, uint32 count );
+        void MoveItemDataToShow( EntityPtr player, std::shared_ptr<const KFItemSetting> setting, DataPtr source_record, DataPtr target_record, DataPtr item_data );
+        void MoveItemDataToShow( EntityPtr player, std::shared_ptr<const KFItemSetting> setting, DataPtr source_record, DataPtr target_record, uint32 count );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 移动背包道具
-        uint32 MoveBagItem( EntityPtr player, const std::string& sourcename, uint64 itemuuid, const std::string& targetname, uint32 targetindex );
+        uint32 MoveBagItem( EntityPtr player, const std::string& source_name, uint64 item_uuid, const std::string& target_name, uint32 target_index );
 
         // 移动页签道具
-        uint32 MoveTabItem( EntityPtr player, const std::string& bagname, const std::string& tabname, uint64 itemuuid, uint32 targetindex );
+        uint32 MoveTabItem( EntityPtr player, const std::string& bag_name, const std::string& tab_name, uint64 item_uuid, uint32 target_index );
     protected:
         // 玩家组件上下文
         std::shared_ptr<KFComponent> _component = nullptr;
 
         // 保存玩家的背包格子信息
         typedef std::pair<uint64, std::string> ItemIndexKey;
-        KFMap< ItemIndexKey, KFItemBagIndex > _player_item_index;
+        KFMap<ItemIndexKey, KFItemBagIndex> _player_item_index;
     };
 }
 

@@ -35,33 +35,33 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 背包格子最大数量
-        virtual uint32 GetItemBagMaxCount( EntityPtr player, DataPtr kfitemrecord );
+        virtual uint32 GetItemBagMaxCount( EntityPtr player, DataPtr item_record );
 
         // 创建一个道具( 可传入一个存在的kfitem, 直接返回 )
-        virtual DataPtr CreateItem( EntityPtr player, uint32 itemid, DataPtr kfitem, const char* function, uint32 line );
+        virtual DataPtr CreateItem( EntityPtr player, uint32 item_id, DataPtr item_data, const char* function, uint32 line );
 
         // 获取能添加物品数量
-        virtual uint32 GetCanAddItemCount( EntityPtr player, uint32 itemid, uint32 count );
+        virtual uint32 GetCanAddItemCount( EntityPtr player, uint32 item_id, uint32 count );
 
         // 查找道具  返回<背包指针, 道具指针>
-        virtual std::tuple<DataPtr, DataPtr> FindItem( EntityPtr player, uint64 itemuuid ) ;
+        virtual std::tuple<DataPtr, DataPtr> FindItem( EntityPtr player, uint64 item_uuid ) ;
 
         // 获得背包空格子数量
-        virtual uint32 GetItemEmptyCount( EntityPtr player, DataPtr kfitemrecord ) ;
+        virtual uint32 GetItemEmptyCount( EntityPtr player, DataPtr item_record ) ;
 
         // 判断包裹是否满了
-        virtual bool CheckItemBagFull( EntityPtr player, DataPtr kfitemrecord );
+        virtual bool CheckItemBagFull( EntityPtr player, DataPtr item_record );
 
-        // 获得包裹内道具数量( maxcount 最多查找数量, 优化用 )
-        virtual uint32 GetItemCount( EntityPtr player, DataPtr kfitemrecord, uint32 itemid, uint32 maxcount = __MAX_UINT32__ );
+        // 获得包裹内道具数量( max_count 最多查找数量, 优化用 )
+        virtual uint32 GetItemCount( EntityPtr player, DataPtr item_record, uint32 item_id, uint32 max_count = __MAX_UINT32__ );
 
         // 删除包裹内道具
-        virtual void RemoveItem( EntityPtr player, DataPtr kfitemrecord, uint32 itemid, uint32 itemcount );
-        virtual uint32 RemoveItemCount( EntityPtr player, DataPtr kfitem, uint32 itemcount );
+        virtual void RemoveItem( EntityPtr player, DataPtr item_record, uint32 item_id, uint32 item_count );
+        virtual uint32 RemoveItemCount( EntityPtr player, DataPtr item_data, uint32 item_count );
 
         // 获得背包属性
-        virtual DataPtr FindItemBag( EntityPtr player, uint32 itemid );
-        virtual DataPtr FindItemBag( EntityPtr player, DataPtr kfitem );
+        virtual DataPtr FindItemBag( EntityPtr player, uint32 item_id );
+        virtual DataPtr FindItemBag( EntityPtr player, DataPtr item_data );
     protected:
         // 删除道具
         __KF_MESSAGE_FUNCTION__( HandleRemoveItemReq, KFMsg::MsgRemoveItemReq );
@@ -107,56 +107,56 @@ namespace KFrame
         __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveItemModule );
 
     protected:
-        virtual void BindItemInitFunction( uint32 itemtype, const std::string& module, KFItemInitFunction& function );
-        virtual void UnBindItemInitFunction( uint32 itemtype, const std::string& module );
+        virtual void BindItemInitFunction( uint32 item_type, KFModule* module, KFItemInitFunction& function );
+        virtual void UnBindItemInitFunction( uint32 item_type, KFModule* module );
 
     protected:
         // 获得背包
-        DataPtr FindFinalItemBag( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 itemcount );
+        DataPtr FindFinalItemBag( EntityPtr player, DataPtr item_record, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting, uint32 item_count );
 
         //背包是否满了
-        bool CheckItemBagFull( EntityPtr player, DataPtr kfitemrecord, const KFItemSetting* setting, uint32 itemcount );
+        bool CheckItemBagFull( EntityPtr player, DataPtr item_record, std::shared_ptr<const KFItemSetting> setting, uint32 item_count );
 
         // 添加时间叠加数量
-        void AddOverlayTimeItem( EntityPtr player, DataPtr kfparent, KFElementResult* kfresult,
-                                 const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count, uint32 time );
+        void AddOverlayTimeItem( EntityPtr player, DataPtr item_record, KFElementResult* element_result,
+                                 std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting, uint32 count, uint32 time );
 
         // 添加数量叠加道具
-        void AddOverlayCountItem( EntityPtr player, DataPtr kfparent, KFElementResult* kfresult,
-                                  const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count );
+        void AddOverlayCountItem( EntityPtr player, DataPtr item_record, KFElementResult* element_result,
+                                  std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting, uint32 count );
 
         // 不能叠加的道具
-        void AddNotOverlayItem( EntityPtr player, DataPtr kfparent, KFElementResult* kfresult,
-                                const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32 count );
+        void AddNotOverlayItem( EntityPtr player, DataPtr item_record, KFElementResult* element_result,
+                                std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting, uint32 count );
 
         // 添加新物品
-        DataPtr AddNewItemData( EntityPtr player, DataPtr kfparent,
-                                const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting, uint32& count, uint32 time );
+        DataPtr AddNewItemData( EntityPtr player, DataPtr item_record,
+                                std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting, uint32& count, uint32 time );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 调用道具初始化函数
-        void CallItemInitFunction( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting );
+        void CallItemInitFunction( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting );
 
         // 启动检查时间道具
-        void StartItemCheckTimer( EntityPtr player, DataPtr kfitem );
+        void StartItemCheckTimer( EntityPtr player, DataPtr item_data );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 计算道具添加数量
-        uint32 CalcItemAddCount( uint32 sourcecount, uint32 targetcount, uint32 maxcount );
+        uint32 CalcItemAddCount( uint32 source_count, uint32 target_count, uint32 max_count );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 添加道具结果
-        void AddItemResult( KFElementResult* kfresult, uint32 itemid, DataPtr kfitem );
-        void AddItemResult( KFElementResult* kfresult, const std::string& itemname, uint32 itemid, uint32 count );
+        void AddItemResult( KFElementResult* element_result, uint32 item_id, DataPtr item_data );
+        void AddItemResult( KFElementResult* element_result, const std::string& item_name, uint32 item_id, uint32 count );
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // 如果不满足itemcount, 返回空列表
-        const std::list<DataPtr>& FindRemoveItemList( EntityPtr player, DataPtr kfparent, const KFItemSetting* setting, uint32 itemcount );
+        // 如果不满足item_count, 返回空列表
+        const std::list<DataPtr>& FindRemoveItemList( EntityPtr player, DataPtr item_record, std::shared_ptr<const KFItemSetting> setting, uint32 item_count );
 
     protected:
         // 玩家组件上下文
         std::shared_ptr<KFComponent> _component = nullptr;
 
         // 初始化
-        KFMap<uint32, KFMapFunction<std::string, KFItemInitFunction>> _item_init_function;
+        KFMap<uint32, KFMapModuleFunction<KFModule*, KFItemInitFunction>> _item_init_function;
     };
 }
 

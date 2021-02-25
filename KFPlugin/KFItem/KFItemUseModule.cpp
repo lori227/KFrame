@@ -31,105 +31,105 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFItemUseModule::BindCheckItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function )
+    void KFItemUseModule::BindCheckItemUseFunction( uint32 item_type, KFModule* module, KFItemUseFunction& function )
     {
-        auto kffunction = _check_item_use_function.Create( itemtype );
-        kffunction->_function = function;
+        auto function_data = _check_item_use_function.Create( item_type );
+        function_data->SetFunction( module, function );
     }
 
-    void KFItemUseModule::UnBindCheckItemUseFunction( uint32 itemtype, const std::string& module )
+    void KFItemUseModule::UnBindCheckItemUseFunction( uint32 item_type, KFModule* module )
     {
-        _check_item_use_function.Remove( itemtype );
+        _check_item_use_function.Remove( item_type );
     }
 
-    void KFItemUseModule::BindItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function )
+    void KFItemUseModule::BindItemUseFunction( uint32 item_type, KFModule* module, KFItemUseFunction& function )
     {
-        auto kffunction = _item_use_function.Create( itemtype );
-        kffunction->_function = function;
+        auto function_data = _item_use_function.Create( item_type );
+        function_data->SetFunction( module, function );
     }
 
-    void KFItemUseModule::UnBindItemUseFunction( uint32 itemtype, const std::string& module )
+    void KFItemUseModule::UnBindItemUseFunction( uint32 item_type, KFModule* module )
     {
-        _item_use_function.Remove( itemtype );
+        _item_use_function.Remove( item_type );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFItemUseModule::CheckCanUseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
+    bool KFItemUseModule::CheckCanUseItem( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting )
     {
-        auto kffunction = _check_item_use_function.Find( kfitemsetting->_type );
-        if ( kffunction == nullptr )
+        auto function_data = _check_item_use_function.Find( item_setting->_type );
+        if ( function_data == nullptr )
         {
             return true;
         }
 
-        return kffunction->_function( player, kfitem, kfitemsetting, kftypesetting );
+        return function_data->CallEx<bool>( player, item_data, item_setting, item_type_setting );
     }
 
     __KF_MESSAGE_FUNCTION__( KFItemUseModule::HandleUseItemReq, KFMsg::MsgUseItemReq )
     {
         // 判断是否有这个道具
-        auto kfitem = entity->Find( kfmsg->name(), kfmsg->uuid() );
-        if ( kfitem == nullptr )
+        auto item_data = entity->Find( kfmsg->name(), kfmsg->uuid() );
+        if ( item_data == nullptr )
         {
             return _kf_display->SendToClient( entity, KFMsg::ItemDataNotExist );
         }
 
-        auto itemid = kfitem->Get<uint32>( kfitem->_data_setting->_config_key_name  );
-        auto kfitemsetting = KFItemConfig::Instance()->FindSetting( itemid );
-        if ( kfitemsetting == nullptr )
+        auto item_id = item_data->Get<uint32>( item_data->_data_setting->_config_key_name  );
+        auto item_setting = KFItemConfig::Instance()->FindSetting( item_id );
+        if ( item_setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemSettingNotExist, itemid );
+            return _kf_display->SendToClient( entity, KFMsg::ItemSettingNotExist, item_id );
         }
 
-        auto kftypesetting = KFItemTypeConfig::Instance()->FindSetting( kfitemsetting->_type );
-        if ( kftypesetting == nullptr )
+        auto item_type_setting = KFItemTypeConfig::Instance()->FindSetting( item_setting->_type );
+        if ( item_type_setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemSettingNotExist, itemid );
+            return _kf_display->SendToClient( entity, KFMsg::ItemSettingNotExist, item_id );
         }
 
         // 不能使用
-        if ( kfitemsetting->_use_count == 0u )
+        if ( item_setting->_use_count == 0u )
         {
             return _kf_display->SendToClient( entity, KFMsg::ItemCanNotUse );
         }
 
-        if ( !CheckCanUseItem( entity, kfitem, kfitemsetting, kftypesetting ) )
+        if ( !CheckCanUseItem( entity, item_data, item_setting, item_type_setting ) )
         {
             return _kf_display->SendToClient( entity, KFMsg::ItemCanNotUseStatus );
         }
 
-        auto ok = UseItem( entity, kfitem, kfitemsetting, kftypesetting );
+        auto ok = UseItem( entity, item_data, item_setting, item_type_setting );
         if ( !ok )
         {
             return _kf_display->SendToClient( entity, KFMsg::ItemUseFailed );
         }
 
-        UseCoseItem( entity, kfitem, kfitemsetting );
-        _kf_display->SendToClient( entity, KFMsg::ItemUseOk, kfitemsetting->_id );
+        UseCostItem( entity, item_data, item_setting );
+        _kf_display->SendToClient( entity, KFMsg::ItemUseOk, item_setting->_id );
     }
 
-    bool KFItemUseModule::UseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
+    bool KFItemUseModule::UseItem( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting )
     {
-        auto kffunction = _item_use_function.Find( kfitemsetting->_type );
-        if ( kffunction == nullptr )
+        auto function_data = _item_use_function.Find( item_setting->_type );
+        if ( function_data == nullptr )
         {
             return false;
         }
 
-        return kffunction->_function( player, kfitem, kfitemsetting, kftypesetting );
+        return function_data->CallEx<bool>( player, item_data, item_setting, item_type_setting );
     }
 
-    void KFItemUseModule::UseCoseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting )
+    void KFItemUseModule::UseCostItem( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting )
     {
         // 扣除数量
-        auto usecount = kfitem->Get<uint32>( __STRING__( usecount ) );
-        if ( usecount + 1u >= kfitemsetting->_use_count )
+        auto use_count = item_data->Get<uint32>( __STRING__( usecount ) );
+        if ( use_count + 1u >= item_setting->_use_count )
         {
-            _kf_item->RemoveItemCount( player, kfitem, 1u );
+            _kf_item->RemoveItemCount( player, item_data, 1u );
         }
         else
         {
-            player->UpdateObject( kfitem, __STRING__( usecount ), KFEnum::Add, 1u );
+            player->UpdateObject( item_data, __STRING__( usecount ), KFEnum::Add, 1u );
         }
     }
 }

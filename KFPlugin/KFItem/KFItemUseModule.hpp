@@ -39,27 +39,27 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleUseItemReq, KFMsg::MsgUseItemReq );
 
     protected:
-        virtual void BindCheckItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function );
-        virtual void UnBindCheckItemUseFunction( uint32 itemtype, const std::string& module );
+        virtual void BindCheckItemUseFunction( uint32 item_type, KFModule* module, KFItemUseFunction& function );
+        virtual void UnBindCheckItemUseFunction( uint32 item_type, KFModule* module );
 
-        virtual void BindItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function );
-        virtual void UnBindItemUseFunction( uint32 itemtype, const std::string& module );
+        virtual void BindItemUseFunction( uint32 item_type, KFModule* module, KFItemUseFunction& function );
+        virtual void UnBindItemUseFunction( uint32 item_type, KFModule* module );
 
         // 判断道具是否能使用
-        bool CheckCanUseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
+        bool CheckCanUseItem( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting );
 
         // 使用道具
-        bool UseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting );
+        bool UseItem( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting );
 
         // 使用扣除物品
-        void UseCoseItem( EntityPtr player, DataPtr kfitem, const KFItemSetting* setting );
+        void UseCostItem( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> setting );
 
     private:
         // 检查道具是否能使用
-        KFMapFunction<uint32, KFItemUseFunction > _check_item_use_function;
+        KFMapModuleFunction<uint32, KFItemUseFunction> _check_item_use_function;
 
         // 使用道具
-        KFMapFunction<uint32, KFItemUseFunction > _item_use_function;
+        KFMapModuleFunction<uint32, KFItemUseFunction> _item_use_function;
     };
 }
 

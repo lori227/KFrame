@@ -7,63 +7,63 @@ namespace KFrame
 {
     class KFItemSetting;
     class KFItemTypeSetting;
-    typedef std::function< bool( EntityPtr, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) > KFItemUseFunction;
+    typedef std::function<bool( EntityPtr, DataPtr, std::shared_ptr<const KFItemSetting>, std::shared_ptr<const KFItemTypeSetting> )> KFItemUseFunction;
     //////////////////////////////////////////////////////////////////////////
     class KFItemUseInterface : public KFModule
     {
     public:
         // 注册检查道具是否可以使用函数
         template<class T>
-        void RegisteCheckItemUseFunction( uint32 itemtype, T* object, bool ( T::*handle )( EntityPtr, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) )
+        void RegisterCheckItemUseFunction( uint32 item_type, T* module, bool ( T::*handle )( EntityPtr, DataPtr, std::shared_ptr<const KFItemSetting>, std::shared_ptr<const KFItemTypeSetting> ) )
         {
-            KFItemUseFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            BindCheckItemUseFunction( itemtype, typeid( T ).name(), function );
+            KFItemUseFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            BindCheckItemUseFunction( item_type, module, function );
         }
 
         template<class T>
-        void UnRegisteCheckItemUseFunction( T* object, uint32 itemtype )
+        void UnRegisterCheckItemUseFunction( T* module, uint32 item_type )
         {
-            UnBindCheckItemUseFunction( itemtype, typeid( T ).name() );
+            UnBindCheckItemUseFunction( item_type, module );
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 注册道具使用函数
         template<class T>
-        void RegisteItemUseFunction( uint32 itemtype, T* object, bool ( T::*handle )( EntityPtr, DataPtr, const KFItemSetting*, const KFItemTypeSetting* ) )
+        void RegisterItemUseFunction( uint32 item_type, T* module, bool ( T::*handle )( EntityPtr, DataPtr, std::shared_ptr<const KFItemSetting>, std::shared_ptr<const KFItemTypeSetting> ) )
         {
-            KFItemUseFunction function = std::bind( handle, object, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
-            BindItemUseFunction( itemtype, typeid( T ).name(), function );
+            KFItemUseFunction function = std::bind( handle, module, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4 );
+            BindItemUseFunction( item_type, module, function );
         }
 
         template<class T>
-        void UnRegisteItemUseFunction( T* object, uint32 itemtype )
+        void UnRegisterItemUseFunction( T* module, uint32 item_type )
         {
-            UnBindItemUseFunction( itemtype, typeid( T ).name() );
+            UnBindItemUseFunction( item_type, module );
         }
 
     protected:
-        virtual void BindCheckItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function ) = 0;
-        virtual void UnBindCheckItemUseFunction( uint32 itemtype, const std::string& module ) = 0;
+        virtual void BindCheckItemUseFunction( uint32 item_type, KFModule* module, KFItemUseFunction& function ) = 0;
+        virtual void UnBindCheckItemUseFunction( uint32 item_type, KFModule* module ) = 0;
 
-        virtual void BindItemUseFunction( uint32 itemtype, const std::string& module, KFItemUseFunction& function ) = 0;
-        virtual void UnBindItemUseFunction( uint32 itemtype, const std::string& module ) = 0;
+        virtual void BindItemUseFunction( uint32 item_type, KFModule* module, KFItemUseFunction& function ) = 0;
+        virtual void UnBindItemUseFunction( uint32 item_type, KFModule* module ) = 0;
     };
     __KF_INTERFACE__( _kf_item_use, KFItemUseInterface );
 
     ////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_ITEM_USE_FUNCTION__( function )\
-    void function( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
-#define __REGISTER_ITEM_USE__( itemtype, function )\
-    _kf_item->RegisteItemUseFunction( itemtype, this, function )
-#define __UN_ITEM_USE__( itemtype )\
-    _kf_item->UnRegisteItemUseFunction( this, itemtype )
+    void function( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting )
+#define __REGISTER_ITEM_USE__( item_type, function )\
+    _kf_item->RegisterItemUseFunction( item_type, this, function )
+#define __UN_ITEM_USE__( item_type )\
+    _kf_item->UnRegisterItemUseFunction( this, item_type )
 
 #define __KF_CHECK_ITEM_USE_FUNCTION__( function )\
-    void function( EntityPtr player, DataPtr kfitem, const KFItemSetting* kfitemsetting, const KFItemTypeSetting* kftypesetting )
-#define __REGISTER_CHECK_ITEM_USE__( itemtype, function )\
-    _kf_item->RegisteItemUseFunction( itemtype, this, function )
-#define __UN_CHECK_ITEM_USE__( itemtype )\
-    _kf_item->UnRegisteItemUseFunction( this, itemtype )
+    void function( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting )
+#define __REGISTER_CHECK_ITEM_USE__( item_type, function )\
+    _kf_item->RegisterItemUseFunction( item_type, this, function )
+#define __UN_CHECK_ITEM_USE__( item_type )\
+    _kf_item->UnRegisterItemUseFunction( this, item_type )
 }
 
 #endif
