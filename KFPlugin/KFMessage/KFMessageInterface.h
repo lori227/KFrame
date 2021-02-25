@@ -104,7 +104,7 @@ namespace KFrame
         }
 
         template<typename T>
-        void RegisterFindEntityFunction( uint32 type, T* module )
+        void UnRegisterFindEntityFunction( uint32 type, T* module )
         {
             UnBindFindEntityFunction( type );
         }
@@ -151,7 +151,7 @@ namespace KFrame
 #define __REGISTER_FIND_ENTITY__(type, function)\
     _kf_message->RegisterFindEntityFunction( type, this, function )
 #define __UN_FIND_ENTITY__( type )\
-    _kf_message->RegisterFindEntityFunction( type, this )
+    _kf_message->UnRegisterFindEntityFunction( type, this )
 
 }
 

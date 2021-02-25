@@ -28,28 +28,28 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_PLAYER_ENTER_FUNCTION__( KFAchieveModule::OnEnterAchieveModule )
     {
-        auto kfachieverecord = player->Find( __STRING__( achieve ) );
+        auto achieve_record = player->Find( __STRING__( achieve ) );
         for ( auto& iter : KFAchieveConfig::Instance()->_setting_list._objects )
         {
             auto setting = iter.second;
-            auto kfachieve = kfachieverecord->Find( setting->_id );
-            if ( kfachieve != nullptr )
+            auto achieve_data = achieve_record->Find( setting->_id );
+            if ( achieve_data != nullptr )
             {
                 continue;
             }
 
-            kfachieve = player->CreateData( kfachieverecord );
-            auto condition_object = kfachieve->Find( __STRING__( conditions ) );
+            achieve_data = player->CreateData( achieve_record );
+            auto condition_object = achieve_data->Find( __STRING__( conditions ) );
             _kf_condition->AddCondition( player, condition_object, setting->_complete_condition );
 
             // 判断条件
             auto complete = _kf_condition->InitCondition( player, condition_object, false );
             if ( complete )
             {
-                kfachieve->Set<uint32>( __STRING__( status ), KFMsg::DoneStatus );
+                achieve_data->Operate<uint32>( __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );
             }
 
-            kfachieverecord->Add( setting->_id, kfachieve );
+            achieve_record->Add( setting->_id, achieve_data );
         }
     }
 
@@ -60,21 +60,21 @@ namespace KFrame
         _kf_display->SendToClient( entity, result, kfmsg->id() );
     }
 
-    uint32 KFAchieveModule::ReceiveAchieveReward( EntityPtr player, uint32 achieveid )
+    uint32 KFAchieveModule::ReceiveAchieveReward( EntityPtr player, uint32 achieve_id )
     {
-        auto setting = KFAchieveConfig::Instance()->FindSetting( achieveid );
+        auto setting = KFAchieveConfig::Instance()->FindSetting( achieve_id );
         if ( setting == nullptr )
         {
             return KFMsg::AchieveCanNotFind;
         }
 
-        auto kfachieve = player->Find( __STRING__( achieve ), setting->_id );
-        if ( kfachieve == nullptr )
+        auto achieve_data = player->Find( __STRING__( achieve ), setting->_id );
+        if ( achieve_data == nullptr )
         {
             return KFMsg::AchieveCanNotFindData;
         }
 
-        auto status = kfachieve->Get( __STRING__( status ) );
+        auto status = achieve_data->Get( __STRING__( status ) );
         if ( status == KFMsg::InitStatus )
         {
             return KFMsg::AchieveNotDone;
@@ -86,7 +86,7 @@ namespace KFrame
         }
 
         // 设置已经领取
-        player->UpdateObject( kfachieve, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
+        player->UpdateObject( achieve_data, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
 
         // 添加奖励
         player->AddElement( &setting->_reward, _default_multiple, __STRING__( achieve ), setting->_id, __FUNC_LINE__ );
@@ -94,46 +94,46 @@ namespace KFrame
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define __UPDATA_ACHIEVE_LIST__( updatefunction )\
-    std::set< DataPtr > _update_list;\
-    auto kfachieverecord = player->Find( __STRING__( achieve ) );\
-    for ( auto kfachieve = kfachieverecord->First(); kfachieve != nullptr; kfachieve = kfachieverecord->Next() )\
+#define __UPDATE_ACHIEVE_LIST__( update_function )\
+    std::set<DataPtr> _update_list;\
+    auto achieve_record = player->Find( __STRING__( achieve ) );\
+    for ( auto achieve_data = achieve_record->First(); achieve_data != nullptr; achieve_data = achieve_record->Next() )\
     {\
-        auto achieveid = kfachieve->Get<uint32>( __STRING__( id ) );\
-        auto setting = KFAchieveConfig::Instance()->FindSetting( achieveid );\
+        auto achieve_id = achieve_data->Get<uint32>( __STRING__( id ) );\
+        auto setting = KFAchieveConfig::Instance()->FindSetting( achieve_id );\
         if ( setting == nullptr )\
         {\
             continue;\
         }\
-        auto status = kfachieve->Get<uint32>( __STRING__( status ) );\
+        auto status = achieve_data->Get<uint32>( __STRING__( status ) );\
         if ( status != KFMsg::InitStatus )\
         {\
             continue;\
         }\
-        _update_list.insert( kfachieve );\
+        _update_list.insert( achieve_data );\
     }\
-    for ( auto kfachieve : _update_list )\
+    for ( auto achieve_data : _update_list )\
     {\
-        auto condition_object = kfachieve->Find( __STRING__( conditions ) );\
-        auto complete = updatefunction;\
+        auto condition_object = achieve_data->Find( __STRING__( conditions ) );\
+        auto complete = update_function;\
         if ( complete )\
         {\
-            player->UpdateObject( kfachieve, __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );\
+            player->UpdateObject( achieve_data, __STRING__( status ), KFEnum::Set, KFMsg::DoneStatus );\
         }\
     }\
 
     __KF_ADD_DATA_FUNCTION__( KFAchieveModule::OnAddDataAchieveModule )
     {
-        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateAddCondition( player, condition_object, kfdata ) );
+        __UPDATE_ACHIEVE_LIST__( _kf_condition->UpdateAddCondition( player, condition_object, data ) );
     }
 
     __KF_REMOVE_DATA_FUNCTION__( KFAchieveModule::OnRemoveDataAchieveModule )
     {
-        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateRemoveCondition( player, condition_object, kfdata ) );
+        __UPDATE_ACHIEVE_LIST__( _kf_condition->UpdateRemoveCondition( player, condition_object, data ) );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFAchieveModule::OnUpdateDataAchieveModule )
     {
-        __UPDATA_ACHIEVE_LIST__( _kf_condition->UpdateUpdateCondition( player, condition_object, kfdata, operate, oldvalue, newvalue ) );
+        __UPDATE_ACHIEVE_LIST__( _kf_condition->UpdateUpdateCondition( player, condition_object, data, operate, oldvalue, newvalue ) );
     }
 }

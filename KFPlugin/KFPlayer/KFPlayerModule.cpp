@@ -52,8 +52,6 @@ namespace KFrame
         __UN_FIND_ENTITY__( KFMessageEnum::Player );
 
         // 卸载逻辑函数
-        _component->UnRegisterEntityInitializeFunction();
-        _component->UnRegisterEntityRemoveFunction();
         _component->UnRegisterEntityRunFunction();
         _component->UnRegisterEntityAfterRunFunction();
 
