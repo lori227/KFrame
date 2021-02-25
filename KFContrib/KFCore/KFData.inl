@@ -7,7 +7,7 @@ namespace KFrame
 {
     ///////////////////////////////////////////////////////////////////////////
     template<class T>
-    T KFData::InvalidValue()
+    inline T KFData::InvalidValue()
     {
         return 0;
     }
@@ -19,7 +19,7 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////
     template<class T>
-    T KFData::Get()
+    inline T KFData::Get()
     {
         switch ( _data_type )
         {
@@ -58,7 +58,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Get( uint64 key )
+    inline T KFData::Get( uint64 key )
     {
         auto data = Find( key );
         if ( data == nullptr )
@@ -70,7 +70,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Get( const std::string& data_name )
+    inline T KFData::Get( const std::string& data_name )
     {
         auto data = Find( data_name );
         if ( data == nullptr )
@@ -82,7 +82,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Get( const std::string& parent_name, const std::string& data_name )
+    inline T KFData::Get( const std::string& parent_name, const std::string& data_name )
     {
         auto data = Find( parent_name, data_name );
         if ( data == nullptr )
@@ -94,7 +94,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Get( uint64 key, const std::string& data_name )
+    inline T KFData::Get( uint64 key, const std::string& data_name )
     {
         auto data = Find( key, data_name );
         if ( data == nullptr )
@@ -106,7 +106,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Get( const std::string& data_name, uint64 key )
+    inline T KFData::Get( const std::string& data_name, uint64 key )
     {
         auto data = Find( data_name, key );
         if ( data == nullptr )
@@ -118,7 +118,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Get( const std::string& parent_name, uint64 key, const std::string& data_name )
+    inline T KFData::Get( const std::string& parent_name, uint64 key, const std::string& data_name )
     {
         auto data = Find( parent_name, key );
         if ( data == nullptr )
@@ -130,7 +130,7 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template<class T>
-    T KFData::Set( T value )
+    inline T KFData::Set( T value )
     {
         switch ( _data_type )
         {
@@ -171,7 +171,7 @@ namespace KFrame
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template<class T>
-    T KFData::Operate( uint32 operate, T value )
+    inline T KFData::Operate( uint32 operate, T value )
     {
         auto base = Get<T>();
         auto final = KFUtility::Operate<T>( base, operate, value );
@@ -179,8 +179,15 @@ namespace KFrame
         return final;
     }
 
+    template<>
+    inline std::string KFData::Operate( uint32 operate, std::string value )
+    {
+        Set<std::string>( value );
+        return  value;
+    }
+
     template<class T>
-    T KFData::Operate( const std::string& data_name, uint32 operate, T value )
+    inline T KFData::Operate( const std::string& data_name, uint32 operate, T value )
     {
         auto data = Find( data_name );
         if ( data == nullptr )
@@ -192,7 +199,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Operate( const std::string& parent_name, const std::string& data_name, uint32 operate, T value )
+    inline T KFData::Operate( const std::string& parent_name, const std::string& data_name, uint32 operate, T value )
     {
         auto data = Find( parent_name, data_name );
         if ( data == nullptr )
@@ -204,7 +211,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Operate( uint64 key, const std::string& data_name, uint32 operate, T value )
+    inline T KFData::Operate( uint64 key, const std::string& data_name, uint32 operate, T value )
     {
         auto data = Find( key, data_name );
         if ( data == nullptr )
@@ -216,7 +223,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Operate( const std::string& data_name, uint64 key, uint32 operate, T value )
+    inline T KFData::Operate( const std::string& data_name, uint64 key, uint32 operate, T value )
     {
         auto data = Find( data_name, key );
         if ( data == nullptr )
@@ -228,7 +235,7 @@ namespace KFrame
     }
 
     template<class T>
-    T KFData::Operate( const std::string& parent_name, uint64 key, const std::string& data_name, uint32 operate, T value )
+    inline T KFData::Operate( const std::string& parent_name, uint64 key, const std::string& data_name, uint32 operate, T value )
     {
         auto data = Find( parent_name, key, data_name );
         if ( data == nullptr )
