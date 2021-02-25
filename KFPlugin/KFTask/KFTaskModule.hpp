@@ -34,8 +34,8 @@ namespace KFrame
         virtual void BeforeShut();
         ////////////////////////////////////////////////////////////////////////////////
         // 开启任务
-        virtual DataPtr OpenTask( EntityPtr player, uint32 taskid, uint32 status, uint64 validtime = 0u,
-                                  uint32 chainid = 0u, uint32 chainindex = 1u );
+        virtual DataPtr OpenTask( EntityPtr player, uint32 task_id, uint32 status, uint64 valid_time = 0u,
+                                  uint32 chain_id = 0u, uint32 chain_index = 1u );
     protected:
         // 接取任务
         __KF_MESSAGE_FUNCTION__( HandleTaskReceiveReq, KFMsg::MsgTaskReceiveReq );
@@ -57,25 +57,25 @@ namespace KFrame
         // 任务超时定时器
         __KF_TIMER_FUNCTION__( OnTimerTaskTimeout );
         // 设置任务时间
-        void SetTaskTime( EntityPtr player, DataPtr kftask, const KFTaskSetting* setting, uint64 validtime, bool update );
+        void SetTaskTime( EntityPtr player, DataPtr task_data, std::shared_ptr<const KFTaskSetting> setting, uint64 valid_time, bool update );
         // 启动任务超时定时器
-        void StartTaskTimeoutTimer( EntityPtr player, uint32 taskid, uint64 time );
-        void StopTaskTimeoutTimer( EntityPtr player, DataPtr kftask, uint32 taskid );
+        void StartTaskTimeoutTimer( EntityPtr player, uint32 task_id, uint64 time );
+        void StopTaskTimeoutTimer( EntityPtr player, DataPtr task_data, uint32 task_id );
 
         // 开启任务
-        DataPtr CreateTask( EntityPtr player, const KFTaskSetting* setting, uint32 status, uint64 validtime = 0u );
-        void UpdataTaskStatus( EntityPtr player, const KFTaskSetting* setting, DataPtr kftask, uint32 status, uint64 time );
+        DataPtr CreateTask( EntityPtr player, std::shared_ptr<const KFTaskSetting> setting, uint32 status, uint64 valid_time = 0u );
+        void UpdateTaskStatus( EntityPtr player, std::shared_ptr<const KFTaskSetting> setting, DataPtr task_data, uint32 status, uint64 time );
 
         // 任务条件完成
-        void DoneTask( EntityPtr player, DataPtr kftask, const KFTaskSetting* setting, bool update );
+        void DoneTask( EntityPtr player, DataPtr task_data, std::shared_ptr<const KFTaskSetting> setting, bool update );
 
         // 添加到完成任务列表
-        void AddFinishTask( EntityPtr player, DataPtr kftask, const KFTaskSetting* setting, bool update );
+        void AddFinishTask( EntityPtr player, DataPtr task_data, std::shared_ptr<const KFTaskSetting> setting, bool update );
         __KF_TIMER_FUNCTION__( OnTimerTaskFinish );
 
         // 任务交付完成
-        void FinishTask( EntityPtr player, uint32 taskid );
-        void FinishTask( EntityPtr player, DataPtr kftask, const KFTaskSetting* setting );
+        void FinishTask( EntityPtr player, uint32 task_id );
+        void FinishTask( EntityPtr player, DataPtr task_data, std::shared_ptr<const KFTaskSetting> setting );
 
         // 更新数据回调
         __KF_ADD_DATA_FUNCTION__( OnAddDataTaskModule );
@@ -86,7 +86,7 @@ namespace KFrame
         __KF_REMOVE_DATA_FUNCTION__( OnRemoveTask );
 
         // 初始化任务条件
-        void InitTaskCondition( EntityPtr player, const KFTaskSetting* setting, DataPtr kftask, uint32 status, bool update );
+        void InitTaskCondition( EntityPtr player, std::shared_ptr<const KFTaskSetting> setting, DataPtr task_data, uint32 status, bool update );
 
         // 执行更新任务状态
         __KF_EXECUTE_FUNCTION__( OnExecuteUpdateTaskStatus );

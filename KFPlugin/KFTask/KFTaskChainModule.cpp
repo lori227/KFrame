@@ -29,161 +29,160 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ADD_ELEMENT_FUNCTION__( KFTaskChainModule::AddTaskChainElement )
     {
-        auto kfelement = kfresult->_element;
-        if ( !kfelement->IsObject() )
+        if ( !element_result->_element->IsObject() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object", kfelement->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object", element_result->_element->_data_name );
             return false;
         }
 
-        auto kfelementobject = reinterpret_cast< KFElementObject* >( kfelement );
-        if ( kfelementobject->_config_id == _invalid_int )
+        auto element_object = std::dynamic_pointer_cast<KFElementObject>( element_result->_element );
+        if ( element_object->_config_id == _invalid_int )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id", kfelement->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id", element_result->_element->_data_name );
             return false;
         }
 
-        auto chainindex = kfelementobject->CalcValue( kfparent->_data_setting, __STRING__( index ) );
-        OpenTaskChain( player, kfelementobject->_config_id, chainindex, 0u );
+        auto chain_index = element_object->CalcValue( element_result->_element->_data_setting, __STRING__( index ) );
+        OpenTaskChain( player, element_object->_config_id, chain_index, 0u );
         return true;
     }
 
-    bool KFTaskChainModule::OpenTaskChain( EntityPtr player, uint32 chainid, uint32 chainindex, uint32 validtime )
+    bool KFTaskChainModule::OpenTaskChain( EntityPtr player, uint32 chain_id, uint32 chain_index, uint32 valid_time )
     {
-        auto kftaskchainsetting = KFTaskChainConfig::Instance()->FindSetting( chainid );
-        if ( kftaskchainsetting == nullptr )
+        auto task_chain_setting = KFTaskChainConfig::Instance()->FindSetting( chain_id );
+        if ( task_chain_setting == nullptr )
         {
-            _kf_display->SendToClient( player, KFMsg::TaskChainSettingNotExist, chainid );
-            __LOG_ERROR__( "taskchain=[{}] can't find setting", chainid );
+            _kf_display->SendToClient( player, KFMsg::TaskChainSettingNotExist, chain_id );
+            __LOG_ERROR__( "task chain=[{}] can't find setting", chain_id );
             return false;
         }
 
-        if ( chainindex >= kftaskchainsetting->_task_chain_data.size() )
+        if ( chain_index >= task_chain_setting->_task_chain_data.size() )
         {
-            __LOG_ERROR__( "taskchain=[{}] order=[{}] is error", chainid, chainindex );
+            __LOG_ERROR__( "task chain=[{}] order=[{}] is error", chain_id, chain_index );
             return false;
         }
 
-        auto taskchaindata = &kftaskchainsetting->_task_chain_data[chainindex];
-        return OpenTaskChainLogicData( player, taskchaindata, chainid, chainindex, validtime );
+        auto task_chain_data = &task_chain_setting->_task_chain_data[chain_index];
+        return OpenTaskChainLogicData( player, task_chain_data, chain_id, chain_index, valid_time );
     }
 
-    bool KFTaskChainModule::OpenTaskChainLogicData( EntityPtr player, const TaskChainData* taskchaindata, uint32 chainid, uint32 chainindex, uint32 validtime )
+    bool KFTaskChainModule::OpenTaskChainLogicData( EntityPtr player, const TaskChainData* task_chain_data, uint32 chain_id, uint32 chain_index, uint32 valid_time )
     {
-        auto taskid = taskchaindata->_task;
-        if ( taskchaindata->_type == KFTaskChainEnum::ChainTypePool )
+        auto task_id = task_chain_data->_task;
+        if ( task_chain_data->_type == KFTaskChainEnum::ChainTypePool )
         {
-            auto kfweightsetting = KFWeightConfig::Instance()->FindSetting( taskchaindata->_task );
-            if ( kfweightsetting == nullptr )
+            auto weight_setting = KFWeightConfig::Instance()->FindSetting( task_chain_data->_task );
+            if ( weight_setting == nullptr )
             {
-                __LOG_ERROR__( "taskchain=[{}] order=[{}] can't rand taskchain pool=[{}]", chainid, chainindex, taskchaindata->_task );
+                __LOG_ERROR__( "task chain=[{}] order=[{}] can't rand pool=[{}]", chain_id, chain_index, task_chain_data->_task );
                 return false;
             }
 
-            auto randdata = kfweightsetting->_weight.Rand();
-            if ( randdata == nullptr )
+            auto rand_data = weight_setting->_weight.Rand();
+            if ( rand_data == nullptr )
             {
-                __LOG_ERROR__( "taskchain=[{}] order=[{}] weight pool=[{}] empty", chainid, chainindex, taskchaindata->_task );
+                __LOG_ERROR__( "task chain=[{}] order=[{}] weight pool=[{}] empty", chain_id, chain_index, task_chain_data->_task );
                 return false;
             }
 
-            taskid = randdata->_value;
+            task_id = rand_data->_value;
         }
 
         // 开启任务
-        auto kftask = _kf_task->OpenTask( player, taskid, taskchaindata->_task_status, validtime, chainid, chainindex );
-        return kftask != nullptr;
+        auto task_data = _kf_task->OpenTask( player, task_id, task_chain_data->_task_status, valid_time, chain_id, chain_index );
+        return task_data != nullptr;
     }
 
-    void KFTaskChainModule::CleanTaskChain( EntityPtr player, uint32 chainid )
+    void KFTaskChainModule::CleanTaskChain( EntityPtr player, uint32 chain_id )
     {
-        auto kftaskrecord = player->Find( __STRING__( task ) );
+        auto task_record = player->Find( __STRING__( task ) );
 
-        std::list<DataPtr> tasklist;
-        kftaskrecord->Find( __STRING__( chain ), chainid, tasklist, true );
+        std::list<DataPtr> task_list;
+        task_record->Find( __STRING__( chain ), chain_id, task_list, true );
 
-        for ( auto kftask : tasklist )
+        for ( auto task_data : task_list )
         {
-            auto taskid = kftask->Get<uint32>( __STRING__( id ) );
-            player->RemoveRecord( kftaskrecord, taskid );
+            auto task_id = task_data->Get<uint32>( __STRING__( id ) );
+            player->RemoveRecord( task_record, task_id );
         }
     }
 
-    void KFTaskChainModule::OpenExtendChain( EntityPtr player, uint32 chainid, const TaskChainData* taskchaindata )
+    void KFTaskChainModule::OpenExtendChain( EntityPtr player, uint32 chain_id, const TaskChainData* task_chain_data )
     {
-        if ( taskchaindata->_extend_chain == 0u )
+        if ( task_chain_data->_extend_chain == 0u )
         {
             return;
         }
 
-        auto extendchainid = taskchaindata->_extend_chain;
-        if ( taskchaindata->_extend_type == KFTaskChainEnum::ChainTypePool )
+        auto extend_chain_id = task_chain_data->_extend_chain;
+        if ( task_chain_data->_extend_type == KFTaskChainEnum::ChainTypePool )
         {
-            auto kfweightsetting = KFWeightConfig::Instance()->FindSetting( taskchaindata->_extend_chain );
-            if ( kfweightsetting == nullptr )
+            auto weight_setting = KFWeightConfig::Instance()->FindSetting( task_chain_data->_extend_chain );
+            if ( weight_setting == nullptr )
             {
-                return __LOG_ERROR__( "taskchain=[{}] order=[{}] can't rand taskchain pool=[{}]", chainid, taskchaindata->_index, taskchaindata->_extend_chain );
+                return __LOG_ERROR__( "task chain=[{}] order=[{}] can't rand pool=[{}]", chain_id, task_chain_data->_index, task_chain_data->_extend_chain );
             }
 
-            auto randdata = kfweightsetting->_weight.Rand();
-            if ( randdata == nullptr )
+            auto rand_data = weight_setting->_weight.Rand();
+            if ( rand_data == nullptr )
             {
-                return __LOG_ERROR__( "taskchain=[{}] order=[{}] weight pool=[{}] empty", chainid, taskchaindata->_index, taskchaindata->_extend_chain );
+                return __LOG_ERROR__( "task chain=[{}] order=[{}] weight pool=[{}] empty", chain_id, task_chain_data->_index, task_chain_data->_extend_chain );
             }
 
-            extendchainid = randdata->_value;
+            extend_chain_id = rand_data->_value;
         }
 
-        OpenTaskChain( player, extendchainid, 0u, 0u );
+        OpenTaskChain( player, extend_chain_id, 0u, 0u );
     }
 
-    bool KFTaskChainModule::IsTaskChain( EntityPtr player, DataPtr kftask )
+    bool KFTaskChainModule::IsTaskChain( EntityPtr player, DataPtr task_data )
     {
-        auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
-        return taskchainid != 0u;
+        auto task_chain_id = task_data->Get<uint32>( __STRING__( chain ) );
+        return task_chain_id != 0u;
     }
 
     __KF_REMOVE_DATA_FUNCTION__( KFTaskChainModule::OnRemoveTaskTaskChainModule )
     {
         // 没有完成, 删除整个任务链
-        auto status = kfdata->Get<uint32>( __STRING__( status ) );
+        auto status = data->Get<uint32>( __STRING__( status ) );
         if ( status == KFMsg::ReceiveStatus )
         {
-            FinishTaskChain( player, kfdata );
+            FinishTaskChain( player, data );
         }
     }
 
     void KFTaskChainModule::FinishTaskChain( EntityPtr player, DataPtr kftask )
     {
-        auto taskchainid = kftask->Get<uint32>( __STRING__( chain ) );
-        auto chainindex = kftask->Get<uint32>( __STRING__( index ) );
-        auto validtime = kftask->Get( __STRING__( time ) );
-        if ( taskchainid == 0u )
+        auto task_chain_id = kftask->Get<uint32>( __STRING__( chain ) );
+        auto chain_index = kftask->Get<uint32>( __STRING__( index ) );
+        auto valid_time = kftask->Get( __STRING__( time ) );
+        if ( task_chain_id == 0u )
         {
             return;
         }
 
-        auto kftaskchainsetting = KFTaskChainConfig::Instance()->FindSetting( taskchainid );
-        if ( kftaskchainsetting == nullptr )
+        auto task_chain_setting = KFTaskChainConfig::Instance()->FindSetting( task_chain_id );
+        if ( task_chain_setting == nullptr )
         {
-            return __LOG_ERROR__( "player=[{}] taskchain=[{}] can't find setting", player->GetKeyID(), taskchainid );
+            return __LOG_ERROR__( "player=[{}] task chain=[{}] can't find setting", player->GetKeyID(), task_chain_id );
         }
 
-        if ( chainindex >= kftaskchainsetting->_task_chain_data.size() )
+        if ( chain_index >= task_chain_setting->_task_chain_data.size() )
         {
-            return __LOG_ERROR__( "player=[{}]  taskchain=[{}] index=[{}] error", player->GetKeyID(), taskchainid, chainindex );
+            return __LOG_ERROR__( "player=[{}]  task chain=[{}] index=[{}] error", player->GetKeyID(), task_chain_id, chain_index );
         }
 
         // 开启额外的任务链
-        OpenExtendChain( player, taskchainid, &kftaskchainsetting->_task_chain_data[chainindex] );
+        OpenExtendChain( player, task_chain_id, &task_chain_setting->_task_chain_data[chain_index] );
 
-        ++chainindex;
-        if ( chainindex >= kftaskchainsetting->_task_chain_data.size() )
+        ++chain_index;
+        if ( chain_index >= task_chain_setting->_task_chain_data.size() )
         {
             return;
         }
 
-        OpenTaskChainLogicData( player, &kftaskchainsetting->_task_chain_data[chainindex], taskchainid, chainindex, validtime );
+        OpenTaskChainLogicData( player, &task_chain_setting->_task_chain_data[chain_index], task_chain_id, chain_index, valid_time );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

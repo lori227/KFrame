@@ -448,7 +448,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_ADD_ELEMENT_FUNCTION__( add_function ) \
-    bool add_function( EntityPtr player, DataPtr parent_data, KFElementResult* kfresult, const char* function, uint32 line )
+    bool add_function( EntityPtr player, DataPtr parent_data, KFElementResult* element_result, const char* function, uint32 line )
 
 #define  __REGISTER_ADD_ELEMENT__( data_name, function ) \
     _component->RegisterAddElementFunction( data_name, this, function )

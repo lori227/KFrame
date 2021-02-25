@@ -26,18 +26,17 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_ADD_ELEMENT_FUNCTION__( KFDropModule::AddDropElement )
     {
-        auto element = kfresult->_element;
-        if ( !element->IsObject() )
+        if ( !element_result->_element->IsObject() )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object", element->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] not object", element_result->_element->_data_name );
             return false;
         }
         
 #ifdef __KF_DEBUG__
-        auto element_object = std::static_pointer_cast<KFElementObject>( element );
+        auto element_object = std::static_pointer_cast<KFElementObject>( element_result->_element );
         if ( element_object->_config_id == _invalid_int )
         {
-            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id", element->_data_name );
+            __LOG_ERROR_FUNCTION__( function, line, "element=[{}] no id", element_result->_element->_data_name );
             return false;
         }
 
