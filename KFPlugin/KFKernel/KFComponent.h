@@ -522,7 +522,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_UPDATE_DATA_FUNCTION__( update_function ) \
-    void update_function( EntityPtr player, uint64 key, DataPtr data, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
+    void update_function( EntityPtr player, uint64 key, DataPtr data, uint32 operate, uint64 value, uint64 old_value, uint64 new_value )
 
 #define  __REGISTER_UPDATE_DATA__( function )\
     _component->RegisterUpdateDataModule( this, function )
