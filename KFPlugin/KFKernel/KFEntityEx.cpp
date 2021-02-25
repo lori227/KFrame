@@ -1728,7 +1728,7 @@ namespace KFrame
             ( *proto_object->mutable_pbdouble() )[data_setting->_name] = data->Get<double>();
             break;
         case KFDataDefine::DataTypeString:
-            ( *proto_object->mutable_pbstring() )[data_setting->_name] = data->Get< std::string >();
+            ( *proto_object->mutable_pbstring() )[data_setting->_name] = data->Get<std::string>();
             break;
         case KFDataDefine::DataTypeObject:
             static_cast< KFKernelModule* >( _kf_kernel )->SaveToObject( data, proto_object, KFDataDefine::DataMaskSync );

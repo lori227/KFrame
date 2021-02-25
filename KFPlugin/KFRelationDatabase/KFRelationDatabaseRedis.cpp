@@ -5,156 +5,156 @@ namespace KFrame
 {
 #define __RELATION_REDIS_DRIVER__ _kf_redis->Create( __STRING__( relation ) )
 
-    std::string KFRelationDatabaseRedis::FormatRelationKey( const std::string& relationname, uint64 firstid, uint64 secondid, bool bothway )
+    std::string KFRelationDatabaseRedis::FormatRelationKey( const std::string& relation_name, uint64 first_id, uint64 second_id, bool is_both_way )
     {
-        auto id1 = firstid;
-        auto id2 = secondid;
-        if ( bothway )
+        auto id1 = first_id;
+        auto id2 = second_id;
+        if ( is_both_way )
         {
-            id1 = __MIN__( firstid, secondid );
-            id2 = __MAX__( firstid, secondid );
+            id1 = __MIN__( first_id, second_id );
+            id2 = __MAX__( first_id, second_id );
         }
 
-        return __DATABASE_KEY_3__( relationname, id1, id2 );
+        return __DATABASE_KEY_3__( relation_name, id1, id2 );
     }
 
-    void KFRelationDatabaseRedis::QueryRelationList( const std::string& listname, const std::string& relationname, uint64 player_id, RelationListType& relationlist )
+    void KFRelationDatabaseRedis::QueryRelationList( const std::string& list_name, const std::string& relation_name, uint64 player_id, RelationListType& relation_list )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
 
-        auto queryidlist = redis_driver->SMembers( __DATABASE_KEY_2__( listname, player_id ) );
-        if ( queryidlist->_value.empty() )
+        auto query_id_list_result = redis_driver->SMembers( __DATABASE_KEY_2__( list_name, player_id ) );
+        if ( query_id_list_result->_value.empty() )
         {
             return;
         }
 
-        for ( auto& strid : queryidlist->_value )
+        for ( auto& id : query_id_list_result->_value )
         {
-            auto relationid = __TO_UINT64__( strid );
+            auto relation_id = __TO_UINT64__( id );
 
             // 好友的基本信息
-            StringMap relationdata;
-            _kf_basic_database->QueryBasicAttribute( relationid, relationdata );
-            if ( relationdata.empty() )
+            StringMap relation_data;
+            _kf_basic_database->QueryBasicAttribute( relation_id, relation_data );
+            if ( relation_data.empty() )
             {
                 continue;
             }
 
             // 好友的关系属性
-            auto relationkey = FormatRelationKey( relationname, player_id, relationid, true );
-            auto kfquery = redis_driver->HGetAll( relationkey );
-            relationdata.insert( kfquery->_value.begin(), kfquery->_value.end() );
-            relationlist.emplace( relationid, relationdata );
+            auto relation_key = FormatRelationKey( relation_name, player_id, relation_id, true );
+            auto query_result = redis_driver->HGetAll( relation_key );
+            relation_data.insert( query_result->_value.begin(), query_result->_value.end() );
+            relation_list.emplace( relation_id, relation_data );
         }
     }
 
-    void KFRelationDatabaseRedis::QueryInviteList( const std::string& listname, const std::string& relationname, uint64 player_id, RelationListType& relationlist )
+    void KFRelationDatabaseRedis::QueryInviteList( const std::string& list_name, const std::string& relation_name, uint64 player_id, RelationListType& relation_list )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
 
-        auto queryidlist = redis_driver->SMembers( __DATABASE_KEY_2__( listname, player_id ) );
-        if ( queryidlist->_value.empty() )
+        auto query_id_list_result = redis_driver->SMembers( __DATABASE_KEY_2__( list_name, player_id ) );
+        if ( query_id_list_result->_value.empty() )
         {
             return;
         }
 
         StringList remove_list;
-        for ( auto& strid : queryidlist->_value )
+        for ( auto& id : query_id_list_result->_value )
         {
-            auto relationid = __TO_UINT64__( strid );
+            auto relation_id = __TO_UINT64__( id );
 
             // 邀请信息
-            auto relationkey = FormatRelationKey( relationname, player_id, relationid, false );
-            auto kfinvitedata = redis_driver->HGetAll( relationkey );
-            if ( kfinvitedata->_value.empty() )
+            auto relation_key = FormatRelationKey( relation_name, player_id, relation_id, false );
+            auto invite_data = redis_driver->HGetAll( relation_key );
+            if ( invite_data->_value.empty() )
             {
-                remove_list.push_back( strid );
+                remove_list.push_back( id );
                 continue;
             }
 
-            StringMap relationdata;
-            _kf_basic_database->QueryBasicAttribute( relationid, relationdata );
-            if ( relationdata.empty() )
+            StringMap relation_data;
+            _kf_basic_database->QueryBasicAttribute( relation_id, relation_data );
+            if ( relation_data.empty() )
             {
                 continue;
             }
 
-            relationdata.insert( kfinvitedata->_value.begin(), kfinvitedata->_value.end() );
-            relationlist.emplace( relationid, relationdata );
+            relation_data.insert( invite_data->_value.begin(), invite_data->_value.end() );
+            relation_list.emplace( relation_id, relation_data );
         }
 
         if ( !remove_list.empty() )
         {
             // 删除已经过期的邀请信息
-            redis_driver->SRem( __DATABASE_KEY_2__( listname, player_id ), remove_list );
+            redis_driver->SRem( __DATABASE_KEY_2__( list_name, player_id ), remove_list );
         }
     }
 
-    bool KFRelationDatabaseRedis::RelationExist( const std::string& listname, uint64 player_id, uint64 targetid )
+    bool KFRelationDatabaseRedis::RelationExist( const std::string& list_name, uint64 player_id, uint64 target_id )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
-        auto kfquery = redis_driver->SIsMember( __DATABASE_KEY_2__( listname, player_id ), targetid );
-        return kfquery->_value != _invalid_int;
+        auto query_result = redis_driver->SIsMember( __DATABASE_KEY_2__( list_name, player_id ), target_id );
+        return query_result->_value != _invalid_int;
     }
 
-    uint32 KFRelationDatabaseRedis::RelationCount( const std::string& listname, uint64 player_id )
+    uint32 KFRelationDatabaseRedis::RelationCount( const std::string& list_name, uint64 player_id )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
-        auto kfquery = redis_driver->SCard( __DATABASE_KEY_2__( listname, player_id ) );
-        return kfquery->_value;
+        auto query_result = redis_driver->SCard( __DATABASE_KEY_2__( list_name, player_id ) );
+        return query_result->_value;
     }
 
-    void KFRelationDatabaseRedis::AddRelation( const std::string& listname, const std::string& relationname, uint64 player_id, uint64 targetid, bool bothway )
+    void KFRelationDatabaseRedis::AddRelation( const std::string& list_name, const std::string& relation_name, uint64 player_id, uint64 target_id, bool is_both_way )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
-        auto relationkey = FormatRelationKey( relationname, player_id, targetid, bothway );
+        auto relation_key = FormatRelationKey( relation_name, player_id, target_id, is_both_way );
 
         redis_driver->WriteMulti();
-        redis_driver->SAdd( __DATABASE_KEY_2__( listname, player_id ), targetid );
-        redis_driver->HSet( relationkey, __STRING__( time ), KFGlobal::Instance()->_real_time );
+        redis_driver->SAdd( __DATABASE_KEY_2__( list_name, player_id ), target_id );
+        redis_driver->HSet( relation_key, __STRING__( time ), KFGlobal::Instance()->_real_time );
         redis_driver->WriteExec();
     }
 
-    void KFRelationDatabaseRedis::RemoveRelation( const std::string& listname, const std::string& relationname, uint64 player_id, uint64 targetid, bool bothway )
+    void KFRelationDatabaseRedis::RemoveRelation( const std::string& list_name, const std::string& relation_name, uint64 player_id, uint64 target_id, bool is_both_way )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
-        auto relationkey = FormatRelationKey( relationname, player_id, targetid, bothway );
+        auto relation_key = FormatRelationKey( relation_name, player_id, target_id, is_both_way );
 
         redis_driver->WriteMulti();
-        redis_driver->Del( relationkey );
-        redis_driver->SRem( __DATABASE_KEY_2__( listname, player_id ), targetid );
+        redis_driver->Del( relation_key );
+        redis_driver->SRem( __DATABASE_KEY_2__( list_name, player_id ), target_id );
         redis_driver->WriteExec();
     }
 
-    void KFRelationDatabaseRedis::AddInvite( const std::string& listname, const std::string& relationname, uint64 player_id, uint64 targetid, const std::string& message, uint64 keeptime )
+    void KFRelationDatabaseRedis::AddInvite( const std::string& list_name, const std::string& relation_name, uint64 player_id, uint64 target_id, const std::string& message, uint64 keep_time )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
-        auto invitekey = FormatRelationKey( relationname, player_id, targetid, false );
+        auto invite_key = FormatRelationKey( relation_name, player_id, target_id, false );
 
         StringMap values;
         values[ __STRING__( message ) ] = message;
         values[ __STRING__( time ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
 
         redis_driver->WriteMulti();
-        redis_driver->SAdd( __DATABASE_KEY_2__( listname, player_id ), targetid );
-        redis_driver->HMSet( invitekey, values );
-        if ( keeptime > 0u )
+        redis_driver->SAdd( __DATABASE_KEY_2__( list_name, player_id ), target_id );
+        redis_driver->HMSet( invite_key, values );
+        if ( keep_time > 0u )
         {
-            redis_driver->Expire( invitekey, keeptime );
+            redis_driver->Expire( invite_key, keep_time );
         }
         redis_driver->WriteExec();
     }
 
-    bool KFRelationDatabaseRedis::IsRefuse( const std::string& refusename, uint64 player_id )
+    bool KFRelationDatabaseRedis::IsRefuse( const std::string& refuse_name, uint64 player_id )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
-        auto kfresult = redis_driver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( refuse ), player_id ), refusename );
-        return kfresult->_value != _invalid_int;
+        auto result = redis_driver->HGetUInt64( __DATABASE_KEY_2__( __STRING__( refuse ), player_id ), refuse_name );
+        return result->_value != _invalid_int;
     }
 
-    void KFRelationDatabaseRedis::SetRefuse( const std::string& refusename, uint64 player_id, uint32 refusevalue )
+    void KFRelationDatabaseRedis::SetRefuse( const std::string& refuse_name, uint64 player_id, uint32 refuse_value )
     {
         auto redis_driver = __RELATION_REDIS_DRIVER__;
-        redis_driver->HSet( __DATABASE_KEY_2__( __STRING__( refuse ), player_id ), refusename, refusevalue );
+        redis_driver->HSet( __DATABASE_KEY_2__( __STRING__( refuse ), player_id ), refuse_name, refuse_value );
     }
 }

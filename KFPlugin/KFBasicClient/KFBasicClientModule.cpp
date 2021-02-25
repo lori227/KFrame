@@ -158,7 +158,7 @@ namespace KFrame
             auto data = basic_data->Find( iter->first );
             if ( data != nullptr )
             {
-                data->Set< std::string >( iter->second );
+                data->Set<std::string>( iter->second );
             }
         }
         auto player_data = _kf_kernel->SerializeToView( basic_data );

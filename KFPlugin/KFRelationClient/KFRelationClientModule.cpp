@@ -53,54 +53,54 @@ namespace KFrame
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void KFRelationClientModule::SendMessageToRelation( EntityPtr player, const std::string& relationname, uint32 msg_id, google::protobuf::Message* message )
+    void KFRelationClientModule::SendMessageToRelation( EntityPtr player, const std::string& relation_name, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto kfrecord = player->Find( relationname );
-        if ( kfrecord == nullptr )
+        auto relation_record = player->Find( relation_name );
+        if ( relation_record == nullptr )
         {
             return;
         }
 
-        for ( auto kfrelation = kfrecord->First(); kfrelation != nullptr; kfrelation = kfrecord->Next() )
+        for ( auto relation_data = relation_record->First(); relation_data != nullptr; relation_data = relation_record->Next() )
         {
-            auto server_id = kfrelation->Get( __STRING__( basic ), __STRING__( server_id ) );
+            auto server_id = relation_data->Get( __STRING__( basic ), __STRING__( serverid ) );
             if ( server_id == 0u )
             {
                 continue;
             }
 
-            _kf_route->RepeatToEntity( player->GetKeyID(), server_id, kfrelation->GetKeyID(), msg_id, message );
+            _kf_route->RepeatToEntity( player->GetKeyID(), server_id, relation_data->GetKeyID(), msg_id, message );
         }
     }
 
-    void KFRelationClientModule::PBRelationToKFData( const KFMsg::PBRelation* pbrelation, DataPtr kfrelation )
+    void KFRelationClientModule::PBRelationToKFData( const KFMsg::PBRelation* relation_proto, DataPtr relation_data )
     {
-        auto pbbasicdata = &pbrelation->basicdata();
-        auto basic_data = kfrelation->Find( __STRING__( basic ) );
-        for ( auto iter = pbbasicdata->begin(); iter != pbbasicdata->end(); ++iter )
+        auto basic_proto = &relation_proto->basicdata();
+        auto basic_data = relation_data->Find( __STRING__( basic ) );
+        for ( auto iter = basic_proto->begin(); iter != basic_proto->end(); ++iter )
         {
-            auto kfdata = basic_data->Find( iter->first );
-            if ( kfdata == nullptr )
+            auto data = basic_data->Find( iter->first );
+            if ( data == nullptr )
             {
                 continue;
             }
 
-            kfdata->Set< std::string >( iter->second );
+            data->Set<std::string>( iter->second );
         }
 
-        auto pbrelationdata = &pbrelation->relationdata();
-        for ( auto iter = pbrelationdata->begin(); iter != pbrelationdata->end(); ++iter )
+        auto relation_data_proto = &relation_proto->relationdata();
+        for ( auto iter = relation_data_proto->begin(); iter != relation_data_proto->end(); ++iter )
         {
-            auto kfdata = kfrelation->Find( iter->first );
-            if ( kfdata == nullptr )
+            auto data = relation_data->Find( iter->first );
+            if ( data == nullptr )
             {
                 continue;
             }
 
-            kfdata->Set< std::string >( iter->second );
+            data->Set<std::string>( iter->second );
         }
 
-        kfrelation->SetKeyID( pbrelation->playerid() );
+        relation_data->SetKeyID( relation_proto->playerid() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_PLAYER_ENTER_FUNCTION__( KFRelationClientModule::OnEnterQueryRelation )
@@ -140,19 +140,19 @@ namespace KFrame
             return;
         }
 
-        auto kfrecord = entity->Find( setting->_id );
-        if ( kfrecord == nullptr )
+        auto relation_record = entity->Find( setting->_id );
+        if ( relation_record == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no data", setting->_id );
         }
 
         for ( auto i = 0; i < kfmsg->pbrelation_size(); ++i )
         {
-            auto pbrelation = &kfmsg->pbrelation( i );
-            auto kfdata = entity->CreateData( kfrecord );
+            auto relation_proto = &kfmsg->pbrelation( i );
+            auto relation_data = entity->CreateData( relation_record );
 
-            PBRelationToKFData( pbrelation, kfdata );
-            entity->AddRecord( kfrecord, kfdata );
+            PBRelationToKFData( relation_proto, relation_data );
+            entity->AddRecord( relation_record, relation_data );
         }
 
         if ( setting->_need_update )
@@ -164,19 +164,19 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleQueryRelationInviteToGameAck, KFMsg::S2SQueryRelationInviteToGameAck )
     {
-        auto kfinviterecord = entity->Find( kfmsg->relationname() );
-        if ( kfinviterecord == nullptr )
+        auto invite_record = entity->Find( kfmsg->relationname() );
+        if ( invite_record == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no invite", kfmsg->relationname() );
         }
 
         for ( auto i = 0; i < kfmsg->pbinvite_size(); ++i )
         {
-            auto pbinvite = &kfmsg->pbinvite( i );
-            auto kfinvite = entity->CreateData( kfinviterecord );
+            auto invite_proto = &kfmsg->pbinvite( i );
+            auto invite_data = entity->CreateData( invite_record );
 
-            PBRelationToKFData( pbinvite, kfinvite );
-            entity->AddRecord( kfinviterecord, kfinvite );
+            PBRelationToKFData( invite_proto, invite_data );
+            entity->AddRecord( invite_record, invite_data );
         }
     }
 
@@ -195,21 +195,21 @@ namespace KFrame
         }
     }
 
-    void KFRelationClientModule::EnterLeaveUpdateToRelation( EntityPtr player, const std::string& relationname )
+    void KFRelationClientModule::EnterLeaveUpdateToRelation( EntityPtr player, const std::string& relation_name )
     {
         auto basic_data = player->Find( __STRING__( basic ) );
 
         StringUInt64 values;
-        values[ __STRING__( server_id ) ] = basic_data->Get( __STRING__( server_id ) );
+        values[ __STRING__( serverid ) ] = basic_data->Get( __STRING__( serverid ) );
         values[ __STRING__( status ) ] = basic_data->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = basic_data->Get( __STRING__( statustime ) );
-        UpdateIntValueToRelation( player, relationname, values );
+        UpdateIntValueToRelation( player, relation_name, values );
     }
 
     __KF_UPDATE_DATA_FUNCTION__( KFRelationClientModule::OnRelationValueUpdate )
     {
-        if ( !kfdata->HaveMask( KFDataDefine::DataMaskRelation ) ||
-                !kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskRelation ) )
+        if ( !data->HaveMask( KFDataDefine::DataMaskRelation ) ||
+                !data->GetParent()->HaveMask( KFDataDefine::DataMaskRelation ) )
         {
             return;
         }
@@ -223,14 +223,14 @@ namespace KFrame
                 continue;
             }
 
-            UpdateIntValueToRelation( player, setting->_id, kfdata->_data_setting->_name, newvalue );
+            UpdateIntValueToRelation( player, setting->_id, data->_data_setting->_name, new_value );
         }
     }
 
     __KF_UPDATE_STRING_FUNCTION__( KFRelationClientModule::OnRelationStringUpdate )
     {
-        if ( !kfdata->HaveMask( KFDataDefine::DataMaskRelation ) ||
-                !kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskRelation ) )
+        if ( !data->HaveMask( KFDataDefine::DataMaskRelation ) ||
+                !data->GetParent()->HaveMask( KFDataDefine::DataMaskRelation ) )
         {
             return;
         }
@@ -244,89 +244,86 @@ namespace KFrame
                 continue;
             }
 
-            UpdateStrValueToRelation( player, setting->_id, kfdata->_data_setting->_name, newvalue );
+            UpdateStrValueToRelation( player, setting->_id, data->_data_setting->_name, new_value );
         }
     }
 
-    void KFRelationClientModule::UpdateIntValueToRelation( EntityPtr player, const std::string& relationname, const std::string& data_name, uint64 data_value )
+    void KFRelationClientModule::UpdateIntValueToRelation( EntityPtr player, const std::string& relation_name, const std::string& data_name, uint64 data_value )
     {
         StringUInt64 values;
-        values[ data_name ] = data_value;
-        UpdateIntValueToRelation( player, relationname, values );
+        values[data_name] = data_value;
+        UpdateIntValueToRelation( player, relation_name, values );
     }
 
-    void KFRelationClientModule::UpdateIntValueToRelation( EntityPtr player, const std::string& relationname, const StringUInt64& values )
+    void KFRelationClientModule::UpdateIntValueToRelation( EntityPtr player, const std::string& relation_name, const StringUInt64& values )
     {
         KFMsg::S2SUpdateIntValueToRelationReq req;
-        req.set_relationname( relationname );
+        req.set_relationname( relation_name );
         req.set_playerid( player->GetKeyID() );
 
-        auto pbdata = req.mutable_pbdata();
-        for ( auto& iter : values )
-        {
-            ( *pbdata )[ iter.first ] = iter.second;
-        }
-        SendMessageToRelation( player, relationname, KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, &req );
+        auto& data_list = *req.mutable_pbdata();
+        __MAP_TO_PROTO__( values, data_list );
+        SendMessageToRelation( player, relation_name, KFMsg::S2S_UPDATE_INT_VALUE_TO_RELATION_REQ, &req );
     }
 
-    void KFRelationClientModule::UpdateStrValueToRelation( EntityPtr player, const std::string& relationname, const std::string& data_name, const std::string& data_value )
+    void KFRelationClientModule::UpdateStrValueToRelation( EntityPtr player, const std::string& relation_name, const std::string& data_name, const std::string& data_value )
     {
         KFMsg::S2SUpdateStrValueToRelationReq req;
-        req.set_relationname( relationname );
+        req.set_relationname( relation_name );
         req.set_playerid( player->GetKeyID() );
-        ( *req.mutable_pbdata() )[ data_name ] = data_value;
-        SendMessageToRelation( player, relationname, KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, &req );
+        ( *req.mutable_pbdata() )[data_name] = data_value;
+        SendMessageToRelation( player, relation_name, KFMsg::S2S_UPDATE_STR_VALUE_TO_RELATION_REQ, &req );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateIntValueToRelationReq, KFMsg::S2SUpdateIntValueToRelationReq )
     {
-        auto kfrelation = entity->Find( kfmsg->relationname(), kfmsg->playerid() );
-        if ( kfrelation == nullptr )
+        auto relation_data = entity->Find( kfmsg->relationname(), kfmsg->playerid() );
+        if ( relation_data == nullptr )
         {
             return;
         }
 
         // 更新关系属性
-        auto pbdata = &kfmsg->pbdata();
-        for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
+        auto data_list = &kfmsg->pbdata();
+        for ( auto iter = data_list->begin(); iter != data_list->end(); ++iter )
         {
-            auto kfdata = kfrelation->Find( __STRING__( basic ), iter->first );
-            if ( kfdata == nullptr )
+            auto data = relation_data->Find( __STRING__( basic ), iter->first );
+            if ( data == nullptr )
             {
-                kfdata = kfrelation->Find( iter->first );
-                if ( kfdata == nullptr )
+                data = relation_data->Find( iter->first );
+                if ( data == nullptr )
                 {
                     continue;
                 }
             }
 
-            entity->UpdateData( kfdata, KFEnum::Set, iter->second );
+            entity->UpdateData( data, KFEnum::Set, iter->second );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateStrValueToRelationReq, KFMsg::S2SUpdateStrValueToRelationReq )
     {
-        auto kfrelation = entity->Find( kfmsg->relationname(), kfmsg->playerid() );
-        if ( kfrelation == nullptr )
+        auto relation_data = entity->Find( kfmsg->relationname(), kfmsg->playerid() );
+        if ( relation_data == nullptr )
         {
             return;
         }
 
         // 更新关系属性
-        auto pbdata = &kfmsg->pbdata();
-        for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
+        auto data_list = &kfmsg->pbdata();
+        for ( auto iter = data_list->begin(); iter != data_list->end(); ++iter )
         {
-            auto kfdata = kfrelation->Find( __STRING__( basic ), iter->first );
-            if ( kfdata == nullptr )
+            auto data = relation_data->Find( __STRING__( basic ), iter->first );
+            if ( data == nullptr )
             {
-                kfdata = kfrelation->Find( iter->first );
-                if ( kfdata == nullptr )
+                data = relation_data->Find( iter->first );
+                if ( data == nullptr )
                 {
                     continue;
                 }
             }
 
-            entity->UpdateData( kfdata, iter->second );
+            entity->UpdateData( data, iter->second );
         }
     }
 
@@ -344,21 +341,21 @@ namespace KFrame
             return _kf_display->SendToClient( entity, KFMsg::RelationSettingError );
         }
 
-        auto kfrelationrecord = entity->Find( setting->_id );
-        if ( kfrelationrecord == nullptr )
+        auto relation_record = entity->Find( setting->_id );
+        if ( relation_record == nullptr )
         {
             return _kf_display->SendToClient( entity, KFMsg::RelationDataError );
         }
 
         // 已经是关系, 不能申请
-        auto kfrelation = kfrelationrecord->Find( kfmsg->playerid() );
-        if ( kfrelation != nullptr )
+        auto relation_data = relation_record->Find( kfmsg->playerid() );
+        if ( relation_data != nullptr )
         {
             return _kf_display->SendToClient( entity, KFMsg::RelationAlready, kfmsg->playername() );
         }
 
         // 判断自己关系数量
-        if ( kfrelationrecord->Size() >= setting->_max_count )
+        if ( relation_record->Size() >= setting->_max_count )
         {
             return _kf_display->SendToClient( entity, KFMsg::RelationSelfLimit, setting->_max_count );
         }
@@ -366,7 +363,7 @@ namespace KFrame
         // 不需要申请, 直接添加
         if ( setting->_invite_data_name.empty() )
         {
-            return AddRelationToRelation( entity, kfmsg->playerid(), kfmsg->playername(), kfrelationrecord, setting );
+            return AddRelationToRelation( entity, kfmsg->playerid(), kfmsg->playername(), relation_record, setting );
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // 检查屏蔽字
@@ -392,23 +389,23 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleApplyAddRelationToGameAck, KFMsg::S2SApplyAddRelationToGameAck )
     {
-        auto kfinviterecord = entity->Find( kfmsg->relationname() );
-        if ( kfinviterecord == nullptr )
+        auto invite_record = entity->Find( kfmsg->relationname() );
+        if ( invite_record == nullptr )
         {
             return __LOG_ERROR__( "invitelist=[{}] is null", kfmsg->relationname() );
         }
 
-        auto kfinvite = entity->CreateData( kfinviterecord );
-        PBRelationToKFData( &kfmsg->pbinvite(), kfinvite );
-        entity->AddRecord( kfinviterecord, kfinvite );
+        auto invite_data = entity->CreateData( invite_record );
+        PBRelationToKFData( &kfmsg->pbinvite(), invite_data );
+        entity->AddRecord( invite_record, invite_data );
 
         // 通知玩家
-        auto name = kfinvite->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
+        auto name = invite_data->Get<std::string>( __STRING__( basic ), __STRING__( name ) );
         _kf_display->DelayToClient( entity, KFMsg::RelationInviteReq, name );
     }
 
     // 查找关系配置
-    const KFRelationSetting* KFRelationClientModule::FindRelationSettingByInviteName( const std::string& name )
+    std::shared_ptr<const KFRelationSetting> KFRelationClientModule::FindRelationSettingByInviteName( const std::string& name )
     {
         for ( auto& iter : KFRelationConfig::Instance()->_setting_list._objects )
         {
@@ -425,14 +422,14 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleReplyRelationInviteReq, KFMsg::MsgReplyRelationInviteReq )
     {
-        auto setting = FindRelationSettingByInviteName( kfmsg->relationname () );
+        auto setting = FindRelationSettingByInviteName( kfmsg->relationname() );
         if ( setting == nullptr )
         {
             return __LOG_ERROR__( "invitelist=[{}] setting is null", kfmsg->relationname() );
         }
 
-        auto kfinviterecord = entity->Find( setting->_invite_data_name );
-        if ( kfinviterecord == nullptr )
+        auto invite_record = entity->Find( setting->_invite_data_name );
+        if ( invite_record == nullptr )
         {
             return __LOG_ERROR__( "invitelist=[{}] recored is null", setting->_invite_data_name );
         }
@@ -440,84 +437,84 @@ namespace KFrame
         // player_id 为0, 代表全部操作
         if ( kfmsg->playerid() == _invalid_int )
         {
-            ReplyRelationAllInvite( entity, kfinviterecord, setting, kfmsg->operate() );
+            ReplyRelationAllInvite( entity, invite_record, setting, kfmsg->operate() );
         }
         else
         {
-            ReplyRelationInvite( entity, kfinviterecord, setting, kfmsg->operate(), kfmsg->playerid() );
+            ReplyRelationInvite( entity, invite_record, setting, kfmsg->operate(), kfmsg->playerid() );
         }
     }
 
-    void KFRelationClientModule::ReplyRelationAllInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate )
+    void KFRelationClientModule::ReplyRelationAllInvite( EntityPtr player, DataPtr invite_record, std::shared_ptr<const KFRelationSetting> setting, uint32 operate )
     {
         UInt64Set remove_list;
-        for ( auto kfinvite = kfinviterecord->First(); kfinvite != nullptr; kfinvite = kfinviterecord->Next() )
+        for ( auto invite_data = invite_record->First(); invite_data != nullptr; invite_data = invite_record->Next() )
         {
-            auto removeid = ReplyInvite( player, setting, operate, kfinvite );
-            if ( removeid != _invalid_int )
+            auto remove_id = ReplyInvite( player, setting, operate, invite_data );
+            if ( remove_id != _invalid_int )
             {
-                remove_list.insert( removeid );
+                remove_list.insert( remove_id );
             }
         }
 
         // 删除申请id
-        for ( auto removeid : remove_list )
+        for ( auto remove_id : remove_list )
         {
-            player->RemoveRecord( kfinviterecord, removeid );
+            player->RemoveRecord( invite_record, remove_id );
         }
     }
 
-    void KFRelationClientModule::ReplyRelationInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate, uint64 player_id )
+    void KFRelationClientModule::ReplyRelationInvite( EntityPtr player, DataPtr invite_record, std::shared_ptr<const KFRelationSetting> setting, uint32 operate, uint64 player_id )
     {
-        auto kfinvite = kfinviterecord->Find( player_id );
-        if ( kfinvite == nullptr )
+        auto invite_data = invite_record->Find( player_id );
+        if ( invite_data == nullptr )
         {
             return _kf_display->SendToClient( player, KFMsg::RelationInviteNotExist );
         }
 
-        auto inviteid = ReplyInvite( player, setting, operate, kfinvite );
-        if ( inviteid != _invalid_int )
+        auto invite_id = ReplyInvite( player, setting, operate, invite_data );
+        if ( invite_id != _invalid_int )
         {
-            player->RemoveRecord( kfinviterecord, inviteid );
+            player->RemoveRecord( invite_record, invite_id );
         }
     }
 
-    uint64 KFRelationClientModule::ReplyInvite( EntityPtr player, const KFRelationSetting* setting, uint32 operate, DataPtr kfinvite )
+    uint64 KFRelationClientModule::ReplyInvite( EntityPtr player, std::shared_ptr<const KFRelationSetting> setting, uint32 operate, DataPtr invite_data )
     {
-        auto removeid = _invalid_int;
+        auto remove_id = _invalid_int;
         switch ( operate )
         {
         case KFMsg::Consent:	// 同意申请
         {
-            auto kfrelationrecord = player->Find( setting->_id );
-            if ( kfrelationrecord != nullptr )
+            auto relation_record = player->Find( setting->_id );
+            if ( relation_record != nullptr )
             {
-                auto player_id = kfinvite->GetKeyID();
-                auto playername = kfinvite->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
-                AddRelationToRelation( player, player_id, playername, kfrelationrecord, setting );
+                auto player_id = invite_data->GetKeyID();
+                auto player_name = invite_data->Get<std::string>( __STRING__( basic ), __STRING__( name ) );
+                AddRelationToRelation( player, player_id, player_name, relation_record, setting );
             }
             else
             {
-                removeid = kfinvite->GetKeyID();
+                remove_id = invite_data->GetKeyID();
             }
             break;
         }
         case KFMsg::Refuse:		// 拒绝, 通知对方
         {
-            auto targetserverid = kfinvite->Get( __STRING__( basic ), __STRING__( server_id ) );
-            auto selfname = player->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
-            _kf_display->SendToPlayer( targetserverid, kfinvite->GetKeyID(), KFMsg::RelationRefuseYourInvite, selfname );
+            auto target_server_id = invite_data->Get( __STRING__( basic ), __STRING__( serverid ) );
+            auto self_name = player->Get<std::string>( __STRING__( basic ), __STRING__( name ) );
+            _kf_display->SendToPlayer( target_server_id, invite_data->GetKeyID(), KFMsg::RelationRefuseYourInvite, self_name );
         }
         //break; 注释break, 执行下次发送删除消息操作
         case KFMsg::Delete:	// 删除, 不通知对方
         {
-            removeid = kfinvite->GetKeyID();
+            remove_id = invite_data->GetKeyID();
 
             // 发送到关系集群
             KFMsg::S2SDelRelationInviteToRelationReq req;
             req.set_relationname( setting->_id );
             req.set_selfplayerid( player->GetKeyID() );
-            req.set_targetplayerid( kfinvite->GetKeyID() );
+            req.set_targetplayerid( invite_data->GetKeyID() );
             _kf_route->SendToRand( player->GetKeyID(), __RELATION_ROUTE_NAME__, KFMsg::S2S_DEL_RELATION_INVITE_TO_RELATION_REQ, &req );
         }
         break;
@@ -525,13 +522,13 @@ namespace KFrame
             break;
         }
 
-        return removeid;
+        return remove_id;
     }
 
-    void KFRelationClientModule::AddRelationToRelation( EntityPtr player, uint64 player_id, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* setting )
+    void KFRelationClientModule::AddRelationToRelation( EntityPtr player, uint64 player_id, const std::string& player_name, DataPtr relation_record, std::shared_ptr<const KFRelationSetting> setting )
     {
         // 判断数量
-        if ( kfrelationrecord->Size() >= setting->_max_count )
+        if ( relation_record->Size() >= setting->_max_count )
         {
             return _kf_display->SendToClient( player, KFMsg::RelationSelfLimit, setting->_max_count );
         }
@@ -539,7 +536,7 @@ namespace KFrame
         // 发送消息到好友集群
         KFMsg::S2SAddRelationToRelationReq req;
         req.set_playerid( player_id );
-        req.set_playername( playername );
+        req.set_playername( player_name );
         req.set_relationname( setting->_id );
         auto ok = _kf_route->SendToRand( player->GetKeyID(), __RELATION_ROUTE_NAME__, KFMsg::S2S_ADD_RELATION_TO_RELATION_REQ, &req );
         if ( !ok )
@@ -556,31 +553,31 @@ namespace KFrame
             return __LOG_ERROR__( "relation=[{}] no setting", kfmsg->relationname() );
         }
 
-        auto kfrelationrecord = entity->Find( setting->_id );
-        if ( kfrelationrecord == nullptr )
+        auto relation_record = entity->Find( setting->_id );
+        if ( relation_record == nullptr )
         {
             return __LOG_ERROR__( "relation=[{}] no record", setting->_id );
         }
 
         // 添加关系
-        auto kfrelation = entity->CreateData( kfrelationrecord );
-        PBRelationToKFData( &kfmsg->pbrelation(), kfrelation );
-        entity->AddRecord( kfrelationrecord, kfrelation );
+        auto relation_data = entity->CreateData( relation_record );
+        PBRelationToKFData( &kfmsg->pbrelation(), relation_data );
+        entity->AddRecord( relation_record, relation_data );
 
         // 删除邀请
         if ( !setting->_invite_data_name.empty() )
         {
-            entity->RemoveRecord( setting->_invite_data_name, kfrelation->GetKeyID() );
+            entity->RemoveRecord( setting->_invite_data_name, relation_data->GetKeyID() );
         }
 
-        auto relationname = kfrelation->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
-        _kf_display->DelayToClient( entity, KFMsg::RelationAddOk, relationname );
+        auto relation_name = relation_data->Get<std::string>( __STRING__( basic ), __STRING__( name ) );
+        _kf_display->DelayToClient( entity, KFMsg::RelationAddOk, relation_name );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelRelationReq, KFMsg::MsgDelRelationReq )
     {
-        auto kfrelation = entity->Find( kfmsg->relationname(), kfmsg->playerid() );
-        if ( kfrelation == nullptr )
+        auto relation_data = entity->Find( kfmsg->relationname(), kfmsg->playerid() );
+        if ( relation_data == nullptr )
         {
             return _kf_display->SendToClient( entity, KFMsg::RelationNotExist );
         }
@@ -598,29 +595,29 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleDelRelationToGameAck, KFMsg::S2SDelRelationToGameAck )
     {
-        auto kfrelationrecord = entity->Find( kfmsg->relationname() );
-        auto kfrelation = kfrelationrecord->Find( kfmsg->relationid() );
-        if ( kfrelation == nullptr )
+        auto relation_record = entity->Find( kfmsg->relationname() );
+        auto relation_data = relation_record->Find( kfmsg->relationid() );
+        if ( relation_data == nullptr )
         {
             return;
         }
 
-        auto name = kfrelation->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
+        auto name = relation_data->Get<std::string>( __STRING__( basic ), __STRING__( name ) );
         _kf_display->DelayToClient( entity, KFMsg::RelationDelOk, kfmsg->relationid(), name );
 
         // 直接删除关系
-        entity->RemoveRecord( kfrelationrecord, kfmsg->relationid() );
+        entity->RemoveRecord( relation_record, kfmsg->relationid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleSetRefuseRelationInviteReq, KFMsg::MsgSetRefuseRelationInviteReq )
     {
-        auto kfdata = entity->Find( kfmsg->refusename() );
-        if ( kfdata == nullptr )
+        auto data = entity->Find( kfmsg->refusename() );
+        if ( data == nullptr )
         {
             return;
         }
 
-        entity->UpdateData( kfdata, KFEnum::Set, kfmsg->refuse() );
+        entity->UpdateData( data, KFEnum::Set, kfmsg->refuse() );
 
         KFMsg::S2SRefuseRelationToRelationReq req;
         req.set_playerid( entity->GetKeyID() );
@@ -629,18 +626,18 @@ namespace KFrame
         _kf_route->RepeatToRand( entity->GetKeyID(), __RELATION_ROUTE_NAME__, KFMsg::S2S_REFUSE_RELATION_TO_RELATION_REQ, &req );
     }
 
-    void KFRelationClientModule::AddFriendLiness( EntityPtr player, uint64 friendid, uint32 type, uint32 value )
+    void KFRelationClientModule::AddFriendliness( EntityPtr player, uint64 friend_id, uint32 type, uint32 value )
     {
         //auto object_data = player->GetData();
-        //auto kffriend = player->Find( __STRING__( friend ), friendid );
-        //if ( kffriend == nullptr )
+        //auto friend_data = player->Find( __STRING__( friend ), friendid );
+        //if ( friend_data == nullptr )
         //{
         //    return;
         //}
 
         //// 最大好友度限制
         //static auto _max_friend_liness_option = _kf_option->FindOption( __STRING__( freindlinessmax ) );
-        //auto friendliness = kffriend->GetValue( __STRING__( friendliness ) );
+        //auto friendliness = friend_data->GetValue( __STRING__( friendliness ) );
         //if ( friendliness >= _max_friend_liness_option->_uint32_value )
         //{
         //    return;
@@ -654,31 +651,31 @@ namespace KFrame
         //SendToRelation( player->GetKeyID(), KFMsg::S2S_UPDATE_FRIENDLINESS_TO_RELATION_REQ, &req );
     }
 
-    void KFRelationClientModule::AddFriendLinessOnce( EntityPtr player, uint64 friendid, uint32 type, uint32 value )
+    void KFRelationClientModule::AddFriendlinessOnce( EntityPtr player, uint64 friend_id, uint32 type, uint32 value )
     {
         // 好友度是双向的, 数据只保存了一条, 所以更新的时候使用id比较小的一个来做逻辑
-        if ( player->GetKeyID() > friendid )
+        if ( player->GetKeyID() > friend_id )
         {
             return;
         }
 
-        AddFriendLiness( player, friendid, type, value );
+        AddFriendliness( player, friend_id, type, value );
     }
 
     __KF_MESSAGE_FUNCTION__( KFRelationClientModule::HandleUpdateFriendLinessToGameAck, KFMsg::S2SUpdateFriendLinessToGameAck )
     {
-        auto kffriend = entity->Find( __STRING__( friend ), kfmsg->targetplayerid() );
-        if ( kffriend == nullptr )
+        auto friend_data = entity->Find( __STRING__( friend ), kfmsg->targetplayerid() );
+        if ( friend_data == nullptr )
         {
             return;
         }
 
         // 更新好友度
-        entity->UpdateObject( kffriend, __STRING__( friendliness ), KFEnum::Add, kfmsg->friendliness() );
+        entity->UpdateObject( friend_data, __STRING__( friendliness ), KFEnum::Add, kfmsg->friendliness() );
 
         // 显示提示
-        auto friendname = kffriend->Get< std::string >( __STRING__( basic ), __STRING__( name ) );
-        _kf_display->SendToClient( entity, KFMsg::FriendLinessAdd, friendname, kfmsg->friendliness() );
+        auto friend_name = friend_data->Get<std::string>( __STRING__( basic ), __STRING__( name ) );
+        _kf_display->SendToClient( entity, KFMsg::FriendLinessAdd, friend_name, kfmsg->friendliness() );
     }
 
     //    void KFRelationClientModule::AddRecentPlayer( EntityPtr player, uint64 roomid, const KFMsg::PBBattleScore* pbscore )
@@ -748,11 +745,11 @@ namespace KFrame
     //
     //        for ( auto i = 0; i < kfmsg->pbrelation_size(); ++i )
     //        {
-    //            auto pbrelation = &kfmsg->pbrelation( i );
+    //            auto relation_proto = &kfmsg->relation_proto( i );
     //
-    //            auto kfrelation = player->CreateData( kfrecentplayer);
-    //            PBRelationToKFData( pbrelation, kfrelation );
-    //            player->AddData( kfrecentplayer, kfrelation );
+    //            auto relation_data = player->CreateData( kfrecentplayer);
+    //            PBRelationToKFData( relation_proto, relation_data );
+    //            player->AddData( kfrecentplayer, relation_data );
     //        }
     //    }
 }

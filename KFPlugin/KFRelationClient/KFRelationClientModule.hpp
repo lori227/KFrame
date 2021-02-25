@@ -34,8 +34,8 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         // 添加好友度 （目前只支持增加）
-        virtual void AddFriendLiness( EntityPtr player, uint64 friendid, uint32 type, uint32 value );
-        virtual void AddFriendLinessOnce( EntityPtr player, uint64 friendid, uint32 type, uint32 value );
+        virtual void AddFriendliness( EntityPtr player, uint64 friend_id, uint32 type, uint32 value );
+        virtual void AddFriendlinessOnce( EntityPtr player, uint64 friend_id, uint32 type, uint32 value );
 
     protected:
         // 上线查询好友数据
@@ -49,7 +49,7 @@ namespace KFrame
         __KF_UPDATE_STRING_FUNCTION__( OnRelationStringUpdate );
 
         // 更新关系属性值
-        void UpdateValueToRelation( EntityPtr player, DataPtr kfdata );
+        void UpdateValueToRelation( EntityPtr player, DataPtr data );
 
     protected:
         // 查询好友回馈
@@ -88,29 +88,29 @@ namespace KFrame
 
     private:
         // 上下限更新关系属性
-        void EnterLeaveUpdateToRelation( EntityPtr player, const std::string& relationname );
+        void EnterLeaveUpdateToRelation( EntityPtr player, const std::string& relation_name );
 
         // 解析关系信息
-        void PBRelationToKFData( const KFMsg::PBRelation* pbrelation, DataPtr kfrelation );
+        void PBRelationToKFData( const KFMsg::PBRelation* relation_proto, DataPtr relation_data );
 
         // 发送消息到好友
-        void SendMessageToRelation( EntityPtr player, const std::string& relationname, uint32 msg_id, google::protobuf::Message* message );
+        void SendMessageToRelation( EntityPtr player, const std::string& relation_name, uint32 msg_id, google::protobuf::Message* message );
 
         // 发送好友更新消息
-        void UpdateIntValueToRelation( EntityPtr player, const std::string& relationname, const StringUInt64& values );
-        void UpdateIntValueToRelation( EntityPtr player, const std::string& relationname, const std::string& data_name, uint64 data_value );
-        void UpdateStrValueToRelation( EntityPtr player, const std::string& relationname, const std::string& data_name, const std::string& data_value );
+        void UpdateIntValueToRelation( EntityPtr player, const std::string& relation_name, const StringUInt64& values );
+        void UpdateIntValueToRelation( EntityPtr player, const std::string& relation_name, const std::string& data_name, uint64 data_value );
+        void UpdateStrValueToRelation( EntityPtr player, const std::string& relation_name, const std::string& data_name, const std::string& data_value );
 
         // 好友申请操作
-        void ReplyRelationAllInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate );
-        void ReplyRelationInvite( EntityPtr player, DataPtr kfinviterecord, const KFRelationSetting* setting, uint32 operate, uint64 player_id );
-        uint64 ReplyInvite( EntityPtr player, const KFRelationSetting* setting, uint32 operate, DataPtr kfinvite );
+        void ReplyRelationAllInvite( EntityPtr player, DataPtr invite_record, std::shared_ptr<const KFRelationSetting> setting, uint32 operate );
+        void ReplyRelationInvite( EntityPtr player, DataPtr invite_record, std::shared_ptr<const KFRelationSetting> setting, uint32 operate, uint64 player_id );
+        uint64 ReplyInvite( EntityPtr player, std::shared_ptr<const KFRelationSetting> setting, uint32 operate, DataPtr invite_data );
 
         // 添加关系
-        void AddRelationToRelation( EntityPtr player, uint64 player_id, const std::string& playername, DataPtr kfrelationrecord, const KFRelationSetting* setting );
+        void AddRelationToRelation( EntityPtr player, uint64 player_id, const std::string& player_name, DataPtr relation_record, std::shared_ptr<const KFRelationSetting> setting );
 
         // 通过邀请名查找关系属性配置
-        const KFRelationSetting* FindRelationSettingByInviteName( const std::string& name );
+        std::shared_ptr<const KFRelationSetting> FindRelationSettingByInviteName( const std::string& name );
 
     private:
         // 玩家组件

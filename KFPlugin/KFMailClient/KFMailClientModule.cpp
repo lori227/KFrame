@@ -172,7 +172,7 @@ namespace KFrame
 
         // 如果有奖励, 并且没有领取
         auto status = kfmail->Get( __STRING__( status ) );
-        auto reward = kfmail->Get< std::string >( __STRING__( reward ) );
+        auto reward = kfmail->Get<std::string>( __STRING__( reward ) );
         if ( status != KFMsg::ReceiveStatus && !reward.empty() )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailDeleteFailed );
@@ -196,7 +196,7 @@ namespace KFrame
             return _kf_display->SendToClient( entity, KFMsg::MailAlreadyReceived );
         }
 
-        auto reward = kfmail->Get< std::string >( __STRING__( reward ) );
+        auto reward = kfmail->Get<std::string>( __STRING__( reward ) );
         if ( reward.empty() )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailNotHaveReward );
@@ -265,7 +265,7 @@ namespace KFrame
             return __LOG_ERROR__( "player={} can't find mail={}", player->GetKeyID(), id );
         }
 
-        auto reward = kfmail->Get< std::string >( __STRING__( reward ) );
+        auto reward = kfmail->Get<std::string>( __STRING__( reward ) );
         if ( reward.empty() )
         {
             return __LOG_ERROR__( "player={} mail={} no reward", player->GetKeyID(), id );
@@ -323,7 +323,7 @@ namespace KFrame
             _mail_data.insert( std::make_pair( __STRING__( sendid ), __TO_STRING__( sender->GetKeyID() ) ) );
 
             // 发送者名字
-            _mail_data.insert( std::make_pair( __STRING__( sendname ), basic_data->Get< std::string >( __STRING__( name ) ) ) );
+            _mail_data.insert( std::make_pair( __STRING__( sendname ), basic_data->Get<std::string>( __STRING__( name ) ) ) );
 
             // 性别
             _mail_data.insert( std::make_pair( __STRING__( sex ), __TO_STRING__( basic_data->Get<uint32>( __STRING__( sex ) ) ) ) );

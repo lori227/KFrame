@@ -129,7 +129,7 @@ namespace KFrame
 
     uint32 KFUtility::GetHashValue( const std::string& data )
     {
-        std::hash< std::string > _hash;
+        std::hash<std::string> _hash;
         return ( uint32 )_hash.operator()( data );
 
         //auto md5value = KFCrypto::Md5Encode( data );

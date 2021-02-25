@@ -27,7 +27,7 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_PLAYER_ENTER_FUNCTION__( KFPayClientModule::OnEnterPayModule )
     {
-        auto order = player->Get< std::string >( __STRING__( payorder ) );
+        auto order = player->Get<std::string>( __STRING__( payorder ) );
         if ( order.empty() )
         {
             return;
