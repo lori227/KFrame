@@ -70,7 +70,7 @@ namespace KFrame
     void KFBasicClientModule::UpdateBasicStrValueToBasic( uint64 player_id, const std::string& data_name, const std::string& data_value )
     {
         KFMsg::S2SUpdateStrValueToBasicReq req;
-        ( *req.mutable_pbdata() )[ data_name ] = data_value;
+        ( *req.mutable_pbdata() )[data_name] = data_value;
         _kf_route->RepeatToRand( player_id, __ROUTE_NAME__, KFMsg::S2S_UPDATE_STR_VALUE_TO_BASIC_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ namespace KFrame
 
         StringUInt64 values;
         values[ __STRING__( id ) ] = player->GetKeyID();
-        values[ __STRING__( server_id ) ] = basic_data->Get( __STRING__( server_id ) );
+        values[ __STRING__( serverid ) ] = basic_data->Get( __STRING__( serverid ) );
         values[ __STRING__( status ) ] = basic_data->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = basic_data->Get( __STRING__( statustime ) );
         UpdateBasicIntValueToBasic( player->GetKeyID(), values );
@@ -100,26 +100,26 @@ namespace KFrame
     {
         // 只有公共属性才更新
         if ( !player->IsInited() ||
-                !kfdata->HaveMask( KFDataDefine::DataMaskBasic ) ||
-                !kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskBasic ) )
+                !data->HaveMask( KFDataDefine::DataMaskBasic ) ||
+                !data->GetParent()->HaveMask( KFDataDefine::DataMaskBasic ) )
         {
             return;
         }
 
-        UpdateBasicIntValueToBasic( player->GetKeyID(), kfdata->_data_setting->_name, newvalue );
+        UpdateBasicIntValueToBasic( player->GetKeyID(), data->_data_setting->_name, newvalue );
     }
 
     __KF_UPDATE_STRING_FUNCTION__( KFBasicClientModule::OnUpdateStringCallBack )
     {
         // 只有公共属性才更新
         if ( !player->IsInited() ||
-                !kfdata->HaveMask( KFDataDefine::DataMaskBasic ) ||
-                !kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskBasic ) )
+                !data->HaveMask( KFDataDefine::DataMaskBasic ) ||
+                !data->GetParent()->HaveMask( KFDataDefine::DataMaskBasic ) )
         {
             return;
         }
 
-        UpdateBasicStrValueToBasic( player->GetKeyID(), kfdata->_data_setting->_name, newvalue );
+        UpdateBasicStrValueToBasic( player->GetKeyID(), data->_data_setting->_name, new_value );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -155,10 +155,10 @@ namespace KFrame
         auto basic_data = entity->CreateData( __STRING__( basic ) );
         for ( auto iter = kfmsg->pbdata().begin(); iter != kfmsg->pbdata().end(); ++iter )
         {
-            auto kfdata = basic_data->Find( iter->first );
-            if ( kfdata != nullptr )
+            auto data = basic_data->Find( iter->first );
+            if ( data != nullptr )
             {
-                kfdata->Set< std::string >( iter->second );
+                data->Set< std::string >( iter->second );
             }
         }
         auto player_data = _kf_kernel->SerializeToView( basic_data );
@@ -199,15 +199,15 @@ namespace KFrame
             return _kf_display->SendToClient( entity, KFMsg::NameEmpty );
         }
 
-        auto kfname = entity->Find( __STRING__( basic ), __STRING__( name ) );
-        auto name = kfname->Get<std::string>();
+        auto name_data = entity->Find( __STRING__( basic ), __STRING__( name ) );
+        auto name = name_data->Get<std::string>();
         if ( !name.empty() )
         {
             return _kf_display->SendToClient( entity, KFMsg::NameAlreadySet );
         }
 
         // 检查名字的有效性
-        auto result = CheckNameValid( kfmsg->name(), kfname->_data_setting->_int_max_value );
+        auto result = CheckNameValid( kfmsg->name(), name_data->_data_setting->_int_max_value );
         if ( result != KFMsg::Ok )
         {
             return _kf_display->SendToClient( entity, result );

@@ -5,8 +5,8 @@ namespace KFrame
 {
     void KFBasicDatabaseModule::BeforeRun()
     {
-        auto databasetype = KFGlobal::Instance()->GetUInt32( __STRING__( basicdatabase ) );
-        switch ( databasetype )
+        auto database_type = KFGlobal::Instance()->GetUInt32( __STRING__( basicdatabase ) );
+        switch ( database_type )
         {
         case KFDatabaseEnum::Mongo:
             _basic_database_logic = __NEW_OBJECT__( KFBasicDatabaseMongo );
@@ -33,9 +33,9 @@ namespace KFrame
         _basic_database_logic->UpdateBasicStrValue( player_id, server_id, values );
     }
 
-    uint64 KFBasicDatabaseModule::QueryBasicPlayerid( const std::string& playername, uint32 zone_id )
+    uint64 KFBasicDatabaseModule::QueryBasicPlayerId( const std::string& player_name, uint32 zone_id )
     {
-        return _basic_database_logic->QueryBasicPlayerid( playername, zone_id );
+        return _basic_database_logic->QueryBasicPlayerId( player_name, zone_id );
     }
 
     void KFBasicDatabaseModule::ClearBasicServerId( uint64 server_id )
@@ -53,9 +53,9 @@ namespace KFrame
         return _basic_database_logic->QueryBasicAttribute( player_id, values );
     }
 
-    uint32 KFBasicDatabaseModule::QueryBasicAttribute( const std::string& playername, uint32 zone_id, StringMap& values )
+    uint32 KFBasicDatabaseModule::QueryBasicAttribute( const std::string& player_name, uint32 zone_id, StringMap& values )
     {
-        auto player_id = QueryBasicPlayerid( playername, zone_id );
+        auto player_id = QueryBasicPlayerId( player_name, zone_id );
         if ( player_id == 0u )
         {
             return KFMsg::QueryBasicNotExist;
@@ -64,9 +64,9 @@ namespace KFrame
         return QueryBasicAttribute( player_id, values );
     }
 
-    uint32 KFBasicDatabaseModule::SetPlayerName( uint32 zone_id, uint64 player_id, const std::string& oldname, const std::string& newname )
+    uint32 KFBasicDatabaseModule::SetPlayerName( uint32 zone_id, uint64 player_id, const std::string& old_name, const std::string& new_name )
     {
-        return _basic_database_logic->SetPlayerName( zone_id, player_id, oldname, newname );
+        return _basic_database_logic->SetPlayerName( zone_id, player_id, old_name, new_name );
     }
 
     uint64 KFBasicDatabaseModule::QueryBasicIntValue( uint64 player_id, const std::string& data_name )

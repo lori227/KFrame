@@ -24,41 +24,41 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleUpdateIntValueToBasicReq, KFMsg::S2SUpdateIntValueToBasicReq )
     {
         StringUInt64 values;
-        auto pbdata = &kfmsg->pbdata();
-        __PROTO_TO_MAP__( pbdata, values );
+        auto data = &kfmsg->pbdata();
+        __PROTO_TO_MAP__( data, values );
         _kf_basic_database->UpdateBasicIntValue( __ROUTE_SEND_ID__, __ROUTE_SERVER_ID__, values );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleUpdateStrValueToBasicReq, KFMsg::S2SUpdateStrValueToBasicReq )
     {
         StringMap values;
-        auto pbdata = &kfmsg->pbdata();
-        __PROTO_TO_MAP__( pbdata, values );
+        auto data = &kfmsg->pbdata();
+        __PROTO_TO_MAP__( data, values );
         _kf_basic_database->UpdateBasicStrValue( __ROUTE_SEND_ID__, __ROUTE_SERVER_ID__, values );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleClearOnlineToBasicReq, KFMsg::S2SClearOnlineToBasicReq )
     {
-        _kf_basic_database->ClearBasicServerId( kfmsg->server_id() );
+        _kf_basic_database->ClearBasicServerId( kfmsg->serverid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleQueryAttributeToBasicReq, KFMsg::S2SQueryAttributeToBasicReq )
     {
         StringMap values;
-        auto result = _kf_basic_database->QueryBasicAttribute( kfmsg->name(), kfmsg->zone_id(), values );
+        auto result = _kf_basic_database->QueryBasicAttribute( kfmsg->name(), kfmsg->zoneid(), values );
 
         KFMsg::S2SQueryAttributeToGameAck ack;
         ack.set_result( result );
         ack.set_name( kfmsg->name() );
 
-        auto& pbdata = *ack.mutable_pbdata();
-        __MAP_TO_PROTO__( values, pbdata );
+        auto& data = *ack.mutable_pbdata();
+        __MAP_TO_PROTO__( values, data );
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_ATTRIBUTE_TO_GAME_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFBasicShardModule::HandleSetPlayerNameToBasicReq, KFMsg::S2SSetPlayerNameToBasicReq )
     {
-        auto result = _kf_basic_database->SetPlayerName( kfmsg->zone_id(), kfmsg->playerid(), kfmsg->oldname(), kfmsg->newname() );
+        auto result = _kf_basic_database->SetPlayerName( kfmsg->zoneid(), kfmsg->playerid(), kfmsg->oldname(), kfmsg->newname() );
 
         KFMsg::S2SSetPlayerNameToGameAck ack;
         ack.set_result( result );

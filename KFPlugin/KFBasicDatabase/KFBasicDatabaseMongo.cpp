@@ -34,26 +34,26 @@ namespace KFrame
     {
         auto mongo_driver = __BASIC_MONGO_DRIVER__;
 
-        KFMongoSelector kfselector;
-        kfselector._document.AddExpression( __STRING__( server_id ), MongoKeyword::_eq, server_id );
-        mongo_driver->Insert( __BASIC_TABLE_NAME__, __STRING__( server_id ), 0u, kfselector );
+        KFMongoSelector selector_data;
+        selector_data._document.AddExpression( __STRING__( serverid ), MongoKeyword::_eq, server_id );
+        mongo_driver->Insert( __BASIC_TABLE_NAME__, __STRING__( serverid ), 0u, selector_data );
     }
 
     uint64 KFBasicDatabaseMongo::QueryBasicServerId( uint64 player_id )
     {
-        return QueryBasicIntValue( player_id, __STRING__( server_id ) );
+        return QueryBasicIntValue( player_id, __STRING__( serverid ) );
     }
 
     uint32 KFBasicDatabaseMongo::QueryBasicAttribute( uint64 player_id, StringMap& values )
     {
         auto mongo_driver = __BASIC_MONGO_DRIVER__;
-        auto kfresult = mongo_driver->QueryRecord( __BASIC_TABLE_NAME__, player_id );
-        if ( !kfresult->IsOk() )
+        auto result = mongo_driver->QueryRecord( __BASIC_TABLE_NAME__, player_id );
+        if ( !result->IsOk() )
         {
             return KFMsg::PublicDatabaseBusy;
         }
 
-        __DBVALUE_TO_MAP__( kfresult->_value, values );
+        __DBVALUE_TO_MAP__( result->_value, values );
         return KFMsg::Ok;
     }
 
@@ -62,34 +62,34 @@ namespace KFrame
         return __FORMAT__( "{}:{}", __STRING__( playername ), zone_id );
     }
 
-    uint32 KFBasicDatabaseMongo::SetPlayerName( uint32 zone_id, uint64 player_id, const std::string& oldname, const std::string& newname )
+    uint32 KFBasicDatabaseMongo::SetPlayerName( uint32 zone_id, uint64 player_id, const std::string& old_name, const std::string& new_name )
     {
         auto mongo_driver = __BASIC_MONGO_DRIVER__;
 
-        auto nametable = FormatNameTable( zone_id );
-        auto kfplayerid = mongo_driver->QueryUInt64( nametable, newname, __STRING__( playerid ) );
-        if ( !kfplayerid->IsOk() )
+        auto name_table = FormatNameTable( zone_id );
+        auto query_player_id_result = mongo_driver->QueryUInt64( name_table, new_name, __STRING__( playerid ) );
+        if ( !query_player_id_result->IsOk() )
         {
             return KFMsg::NameDatabaseBusy;
         }
 
         // 如果不存在, 设置新名字
-        if ( kfplayerid->_value == _invalid_int )
+        if ( query_player_id_result->_value == _invalid_int )
         {
             // 保存名字
-            auto result = mongo_driver->Insert( nametable, newname, __STRING__( playerid ), player_id );
+            auto result = mongo_driver->Insert( name_table, new_name, __STRING__( playerid ), player_id );
             if ( !result )
             {
                 return KFMsg::NameDatabaseBusy;
             }
 
             // 删除旧的名字关联
-            if ( !oldname.empty() )
+            if ( !old_name.empty() )
             {
-                mongo_driver->Delete( nametable, oldname );
+                mongo_driver->Delete( name_table, old_name );
             }
         }
-        else if ( kfplayerid->_value != player_id )
+        else if ( query_player_id_result->_value != player_id )
         {
             // 存在, 并且不是设定者
             return KFMsg::NameAlreadyExist;
@@ -98,26 +98,26 @@ namespace KFrame
         return KFMsg::NameSetOk;
     }
 
-    uint64 KFBasicDatabaseMongo::QueryBasicPlayerid( const std::string& playername, uint32 zone_id )
+    uint64 KFBasicDatabaseMongo::QueryBasicPlayerId( const std::string& player_name, uint32 zone_id )
     {
         auto mongo_driver = __BASIC_MONGO_DRIVER__;
 
-        auto nametable = FormatNameTable( zone_id );
-        auto kfplayerid = mongo_driver->QueryUInt64( nametable, playername, __STRING__( playerid ) );
-        return kfplayerid->_value;
+        auto name_table = FormatNameTable( zone_id );
+        auto query_player_id_result = mongo_driver->QueryUInt64( name_table, player_name, __STRING__( playerid ) );
+        return query_player_id_result->_value;
     }
 
     uint64 KFBasicDatabaseMongo::QueryBasicIntValue( uint64 player_id, const std::string& data_name )
     {
         auto mongo_driver = __BASIC_MONGO_DRIVER__;
-        auto kfresult = mongo_driver->QueryUInt64( __BASIC_TABLE_NAME__, player_id, data_name );
-        return kfresult->_value;
+        auto result = mongo_driver->QueryUInt64( __BASIC_TABLE_NAME__, player_id, data_name );
+        return result->_value;
     }
 
     std::string KFBasicDatabaseMongo::QueryBasicStrValue( uint64 player_id, const std::string& data_name )
     {
         auto mongo_driver = __BASIC_MONGO_DRIVER__;
-        auto kfresult = mongo_driver->QueryString( __BASIC_TABLE_NAME__, player_id, data_name );
-        return kfresult->_value;
+        auto result = mongo_driver->QueryString( __BASIC_TABLE_NAME__, player_id, data_name );
+        return result->_value;
     }
 }
