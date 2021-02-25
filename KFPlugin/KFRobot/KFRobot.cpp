@@ -8,7 +8,7 @@ namespace KFrame
     {
         _fsm = nullptr;
         _net_client = nullptr;
-        _kf_component = nullptr;
+        _component = nullptr;
     }
 
     KFRobot::~KFRobot()
@@ -16,7 +16,7 @@ namespace KFrame
         __DELETE_OBJECT__( _fsm );
 
         _player = nullptr;
-        _kf_component->RemoveEntity( _player_id );
+        _component->RemoveEntity( _player_id );
     }
 
     void KFRobot::Init( uint64 id, KFNetClientEngine* netclient )
@@ -27,7 +27,7 @@ namespace KFrame
         _net_client = netclient;
         _fsm = new KFFsm( this );
 
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         ////////////////////////////////////////////////////////////////////////////////
     }
 

@@ -114,7 +114,7 @@ namespace KFrame
 
     private:
         // 玩家组件
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
     };
 }
 

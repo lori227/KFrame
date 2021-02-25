@@ -12,8 +12,8 @@ namespace KFrame
         __REGISTER_ROUTE_MESSAGE_FUNCTION__( &KFGameModule::TranspondToPlayer );
         __REGISTER_TCP_CLIENT_FORWARD__( &KFGameModule::TranspondToPlayer );
 
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
-        _kf_component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component->RegisterEntitySaveFunction( this, &KFGameModule::SavePlayer );
 
         __REGISTER_PLAYER_ENTER__( &KFGameModule::OnEnterGame );
         __REGISTER_PLAYER_LEAVE__( &KFGameModule::OnLeaveGame );
@@ -51,7 +51,7 @@ namespace KFrame
         _kf_data_client->UnBindLoadPlayerFunction( this );
         _kf_data_client->UnBindLoadPlayerFunction( this );
 
-        _kf_component->UnRegisterEntitySaveFunction();
+        _component->UnRegisterEntitySaveFunction();
         __UN_DEPLOY_FUNCTION__( __STRING__( shutdown ) );
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_LOGIN_TO_GAME_REQ );
@@ -163,15 +163,15 @@ namespace KFrame
     }
 
     // 发送消息到Gate服务器
-    bool KFGameModule::SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToGate( uint64 gate_id, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        return _kf_tcp_server->SendNetMessage( gateid, msg_id, message );
+        return _kf_tcp_server->SendNetMessage( gate_id, msg_id, message );
     }
 
     // 发送消息到客户端
-    bool KFGameModule::SendToClient( uint64 gateid, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay )
+    bool KFGameModule::SendToClient( uint64 gate_id, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay )
     {
-        return _kf_tcp_server->SendNetMessage( gateid, player_id, msg_id, message, delay );
+        return _kf_tcp_server->SendNetMessage( gate_id, player_id, msg_id, message, delay );
     }
 
     // 发送消息到客户端
@@ -182,30 +182,30 @@ namespace KFrame
             return false;
         }
 
-        auto gateid = player->Get( __STRING__( gateid ) );
-        if ( gateid == _invalid_int )
+        auto gate_id = player->Get( __STRING__( gateid ) );
+        if ( gate_id == _invalid_int )
         {
             return false;
         }
 
-        return _kf_tcp_server->SendNetMessage( gateid, player->GetKeyID(), msg_id, message, delay );
+        return _kf_tcp_server->SendNetMessage( gate_id, player->GetKeyID(), msg_id, message, delay );
     }
 
     // 发送到玩家
-    bool KFGameModule::SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToPlayer( uint64 send_id, DataPtr basic_data, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        auto player_id = kfbasic->Get( __STRING__( id ) );
-        auto server_id = kfbasic->Get( __STRING__( server_id ) );
+        auto player_id = basic_data->Get( __STRING__( id ) );
+        auto server_id = basic_data->Get( __STRING__( serverid ) );
         if ( server_id == _invalid_int || player_id == _invalid_int )
         {
             return false;
         }
 
-        return SendToPlayer( sendid, server_id, player_id, msg_id, message );
+        return SendToPlayer( send_id, server_id, player_id, msg_id, message );
     }
 
     // 发送到玩家
-    bool KFGameModule::SendToPlayer( uint64 sendid, uint64 server_id, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFGameModule::SendToPlayer( uint64 send_id, uint64 server_id, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message )
     {
         // 本服务器
         if ( server_id == KFGlobal::Instance()->_app_id->GetId() )
@@ -220,7 +220,7 @@ namespace KFrame
         }
 
         // 转发消息
-        return _kf_route->SendToEntity( sendid, server_id, player_id, msg_id, message );
+        return _kf_route->SendToEntity( send_id, server_id, player_id, msg_id, message );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,13 +233,13 @@ namespace KFrame
             return true;
         }
 
-        auto gateid = player->Get( __STRING__( gateid ) );
-        if ( gateid == _invalid_int )
+        auto gate_id = player->Get( __STRING__( gateid ) );
+        if ( gate_id == _invalid_int )
         {
             return true;
         }
 
-        return _kf_tcp_server->SendNetMessage( gateid, player_id, msg_id, data, length );
+        return _kf_tcp_server->SendNetMessage( gate_id, player_id, msg_id, data, length );
     }
 
     void KFGameModule::BroadcastToGate( uint32 msg_id, ::google::protobuf::Message* message )
@@ -279,10 +279,10 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleBroadcastToGameAck, KFMsg::S2SBroadcastToGameAck )
     {
         KFMsg::S2SBroadcastToGateReq req;
-        req.set_msgid( kfmsg->msg_id() );
+        req.set_msgid( kfmsg->msgid() );
         req.set_msgdata( kfmsg->msgdata() );
         req.set_serial( kfmsg->serial() );
-        req.set_worldid( kfmsg->world_id() );
+        req.set_worldid( kfmsg->worldid() );
         _kf_tcp_server->SendNetMessage( KFMsg::S2S_BROADCAST_TO_GATE_REQ, &req );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -307,78 +307,78 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLoginToGameReq, KFMsg::S2SLoginToGameReq )
     {
-        auto pblogin = &kfmsg->pblogin();
-        __LOG_DEBUG__( "player[{}:{}:{}] login game req", pblogin->account(), pblogin->account_id(), pblogin->playerid() );
+        auto login_data = &kfmsg->pblogin();
+        __LOG_DEBUG__( "player[{}:{}:{}] login game req", login_data->account(), login_data->accountid(), login_data->playerid() );
 
         // 踢掉在线玩家
-        KickPlayer( pblogin->playerid(), KFMsg::KickEnum::KickByLogin, __FUNC_LINE__ );
+        KickPlayer( login_data->playerid(), KFMsg::KickEnum::KickByLogin, __FUNC_LINE__ );
 
         // 加载玩家数据
-        auto ok = _kf_data_client->LoadPlayerData( pblogin );
+        auto ok = _kf_data_client->LoadPlayerData( login_data );
         if ( ok )
         {
-            __LOG_DEBUG__( "player[{}:{}:{}] login game ok", pblogin->account(), pblogin->account_id(), pblogin->playerid() );
+            __LOG_DEBUG__( "player[{}:{}:{}] login game ok", login_data->account(), login_data->accountid(), login_data->playerid() );
         }
         else
         {
-            __LOG_ERROR__( "player[{}:{}:{}] login game failed", pblogin->account(), pblogin->account_id(), pblogin->playerid() );
+            __LOG_ERROR__( "player[{}:{}:{}] login game failed", login_data->account(), login_data->accountid(), login_data->playerid() );
         }
     }
 
-    void KFGameModule::OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* player_data )
+    void KFGameModule::OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* login_data, const KFMsg::PBObject* player_data )
     {
-        __LOG_DEBUG__( "player[{}:{}:{}] load data[{}] ack", pblogin->account(), pblogin->account_id(), pblogin->playerid(), result );
+        __LOG_DEBUG__( "player[{}:{}:{}] load data[{}] ack", login_data->account(), login_data->accountid(), login_data->playerid(), result );
 
         if ( result == KFMsg::Ok )
         {
-            auto player = _kf_player->Login( pblogin, player_data );
+            auto player = _kf_player->Login( login_data, player_data );
             if ( player != nullptr )
             {
-                if ( !pblogin->loginbycrash() )
+                if ( !login_data->loginbycrash() )
                 {
                     // 序列化玩家数据
-                    auto pbnewdata = _kf_kernel->SerializeToOnline( player );
+                    auto new_player_data = _kf_kernel->SerializeToOnline( player );
 
 #ifdef __KF_DEBUG__
                     static auto _print_enter = 0u;
                     if ( _print_enter == 1u )
                     {
-                        __LOG_DEBUG__( "player=[{}], data=[{}]", player->GetKeyID(), pbnewdata->DebugString() );
+                        __LOG_DEBUG__( "player=[{}], data=[{}]", player->GetKeyID(), new_player_data->DebugString() );
                     }
 #endif
 
                     KFMsg::S2SEnterToGateAck ack;
-                    ack.mutable_pblogin()->CopyFrom( *pblogin );
-                    ack.mutable_playerdata()->CopyFrom( *pbnewdata );
+                    ack.mutable_pblogin()->CopyFrom( *login_data );
+                    ack.mutable_playerdata()->CopyFrom( *new_player_data );
                     ack.set_servertime( KFGlobal::Instance()->_real_time );
-                    auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
+                    auto ok = SendToGate( login_data->gateid(), KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
                     if ( !ok )
                     {
-                        __LOG_ERROR__( "player[{}:{}] send failed", pblogin->account_id(), pblogin->playerid() );
+                        __LOG_ERROR__( "player[{}:{}] send failed", login_data->accountid(), login_data->playerid() );
                     }
                 }
             }
             else
             {
-                SendLoginToGateAck( KFMsg::LoginCreatePlayerError, pblogin );
+                SendLoginToGateAck( KFMsg::LoginCreatePlayerError, login_data );
             }
         }
         else
         {
-            SendLoginToGateAck( result, pblogin );
+            SendLoginToGateAck( result, login_data );
         }
     }
 
-    void KFGameModule::SendLoginToGateAck( uint32 result, const KFMsg::PBLoginData* pblogin )
+    void KFGameModule::SendLoginToGateAck( uint32 result, const KFMsg::PBLoginData* login_data )
     {
         KFMsg::S2SLoginToGateAck ack;
         ack.set_result( result );
-        ack.set_accountid( pblogin->account_id() );
-        ack.set_sessionid( pblogin->sessionid() );
-        auto ok = SendToGate( pblogin->gateid(), KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
+        ack.set_accountid( login_data->accountid() );
+        ack.set_sessionid( login_data->sessionid() );
+        auto ok = SendToGate( login_data->gateid(), KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}] load [{}] failed", pblogin->account_id(), pblogin->playerid(), result );
+            __LOG_ERROR__( "player[{}:{}] load [{}] failed", login_data->accountid(), login_data->playerid(), result );
         }
     }
 
@@ -390,18 +390,18 @@ namespace KFrame
             KFMsg::S2SEnterToGateAck ack;
             ack.set_servertime( KFGlobal::Instance()->_real_time );
 
-            auto pblogin = ack.mutable_pblogin();
-            pblogin->set_token( kfmsg->token() );
-            pblogin->set_playerid( kfmsg->playerid() );
-            pblogin->set_sessionid( kfmsg->sessionid() );
-            pblogin->set_accountid( kfmsg->account_id() );
+            auto login_data = ack.mutable_pblogin();
+            login_data->set_token( kfmsg->token() );
+            login_data->set_playerid( kfmsg->playerid() );
+            login_data->set_sessionid( kfmsg->sessionid() );
+            login_data->set_accountid( kfmsg->accountid() );
 
-            auto playerdata = _kf_kernel->SerializeToOnline( player );
-            ack.mutable_playerdata()->CopyFrom( *playerdata );
+            auto player_data = _kf_kernel->SerializeToOnline( player );
+            ack.mutable_playerdata()->CopyFrom( *player_data );
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_ENTER_TO_GATE_ACK, &ack );
             if ( !ok )
             {
-                __LOG_ERROR__( "player[{}:{}] relogin failed", kfmsg->account_id(), kfmsg->playerid() );
+                __LOG_ERROR__( "player[{}:{}] relogin failed", kfmsg->accountid(), kfmsg->playerid() );
             }
         }
         else
@@ -410,11 +410,11 @@ namespace KFrame
             ack.set_token( kfmsg->token() );
             ack.set_playerid( kfmsg->playerid() );
             ack.set_sessionid( kfmsg->sessionid() );
-            ack.set_accountid( kfmsg->account_id() );
+            ack.set_accountid( kfmsg->accountid() );
             auto ok = SendToGate( __ROUTE_SERVER_ID__, KFMsg::S2S_RELOGIN_TO_GATE_ACK, &ack );
             if ( !ok )
             {
-                __LOG_ERROR__( "player[{}:{}] ack failed", kfmsg->account_id(), kfmsg->playerid() );
+                __LOG_ERROR__( "player[{}:{}] ack failed", kfmsg->accountid(), kfmsg->playerid() );
             }
         }
     }
@@ -423,11 +423,11 @@ namespace KFrame
     {
         for ( auto i = 0; i < kfmsg->pblogin_size(); ++i )
         {
-            auto pblogin = &kfmsg->pblogin( i );
-            auto player = _kf_player->FindPlayer( pblogin->playerid() );
+            auto login_data = &kfmsg->pblogin( i );
+            auto player = _kf_player->FindPlayer( login_data->playerid() );
             if ( player == nullptr )
             {
-                _kf_data_client->LoadPlayerData( pblogin );
+                _kf_data_client->LoadPlayerData( login_data );
             }
         }
     }
@@ -452,7 +452,7 @@ namespace KFrame
         __LOG_DEBUG__( "player[{}] logout", kfmsg->playerid() );
 
         // 设置不在线, 后续不发送消息
-        player->Set( __STRING__( gateid ), _invalid_int );
+        player->Operate( __STRING__( gateid ), KFEnum::Set, _invalid_int );
 
         // 删除玩家
         _kf_player->RemovePlayer( kfmsg->playerid() );
@@ -480,7 +480,7 @@ namespace KFrame
         SendToClient( player, KFMsg::S2S_KICK_PLAYER_TO_GATE_REQ, &req );
 
         // 删除玩家
-        player->Set( __STRING__( gateid ), _invalid_int );
+        player->Operate( __STRING__( gateid ), KFEnum::Set, _invalid_int );
         _kf_player->RemovePlayer( player_id );
         return true;
     }
@@ -513,8 +513,6 @@ namespace KFrame
         {
             return _kf_display->SendToClient( player_id, result );
         }
-
-
 
         KFMsg::MsgQueryPlayerAck ack;
         ack.mutable_player()->CopyFrom( *player_data );

@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFLuaModule::BeforeRun()
     {
-        _kf_player_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _player_component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_DEPLOY_FUNCTION__( __STRING__( loadscript ), &KFLuaModule::LoadScript );
     }
 
@@ -21,135 +21,135 @@ namespace KFrame
         }
         else
         {
-            auto kfluascript = _lua_script.Find( param );
-            if ( kfluascript != nullptr )
+            auto lua_script = _lua_script.Find( param );
+            if ( lua_script != nullptr )
             {
-                kfluascript->LoadScript( param );
+                lua_script->LoadScript( param );
             }
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    KFLuaScript* KFLuaModule::FindLuaScript( const std::string& luafile )
+    KFLuaScript* KFLuaModule::FindLuaScript( const std::string& lua_file )
     {
-        auto kfluascript = _lua_script.Create( luafile );
-        if ( !kfluascript->_is_initialized )
+        auto lua_script = _lua_script.Create( lua_file );
+        if ( !lua_script->_is_initialized )
         {
             // 注册函数
-            RegisterLuaFunction( kfluascript );
+            RegisterLuaFunction( lua_script );
 
             // 加载文件
-            kfluascript->LoadScript( luafile );
+            lua_script->LoadScript( lua_file );
         }
 
-        return kfluascript;
+        return lua_script;
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid )
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               uint64 param1 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1 );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1 );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               uint64 param1, uint64 param2 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1, param2 );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1, param2 );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               uint64 param1, uint64 param2, uint64 param3 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1, param2, param3 );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1, param2, param3 );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               uint64 param1, uint64 param2, uint64 param3, uint64 param4 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1, param2, param3, param4 );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1, param2, param3, param4 );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1, param2, param3, param4, param5 );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1, param2, param3, param4, param5 );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               uint64 param1, uint64 param2, uint64 param3, uint64 param4, uint64 param5, uint64 param6 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1, param2, param3, param4, param5, param6 );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1, param2, param3, param4, param5, param6 );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               const std::string& param1 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1.c_str() );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1.c_str() );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               const std::string& param1, const std::string& param2 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str() );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1.c_str(), param2.c_str() );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               const std::string& param1, const std::string& param2, const std::string& param3 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str() );
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1.c_str(), param2.c_str(), param3.c_str() );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               const std::string& param1, const std::string& param2, const std::string& param3,
                               const std::string& param4 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1.c_str(), param2.c_str(), param3.c_str(),
                                           param4.c_str() );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               const std::string& param1, const std::string& param2, const std::string& param3,
                               const std::string& param4, const std::string& param5 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1.c_str(), param2.c_str(), param3.c_str(),
                                           param4.c_str(), param5.c_str() );
     }
 
-    uint64 KFLuaModule::Call( const std::string& luafile, const std::string& function, uint64 objectid,
+    uint64 KFLuaModule::Call( const std::string& lua_file, const std::string& function, uint64 object_id,
                               const std::string& param1, const std::string& param2, const std::string& param3,
                               const std::string& param4, const std::string& param5, const std::string& param6 )
     {
-        auto kfluascript = FindLuaScript( luafile );
-        return kfluascript->CallFunction( function, objectid, param1.c_str(), param2.c_str(), param3.c_str(),
+        auto lua_script = FindLuaScript( lua_file );
+        return lua_script->CallFunction( function, object_id, param1.c_str(), param2.c_str(), param3.c_str(),
                                           param4.c_str(), param5.c_str(), param6.c_str() );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define __LUA_FUNCTION__( name, function ) \
-    metatableobject.RegisterObjectDirect( name, this, function );
+    meta_table_object.RegisterObjectDirect( name, this, function );
 
 
-    void KFLuaModule::RegisterLuaFunction( KFLuaScript* kfscript )
+    void KFLuaModule::RegisterLuaFunction( std::shared_ptr<KFLuaScript> lus_script )
     {
-        auto metatableobject = kfscript->_lua_state->GetGlobals().CreateTable( "MultiObjectMetaTable" );
-        metatableobject.SetObject( "__index", metatableobject );
+        auto meta_table_object = lus_script->_lua_state->GetGlobals().CreateTable( "MultiObjectMetaTable" );
+        meta_table_object.SetObject( "__index", meta_table_object );
 
         __LUA_FUNCTION__( "LogDebug", &KFLuaModule::LuaLogDebug );
         __LUA_FUNCTION__( "LogInfo", &KFLuaModule::LuaLogInfo );
@@ -176,9 +176,9 @@ namespace KFrame
         __LUA_FUNCTION__( "GetConstantString", &KFLuaModule::LuaGetConstantString );
         __LUA_FUNCTION__( "GetConstantUInt32", &KFLuaModule::LuaGetConstantUInt32 );
 
-        LuaPlus::LuaObject kframeobject = kfscript->_lua_state->BoxPointer( this );
-        kframeobject.SetMetatable( metatableobject );
-        kfscript->_lua_state->GetGlobals().SetObject( "KFrame", kframeobject );
+        LuaPlus::LuaObject lua_object = lus_script->_lua_state->BoxPointer( this );
+        lua_object.SetMetatable( meta_table_object );
+        lus_script->_lua_state->GetGlobals().SetObject( "KFrame", lua_object );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,9 +209,9 @@ namespace KFrame
         return _result.c_str();
     }
 
-    uint64 KFLuaModule::LuaGetValue( uint64 objectid, const char* data_name )
+    uint64 KFLuaModule::LuaGetValue( uint64 object_id, const char* data_name )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return _invalid_int;
@@ -220,9 +220,9 @@ namespace KFrame
         return entity->Get( data_name );
     }
 
-    uint64 KFLuaModule::LuaOperateValue( uint64 objectid, const char* data_name, uint32 operate, uint64 value )
+    uint64 KFLuaModule::LuaOperateValue( uint64 object_id, const char* data_name, uint32 operate, uint64 value )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return _invalid_int;
@@ -231,9 +231,9 @@ namespace KFrame
         return entity->UpdateData( data_name, operate, value );
     }
 
-    uint64 KFLuaModule::LuaGetObjectValue( uint64 objectid, const char* parent_name, const char* data_name )
+    uint64 KFLuaModule::LuaGetObjectValue( uint64 object_id, const char* parent_name, const char* data_name )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return _invalid_int;
@@ -242,9 +242,9 @@ namespace KFrame
         return entity->Get( parent_name, data_name );
     }
 
-    uint64 KFLuaModule::LuaOperateObjectValue( uint64 objectid, const char* parent_name, const char* data_name, uint32 operate, uint64 value )
+    uint64 KFLuaModule::LuaOperateObjectValue( uint64 object_id, const char* parent_name, const char* data_name, uint32 operate, uint64 value )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return _invalid_int;
@@ -253,9 +253,9 @@ namespace KFrame
         return entity->UpdateObject( parent_name, data_name, operate, value );
     }
 
-    uint64 KFLuaModule::LuaGetRecordValue( uint64 objectid, const char* parent_name, uint64 key, const char* data_name )
+    uint64 KFLuaModule::LuaGetRecordValue( uint64 object_id, const char* parent_name, uint64 key, const char* data_name )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return _invalid_int;
@@ -264,9 +264,9 @@ namespace KFrame
         return entity->Get( parent_name, key, data_name );
     }
 
-    uint64 KFLuaModule::LuaOperateRecordValue( uint64 objectid, const char* parent_name, uint64 key, const char* data_name, uint32 operate, uint64 value )
+    uint64 KFLuaModule::LuaOperateRecordValue( uint64 object_id, const char* parent_name, uint64 key, const char* data_name, uint32 operate, uint64 value )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return _invalid_int;
@@ -275,17 +275,17 @@ namespace KFrame
         return entity->UpdateRecord( parent_name, key, data_name, operate, value );
     }
 
-    uint32 KFLuaModule::LuaGetVariable( uint32 varid )
+    uint32 KFLuaModule::LuaGetVariable( uint32 variable_id )
     {
-        return _run_variable[ varid ];
+        return _run_variable[ variable_id ];
     }
 
     // 操作运行时变量
-    uint32 KFLuaModule::LuaOperateVariable( uint32 varid, uint32 operate, uint32 value )
+    uint32 KFLuaModule::LuaOperateVariable( uint32 variable_id, uint32 operate, uint32 value )
     {
-        auto base = LuaGetVariable( varid );
+        auto base = LuaGetVariable( variable_id );
         auto final = KFUtility::Operate( base, operate, value );
-        _run_variable[ varid ] = final;
+        _run_variable[ variable_id ] = final;
 
         return final;
     }
@@ -300,32 +300,34 @@ namespace KFrame
         return KFGlobal::Instance()->_real_time;
     }
 
-    void KFLuaModule::LuaAddData( uint64 objectid, const char* strelement, const char* module_name )
+    void KFLuaModule::LuaAddData( uint64 object_id, const char* element, const char* module_name )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return;
         }
 
         KFElements elements;
-        auto ok = elements.Parse( strelement, __FUNC_LINE__ );
+        elements._str_parse = element;
+        auto ok = KFGlobal::Instance()->ParseElement( elements, __FILE__, __LINE__ );
         if ( ok )
         {
             entity->AddElement( &elements, _default_multiple, module_name, 0u, __FUNC_LINE__ );
         }
     }
 
-    void KFLuaModule::LuaSetData( uint64 objectid, const char* strelement, const char* module_name )
+    void KFLuaModule::LuaSetData( uint64 object_id, const char* element, const char* module_name )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return;
         }
 
         KFElements elements;
-        auto ok = elements.Parse( strelement, __FUNC_LINE__ );
+        elements._str_parse = element;
+        auto ok = KFGlobal::Instance()->ParseElement( elements, __FILE__, __LINE__ );
         if ( ok )
         {
             elements.SetOperate( KFEnum::Set );
@@ -333,16 +335,17 @@ namespace KFrame
         }
     }
 
-    void KFLuaModule::LuaDecData( uint64 objectid, const char* strelement, const char* module_name )
+    void KFLuaModule::LuaDecData( uint64 object_id, const char* element, const char* module_name )
     {
-        auto entity = _kf_player_component->FindEntity( objectid, __FUNC_LINE__ );
+        auto entity = _player_component->FindEntity( object_id, __FUNC_LINE__ );
         if ( entity == nullptr )
         {
             return;
         }
 
         KFElements elements;
-        auto ok = elements.Parse( strelement, __FUNC_LINE__ );
+        elements._str_parse = element;
+        auto ok = KFGlobal::Instance()->ParseElement( elements, __FILE__, __LINE__ );
         if ( ok )
         {
             entity->RemoveElement( &elements, _default_multiple, module_name, 0u, __FUNC_LINE__ );
@@ -375,32 +378,32 @@ namespace KFrame
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLuaModule::OnLuaHttpCallBack )
     {
-        if ( args.empty() )
+        if ( pass_back_data.empty() )
         {
             return;
         }
 
-        __JSON_PARSE_STRING__( kfjson, args );
+        __JSON_PARSE_STRING__( kfjson, pass_back_data );
 
-        auto luafile = __JSON_GET_STRING__( kfjson, __STRING__( luafile ) );
-        auto luafunction = __JSON_GET_STRING__( kfjson, __STRING__( luafunction ) );
-        if ( luafile.empty() || luafunction.empty() )
+        auto lua_file = __JSON_GET_STRING__( kfjson, __STRING__( lua_file ) );
+        auto lua_function = __JSON_GET_STRING__( kfjson, __STRING__( luafunction ) );
+        if ( lua_file.empty() || lua_function.empty() )
         {
             return;
         }
 
-        auto objectid = __JSON_GET_UINT64__( kfjson, __STRING__( playerid ) );
-        Call( luafile, luafunction, objectid, senddata, recvdata );
+        auto object_id = __JSON_GET_UINT64__( kfjson, __STRING__( playerid ) );
+        Call( lua_file, lua_function, object_id, send_data, recv_data );
     }
 
-    const char* KFLuaModule::LuaGetConstantString( const char* name, uint32 logicid )
+    const char* KFLuaModule::LuaGetConstantString( const char* name, uint32 logic_id )
     {
-        auto& strvalue = KFGlobal::Instance()->GetString( name, logicid );
-        return strvalue.c_str();
+        auto& value = KFGlobal::Instance()->GetString( name, logic_id );
+        return value.c_str();
     }
 
-    uint32 KFLuaModule::LuaGetConstantUInt32( const char* name, uint32 logicid )
+    uint32 KFLuaModule::LuaGetConstantUInt32( const char* name, uint32 logic_id )
     {
-        return KFGlobal::Instance()->GetUInt32( name, logicid );
+        return KFGlobal::Instance()->GetUInt32( name, logic_id );
     }
 }

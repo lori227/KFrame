@@ -10,10 +10,10 @@ namespace KFrame
 	class KFLeaveSetting : public KFIntSetting
 	{
 	public:
-		// lua½Å±¾
+		// luaï¿½Å±ï¿½
 		std::string _lua_file;
 
-		// µ÷ÓÃº¯Êý
+		// ï¿½ï¿½ï¿½Ãºï¿½ï¿½ï¿½
 		std::string _lua_function;
 
 	};
@@ -33,7 +33,7 @@ namespace KFrame
 	protected:
 		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFLeaveSetting> setting )
 		{
-			setting->_lua_file = xml_node.ReadString( "luafile", true );
+			setting->_lua_file = xml_node.ReadString( "lua_file", true );
 			setting->_lua_function = xml_node.ReadString( "luafunction", true );
 		}
 

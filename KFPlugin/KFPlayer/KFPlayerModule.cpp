@@ -17,17 +17,17 @@ namespace KFrame
         __REGISTER_FIND_ENTITY__( KFMessageEnum::Player, &KFPlayerModule::FindPlayer );
 
         // 注册逻辑函数
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
-        _kf_component->RegisterEntityInitializeFunction( this, &KFPlayerModule::InitPlayer );
-        _kf_component->RegisterEntityRemoveFunction( this, &KFPlayerModule::UnInitPlayer );
-        _kf_component->RegisterEntityRunFunction( this, &KFPlayerModule::RunPlayer );
-        _kf_component->RegisterEntityAfterRunFunction( this, &KFPlayerModule::AfterRunPlayer );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component->RegisterEntityInitializeFunction( this, &KFPlayerModule::InitPlayer );
+        _component->RegisterEntityRemoveFunction( this, &KFPlayerModule::UnInitPlayer );
+        _component->RegisterEntityRunFunction( this, &KFPlayerModule::RunPlayer );
+        _component->RegisterEntityAfterRunFunction( this, &KFPlayerModule::AfterRunPlayer );
 
         // 注册更新函数
-        _kf_component->RegisterSyncAddFunction( this, &KFPlayerModule::SendAddDataToClient );
-        _kf_component->RegisterSyncRemoveFunction( this, &KFPlayerModule::SendRemoveDataToClient );
-        _kf_component->RegisterSyncUpdateFunction( this, &KFPlayerModule::SendUpdateDataToClient );
-        _kf_component->RegisterShowElementFunction( this, &KFPlayerModule::SendElementToClient );
+        _component->RegisterSyncAddFunction( this, &KFPlayerModule::SendAddDataToClient );
+        _component->RegisterSyncRemoveFunction( this, &KFPlayerModule::SendRemoveDataToClient );
+        _component->RegisterSyncUpdateFunction( this, &KFPlayerModule::SendUpdateDataToClient );
+        _component->RegisterShowElementFunction( this, &KFPlayerModule::SendElementToClient );
 
         __REGISTER_UPDATE_STRING_2__( __STRING__( basic ), __STRING__( name ), &KFPlayerModule::OnUpdateNameCallBack );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,16 +54,16 @@ namespace KFrame
         __UN_FIND_ENTITY__( KFMessageEnum::Player );
 
         // 卸载逻辑函数
-        _kf_component->UnRegisterEntityInitializeFunction();
-        _kf_component->UnRegisterEntityRemoveFunction();
-        _kf_component->UnRegisterEntityRunFunction();
-        _kf_component->UnRegisterEntityAfterRunFunction();
+        _component->UnRegisterEntityInitializeFunction();
+        _component->UnRegisterEntityRemoveFunction();
+        _component->UnRegisterEntityRunFunction();
+        _component->UnRegisterEntityAfterRunFunction();
 
         // 卸载更新函数
-        _kf_component->UnRegisterSyncAddFunction();
-        _kf_component->UnRegisterSyncRemoveFunction();
-        _kf_component->UnRegisterSyncUpdateFunction();
-        _kf_component->UnRegisterShowElementFunction();
+        _component->UnRegisterSyncAddFunction();
+        _component->UnRegisterSyncRemoveFunction();
+        _component->UnRegisterSyncUpdateFunction();
+        _component->UnRegisterShowElementFunction();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_UPDATE_STRING_2__( __STRING__( basic ), __STRING__( name ) );
         // 取消注册command函数
@@ -206,25 +206,25 @@ namespace KFrame
     void KFPlayerModule::RemovePlayer()
     {
         std::list< EntityPtr > playerlist;
-        for ( auto player = _kf_component->FirstEntity(); player != nullptr; player = _kf_component->NextEntity() )
+        for ( auto player = _component->FirstEntity(); player != nullptr; player = _component->NextEntity() )
         {
             playerlist.push_back( player );
         }
 
         for ( auto player : playerlist )
         {
-            _kf_component->RemoveEntity( player );
+            _component->RemoveEntity( player );
         }
     }
 
     void KFPlayerModule::RemovePlayer( uint64 player_id )
     {
-        _kf_component->RemoveEntity( player_id );
+        _component->RemoveEntity( player_id );
     }
 
     void KFPlayerModule::RemovePlayer( EntityPtr player )
     {
-        _kf_component->RemoveEntity( player );
+        _component->RemoveEntity( player );
     }
 
     bool KFPlayerModule::SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
@@ -255,10 +255,10 @@ namespace KFrame
 
     void KFPlayerModule::UnInitPlayer( EntityPtr player )
     {
-        auto kfbasic = player->Find( __STRING__( basic ) );
-        kfbasic->Set( __STRING__( server_id ), 0 );
-        kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::OfflineStatus );
-        kfbasic->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
+        auto basic_data = player->Find( __STRING__( basic ) );
+        basic_data->Set( __STRING__( server_id ), 0 );
+        basic_data->Set( __STRING__( status ), ( uint32 )KFMsg::OfflineStatus );
+        basic_data->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
 
         // 调用函数, 处理离开游戏的一些事务逻辑
         for ( auto& iter : _player_leave_function._objects )
@@ -297,13 +297,13 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     EntityPtr KFPlayerModule::FindPlayer( uint64 player_id )
     {
-        return _kf_component->FindEntity( player_id );
+        return _component->FindEntity( player_id );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     EntityPtr KFPlayerModule::Login( const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* player_data )
     {
-        auto player = _kf_component->CreateEntity( pblogin->playerid(), player_data );
+        auto player = _component->CreateEntity( pblogin->playerid(), player_data );
         if ( player == nullptr )
         {
             return nullptr;
@@ -319,10 +319,10 @@ namespace KFrame
         player->Set( __STRING__( account ), pblogin->account() );
         player->Set( __STRING__( accountid ), pblogin->account_id() );
 
-        auto kfbasic = player->Find( __STRING__( basic ) );
-        kfbasic->Set( __STRING__( status ), ( uint32 )KFMsg::OnlineStatus );
-        kfbasic->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
-        kfbasic->Set( __STRING__( server_id ), KFGlobal::Instance()->_app_id->GetId() );
+        auto basic_data = player->Find( __STRING__( basic ) );
+        basic_data->Set( __STRING__( status ), ( uint32 )KFMsg::OnlineStatus );
+        basic_data->Set( __STRING__( statustime ), KFGlobal::Instance()->_real_time );
+        basic_data->Set( __STRING__( server_id ), KFGlobal::Instance()->_app_id->GetId() );
 
         // 渠道数据
         auto pbchanneldata = &pblogin->channel_data();

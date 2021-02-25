@@ -75,7 +75,7 @@ namespace KFrame
         __KF_MESSAGE_FUNCTION__( HandleQueryAttributeToGameAck, KFMsg::S2SQueryAttributeToGameAck );
     private:
         // 组件
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
 
         // 是否需要重置在线数据
         bool _need_refresh_online = true;

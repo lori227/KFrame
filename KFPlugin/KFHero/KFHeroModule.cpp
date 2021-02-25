@@ -5,7 +5,7 @@ namespace KFrame
 {
     void KFHeroModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_DATA_1__( __STRING__( hero ), &KFHeroModule::OnAddHeroCallBack );
         __REGISTER_REMOVE_DATA_1__( __STRING__( hero ), &KFHeroModule::OnRemoveHeroCallBack );
         __REGISTER_ADD_ELEMENT__( __STRING__( hero ), &KFHeroModule::AddHeroElement );

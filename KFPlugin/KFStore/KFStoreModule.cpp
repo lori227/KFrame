@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFStoreModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         //////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMessageEnum::Player, KFMsg::MSG_STORE_BUY_GOODS_REQ, &KFStoreModule::HandleStoreBuyGoodsReq );
     }

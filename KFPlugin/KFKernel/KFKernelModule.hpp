@@ -63,7 +63,7 @@ namespace KFrame
 
     private:
         // 组件列表
-        KFHashMap<std::string, KFComponentEx> _kf_component;
+        KFHashMap<std::string, KFComponentEx> _component;
     };
 }
 

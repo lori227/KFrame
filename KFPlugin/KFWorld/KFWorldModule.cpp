@@ -51,25 +51,25 @@ namespace KFrame
     {
         for ( auto i = 0; i < kfmsg->gateid_size(); ++i )
         {
-            auto gateid = kfmsg->gateid( i );
-            auto kfconhash = _gate_conhash.Create( gateid );
-            kfconhash->AddHashNode( __STRING__( game ), kfmsg->gameid(), 50 );
+            auto gate_id = kfmsg->gateid( i );
+            auto hash_data = _gate_hash.Create( gate_id );
+            hash_data->AddHashNode( __STRING__( game ), kfmsg->game_id(), 50 );
 
-            __LOG_INFO__( "add gate=[{}] game=[{}]", KFAppId::ToString( gateid ), KFAppId::ToString( kfmsg->gameid() ) );
+            __LOG_INFO__( "add gate=[{}] game=[{}]", KFAppId::ToString( gate_id ), KFAppId::ToString( kfmsg->game_id() ) );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleRemoveGateToWorldReq, KFMsg::S2SRemoveGateToWorldReq )
     {
-        auto kfconhash = _gate_conhash.Find( kfmsg->gateid() );
-        if ( kfconhash == nullptr )
+        auto hash_data = _gate_hash.Find( kfmsg->gateid() );
+        if ( hash_data == nullptr )
         {
             return;
         }
 
-        kfconhash->RemoveHashNode( kfmsg->gameid() );
+        hash_data->RemoveHashNode( kfmsg->game_id() );
 
-        __LOG_ERROR__( "remove gate=[{}] game=[{}]", KFAppId::ToString( kfmsg->gateid() ), KFAppId::ToString( kfmsg->gameid() ) );
+        __LOG_ERROR__( "remove gate=[{}] game=[{}]", KFAppId::ToString( kfmsg->gateid() ), KFAppId::ToString( kfmsg->game_id() ) );
     }
 
     __KF_NET_EVENT_FUNCTION__( KFWorldModule::OnServerLostGame )
@@ -80,10 +80,10 @@ namespace KFrame
         }
 
         // 删除节点
-        for ( auto& iter : _gate_conhash._objects )
+        for ( auto& iter : _gate_hash._objects )
         {
-            auto kfconhash = iter.second;
-            auto ok = kfconhash->RemoveHashNode( net_data->_id );
+            auto hash_data = iter.second;
+            auto ok = hash_data->RemoveHashNode( net_data->_id );
             if ( ok )
             {
                 __LOG_ERROR__( "remove gate=[{}] game=[{}]", KFAppId::ToString( iter.first ), KFAppId::ToString( net_data->_id ) );
@@ -91,52 +91,52 @@ namespace KFrame
         }
     }
 
-    uint64 KFWorldModule::FindLoginGame( uint64 gateid, uint64 player_id )
+    uint64 KFWorldModule::FindLoginGame( uint64 gate_id, uint64 player_id )
     {
-        auto kfconhash = _gate_conhash.Find( gateid );
-        if ( kfconhash == nullptr )
+        auto hash_data = _gate_hash.Find( gate_id );
+        if ( hash_data == nullptr )
         {
             return _invalid_int;
         }
 
-        return kfconhash->FindHashNode( player_id );
+        return hash_data->FindHashNode( player_id );
     }
     //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleLoginToWorldReq, KFMsg::S2SLoginToWorldReq )
     {
-        auto loginid = __ROUTE_SERVER_ID__;
-        auto pblogin = &kfmsg->pblogin();
-        __LOG_DEBUG__( "player[{}:{}:{}] login world req", pblogin->account(), pblogin->account_id(), pblogin->playerid() );
+        auto login_id = __ROUTE_SERVER_ID__;
+        auto login_data = &kfmsg->pblogin();
+        __LOG_DEBUG__( "player[{}:{}:{}] login world req", login_data->account(), login_data->accountid(), login_data->playerid() );
 
         // 踢掉已经在线的玩家
-        KickOnlineToGame( KFMsg::KickByLogin, pblogin->playerid(), _invalid_int, __FUNC_LINE__ );
+        KickOnlineToGame( KFMsg::KickByLogin, login_data->playerid(), _invalid_int, __FUNC_LINE__ );
 
         // 选择Game服务器
-        auto gameid = FindLoginGame( pblogin->gateid(), pblogin->playerid() );
-        if ( gameid == _invalid_int )
+        auto game_id = FindLoginGame( login_data->gateid(), login_data->playerid() );
+        if ( game_id == _invalid_int )
         {
-            return SendLoginAckToLogin( KFMsg::LoginNoGameServer, loginid, pblogin->gateid(), pblogin->account_id(), pblogin->sessionid() );
+            return SendLoginAckToLogin( KFMsg::LoginNoGameServer, login_id, login_data->gateid(), login_data->accountid(), login_data->sessionid() );
         }
 
         // 登录请求到game服务器
         KFMsg::S2SLoginToGameReq req;
-        req.mutable_pblogin()->CopyFrom( *pblogin );
-        auto ok = _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_LOGIN_TO_GAME_REQ, &req );
+        req.mutable_pblogin()->CopyFrom( *login_data );
+        auto ok = _kf_tcp_server->SendNetMessage( game_id, KFMsg::S2S_LOGIN_TO_GAME_REQ, &req );
         if ( !ok )
         {
-            __LOG_ERROR__( "player[{}:{}] login game failed", pblogin->account_id(), pblogin->playerid() );
-            SendLoginAckToLogin( KFMsg::LoginGameServerBusy, loginid, pblogin->gateid(), pblogin->account_id(), pblogin->sessionid() );
+            __LOG_ERROR__( "player[{}:{}] login game failed", login_data->accountid(), login_data->playerid() );
+            SendLoginAckToLogin( KFMsg::LoginGameServerBusy, login_id, login_data->gateid(), login_data->accountid(), login_data->sessionid() );
         }
     }
 
-    void KFWorldModule::SendLoginAckToLogin( uint32 result, uint64 loginid, uint64 gateid, uint64 account_id, uint64 sessionid )
+    void KFWorldModule::SendLoginAckToLogin( uint32 result, uint64 login_id, uint64 gate_id, uint64 account_id, uint64 sessionid )
     {
         KFMsg::S2SLoginToLoginAck ack;
         ack.set_result( result );
-        ack.set_gateid( gateid );
+        ack.set_gateid( gate_id );
         ack.set_accountid( account_id );
         ack.set_sessionid( sessionid );
-        auto ok = _kf_tcp_server->SendNetMessage( loginid, KFMsg::S2S_LOGIN_TO_LOGIN_ACK, &ack );
+        auto ok = _kf_tcp_server->SendNetMessage( login_id, KFMsg::S2S_LOGIN_TO_LOGIN_ACK, &ack );
         if ( !ok )
         {
             __LOG_ERROR__( "player[{}] world verify result[{}] failed", account_id, result );
@@ -145,15 +145,15 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerEnterToWorldReq, KFMsg::S2SPlayerEnterToWorldReq )
     {
-        UpdatePlayerOnline( kfmsg->account_id(), kfmsg->playerid(), KFGlobal::Instance()->_app_id->GetId(), __ROUTE_SERVER_ID__ );
+        UpdatePlayerOnline( kfmsg->accountid(), kfmsg->playerid(), KFGlobal::Instance()->_app_id->GetId(), __ROUTE_SERVER_ID__ );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandlePlayerLeaveToWorldReq, KFMsg::S2SPlayerLeaveToWorldReq )
     {
-        UpdatePlayerOnline( kfmsg->account_id(), kfmsg->playerid(), _invalid_int, _invalid_int );
+        UpdatePlayerOnline( kfmsg->accountid(), kfmsg->playerid(), _invalid_int, _invalid_int );
     }
 
-    void KFWorldModule::UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 world_id, uint64 gameid )
+    void KFWorldModule::UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 world_id, uint64 game_id )
     {
         static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( online );
 
@@ -161,20 +161,20 @@ namespace KFrame
         __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), account_id );
         __JSON_SET_VALUE__( sendjson, __STRING__( playerid ), player_id );
         __JSON_SET_VALUE__( sendjson, __STRING__( world ), world_id );
-        __JSON_SET_VALUE__( sendjson, __STRING__( game ), gameid );
+        __JSON_SET_VALUE__( sendjson, __STRING__( game ), game_id );
         _kf_http_client->MTGet<KFWorldModule>( _url, sendjson );
     }
 
-    void KFWorldModule::KickOnlineToGame( uint32 type, uint64 player_id, uint64 gameid, const char* function, uint32 line )
+    void KFWorldModule::KickOnlineToGame( uint32 type, uint64 player_id, uint64 game_id, const char* function, uint32 line )
     {
         __LOG_INFO_FUNCTION__( function, line, "kick=[{}] player=[{}]", type, player_id );
 
         KFMsg::S2SKickPlayerToGameReq req;
         req.set_type( type );
         req.set_playerid( player_id );
-        if ( gameid != _invalid_int )
+        if ( game_id != _invalid_int )
         {
-            _kf_tcp_server->SendNetMessage( gameid, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &req );
+            _kf_tcp_server->SendNetMessage( game_id, KFMsg::S2S_KICK_PLAYER_TO_GAME_REQ, &req );
         }
         else
         {
@@ -187,19 +187,19 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         auto type = __JSON_GET_UINT32__( request, __STRING__( type ) );
-        auto gameid = __JSON_GET_UINT64__( request, __STRING__( game ) );
+        auto game_id = __JSON_GET_UINT64__( request, __STRING__( game ) );
         auto player_id = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
-        KickOnlineToGame( type, player_id, gameid, __FUNC_LINE__ );
+        KickOnlineToGame( type, player_id, game_id, __FUNC_LINE__ );
         return _invalid_string;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
-    void KFWorldModule::BroadCastToGame( uint32 msg_id, const std::string& msgdata, uint32 serial, uint64 world_id )
+    void KFWorldModule::BroadCastToGame( uint32 msg_id, const std::string& msg_data, uint32 serial, uint64 world_id )
     {
         KFMsg::S2SBroadcastToGameAck ack;
         ack.set_msgid( msg_id );
-        ack.set_msgdata( msgdata );
+        ack.set_msgdata( msg_data );
         ack.set_serial( serial );
         ack.set_worldid( world_id );
         _kf_tcp_server->SendMessageToType( __STRING__( game ), KFMsg::S2S_BROADCAST_TO_GAME_ACK, &ack );
@@ -207,16 +207,16 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastToGameReq, KFMsg::S2SBroadcastToGameReq )
     {
-        BroadCastToGame( kfmsg->msg_id(), kfmsg->msgdata(), ++_broadcast_serial, KFGlobal::Instance()->_app_id->GetId() );
+        BroadCastToGame( kfmsg->msgid(), kfmsg->msgdata(), ++_broadcast_serial, KFGlobal::Instance()->_app_id->GetId() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastToWorldReq, KFMsg::S2SBroadcastToWorldReq )
     {
-        BroadCastToGame( kfmsg->msg_id(), kfmsg->msgdata(), ++_broadcast_serial, KFGlobal::Instance()->_app_id->GetId() );
+        BroadCastToGame( kfmsg->msgid(), kfmsg->msgdata(), ++_broadcast_serial, KFGlobal::Instance()->_app_id->GetId() );
 
         // 广播给其他world
         KFMsg::S2SBroadcastToWorldAck ack;
-        ack.set_msgid( kfmsg->msg_id() );
+        ack.set_msgid( kfmsg->msgid() );
         ack.set_msgdata( kfmsg->msgdata() );
         ack.set_serial( _broadcast_serial );
         ack.set_worldid( KFGlobal::Instance()->_app_id->GetId() );
@@ -225,6 +225,6 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFWorldModule::HandleBroadcastToWorldAck, KFMsg::S2SBroadcastToWorldAck )
     {
-        BroadCastToGame( kfmsg->msg_id(), kfmsg->msgdata(), kfmsg->serial(), kfmsg->world_id() );
+        BroadCastToGame( kfmsg->msgid(), kfmsg->msgdata(), kfmsg->serial(), kfmsg->worldid() );
     }
 }

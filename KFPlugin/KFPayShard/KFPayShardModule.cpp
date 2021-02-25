@@ -34,16 +34,16 @@ namespace KFrame
         __JSON_PARSE_STRING__( request, data );
 
         auto order = __JSON_GET_STRING__( request, __STRING__( payorder ) );
-        auto payid = __JSON_GET_STRING__( request, __STRING__( payid ) );
+        auto pay_id = __JSON_GET_STRING__( request, __STRING__( payid ) );
         auto player_id = __JSON_GET_UINT64__( request, __STRING__( playerid ) );
-        if ( player_id == _invalid_int || payid.empty() || order.empty() )
+        if ( player_id == _invalid_int || pay_id.empty() || order.empty() )
         {
             return _kf_http_server->SendCode( KFMsg::PayDataError );
         }
 
         // 订单保存时间( 1个月 )
         static auto _order_expire_time = 3600 * 24 * 30;
-        auto orderkey = __FORMAT__( "{}:{}", __STRING__( payorder ), order );
+        auto order_key_name = __FORMAT__( "{}:{}", __STRING__( payorder ), order );
 
         // 保存到数据库
         auto redis_driver = __PAY_REDIS_DRIVER__;
@@ -54,10 +54,10 @@ namespace KFrame
         // 保存订单信息
         StringMap values;
         __JSON_TO_MAP__( request, values );
-        redis_driver->Append( values, "hmset {}", orderkey );
-        redis_driver->Append( "expire {} {}", orderkey, _order_expire_time );
-        auto kfresult = redis_driver->Pipeline();
-        if ( kfresult->IsOk() )
+        redis_driver->Append( values, "hmset {}", order_key_name );
+        redis_driver->Append( "expire {} {}", order_key_name, _order_expire_time );
+        auto result = redis_driver->Pipeline();
+        if ( result->IsOk() )
         {
             __JSON_SET_VALUE__( response, __STRING__( payid ), payid );
             __JSON_SET_VALUE__( response, __STRING__( payorder ), order );

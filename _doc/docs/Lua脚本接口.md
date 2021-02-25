@@ -259,11 +259,11 @@
 	参数: 
 	url : http访问地址
 	data : 发送的数据
-	args : 回调参数( json格式, 需要playerid,luafile, luafunction, 如没有luafile和luafunction则不会执行回调 )
+	args : 回调参数( json格式, 需要playerid,lua_file, luafunction, 如没有luafile和luafunction则不会执行回调 )
 		  不需要回调直接传入空字串
 		
 	用例 : 
-	local args = {"playerid":1001,"luafile":"../script/game/test.lua","luafunction":"testfunction"}
+	local args = {"playerid":1001,"lua_file":"../script/game/test.lua","luafunction":"testfunction"}
 	KFrame:MTHttpGet( "http://127.0.0.1/test", "test", args )
 
 ### LuaMTPost
@@ -273,11 +273,11 @@
 	参数: 
 	url : http访问地址
 	data : 发送的数据
-	args : 回调参数( json格式, 需要playerid,luafile, luafunction,如没有luafile和luafunction则不会执行回调 )
+	args : 回调参数( json格式, 需要playerid,lua_file, luafunction,如没有luafile和luafunction则不会执行回调 )
 		  不需要回调直接传入空字串
 
 	用例 : 
-	local args = {"playerid":1001,"luafile":"../script/game/test.lua","luafunction":"testfunction"}
+	local args = {"playerid":1001,"lua_file":"../script/game/test.lua","luafunction":"testfunction"}
 	KFrame:LuaMTPost( "http://127.0.0.1/test", "test", args )
 
 ### GetOptionString

@@ -57,7 +57,7 @@ namespace KFrame
         _kf_route->RepeatToEntity( 0u, server_id, player_id, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
-    void KFDisplayModule::SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params )
+    void KFDisplayModule::SendToPlayer( DataPtr basic_data, uint32 result, StringList& params )
     {
         if ( _kf_game == nullptr )
         {
@@ -65,7 +65,7 @@ namespace KFrame
         }
 
         __DISPLAY_MESSAGE__();
-        _kf_game->SendToPlayer( 0u, kfbasic, KFMsg::MSG_RESULT_DISPLAY, &display );
+        _kf_game->SendToPlayer( 0u, basic_data, KFMsg::MSG_RESULT_DISPLAY, &display );
     }
 
     void KFDisplayModule::SendToPlayer( const Route& route, uint32 result, StringList& params )

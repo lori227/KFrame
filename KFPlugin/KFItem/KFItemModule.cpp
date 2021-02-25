@@ -35,7 +35,7 @@ namespace KFrame
 
     void KFItemModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_GET_CONFIG_VALUE__( __STRING__( item ), &KFItemModule::GetItemTotalCount );
         __REGISTER_ADD_DATA_1__( __STRING__( item ), &KFItemModule::OnAddItemCallBack );
         __REGISTER_UPDATE_DATA_2__( __STRING__( item ), __STRING__( count ), &KFItemModule::OnItemCountUpdateCallBack );

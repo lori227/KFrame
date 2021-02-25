@@ -33,7 +33,7 @@ namespace KFrame
         virtual void DelayToClient( EntityPtr player, uint32 result, StringList& params );
 
         // Route ==> Player
-        virtual void SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params );
+        virtual void SendToPlayer( DataPtr basic_data, uint32 result, StringList& params );
         virtual void SendToPlayer( const Route& route, uint32 result, StringList& params );
         virtual void SendToPlayer( uint64 server_id, uint64 player_id, uint32 result, StringList& params );
 

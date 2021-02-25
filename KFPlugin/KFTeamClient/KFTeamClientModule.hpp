@@ -95,7 +95,7 @@ namespace KFrame
         void SendTeamInviteToTarget( EntityPtr player, DataPtr kfteam, uint64 server_id, uint64 player_id );
     private:
         // 玩家组件
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
     };
 }
 

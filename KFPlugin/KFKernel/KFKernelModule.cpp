@@ -14,7 +14,7 @@ namespace KFrame
         KFDataFactory::Instance()->RunAutoDestroyData();
 
         // 组件上下文逻辑
-        for ( auto& iter : _kf_component._objects )
+        for ( auto& iter : _component._objects )
         {
             iter.second->Run();
         }
@@ -22,7 +22,7 @@ namespace KFrame
 
     void KFKernelModule::AfterRun()
     {
-        for ( auto& iter : _kf_component._objects )
+        for ( auto& iter : _component._objects )
         {
             iter.second->AfterRun();
         }
@@ -32,10 +32,10 @@ namespace KFrame
     static std::string _global_class = "Global";
     std::shared_ptr<KFComponent> KFKernelModule::FindComponent( const std::string& data_name )
     {
-        auto component = _kf_component.Find( data_name );
+        auto component = _component.Find( data_name );
         if ( component == nullptr )
         {
-            component = _kf_component.Create( data_name );
+            component = _component.Create( data_name );
             component->_name = data_name;
             component->_data_setting = KFDataConfig::Instance()->FindDataSetting( _global_class, data_name );
         }

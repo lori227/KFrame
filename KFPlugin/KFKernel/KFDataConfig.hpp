@@ -176,7 +176,7 @@ namespace KFrame
             data_setting->_key_name = xml_node.ReadString( "keyname", true );
             data_setting->_config_key_name = xml_node.ReadString( "configkeyname", true );
             data_setting->_value_key_name = xml_node.ReadString( "valuekeyname", true );
-            data_setting->_lua_file = xml_node.ReadString( "luafile", true );
+            data_setting->_lua_file = xml_node.ReadString( "lua_file", true );
             data_setting->_add_function = xml_node.ReadString( "addfunction", true );
             data_setting->_update_function = xml_node.ReadString( "updatefunction", true );
             data_setting->_remove_function = xml_node.ReadString( "removefunction", true );

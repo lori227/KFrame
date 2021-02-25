@@ -6,14 +6,14 @@ namespace KFrame
     {
         _kf_route->RegisterConnectionFunction( this, &KFTeamShardModule::OnRouteConnectCluster );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_component = _kf_kernel->FindComponent( __STRING__( team ) );
-        _kf_component->RegisterEntityInitializeFunction( this, &KFTeamShardModule::InitTeam );
-        _kf_component->RegisterEntityRemoveFunction( this, &KFTeamShardModule::UnInitTeam );
+        _component = _kf_kernel->FindComponent( __STRING__( team ) );
+        _component->RegisterEntityInitializeFunction( this, &KFTeamShardModule::InitTeam );
+        _component->RegisterEntityRemoveFunction( this, &KFTeamShardModule::UnInitTeam );
 
         // 注册更新函数
-        _kf_component->RegisterSyncAddFunction( this, &KFTeamShardModule::SendTeamAddDataToMember );
-        _kf_component->RegisterSyncRemoveFunction( this, &KFTeamShardModule::SendTeamRemoveDataToMember );
-        _kf_component->RegisterSyncUpdateFunction( this, &KFTeamShardModule::SendTeamUpdateDataToMember );
+        _component->RegisterSyncAddFunction( this, &KFTeamShardModule::SendTeamAddDataToMember );
+        _component->RegisterSyncRemoveFunction( this, &KFTeamShardModule::SendTeamRemoveDataToMember );
+        _component->RegisterSyncUpdateFunction( this, &KFTeamShardModule::SendTeamUpdateDataToMember );
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __REGISTER_MESSAGE__( KFMessageEnum::Normal, KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, &KFTeamShardModule::HandleTeamCreateToTeamReq );
@@ -32,12 +32,12 @@ namespace KFrame
     {
         _kf_route->UnRegisterConnectionFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        _kf_component->UnRegisterEntityInitializeFunction();
-        _kf_component->UnRegisterEntityRemoveFunction();
+        _component->UnRegisterEntityInitializeFunction();
+        _component->UnRegisterEntityRemoveFunction();
 
-        _kf_component->UnRegisterSyncAddFunction();
-        _kf_component->UnRegisterSyncRemoveFunction();
-        _kf_component->UnRegisterSyncUpdateFunction();
+        _component->UnRegisterSyncAddFunction();
+        _component->UnRegisterSyncRemoveFunction();
+        _component->UnRegisterSyncUpdateFunction();
         //////////////////////////////////////////////////////////////////////////////////////////////////
         __UN_MESSAGE__( KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ );
         __UN_MESSAGE__( KFMsg::S2S_TEAM_JION_FAILED_TO_TEAM_REQ );
@@ -54,7 +54,7 @@ namespace KFrame
     void KFTeamShardModule::OnRouteConnectCluster( uint64 server_id )
     {
         RouteObjectList teamlist;
-        for ( auto kfteam = _kf_component->FirstEntity(); kfteam != nullptr; kfteam = _kf_component->NextEntity() )
+        for ( auto kfteam = _component->FirstEntity(); kfteam != nullptr; kfteam = _component->NextEntity() )
         {
             teamlist.insert( kfteam->GetKeyID() );
         }
@@ -122,7 +122,7 @@ namespace KFrame
 
         // 直接创建队伍, 如果玩家有队伍, 在加入队伍时game上处理失败情况
         auto teamuuid = KFGlobal::Instance()->STMakeUuid( __STRING__( team ) );
-        auto kfteam = _kf_component->CreateEntity( teamuuid );
+        auto kfteam = _component->CreateEntity( teamuuid );
 
         kfteam->Set( __STRING__( configid ), kfmsg->id() );
         kfteam->Set( __STRING__( name ), kfmsg->name() );
@@ -182,7 +182,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamJoinFailedToTeamReq, KFMsg::S2STeamJoinFailedToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return;
@@ -199,7 +199,7 @@ namespace KFrame
         if ( kfmemberrecord->Size() == 0u )
         {
             // 已经没有队员了, 删除队伍
-            _kf_component->RemoveEntity( kfteam );
+            _component->RemoveEntity( kfteam );
         }
         else
         {
@@ -217,7 +217,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamOnlineQueryToTeamReq, KFMsg::S2STeamOnlineQueryToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return;
@@ -239,7 +239,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamIntValueToTeamReq, KFMsg::S2STeamIntValueToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return;
@@ -259,7 +259,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamStrValueToTeamReq, KFMsg::S2STeamStrValueToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return;
@@ -279,7 +279,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamMemberIntValueToTeamReq, KFMsg::S2STeamMemberIntValueToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return;
@@ -309,7 +309,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamMemberStrValueToTeamReq, KFMsg::S2STeamMemberStrValueToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return;
@@ -329,7 +329,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamLeaveToTeamReq, KFMsg::S2STeamLeaveToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return;
@@ -347,7 +347,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamKickToTeamReq, KFMsg::S2STeamKickToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return;
@@ -379,7 +379,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamAgreeToTeamReq, KFMsg::S2STeamAgreeToTeamReq )
     {
-        auto kfteam = _kf_component->FindEntity( kfmsg->teamid() );
+        auto kfteam = _component->FindEntity( kfmsg->teamid() );
         if ( kfteam == nullptr )
         {
             return _kf_display->SendToPlayer( route, KFMsg::TeamNotExist );

@@ -61,7 +61,7 @@ namespace KFrame
         __KF_HTTP_CALL_BACK_FUNCTION__( OnHttpQueryPayCallBack );
 
         // 初始充值逻辑
-        void ProcessPay( EntityPtr player, const std::string& payid, const std::string& order );
+        void ProcessPay( EntityPtr player, const std::string& pay_id, const std::string& order );
     };
 
 }

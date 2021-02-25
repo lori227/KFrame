@@ -65,7 +65,7 @@ namespace KFrame
         // 角色id
         uint64 _player_id = 0u;
         EntityPtr _player = nullptr;
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
 
     private:
         // 客户端引擎

@@ -65,23 +65,23 @@ namespace KFrame
 
     protected:
         // 发送验证结果消息
-        void SendLoginAckToLogin( uint32 result, uint64 loginid, uint64 gateid, uint64 account_id, uint64 sessionid );
+        void SendLoginAckToLogin( uint32 result, uint64 login_id, uint64 gate_id, uint64 account_id, uint64 session_id );
 
         // 踢掉在线玩家
-        void KickOnlineToGame( uint32 type, uint64 player_id, uint64 gameid, const char* function, uint32 line );
+        void KickOnlineToGame( uint32 type, uint64 player_id, uint64 game_id, const char* function, uint32 line );
 
         // 查找一个可以用的game
-        uint64 FindLoginGame( uint64 gateid, uint64 player_id );
+        uint64 FindLoginGame( uint64 gate_id, uint64 player_id );
 
         // 广播消息
-        void BroadCastToGame( uint32 msg_id, const std::string& msgdata, uint32 serial, uint64 world_id );
+        void BroadCastToGame( uint32 msg_id, const std::string& msg_data, uint32 serial, uint64 world_id );
 
         // 更新玩家在线信息
-        void UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 world_id, uint64 gameid );
+        void UpdatePlayerOnline( uint64 account_id, uint64 player_id, uint64 world_id, uint64 game_id );
 
     private:
         // 游戏服务列表
-        KFHashMap< uint64, KFHash > _gate_conhash;
+        KFHashMap<uint64, KFHash> _gate_hash;
 
         // 广播的序号
         uint32 _broadcast_serial = 0u;

@@ -82,7 +82,7 @@ namespace KFrame
 #endif
     private:
         // 玩家组件上下文
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
 
         // 掉落逻辑函数
         KFMapModuleFunction<std::string, KFDropLogicFunction> _drop_logic_function;

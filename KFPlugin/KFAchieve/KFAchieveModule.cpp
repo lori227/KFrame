@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFAchieveModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
 
         __REGISTER_ADD_DATA__( &KFAchieveModule::OnAddDataAchieveModule );
         __REGISTER_REMOVE_DATA__( &KFAchieveModule::OnRemoveDataAchieveModule );

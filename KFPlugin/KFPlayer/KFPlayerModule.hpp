@@ -144,7 +144,7 @@ namespace KFrame
 
     private:
         // 玩家组件
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
 
         // 更新函数
         KFMapFunction< std::string,  KFEntityFunction  > _player_run_function;

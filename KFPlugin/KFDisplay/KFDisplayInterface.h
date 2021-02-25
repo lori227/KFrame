@@ -10,7 +10,7 @@ namespace KFrame
     public:
         // 发送结果提示到客户端
         // Gate/Proxy ==> Client
-        template< class...Args >
+        template<class...Args>
         inline void SendToClient( uint64 player_id, uint32 result, Args&& ... args )
         {
             StringList params;
@@ -20,7 +20,7 @@ namespace KFrame
 
         // 发送结果提示到客户端
         // Game ==> Client
-        template< class...Args >
+        template<class...Args>
         inline void SendToClient( EntityPtr player, uint32 result, Args&& ... args )
         {
             StringList params;
@@ -30,7 +30,7 @@ namespace KFrame
 
         // 发送结果提示到客户端
         // Game ==> Client
-        template< class...Args >
+        template<class...Args>
         inline void DelayToClient( EntityPtr player, uint32 result, Args&& ... args )
         {
             StringList params;
@@ -40,7 +40,7 @@ namespace KFrame
 
         // 发送结果提示到客户端
         // Route ==> Player
-        template< class...Args >
+        template<class...Args>
         inline void SendToPlayer( uint64 server_id, uint64 player_id, uint32 result, Args&& ... args )
         {
             StringList params;
@@ -50,7 +50,7 @@ namespace KFrame
 
         // 发送结果提示到客户端
         // Route ==> Player
-        template< class...Args >
+        template<class...Args>
         inline void SendToPlayer( const Route& route, uint32 result, Args&& ... args )
         {
             StringList params;
@@ -60,17 +60,17 @@ namespace KFrame
 
         // 发送结果提示到客户端
         // Game ==> Player
-        template< class...Args >
-        inline void SendToPlayer( DataPtr kfbasic, uint32 result, Args&& ... args )
+        template<class...Args>
+        inline void SendToPlayer( DataPtr basic_data, uint32 result, Args&& ... args )
         {
             StringList params;
             FormatParam( params, std::forward< Args >( args )... );
-            SendToPlayer( kfbasic, result, params );
+            SendToPlayer( basic_data, result, params );
         }
 
         // 发送结果提示到客户端
         // Game ==> Client
-        template< class...Args >
+        template<class...Args>
         inline void SendToGroup( EntityPtr player, uint32 result, Args&& ... args )
         {
             StringList params;
@@ -101,10 +101,9 @@ namespace KFrame
         virtual void SendToGroup( EntityPtr player, uint32 result, StringList& params ) = 0;
 
         // Game ==> Route ==> Game
-        virtual void SendToPlayer( DataPtr kfbasic, uint32 result, StringList& params ) = 0;
-        virtual void SendToPlayer( uint64 server_id, uint64 player_id, uint32 result, StringList& params ) = 0;
+        virtual void SendToPlayer( DataPtr basic_data, uint32 result, StringList& params ) = 0;
         virtual void SendToPlayer( const Route& route, uint32 result, StringList& params ) = 0;
-
+        virtual void SendToPlayer( uint64 server_id, uint64 player_id, uint32 result, StringList& params ) = 0;
     };
 
 

@@ -40,15 +40,15 @@ namespace KFrame
 
         // 发送消息到Gate服务器
         virtual void SendToGate( uint32 msg_id, ::google::protobuf::Message* message );
-        virtual bool SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToGate( uint64 gate_id, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送消息到客户端
-        virtual bool SendToClient( uint64 gateid, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
+        virtual bool SendToClient( uint64 gate_id, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
         virtual bool SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay = 0u );
 
         // 发送到玩家
-        virtual bool SendToPlayer( uint64 sendid, DataPtr kfbasic, uint32 msg_id, ::google::protobuf::Message* message );
-        virtual bool SendToPlayer( uint64 sendid, uint64 server_id, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToPlayer( uint64 send_id, DataPtr basic_data, uint32 msg_id, ::google::protobuf::Message* message );
+        virtual bool SendToPlayer( uint64 send_id, uint64 server_id, uint64 player_id, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 广播消息到客户端
         virtual void BroadcastToGate( uint32 msg_id, ::google::protobuf::Message* message );
@@ -115,23 +115,23 @@ namespace KFrame
         __KF_PLAYER_LEAVE_FUNCTION__( OnLeaveGame );
 
         // 加载玩家数据
-        void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* pblogin, const KFMsg::PBObject* player_data );
+        void OnAfterLoadPlayerData( uint32 result, const KFMsg::PBLoginData* login_data, const KFMsg::PBObject* player_data );
 
         // 保存玩家
         void SavePlayer( EntityPtr player, uint32 save_flag );
 
         // 查询玩家数据
-        void OnAfterQueryPlayerData( uint32 result, uint64 player_id, const KFMsg::PBObject* playerdata );
+        void OnAfterQueryPlayerData( uint32 result, uint64 player_id, const KFMsg::PBObject* player_data );
 
         // 发送登陆失败消息
-        void SendLoginToGateAck( uint32 result, const KFMsg::PBLoginData* pblogin );
+        void SendLoginToGateAck( uint32 result, const KFMsg::PBLoginData* login_data );
     private:
         // 世界服务器id
         KFHash _world_hash;
         uint64 _world_server_id = _invalid_int;
 
         // 玩家组建
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
     };
 }
 

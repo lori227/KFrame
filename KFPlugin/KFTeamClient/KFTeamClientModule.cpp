@@ -6,7 +6,7 @@ namespace KFrame
 
     void KFTeamClientModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_UPDATE_DATA__( &KFTeamClientModule::OnTeamIntValueUpdate );
         __REGISTER_UPDATE_STRING__( &KFTeamClientModule::OnTeamStrValueUpdate );
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -180,12 +180,12 @@ namespace KFrame
 
     void KFTeamClientModule::EnterLeaveUpdateToTeam( EntityPtr player )
     {
-        auto kfbasic = player->Find( __STRING__( basic ) );
+        auto basic_data = player->Find( __STRING__( basic ) );
 
         StringUInt64 values;
-        values[ __STRING__( server_id ) ] = kfbasic->Get( __STRING__( server_id ) );
-        values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
-        values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );
+        values[ __STRING__( server_id ) ] = basic_data->Get( __STRING__( server_id ) );
+        values[ __STRING__( status ) ] = basic_data->Get( __STRING__( status ) );
+        values[ __STRING__( statustime ) ] = basic_data->Get( __STRING__( statustime ) );
         UpdateMemberIntValueToTeam( player, values );
     }
     ///////////////////////////////////////////////////////////////////////////////////////////

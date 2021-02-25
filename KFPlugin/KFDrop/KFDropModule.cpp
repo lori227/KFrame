@@ -6,7 +6,7 @@ namespace KFrame
 {
     void KFDropModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_ELEMENT__( __STRING__( drop ), &KFDropModule::AddDropElement );
         __REGISTER_DROP_LOGIC__( __STRING__( data ), &KFDropModule::OnDropDataElement );
         ////////////////////////////////////////////////////////////////////////////////////////////////////

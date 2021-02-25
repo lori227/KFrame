@@ -138,7 +138,7 @@ namespace KFrame
         uint32 MoveTabItem( EntityPtr player, const std::string& bagname, const std::string& tabname, uint64 itemuuid, uint32 targetindex );
     protected:
         // 玩家组件上下文
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
 
         // 保存玩家的背包格子信息
         typedef std::pair<uint64, std::string> ItemIndexKey;

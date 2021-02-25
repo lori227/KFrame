@@ -6,7 +6,7 @@ namespace KFrame
 
     void KFSkinModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_DATA_1__( __STRING__( skin ), &KFSkinModule::OnAddSkinCallBack );
         __REGISTER_REMOVE_DATA_1__( __STRING__( skin ), &KFSkinModule::OnRemoveSkinCallBack );
         __REGISTER_ADD_ELEMENT__( __STRING__( skin ), &KFSkinModule::AddSkinElement );

@@ -317,16 +317,16 @@ namespace KFrame
         // 发送者信息
         if ( sender != nullptr )
         {
-            auto kfbasic = sender->Find( __STRING__( basic ) );
+            auto basic_data = sender->Find( __STRING__( basic ) );
 
             // 发送者id
             _mail_data.insert( std::make_pair( __STRING__( sendid ), __TO_STRING__( sender->GetKeyID() ) ) );
 
             // 发送者名字
-            _mail_data.insert( std::make_pair( __STRING__( sendname ), kfbasic->Get< std::string >( __STRING__( name ) ) ) );
+            _mail_data.insert( std::make_pair( __STRING__( sendname ), basic_data->Get< std::string >( __STRING__( name ) ) ) );
 
             // 性别
-            _mail_data.insert( std::make_pair( __STRING__( sex ), __TO_STRING__( kfbasic->Get<uint32>( __STRING__( sex ) ) ) ) );
+            _mail_data.insert( std::make_pair( __STRING__( sex ), __TO_STRING__( basic_data->Get<uint32>( __STRING__( sex ) ) ) ) );
         }
 
         return _mail_data;

@@ -28,7 +28,7 @@ namespace KFrame
         {
             robot->_player_id = 0u;
             robot->_player = nullptr;
-            robot->_kf_component->RemoveEntity( robot->_player_id );
+            robot->_component->RemoveEntity( robot->_player_id );
         }
 
         // 发送登陆消息

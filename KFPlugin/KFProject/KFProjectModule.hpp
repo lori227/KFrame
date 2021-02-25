@@ -47,7 +47,7 @@ namespace KFrame
         const std::string& FormatRewardString( uint32 type, uint32 code, uint32 num );
 
         // 格式化编码字串
-        const std::string& ParseCodeString( const std::string& strparse );
+        const std::string& ParseCodeString( const std::string& str_parse );
 
     private:
         // 保存id和属性名的对应列表

@@ -4,7 +4,7 @@ namespace KFrame
 {
     void KFUnlockModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_ADD_DATA__( &KFUnlockModule::OnAddDataUnlockModule );
         __REGISTER_REMOVE_DATA__( &KFUnlockModule::OnRemoveDataUnlockModule );
         __REGISTER_UPDATE_DATA__( &KFUnlockModule::OnUpdateDataUnlockModule );

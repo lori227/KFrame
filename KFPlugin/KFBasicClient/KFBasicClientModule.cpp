@@ -6,7 +6,7 @@ namespace KFrame
 
     void KFBasicClientModule::BeforeRun()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_UPDATE_DATA__( &KFBasicClientModule::OnUpdateDataCallBack );
         __REGISTER_UPDATE_STRING__( &KFBasicClientModule::OnUpdateStringCallBack );
 
@@ -86,13 +86,13 @@ namespace KFrame
 
     void KFBasicClientModule::EnterLeaveUpdateAttributeToBasic( EntityPtr player )
     {
-        auto kfbasic = player->Find( __STRING__( basic ) );
+        auto basic_data = player->Find( __STRING__( basic ) );
 
         StringUInt64 values;
         values[ __STRING__( id ) ] = player->GetKeyID();
-        values[ __STRING__( server_id ) ] = kfbasic->Get( __STRING__( server_id ) );
-        values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
-        values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );
+        values[ __STRING__( server_id ) ] = basic_data->Get( __STRING__( server_id ) );
+        values[ __STRING__( status ) ] = basic_data->Get( __STRING__( status ) );
+        values[ __STRING__( statustime ) ] = basic_data->Get( __STRING__( statustime ) );
         UpdateBasicIntValueToBasic( player->GetKeyID(), values );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,16 +152,16 @@ namespace KFrame
             return _kf_display->SendToClient( entity, kfmsg->result(), kfmsg->name() );
         }
 
-        auto kfbasic = entity->CreateData( __STRING__( basic ) );
+        auto basic_data = entity->CreateData( __STRING__( basic ) );
         for ( auto iter = kfmsg->pbdata().begin(); iter != kfmsg->pbdata().end(); ++iter )
         {
-            auto kfdata = kfbasic->Find( iter->first );
+            auto kfdata = basic_data->Find( iter->first );
             if ( kfdata != nullptr )
             {
                 kfdata->Set< std::string >( iter->second );
             }
         }
-        auto player_data = _kf_kernel->SerializeToView( kfbasic );
+        auto player_data = _kf_kernel->SerializeToView( basic_data );
 
         // 发送给客户端
         KFMsg::MsgQueryBasicAck ack;

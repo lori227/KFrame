@@ -31,7 +31,7 @@ namespace KFrame
         {
             return _kf_display->SendToClient( entity, KFMsg::ChatNotFriend );
         }
-        auto kfbasic = kfrelation->Find( __STRING__( basic ) );
+        auto basic_data = kfrelation->Find( __STRING__( basic ) );
 
         // 判断屏蔽字符
         std::string content = kfmsg->content();
@@ -40,7 +40,7 @@ namespace KFrame
         KFMsg::MsgTellFriendChat chat;
         chat.set_content( content );
         chat.set_playerid( entity->GetKeyID() );
-        auto ok = _kf_game->SendToPlayer( entity->GetKeyID(), kfbasic, KFMsg::MSG_TELL_FRIEND_CHAT, &chat );
+        auto ok = _kf_game->SendToPlayer( entity->GetKeyID(), basic_data, KFMsg::MSG_TELL_FRIEND_CHAT, &chat );
         if ( !ok )
         {
             return _kf_display->SendToClient( entity, KFMsg::ChatFriendNotOnline );
@@ -58,8 +58,8 @@ namespace KFrame
         std::string content = kfmsg->content();
         _kf_filter->CensorFilter( content );
 
-        auto kfbasic = entity->Find( __STRING__( basic ) );
-        auto pbbasic = _kf_kernel->SerializeToView( kfbasic );
+        auto basic_data = entity->Find( __STRING__( basic ) );
+        auto pbbasic = _kf_kernel->SerializeToView( basic_data );
 
         KFMsg::MsgTellServerChat chat;
         chat.set_content( content );

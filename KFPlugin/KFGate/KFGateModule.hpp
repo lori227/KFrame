@@ -83,27 +83,27 @@ namespace KFrame
 
     protected:
         // 登录到登录服务器
-        void LoginToLogin( uint64 sessionid, uint64 account_id, const std::string& token );
+        void LoginToLogin( uint64 session_id, uint64 account_id, const std::string& token );
 
         // 发送登录失败消息
-        void SendLoginAckMessage( uint64 sessionid, uint32 result, uint64 bantime );
+        void SendLoginAckMessage( uint64 session_id, uint32 result, uint64 ban_time );
 
-        void AddRole( KFRole* role );
+        void AddRole( std::shared_ptr<KFRole> role );
         void RemoveRole( uint64 id );
-        void RemoveRole( KFRole* role );
-        KFRole* FindRole( uint64 id );
-        KFRole* FindRole( const std::string& token );
+        void RemoveRole( std::shared_ptr<KFRole> role );
+        std::shared_ptr<KFRole> FindRole( uint64 id );
+        std::shared_ptr<KFRole> FindRole( const std::string& token );
 
     private:
         // 服务器关闭
         bool _is_server_shutdown = false;
 
         // 玩家列表
-        KFHashMap< uint64, KFRole > _kf_role_list;
-        std::unordered_map< std::string, KFRole* > _token_list;
+        KFHashMap<uint64, KFRole> _role_list;
+        KFHashMap<std::string, KFRole> _token_list;
 
         // login服务器列表
-        KFHash _login_conhash;
+        KFHash _login_hash;
         uint64 _login_server_id = _invalid_int;
 
         // 广播的序号

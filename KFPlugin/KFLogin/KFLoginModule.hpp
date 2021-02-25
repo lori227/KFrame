@@ -37,7 +37,7 @@ namespace KFrame
         bool SendToWorld( uint32 msg_id, ::google::protobuf::Message* message );
 
         // 发送消息到Gate服务器
-        bool SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message );
+        bool SendToGate( uint64 gate_id, uint32 msg_id, ::google::protobuf::Message* message );
 
     protected:
         // 连接成功
@@ -58,7 +58,7 @@ namespace KFrame
 
     protected:
         // 发送登录验证结果消息
-        void SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 account_id, uint64 bantime );
+        void SendLoginAckToGate( uint32 result, uint64 gate_id, uint64 session_id, uint64 account_id, uint64 ban_time );
     private:
         // 世界服务器id
         KFHash _world_hash;

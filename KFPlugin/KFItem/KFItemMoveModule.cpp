@@ -17,7 +17,7 @@ namespace KFrame
 
     void KFItemMoveModule::AfterLoad()
     {
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         if ( KFItemBagConfig::Instance()->_load_ok )
         {
             for ( auto& iter : KFItemBagConfig::Instance()->_setting_list._objects )

@@ -10,7 +10,7 @@ namespace KFrame
         __REGISTER_PLAYER_LEAVE__( &KFRelationClientModule::OnLeaveUpdateRelation );
 
         // 注册属性回调
-        _kf_component = _kf_kernel->FindComponent( __STRING__( player ) );
+        _component = _kf_kernel->FindComponent( __STRING__( player ) );
         __REGISTER_UPDATE_DATA__( &KFRelationClientModule::OnRelationValueUpdate );
         __REGISTER_UPDATE_STRING__( &KFRelationClientModule::OnRelationStringUpdate );
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,10 +76,10 @@ namespace KFrame
     void KFRelationClientModule::PBRelationToKFData( const KFMsg::PBRelation* pbrelation, DataPtr kfrelation )
     {
         auto pbbasicdata = &pbrelation->basicdata();
-        auto kfbasic = kfrelation->Find( __STRING__( basic ) );
+        auto basic_data = kfrelation->Find( __STRING__( basic ) );
         for ( auto iter = pbbasicdata->begin(); iter != pbbasicdata->end(); ++iter )
         {
-            auto kfdata = kfbasic->Find( iter->first );
+            auto kfdata = basic_data->Find( iter->first );
             if ( kfdata == nullptr )
             {
                 continue;
@@ -197,12 +197,12 @@ namespace KFrame
 
     void KFRelationClientModule::EnterLeaveUpdateToRelation( EntityPtr player, const std::string& relationname )
     {
-        auto kfbasic = player->Find( __STRING__( basic ) );
+        auto basic_data = player->Find( __STRING__( basic ) );
 
         StringUInt64 values;
-        values[ __STRING__( server_id ) ] = kfbasic->Get( __STRING__( server_id ) );
-        values[ __STRING__( status ) ] = kfbasic->Get( __STRING__( status ) );
-        values[ __STRING__( statustime ) ] = kfbasic->Get( __STRING__( statustime ) );
+        values[ __STRING__( server_id ) ] = basic_data->Get( __STRING__( server_id ) );
+        values[ __STRING__( status ) ] = basic_data->Get( __STRING__( status ) );
+        values[ __STRING__( statustime ) ] = basic_data->Get( __STRING__( statustime ) );
         UpdateIntValueToRelation( player, relationname, values );
     }
 

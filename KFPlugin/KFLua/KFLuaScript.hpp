@@ -19,14 +19,14 @@ namespace KFrame
         void ReleaseScript();
 
         template< class ... T >
-        uint64 CallFunction( const std::string& function, uint64 objectid, T&& ...params )
+        uint64 CallFunction( const std::string& function, uint64 object_id, T&& ...params )
         {
             try
             {
-                LuaPlus::LuaObject luaobject = _lua_state->GetGlobal( function.c_str() );
-                if ( luaobject.IsFunction() )
+                LuaPlus::LuaObject lua_object = _lua_state->GetGlobal( function.c_str() );
+                if ( lua_object.IsFunction() )
                 {
-                    auto result = ( ( LuaPlus::LuaFunction<uint64> )luaobject )( objectid, std::forward<T>( params )... );
+                    auto result = ( ( LuaPlus::LuaFunction<uint64> )lua_object )( object_id, std::forward<T>( params )... );
                     return result;
                 }
             }

@@ -461,145 +461,145 @@ namespace KFrame
     bool check_function( EntityPtr player, DataPtr parent_data, std::shared_ptr<KFElement> element, double multiple, const char* function, uint32 line )
 
 #define  __REGISTER_CHECK_ADD_ELEMENT__( data_name, function )\
-    _kf_component->RegisterCheckAddElementFunction( data_name, this, function )
+    _component->RegisterCheckAddElementFunction( data_name, this, function )
 #define  __UN_CHECK_ADD_ELEMENT__( data_name )\
-    _kf_component->UnRegisterCheckAddElementFunction( data_name  )
+    _component->UnRegisterCheckAddElementFunction( data_name  )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_ADD_ELEMENT_FUNCTION__( add_function ) \
     bool add_function( EntityPtr player, DataPtr parent_data, KFElementResult* kfresult, const char* function, uint32 line )
 
 #define  __REGISTER_ADD_ELEMENT__( data_name, function ) \
-    _kf_component->RegisterAddElementFunction( data_name, this, function )
+    _component->RegisterAddElementFunction( data_name, this, function )
 #define  __UN_ADD_ELEMENT__( data_name ) \
-    _kf_component->UnRegisterAddElementFunction( data_name  )
+    _component->UnRegisterAddElementFunction( data_name  )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_CHECK_REMOVE_ELEMENT_FUNCTION__( check_function ) \
     bool check_function( EntityPtr player, DataPtr parent_data, std::shared_ptr<KFElement> element, double multiple, const char* function, uint32 line )
 
 #define  __REGISTER_CHECK_REMOVE_ELEMENT__( data_name, function )\
-    _kf_component->RegisterCheckRemoveElementFunction( data_name, this, function )
+    _component->RegisterCheckRemoveElementFunction( data_name, this, function )
 #define  __UN_CHECK_REMOVE_ELEMENT__( data_name )\
-    _kf_component->UnRegisterCheckRemoveElementFunction( data_name )
+    _component->UnRegisterCheckRemoveElementFunction( data_name )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_REMOVE_ELEMENT_FUNCTION__( remove_function ) \
     bool remove_function( EntityPtr player, DataPtr parent_data, KFElementResult* element_result, const char* function, uint32 line )
 
 #define __REGISTER_REMOVE_ELEMENT__( data_name, function ) \
-    _kf_component->RegisterRemoveElementFunction( data_name, this, function )
+    _component->RegisterRemoveElementFunction( data_name, this, function )
 #define __UN_REMOVE_ELEMENT__( data_name ) \
-    _kf_component->UnRegisterRemoveElementFunction( data_name )
+    _component->UnRegisterRemoveElementFunction( data_name )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_ADD_DATA_FUNCTION__( add_function ) \
     void add_function( EntityPtr player, DataPtr parent_data, uint64 key, DataPtr data )
 
 #define __REGISTER_ADD_LOGIC__( data_name, function )\
-    _kf_component->RegisterAddDataLogic( data_name, this, function )
+    _component->RegisterAddDataLogic( data_name, this, function )
 #define __UN_ADD_LOGIC__( data_name )\
-    _kf_component->UnRegisterAddDataLogic( data_name, this )
+    _component->UnRegisterAddDataLogic( data_name, this )
 
 #define __REGISTER_ADD_DATA__( function )\
-    _kf_component->RegisterAddDataModule( this, function )
+    _component->RegisterAddDataModule( this, function )
 #define __UN_ADD_DATA__()\
-    _kf_component->UnRegisterAddDataModule( this )
+    _component->UnRegisterAddDataModule( this )
 
 #define __REGISTER_ADD_DATA_1__( data_name, function )\
-    _kf_component->RegisterAddDataFunction( data_name, 0u, this, function )
+    _component->RegisterAddDataFunction( data_name, 0u, this, function )
 #define __REGISTER_ADD_DATA_2__( data_name, key, function )\
-    _kf_component->RegisterAddDataFunction( data_name, key, this, function )
+    _component->RegisterAddDataFunction( data_name, key, this, function )
 
 #define __UN_ADD_DATA_1__( data_name )\
-    _kf_component->UnRegisterAddDataFunction( this, data_name, 0u )
+    _component->UnRegisterAddDataFunction( this, data_name, 0u )
 #define __UN_ADD_DATA_2__( data_name, key )\
-    _kf_component->UnRegisterAddDataFunction( this, data_name, key  )
+    _component->UnRegisterAddDataFunction( this, data_name, key  )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_REMOVE_DATA_FUNCTION__( remove_function ) \
     void remove_function( EntityPtr player, DataPtr parent_data, uint64 key, DataPtr data )
 
 #define __REGISTER_REMOVE_LOGIC__( data_name, function )\
-    _kf_component->RegisterRemoveDataLogic( data_name, this, function )
+    _component->RegisterRemoveDataLogic( data_name, this, function )
 #define __UN_REMOVE_LOGIC__( data_name )\
-    _kf_component->UnRegisterRemoveDataLogic( data_name, this )
+    _component->UnRegisterRemoveDataLogic( data_name, this )
 
 #define __REGISTER_REMOVE_DATA__( function )\
-    _kf_component->RegisterRemoveDataModule( this, function )
+    _component->RegisterRemoveDataModule( this, function )
 #define __UN_REMOVE_DATA__()\
-    _kf_component->UnRegisterRemoveDataModule( this  )
+    _component->UnRegisterRemoveDataModule( this  )
 
 #define __REGISTER_REMOVE_DATA_1__( data_name, function )\
-    _kf_component->RegisterRemoveDataFunction( data_name, 0u, this, function )
+    _component->RegisterRemoveDataFunction( data_name, 0u, this, function )
 #define __REGISTER_REMOVE_DATA_2__( data_name, key, function )\
-    _kf_component->RegisterRemoveDataFunction( data_name, key, this, function )
+    _component->RegisterRemoveDataFunction( data_name, key, this, function )
 #define __UN_REMOVE_DATA_1__( data_name )\
-    _kf_component->UnRegisterRemoveDataFunction( this, data_name, 0u )
+    _component->UnRegisterRemoveDataFunction( this, data_name, 0u )
 #define __UN_REMOVE_DATA_2__( data_name, key )\
-    _kf_component->UnRegisterRemoveDataFunction( this, data_name, key )
+    _component->UnRegisterRemoveDataFunction( this, data_name, key )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_UPDATE_DATA_FUNCTION__( update_function ) \
     void update_function( EntityPtr player, uint64 key, DataPtr data, uint32 operate, uint64 value, uint64 oldvalue, uint64 newvalue )
 
 #define  __REGISTER_UPDATE_DATA__( function )\
-    _kf_component->RegisterUpdateDataModule( this, function )
+    _component->RegisterUpdateDataModule( this, function )
 #define  __REGISTER_UPDATE_DATA_1__( data_name, update_function)\
-    _kf_component->RegisterUpdateDataFunction( data_name, this, update_function )
+    _component->RegisterUpdateDataFunction( data_name, this, update_function )
 #define  __REGISTER_UPDATE_DATA_2__( parent_name, data_name, update_function)\
-    _kf_component->RegisterUpdateDataFunction( parent_name, data_name, this, update_function )
+    _component->RegisterUpdateDataFunction( parent_name, data_name, this, update_function )
 
 #define  __UN_UPDATE_DATA__()\
-    _kf_component->UnRegisterUpdateDataModule( this )
+    _component->UnRegisterUpdateDataModule( this )
 #define  __UN_UPDATE_DATA_1__( data_name )\
-    _kf_component->UnRegisterUpdateDataFunction( this, data_name )
+    _component->UnRegisterUpdateDataFunction( this, data_name )
 #define  __UN_UPDATE_DATA_2__( parent_name, data_name )\
-    _kf_component->UnRegisterUpdateDataFunction( this, parent_name, data_name )
+    _component->UnRegisterUpdateDataFunction( this, parent_name, data_name )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_UPDATE_STRING_FUNCTION__( update_function ) \
     void update_function( EntityPtr player, DataPtr data, const std::string& old_value, const std::string& new_value )
 
 #define  __REGISTER_UPDATE_STRING__( update_function)\
-    _kf_component->RegisterUpdateStringModule( this, update_function )
+    _component->RegisterUpdateStringModule( this, update_function )
 #define  __REGISTER_UPDATE_STRING_1__( data_name, update_function)\
-    _kf_component->RegisterUpdateStringFunction( data_name, this, update_function )
+    _component->RegisterUpdateStringFunction( data_name, this, update_function )
 #define  __REGISTER_UPDATE_STRING_2__( parent_name, data_name, update_function)\
-    _kf_component->RegisterUpdateStringFunction( parent_name, data_name, this, update_function )
+    _component->RegisterUpdateStringFunction( parent_name, data_name, this, update_function )
 
 #define  __UN_UPDATE_STRING__()\
-    _kf_component->UnRegisterUpdateStringModule( this )
+    _component->UnRegisterUpdateStringModule( this )
 #define  __UN_UPDATE_STRING_1__( data_name )\
-    _kf_component->UnRegisterUpdateStringFunction( this, data_name )
+    _component->UnRegisterUpdateStringFunction( this, data_name )
 #define  __UN_UPDATE_STRING_2__( parent_name, data_name )\
-    _kf_component->UnRegisterUpdateStringFunction( this, parent_name, data_name )
+    _component->UnRegisterUpdateStringFunction( this, parent_name, data_name )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_GET_CONFIG_VALUE_FUNCTION__( function ) \
     uint64 function( EntityPtr player, uint64 id, uint64 max_value )
 
 #define __REGISTER_GET_CONFIG_VALUE__( data_name, function ) \
-    _kf_component->RegisterGetConfigValueFunction( data_name, this, function )
+    _component->RegisterGetConfigValueFunction( data_name, this, function )
 #define __UN_GET_CONFIG_VALUE__( data_name ) \
-    _kf_component->UnRegisterGetConfigValueFunction( data_name )
+    _component->UnRegisterGetConfigValueFunction( data_name )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_LOG_ELEMENT_FUNCTION__( function ) \
     void function( EntityPtr player, const KFElementResult* kfresult )
 
 #define __REGISTER_LOG_ELEMENT__( data_name, function ) \
-    _kf_component->RegisterLogElementFunction( data_name, this, function )
+    _component->RegisterLogElementFunction( data_name, this, function )
 #define __UN_LOG_ELEMENT__( data_name ) \
-    _kf_component->UnRegisterLogElementFunction( data_name )
+    _component->UnRegisterLogElementFunction( data_name )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 #define  __KF_ELEMENT_RESULT_FUNCTION__( function ) \
     bool function( EntityPtr player, const KFElementResult* kfresult )
 
 #define __REGISTER_ELEMENT_RESULT__( module_name, function ) \
-    _kf_component->RegisterElementResultFunction( module_name, this, function )
+    _component->RegisterElementResultFunction( module_name, this, function )
 #define __UN_ELEMENT_RESULT__( module_name ) \
-    _kf_component->UnRegisterElementResultFunction( module_name )
+    _component->UnRegisterElementResultFunction( module_name )
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 }

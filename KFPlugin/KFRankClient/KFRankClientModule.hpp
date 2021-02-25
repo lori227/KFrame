@@ -58,7 +58,7 @@ namespace KFrame
 
     private:
         // 玩家组件
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
 
         // 更新的排行榜操作
         std::unordered_map< uint64, std::set< KFRankSetting* > > _update_rank_list;

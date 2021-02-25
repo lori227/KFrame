@@ -59,9 +59,9 @@ namespace KFrame
     }
 
     // 发送消息到Gate服务器
-    bool KFLoginModule::SendToGate( uint64 gateid, uint32 msg_id, ::google::protobuf::Message* message )
+    bool KFLoginModule::SendToGate( uint64 gate_id, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        return _kf_tcp_server->SendNetMessage( gateid, msg_id, message );
+        return _kf_tcp_server->SendNetMessage( gate_id, msg_id, message );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,100 +75,100 @@ namespace KFrame
         }
 
         auto& token = kfmsg->token();
-        auto account_id = kfmsg->account_id();
-        auto sessionid = kfmsg->sessionid();
+        auto account_id = kfmsg->accountid();
+        auto session_id = kfmsg->sessionid();
         static auto _url = _kf_ip_address->GetAuthUrl() + __STRING__( verify );
 
         __LOG_DEBUG__( "account_id[{}] login verify", account_id );
 
         // 认证服务器, 验证token
-        __JSON_OBJECT_DOCUMENT__( sendjson );
-        __JSON_SET_VALUE__( sendjson, __STRING__( ip ), kfmsg->ip() );
-        __JSON_SET_VALUE__( sendjson, __STRING__( gateid ), gateid );
-        __JSON_SET_VALUE__( sendjson, __STRING__( token ), kfmsg->token() );
-        __JSON_SET_VALUE__( sendjson, __STRING__( sessionid ), sessionid );
-        __JSON_SET_VALUE__( sendjson, __STRING__( accountid ), kfmsg->account_id() );
-        __JSON_SET_VALUE__( sendjson, __STRING__( zoneid ), setting->_id );
-        __JSON_SET_VALUE__( sendjson, __STRING__( datazoneid ), setting->_data_id );
-        _kf_http_client->MTGet( _url, sendjson, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
+        __JSON_OBJECT_DOCUMENT__( send_json );
+        __JSON_SET_VALUE__( send_json, __STRING__( ip ), kfmsg->ip() );
+        __JSON_SET_VALUE__( send_json, __STRING__( gateid ), gateid );
+        __JSON_SET_VALUE__( send_json, __STRING__( token ), kfmsg->token() );
+        __JSON_SET_VALUE__( send_json, __STRING__( sessionid ), session_id );
+        __JSON_SET_VALUE__( send_json, __STRING__( accountid ), kfmsg->accountid() );
+        __JSON_SET_VALUE__( send_json, __STRING__( zoneid ), setting->_id );
+        __JSON_SET_VALUE__( send_json, __STRING__( datazoneid ), setting->_data_id );
+        _kf_http_client->MTGet( _url, send_json, this, &KFLoginModule::OnHttpAuthLoginVerifyCallBack );
     }
 
     __KF_HTTP_CALL_BACK_FUNCTION__( KFLoginModule::OnHttpAuthLoginVerifyCallBack )
     {
         // 处理验证结果
-        __JSON_PARSE_STRING__( sendjson, senddata );
-        __JSON_PARSE_STRING__( recvjson, recvdata );
+        __JSON_PARSE_STRING__( send_json, send_data );
+        __JSON_PARSE_STRING__( recv_json, recv_data );
 
-        auto ip = __JSON_GET_STRING__( sendjson, __STRING__( ip ) );
-        auto gateid = __JSON_GET_UINT64__( sendjson, __STRING__( gateid ) );
-        auto account_id = __JSON_GET_UINT64__( sendjson, __STRING__( accountid ) );
-        auto sessionid = __JSON_GET_UINT64__( sendjson, __STRING__( sessionid ) );
+        auto ip = __JSON_GET_STRING__( send_json, __STRING__( ip ) );
+        auto gate_id = __JSON_GET_UINT64__( send_json, __STRING__( gateid ) );
+        auto account_id = __JSON_GET_UINT64__( send_json, __STRING__( accountid ) );
+        auto session_id = __JSON_GET_UINT64__( send_json, __STRING__( sessionid ) );
 
         // 验证失败
-        auto retcode = _kf_http_client->GetCode( recvjson );
-        if ( retcode != KFMsg::Ok )
+        auto ret_code = _kf_http_client->GetCode( recv_json );
+        if ( ret_code != KFMsg::Ok )
         {
-            auto bantime = __JSON_GET_UINT64__( recvjson, __STRING__( bantime ) );
-            return SendLoginAckToGate( retcode, gateid, sessionid, account_id, bantime );
+            auto ban_time = __JSON_GET_UINT64__( recv_json, __STRING__( bantime ) );
+            return SendLoginAckToGate( ret_code, gate_id, session_id, account_id, ban_time );
         }
 
-        auto token = __JSON_GET_STRING__( recvjson, __STRING__( token ) );
-        auto account = __JSON_GET_STRING__( recvjson, __STRING__( account ) );
-        auto channel = __JSON_GET_UINT32__( recvjson, __STRING__( channel ) );
-        auto player_id = __JSON_GET_UINT64__( recvjson, __STRING__( playerid ) );
+        auto token = __JSON_GET_STRING__( recv_json, __STRING__( token ) );
+        auto account = __JSON_GET_STRING__( recv_json, __STRING__( account ) );
+        auto channel = __JSON_GET_UINT32__( recv_json, __STRING__( channel ) );
+        auto player_id = __JSON_GET_UINT64__( recv_json, __STRING__( playerid ) );
         if ( account_id == _invalid_int || token.empty() || channel == _invalid_int || player_id == _invalid_int )
         {
-            return SendLoginAckToGate( KFMsg::HttpDataError, gateid, sessionid, account_id, _invalid_int );
+            return SendLoginAckToGate( KFMsg::HttpDataError, gate_id, session_id, account_id, _invalid_int );
         }
 
-        KFMsg::PBLoginData pblogin;
-        pblogin.set_ip( ip );
-        pblogin.set_token( token );
-        pblogin.set_gateid( gateid );
-        pblogin.set_channel( channel );
-        pblogin.set_account( account );
-        pblogin.set_accountid( account_id );
-        pblogin.set_sessionid( sessionid );
-        pblogin.set_playerid( player_id );
+        KFMsg::PBLoginData login_data;
+        login_data.set_ip( ip );
+        login_data.set_token( token );
+        login_data.set_gateid( gate_id );
+        login_data.set_channel( channel );
+        login_data.set_account( account );
+        login_data.set_accountid( account_id );
+        login_data.set_sessionid( session_id );
+        login_data.set_playerid( player_id );
 
         // 渠道数据
-        if ( __JSON_HAS_MEMBER__( recvjson, __STRING__( channel_data ) ) )
+        if ( __JSON_HAS_MEMBER__( recv_json, __STRING__( channeldata ) ) )
         {
-            auto pbchanneldata = pblogin.mutable_channeldata();
-            auto& channel_data = recvjson[ __STRING__( channel_data ) ];
-            for ( auto iter = channel_data.MemberBegin(); iter != channel_data.MemberEnd(); ++iter )
+            auto channel_data = login_data.mutable_channeldata();
+            auto& channel_data_json = recv_json[ __STRING__( channeldata ) ];
+            for ( auto iter = channel_data_json.MemberBegin(); iter != channel_data_json.MemberEnd(); ++iter )
             {
-                ( *pbchanneldata )[ iter->name.GetString() ] = iter->value.GetString();
+                ( *channel_data )[ iter->name.GetString() ] = iter->value.GetString();
             }
         }
 
         KFMsg::S2SLoginToWorldReq req;
-        req.mutable_pblogin()->CopyFrom( pblogin );
+        req.mutable_pblogin()->CopyFrom( login_data );
         auto ok = SendToWorld( KFMsg::S2S_LOGIN_TO_WORLD_REQ, &req );
         if ( !ok )
         {
             __LOG_ERROR__( "player[{}:{}:{}] send world failed", account, channel, account_id );
-            SendLoginAckToGate( KFMsg::LoginWorldSystemBusy, gateid, sessionid, account_id, _invalid_int );
+            SendLoginAckToGate( KFMsg::LoginWorldSystemBusy, gate_id, session_id, account_id, _invalid_int );
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFLoginModule::HandleLoginToLoginAck, KFMsg::S2SLoginToLoginAck )
     {
-        __LOG_DEBUG__( "player[{}] login result[{}] ack", kfmsg->account_id(), kfmsg->result() );
+        __LOG_DEBUG__( "player[{}] login result[{}] ack", kfmsg->accountid(), kfmsg->result() );
 
         // 通知客户端
-        SendLoginAckToGate( kfmsg->result(), kfmsg->gateid(), kfmsg->sessionid(), kfmsg->account_id(), _invalid_int );
+        SendLoginAckToGate( kfmsg->result(), kfmsg->gateid(), kfmsg->sessionid(), kfmsg->accountid(), _invalid_int );
     }
 
-    void KFLoginModule::SendLoginAckToGate( uint32 result, uint64 gateid, uint64 sessionid, uint64 account_id, uint64 bantime )
+    void KFLoginModule::SendLoginAckToGate( uint32 result, uint64 gate_id, uint64 session_id, uint64 account_id, uint64 ban_time )
     {
         KFMsg::S2SLoginToGateAck ack;
         ack.set_result( result );
         ack.set_accountid( account_id );
-        ack.set_sessionid( sessionid );
-        ack.set_bantime( bantime );
-        auto ok = _kf_tcp_server->SendNetMessage( gateid, KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
+        ack.set_sessionid( session_id );
+        ack.set_bantime( ban_time );
+        auto ok = _kf_tcp_server->SendNetMessage( gate_id, KFMsg::S2S_LOGIN_TO_GATE_ACK, &ack );
         if ( !ok )
         {
             __LOG_ERROR__( "player[{}] login verify result[{}] failed", account_id, result );

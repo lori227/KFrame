@@ -58,7 +58,7 @@ namespace KFrame
         void FinishTaskChain( EntityPtr player, DataPtr kftask );
     protected:
         // 玩家组件上下文
-        std::shared_ptr<KFComponent> _kf_component = nullptr;
+        std::shared_ptr<KFComponent> _component = nullptr;
     };
 }
 

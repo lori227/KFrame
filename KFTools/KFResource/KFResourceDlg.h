@@ -72,7 +72,7 @@ protected:
     void CopyConfigFiles();
     void CopyConfigFiles( const std::string& path, const std::string& configpath );
 
-    template< class...Args >
+    template<class...Args>
     inline void AddLog( const std::string& myfmt, Args&& ... args )
     {
         auto content = __FORMAT__( myfmt, std::forward<Args>( args )... );
