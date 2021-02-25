@@ -109,10 +109,10 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemCountReq, KFMsg::MsgRemoveItemCountReq )
     {
-        __LOG_INFO__( "player=[{}] remove item count=[{}:{}]", entity->GetKeyID(), kfmsg->item_id(), kfmsg->count() );
+        __LOG_INFO__( "player=[{}] remove item count=[{}:{}]", entity->GetKeyID(), kfmsg->itemid(), kfmsg->count() );
 
-        auto item_record = FindItemBag( entity, kfmsg->item_id() );
-        RemoveItem( entity, item_record, kfmsg->item_id(), kfmsg->count() );
+        auto item_record = FindItemBag( entity, kfmsg->itemid() );
+        RemoveItem( entity, item_record, kfmsg->itemid(), kfmsg->count() );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_GET_CONFIG_VALUE_FUNCTION__( KFItemModule::GetItemTotalCount )

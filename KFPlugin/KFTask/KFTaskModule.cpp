@@ -541,7 +541,7 @@ namespace KFrame
         case KFMsg::ExecuteStatus:
         {
             // 开启任务
-            CreateTask( player, setting, status, 0u );
+            CreateTask( player, setting, task_status, 0u );
         }
         break;
         case KFMsg::DoneStatus:
