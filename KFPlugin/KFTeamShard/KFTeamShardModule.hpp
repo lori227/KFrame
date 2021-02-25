@@ -33,37 +33,33 @@ namespace KFrame
         virtual void BeforeShut();
 
     protected:
-        // 初始化
-        void InitTeam( EntityPtr team );
-        void UnInitTeam( EntityPtr team );
-
         // 连接成功
         void OnRouteConnectCluster( uint64 server_id );
 
         // 更换队长
-        void ChangeTeamCaptain( EntityPtr kfteam, uint64 captainid );
+        void ChangeTeamCaptain( EntityPtr team_data, uint64 captain_id );
 
         // 设置队长信息
-        void SetTeamCaptain( EntityPtr kfteam, DataPtr kfmember, bool update );
+        void SetTeamCaptain( EntityPtr team_data, DataPtr member_data, bool update );
 
         // 发送消息到队伍
-        void SendMessageToTeam( EntityPtr kfteam, uint32 msg_id, ::google::protobuf::Message* message );
-        void SendMessageToMember( DataPtr kfmember, uint32 msg_id, ::google::protobuf::Message* message );
+        void SendMessageToTeam( EntityPtr team_data, uint32 msg_id, ::google::protobuf::Message* message );
+        void SendMessageToMember( DataPtr member_data, uint32 msg_id, ::google::protobuf::Message* message );
 
         // 通知加入队伍
-        void SendJoinTeamToMember( EntityPtr kfteam, DataPtr kfmember );
+        void SendJoinTeamToMember( EntityPtr team_data, DataPtr member_data );
 
         // 同步更新属性到客户端
-        void SendTeamUpdateDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object );
+        void SendTeamUpdateDataToMember( EntityPtr team_data, KFMsg::PBObject& proto_object );
 
         // 同步添加属性到客户端
-        void SendTeamAddDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object );
+        void SendTeamAddDataToMember( EntityPtr team_data, KFMsg::PBObject& proto_object );
 
         // 同步删除属性到客户端
-        void SendTeamRemoveDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object );
+        void SendTeamRemoveDataToMember( EntityPtr team_data, KFMsg::PBObject& proto_object );
 
         // 删除队员
-        void RemoveTeamMember( EntityPtr kfteam, uint64 memberid );
+        void RemoveTeamMember( EntityPtr team_data, uint64 member_id );
     protected:
         // 创建队伍请求
         __KF_MESSAGE_FUNCTION__( HandleTeamCreateToTeamReq, KFMsg::S2STeamCreateToTeamReq );

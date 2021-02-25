@@ -92,7 +92,7 @@ namespace KFrame
         void EnterLeaveUpdateToTeam( EntityPtr player );
 
         // 发送队伍邀请到目标
-        void SendTeamInviteToTarget( EntityPtr player, DataPtr kfteam, uint64 server_id, uint64 player_id );
+        void SendTeamInviteToTarget( EntityPtr player, DataPtr team_data, uint64 server_id, uint64 player_id );
     private:
         // 玩家组件
         std::shared_ptr<KFComponent> _component = nullptr;

@@ -7,9 +7,6 @@ namespace KFrame
         _kf_route->RegisterConnectionFunction( this, &KFTeamShardModule::OnRouteConnectCluster );
         //////////////////////////////////////////////////////////////////////////////////////////////////
         _component = _kf_kernel->FindComponent( __STRING__( team ) );
-        _component->RegisterEntityInitializeFunction( this, &KFTeamShardModule::InitTeam );
-        _component->RegisterEntityRemoveFunction( this, &KFTeamShardModule::UnInitTeam );
-
         // 注册更新函数
         _component->RegisterSyncAddFunction( this, &KFTeamShardModule::SendTeamAddDataToMember );
         _component->RegisterSyncRemoveFunction( this, &KFTeamShardModule::SendTeamRemoveDataToMember );
@@ -32,9 +29,6 @@ namespace KFrame
     {
         _kf_route->UnRegisterConnectionFunction( this );
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        _component->UnRegisterEntityInitializeFunction();
-        _component->UnRegisterEntityRemoveFunction();
-
         _component->UnRegisterSyncAddFunction();
         _component->UnRegisterSyncRemoveFunction();
         _component->UnRegisterSyncUpdateFunction();
@@ -53,63 +47,51 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////
     void KFTeamShardModule::OnRouteConnectCluster( uint64 server_id )
     {
-        RouteObjectList teamlist;
-        for ( auto kfteam = _component->FirstEntity(); kfteam != nullptr; kfteam = _component->NextEntity() )
+        UInt64Set team_list;
+        for ( auto team_data = _component->FirstEntity(); team_data != nullptr; team_data = _component->NextEntity() )
         {
-            teamlist.insert( kfteam->GetKeyID() );
+            team_list.insert( team_data->GetKeyID() );
         }
-        _kf_route->SyncObject( teamlist );
+        _kf_route->SyncObject( team_list );
     }
 
-    void KFTeamShardModule::SendMessageToTeam( EntityPtr kfteam, uint32 msg_id, ::google::protobuf::Message* message )
+    void KFTeamShardModule::SendMessageToTeam( EntityPtr team_data, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
-        for ( auto kfmember = kfmemberrecord->First(); kfmember != nullptr; kfmember = kfmemberrecord->Next() )
+        auto member_record = team_data->Find( __STRING__( member ) );
+        for ( auto member_data = member_record->First(); member_data != nullptr; member_data = member_record->Next() )
         {
-            SendMessageToMember( kfmember, msg_id, message );
+            SendMessageToMember( member_data, msg_id, message );
         }
     }
 
-    void KFTeamShardModule::SendMessageToMember( DataPtr kfmember, uint32 msg_id, ::google::protobuf::Message* message )
+    void KFTeamShardModule::SendMessageToMember( DataPtr member_data, uint32 msg_id, ::google::protobuf::Message* message )
     {
-        auto server_id = kfmember->Get<uint64>( __STRING__( basic ), __STRING__( server_id ) );
-        _kf_route->SendToEntity( server_id, kfmember->GetKeyID(), msg_id, message );
+        auto server_id = member_data->Get<uint64>( __STRING__( basic ), __STRING__( serverid ) );
+        _kf_route->SendToEntity( server_id, member_data->GetKeyID(), msg_id, message );
     }
 
-    void KFTeamShardModule::InitTeam( EntityPtr team )
-    {
-        auto teamuuid = team->GetKeyID();
-        _kf_route->AddObject( teamuuid );
-    }
-
-    void KFTeamShardModule::UnInitTeam( EntityPtr team )
-    {
-        auto teamuuid = team->GetKeyID();
-        _kf_route->RemoveObject( teamuuid );
-    }
-
-    void KFTeamShardModule::SendTeamUpdateDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object )
+    void KFTeamShardModule::SendTeamUpdateDataToMember( EntityPtr team_data, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncUpdateDataFromServer sync;
-        sync.set_dataname( __STRING__( team ) );
+        sync.set_data_name( __STRING__( team ) );
         sync.mutable_pbdata()->Swap( &proto_object );
-        SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, &sync );
+        SendMessageToTeam( team_data, KFMsg::S2S_SYNC_UPDATE_DATA_FROM_SERVER, &sync );
     }
 
-    void KFTeamShardModule::SendTeamAddDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object )
+    void KFTeamShardModule::SendTeamAddDataToMember( EntityPtr team_data, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncAddDataFromServer sync;
-        sync.set_dataname( __STRING__( team ) );
+        sync.set_data_name( __STRING__( team ) );
         sync.mutable_pbdata()->Swap( &proto_object );
-        SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, &sync );
+        SendMessageToTeam( team_data, KFMsg::S2S_SYNC_ADD_DATA_FROM_SERVER, &sync );
     }
 
-    void KFTeamShardModule::SendTeamRemoveDataToMember( EntityPtr kfteam, KFMsg::PBObject& proto_object )
+    void KFTeamShardModule::SendTeamRemoveDataToMember( EntityPtr team_data, KFMsg::PBObject& proto_object )
     {
         KFMsg::S2SSyncRemoveDataFromServer sync;
-        sync.set_dataname( __STRING__( team ) );
+        sync.set_data_name( __STRING__( team ) );
         sync.mutable_pbdata()->Swap( &proto_object );
-        SendMessageToTeam( kfteam, KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, &sync );
+        SendMessageToTeam( team_data, KFMsg::S2S_SYNC_REMOVE_DATA_FROM_SERVER, &sync );
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamCreateToTeamReq, KFMsg::S2STeamCreateToTeamReq )
@@ -121,187 +103,191 @@ namespace KFrame
         }
 
         // 直接创建队伍, 如果玩家有队伍, 在加入队伍时game上处理失败情况
-        auto teamuuid = KFGlobal::Instance()->STMakeUuid( __STRING__( team ) );
-        auto kfteam = _component->CreateEntity( teamuuid );
+        auto team_uuid = KFGlobal::Instance()->STMakeUuid( __STRING__( team ) );
+        auto team_data = _component->CreateEntity( team_uuid );
 
-        kfteam->Set( __STRING__( configid ), kfmsg->id() );
-        kfteam->Set( __STRING__( name ), kfmsg->name() );
-        kfteam->Set( __STRING__( info ), kfmsg->info() );
-        kfteam->Set( __STRING__( maxcount ), setting->_max_count );
+        team_data->Operate( __STRING__( configid ), KFEnum::Set, kfmsg->id() );
+        team_data->Operate( __STRING__( name ), KFEnum::Set, kfmsg->name() );
+        team_data->Operate( __STRING__( info ), KFEnum::Set, kfmsg->info() );
+        team_data->Operate( __STRING__( maxcount ), KFEnum::Set, setting->_max_count );
 
-        auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
-        auto kfmember = kfteam->CreateData( kfmemberrecord );
-        _kf_kernel->ParseFromMessage( kfmember, &kfmsg->pbcaptain() );
+        auto member_record = team_data->Find( __STRING__( member ) );
+        auto member_data = team_data->CreateData( member_record );
+        _kf_kernel->ParseFromMessage( member_data, &kfmsg->pbcaptain() );
 
         // 设置队长
-        SetTeamCaptain( kfteam, kfmember, false );
+        SetTeamCaptain( team_data, member_data, false );
 
         // 添加队员
-        kfmemberrecord->Add( kfmember->GetKeyID(), kfmember );
+        member_record->Add( member_data->GetKeyID(), member_data );
 
         // 通知队员加入队伍
-        SendJoinTeamToMember( kfteam, kfmember );
+        SendJoinTeamToMember( team_data, member_data );
+
+        // 通知转发集群
+        _kf_route->AddObject( team_uuid );
     }
 
-    void KFTeamShardModule::ChangeTeamCaptain( EntityPtr kfteam, uint64 captainid )
+    void KFTeamShardModule::ChangeTeamCaptain( EntityPtr team_data, uint64 captain_id )
     {
-        auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
-        for ( auto kfmember = kfmemberrecord->First(); kfmember != nullptr; kfmember = kfmemberrecord->Next() )
+        auto member_record = team_data->Find( __STRING__( member ) );
+        for ( auto member_data = member_record->First(); member_data != nullptr; member_data = member_record->Next() )
         {
-            if ( kfmember->GetKeyID() == captainid )
+            if ( member_data->GetKeyID() == captain_id )
             {
                 continue;
             }
 
-            return SetTeamCaptain( kfteam, kfmember, true );
+            return SetTeamCaptain( team_data, member_data, true );
         }
     }
 
-    void KFTeamShardModule::SetTeamCaptain( EntityPtr kfteam, DataPtr kfmember, bool update )
+    void KFTeamShardModule::SetTeamCaptain( EntityPtr team_data, DataPtr member_data, bool update )
     {
         if ( !update )
         {
-            kfteam->Set( __STRING__( captainid ), kfmember->GetKeyID() );
-            kfteam->Set( __STRING__( captainname ), kfmember->Get<std::string>( __STRING__( name ) ) );
+            team_data->Operate( __STRING__( captainid ), KFEnum::Set, member_data->GetKeyID() );
+            team_data->Operate( __STRING__( captainname ), KFEnum::Set, member_data->Get<std::string>( __STRING__( name ) ) );
         }
         else
         {
-            kfteam->UpdateData( __STRING__( captainid ), KFEnum::Set, kfmember->GetKeyID() );
-            kfteam->UpdateData( __STRING__( captainname ), kfmember->Get<std::string>( __STRING__( name ) ) );
+            team_data->UpdateData( __STRING__( captainid ), KFEnum::Set, member_data->GetKeyID() );
+            team_data->UpdateData( __STRING__( captainname ), member_data->Get<std::string>( __STRING__( name ) ) );
         }
     }
 
-    void KFTeamShardModule::SendJoinTeamToMember( EntityPtr kfteam, DataPtr kfmember )
+    void KFTeamShardModule::SendJoinTeamToMember( EntityPtr team_data, DataPtr member_data )
     {
-        auto pbteam = _kf_kernel->SerializeToClient( kfteam );
+        auto pb_team = _kf_kernel->SerializeToClient( team_data );
 
         KFMsg::S2STeamJoinToGameAck ack;
-        ack.mutable_pbteam()->CopyFrom( *pbteam );
-        SendMessageToMember( kfmember, KFMsg::S2S_TEAM_JON_TO_GAME_ACK, &ack );
+        ack.mutable_pbteam()->CopyFrom( *pb_team );
+        SendMessageToMember( member_data, KFMsg::S2S_TEAM_JON_TO_GAME_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamJoinFailedToTeamReq, KFMsg::S2STeamJoinFailedToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return;
         }
 
-        RemoveTeamMember( kfteam, kfmsg->playerid() );
+        RemoveTeamMember( team_data, kfmsg->playerid() );
     }
 
-    void KFTeamShardModule::RemoveTeamMember( EntityPtr kfteam, uint64 memberid )
+    void KFTeamShardModule::RemoveTeamMember( EntityPtr team_data, uint64 member_id )
     {
         // 删除队员
-        auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
-        kfteam->RemoveRecord( kfmemberrecord, memberid );
-        if ( kfmemberrecord->Size() == 0u )
+        auto member_record = team_data->Find( __STRING__( member ) );
+        team_data->RemoveRecord( member_record, member_id );
+        if ( member_record->Size() == 0u )
         {
             // 已经没有队员了, 删除队伍
-            _component->RemoveEntity( kfteam );
+            _component->RemoveEntity( team_data );
+            _kf_route->RemoveObject( team_data->GetKeyID() );
         }
         else
         {
             // 更新队伍当前数量
-            kfteam->UpdateData( __STRING__( nowcount ), KFEnum::Set, kfmemberrecord->Size() );
+            team_data->UpdateData( __STRING__( nowcount ), KFEnum::Set, member_record->Size() );
 
             // 更新队长
-            auto captainid = kfteam->Get<uint64>( __STRING__( captainid ) );
-            if ( captainid == memberid )
+            auto captain_id = team_data->Get<uint64>( __STRING__( captainid ) );
+            if ( captain_id == member_id )
             {
-                ChangeTeamCaptain( kfteam, captainid );
+                ChangeTeamCaptain( team_data, captain_id );
             }
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamOnlineQueryToTeamReq, KFMsg::S2STeamOnlineQueryToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return;
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->playerid() );
-        if ( kfmember == nullptr )
+        auto member_data = team_data->Find( __STRING__( member ), kfmsg->playerid() );
+        if ( member_data == nullptr )
         {
             return;
         }
 
         // 如果在队伍, 把队伍信息返回给客户端
-        auto pbteam = _kf_kernel->SerializeToClient( kfteam );
+        auto pb_team = _kf_kernel->SerializeToClient( team_data );
 
         KFMsg::S2STeamOnlineQueryToGameAck ack;
-        ack.mutable_pbteam()->CopyFrom( *pbteam );
+        ack.mutable_pbteam()->CopyFrom( *pb_team );
         _kf_route->RepeatToRoute( route, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_GAME_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamIntValueToTeamReq, KFMsg::S2STeamIntValueToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return;
         }
 
-        auto captainid = kfteam->Get( __STRING__( captainid ) );
-        if ( captainid != kfmsg->playerid() )
+        auto captain_id = team_data->Get( __STRING__( captainid ) );
+        if ( captain_id != kfmsg->playerid() )
         {
             return;
         }
 
         for ( auto iter = kfmsg->pbdata().begin(); iter != kfmsg->pbdata().end(); ++iter )
         {
-            kfteam->UpdateData( iter->first, KFEnum::Set, iter->second );
+            team_data->UpdateData( iter->first, KFEnum::Set, iter->second );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamStrValueToTeamReq, KFMsg::S2STeamStrValueToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return;
         }
 
-        auto captainid = kfteam->Get( __STRING__( captainid ) );
-        if ( captainid != kfmsg->playerid() )
+        auto captain_id = team_data->Get( __STRING__( captainid ) );
+        if ( captain_id != kfmsg->playerid() )
         {
             return;
         }
 
         for ( auto iter = kfmsg->pbdata().begin(); iter != kfmsg->pbdata().end(); ++iter )
         {
-            kfteam->UpdateData( iter->first, iter->second );
+            team_data->UpdateData( iter->first, iter->second );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamMemberIntValueToTeamReq, KFMsg::S2STeamMemberIntValueToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return;
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->playerid() );
-        if ( kfmember == nullptr )
+        auto member_data = team_data->Find( __STRING__( member ), kfmsg->playerid() );
+        if ( member_data == nullptr )
         {
             return;
         }
 
         for ( auto iter = kfmsg->pbdata().begin(); iter != kfmsg->pbdata().end(); ++iter )
         {
-            kfteam->UpdateObject( kfmember, iter->first, KFEnum::Set, iter->second );
+            team_data->UpdateObject( member_data, iter->first, KFEnum::Set, iter->second );
 
             // 如果是队长下线, 需要更换队长
-            if ( iter->first == __STRING__( server_id ) && iter->second == _invalid_int )
+            if ( iter->first == __STRING__( serverid ) && iter->second == _invalid_int )
             {
-                auto captainid = kfteam->Get( __STRING__( captainid ) );
-                if ( captainid == kfmember->GetKeyID() )
+                auto captain_id = team_data->Get( __STRING__( captainid ) );
+                if ( captain_id == member_data->GetKeyID() )
                 {
-                    ChangeTeamCaptain( kfteam, captainid );
+                    ChangeTeamCaptain( team_data, captain_id );
                 }
             }
         }
@@ -309,28 +295,28 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamMemberStrValueToTeamReq, KFMsg::S2STeamMemberStrValueToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return;
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->playerid() );
-        if ( kfmember == nullptr )
+        auto member_data = team_data->Find( __STRING__( member ), kfmsg->playerid() );
+        if ( member_data == nullptr )
         {
             return;
         }
 
         for ( auto iter = kfmsg->pbdata().begin(); iter != kfmsg->pbdata().end(); ++iter )
         {
-            kfteam->UpdateObject( kfmember, iter->first, iter->second );
+            team_data->UpdateObject( member_data, iter->first, iter->second );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamLeaveToTeamReq, KFMsg::S2STeamLeaveToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return;
         }
@@ -342,25 +328,25 @@ namespace KFrame
         _kf_route->RepeatToRoute( route, KFMsg::S2S_TEAM_LEAVE_TO_GAME_ACK, &ack );
 
         // 删除玩家
-        RemoveTeamMember( kfteam, kfmsg->playerid() );
+        RemoveTeamMember( team_data, kfmsg->playerid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamKickToTeamReq, KFMsg::S2STeamKickToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return;
         }
 
-        auto captainid = kfteam->Get( __STRING__( captainid ) );
-        if ( captainid != kfmsg->captainid() )
+        auto captain_id = team_data->Get( __STRING__( captainid ) );
+        if ( captain_id != kfmsg->captainid() )
         {
             return;
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->memberid() );
-        if ( kfmember == nullptr )
+        auto member_data = team_data->Find( __STRING__( member ), kfmsg->memberid() );
+        if ( member_data == nullptr )
         {
             return;
         }
@@ -370,36 +356,36 @@ namespace KFrame
             KFMsg::S2STeamLeaveToGameAck ack;
             ack.set_type( KFMsg::Kick );
             ack.set_teamid( kfmsg->teamid() );
-            SendMessageToMember( kfmember, KFMsg::S2S_TEAM_LEAVE_TO_GAME_ACK, &ack );
+            SendMessageToMember( member_data, KFMsg::S2S_TEAM_LEAVE_TO_GAME_ACK, &ack );
         }
 
         // 删除玩家
-        RemoveTeamMember( kfteam, kfmsg->memberid() );
+        RemoveTeamMember( team_data, kfmsg->memberid() );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTeamShardModule::HandleTeamAgreeToTeamReq, KFMsg::S2STeamAgreeToTeamReq )
     {
-        auto kfteam = _component->FindEntity( kfmsg->teamid() );
-        if ( kfteam == nullptr )
+        auto team_data = _component->FindEntity( kfmsg->teamid() );
+        if ( team_data == nullptr )
         {
             return _kf_display->SendToPlayer( route, KFMsg::TeamNotExist );
         }
 
-        auto maxcount = kfteam->Get( __STRING__( maxcount ) );
-        auto nowcount = kfteam->Get( __STRING__( nowcount ) );
-        if ( nowcount >= maxcount )
+        auto max_count = team_data->Get( __STRING__( maxcount ) );
+        auto now_count = team_data->Get( __STRING__( nowcount ) );
+        if ( now_count >= max_count )
         {
             return _kf_display->SendToPlayer( route, KFMsg::TeamIsFull );
         }
 
-        auto kfmemberrecord = kfteam->Find( __STRING__( member ) );
-        auto kfmember = kfteam->CreateData( kfmemberrecord );
-        _kf_kernel->ParseFromMessage( kfmember, &kfmsg->pbplayer() );
+        auto member_record = team_data->Find( __STRING__( member ) );
+        auto member_data = team_data->CreateData( member_record );
+        _kf_kernel->ParseFromMessage( member_data, &kfmsg->pbplayer() );
 
         // 加入队伍中
-        kfteam->AddRecord( kfmemberrecord, kfmember->GetKeyID(), kfmember );
+        team_data->AddRecord( member_record, member_data->GetKeyID(), member_data );
 
         // 通知队员加入队伍
-        SendJoinTeamToMember( kfteam, kfmember );
+        SendJoinTeamToMember( team_data, member_data );
     }
 }

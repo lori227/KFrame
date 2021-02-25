@@ -51,27 +51,27 @@ namespace KFrame
     __KF_PLAYER_ENTER_FUNCTION__( KFTeamClientModule::OnEnterTeamModule )
     {
         // 判断队伍是否存在, 存在去队伍集群中请求
-        auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
-        if ( teamid == _invalid_int )
+        auto team_id = player->Get( __STRING__( team ), __STRING__( id ) );
+        if ( team_id == _invalid_int )
         {
             return;
         }
 
         KFMsg::S2STeamOnlineQueryToTeamReq req;
-        req.set_teamid( teamid );
+        req.set_teamid( team_id );
         req.set_playerid( player->GetKeyID() );
-        auto ok = _kf_route->RepeatToObject( player->GetKeyID(), __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ, &req );
+        auto ok = _kf_route->RepeatToObject( player->GetKeyID(), __TEAM_ROUTE_NAME__, team_id, KFMsg::S2S_TEAM_ONLINE_QUERY_TO_TEAM_REQ, &req );
         if ( ok )
         {
             // 把队伍id清除
-            player->Set( __STRING__( team ), __STRING__( id ), _invalid_int );
+            player->Operate( __STRING__( team ), __STRING__( id ), KFEnum::Set, _invalid_int );
         }
     }
 
     __KF_PLAYER_LEAVE_FUNCTION__( KFTeamClientModule::OnLeaveTeamModule )
     {
-        auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
-        if ( teamid == _invalid_int )
+        auto team_id = player->Get( __STRING__( team ), __STRING__( id ) );
+        if ( team_id == _invalid_int )
         {
             return;
         }
@@ -81,67 +81,61 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFTeamClientModule::OnTeamIntValueUpdate )
     {
-        if ( !kfdata->HaveMask( KFDataDefine::DataMaskTeam ) ||
-                !kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskTeam ) )
+        if ( !data->HaveMask( KFDataDefine::DataMaskTeam ) ||
+                !data->GetParent()->HaveMask( KFDataDefine::DataMaskTeam ) )
         {
             return;
         }
 
-        auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
-        if ( teamid == _invalid_int )
+        auto team_id = player->Get( __STRING__( team ), __STRING__( id ) );
+        if ( team_id == _invalid_int )
         {
             return;
         }
 
-        UpdateMemberIntValueToTeam( player, kfdata->_data_setting->_name, newvalue );
+        UpdateMemberIntValueToTeam( player, data->_data_setting->_name, new_value );
     }
 
     __KF_UPDATE_STRING_FUNCTION__( KFTeamClientModule::OnTeamStrValueUpdate )
     {
-        if ( !kfdata->HaveMask( KFDataDefine::DataMaskTeam ) ||
-                !kfdata->GetParent()->HaveMask( KFDataDefine::DataMaskTeam ) )
+        if ( !data->HaveMask( KFDataDefine::DataMaskTeam ) ||
+                !data->GetParent()->HaveMask( KFDataDefine::DataMaskTeam ) )
         {
             return;
         }
 
-        auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
-        if ( teamid == _invalid_int )
+        auto team_id = player->Get( __STRING__( team ), __STRING__( id ) );
+        if ( team_id == _invalid_int )
         {
             return;
         }
 
-        UpdateMemberStrValueToTeam( player, kfdata->_data_setting->_name, newvalue );
+        UpdateMemberStrValueToTeam( player, data->_data_setting->_name, new_value );
     }
 
     void KFTeamClientModule::UpdateIntValueToTeam( EntityPtr player, const StringUInt64& values )
     {
-        auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
+        auto team_id = player->Get( __STRING__( team ), __STRING__( id ) );
 
         KFMsg::S2STeamIntValueToTeamReq req;
-        req.set_teamid( teamid );
+        req.set_teamid( team_id );
         req.set_playerid( player->GetKeyID() );
 
-        auto pbdata = req.mutable_pbdata();
-        for ( auto& iter : values )
-        {
-            ( *pbdata )[ iter.first ] = iter.second;
-        }
-        _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_INT_VALUE_TO_TEAM_REQ, &req );
+        auto& pb_data = *req.mutable_pbdata();
+        __MAP_TO_PROTO__( values, pb_data );
+        _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, team_id, KFMsg::S2S_TEAM_INT_VALUE_TO_TEAM_REQ, &req );
     }
 
     void KFTeamClientModule::UpdateStrValueToTeam( EntityPtr player, const StringMap& values )
     {
-        auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
+        auto team_id = player->Get( __STRING__( team ), __STRING__( id ) );
 
         KFMsg::S2STeamStrValueToTeamReq req;
-        req.set_teamid( teamid );
+        req.set_teamid( team_id );
         req.set_playerid( player->GetKeyID() );
-        auto pbdata = req.mutable_pbdata();
-        for ( auto& iter : values )
-        {
-            ( *pbdata )[ iter.first ] = iter.second;
-        }
-        _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, &req );
+        auto& pb_data = *req.mutable_pbdata();
+        __MAP_TO_PROTO__( values, pb_data );
+        _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, team_id, KFMsg::S2S_TEAM_STR_VALUE_TO_TEAM_REQ, &req );
     }
 
     void KFTeamClientModule::UpdateMemberIntValueToTeam( EntityPtr player, const std::string& data_name, uint64 data_value )
@@ -153,29 +147,26 @@ namespace KFrame
 
     void KFTeamClientModule::UpdateMemberIntValueToTeam( EntityPtr player, const StringUInt64& values )
     {
-        auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
+        auto team_id = player->Get( __STRING__( team ), __STRING__( id ) );
 
         KFMsg::S2STeamMemberIntValueToTeamReq req;
-        req.set_teamid( teamid );
+        req.set_teamid( team_id );
         req.set_playerid( player->GetKeyID() );
 
-        auto pbdata = req.mutable_pbdata();
-        for ( auto& iter : values )
-        {
-            ( *pbdata )[ iter.first ] = iter.second;
-        }
-        _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, &req );
+        auto& pb_data = *req.mutable_pbdata();
+        __MAP_TO_PROTO__( values, pb_data );
+        _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, team_id, KFMsg::S2S_TEAM_MEMBER_INT_VALUE_TO_TEAM_REQ, &req );
     }
 
     void KFTeamClientModule::UpdateMemberStrValueToTeam( EntityPtr player, const std::string& data_name, const std::string& data_value )
     {
-        auto teamid = player->Get( __STRING__( team ), __STRING__( id ) );
+        auto team_id = player->Get( __STRING__( team ), __STRING__( id ) );
 
         KFMsg::S2STeamMemberStrValueToTeamReq req;
-        req.set_teamid( teamid );
+        req.set_teamid( team_id );
         req.set_playerid( player->GetKeyID() );
         ( *req.mutable_pbdata() )[ data_name ] = data_value;
-        _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, &req );
+        _kf_route->RepeatToObject( __TEAM_ROUTE_NAME__, team_id, KFMsg::S2S_TEAM_MEMBER_STR_VALUE_TO_TEAM_REQ, &req );
     }
 
     void KFTeamClientModule::EnterLeaveUpdateToTeam( EntityPtr player )
@@ -183,7 +174,7 @@ namespace KFrame
         auto basic_data = player->Find( __STRING__( basic ) );
 
         StringUInt64 values;
-        values[ __STRING__( server_id ) ] = basic_data->Get( __STRING__( server_id ) );
+        values[ __STRING__( serverid ) ] = basic_data->Get( __STRING__( serverid ) );
         values[ __STRING__( status ) ] = basic_data->Get( __STRING__( status ) );
         values[ __STRING__( statustime ) ] = basic_data->Get( __STRING__( statustime ) );
         UpdateMemberIntValueToTeam( player, values );
@@ -192,8 +183,8 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamCreateReq, KFMsg::MsgTeamCreateReq )
     {
         // 判断自己是否有队伍
-        auto teamid = entity->Get( __STRING__( team ), __STRING__( id ) );
-        if ( teamid != _invalid_int )
+        auto team_id = entity->Get( __STRING__( team ), __STRING__( id ) );
+        if ( team_id != _invalid_int )
         {
             return _kf_display->SendToClient( entity, KFMsg::TeamAlready );
         }
@@ -216,14 +207,14 @@ namespace KFrame
             return _kf_display->SendToClient( entity, KFMsg::TeamSettingError );
         }
 
-        auto pbbasic = _kf_kernel->SerializeToClient( entity->Find( __STRING__( basic ) ) );
+        auto pb_basic = _kf_kernel->SerializeToClient( entity->Find( __STRING__( basic ) ) );
 
         // 发送到队伍集群处理
         KFMsg::S2STeamCreateToTeamReq req;
         req.set_id( kfmsg->id() );
         req.set_name( kfmsg->name() );
         req.set_info( kfmsg->info() );
-        req.mutable_pbcaptain()->CopyFrom( *pbbasic );
+        req.mutable_pbcaptain()->CopyFrom( *pb_basic );
         auto ok = _kf_route->SendToRand( __TEAM_ROUTE_NAME__, KFMsg::S2S_TEAM_CREATE_TO_TEAM_REQ, &req );
         if ( !ok )
         {
@@ -234,11 +225,11 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamJoinToGameAck, KFMsg::S2STeamJoinToGameAck )
     {
         // 先判断是否有队伍
-        auto kfteam = entity->Find( __STRING__( team ) );
-        auto teamid = kfteam->Get( __STRING__( id ) );
-        if ( teamid != _invalid_int )
+        auto team_data = entity->Find( __STRING__( team ) );
+        auto team_id = team_data->Get( __STRING__( id ) );
+        if ( team_id != _invalid_int )
         {
-            if ( teamid != kfmsg->id() )
+            if ( team_id != kfmsg->id() )
             {
                 // 已经在队伍, 并且不是同一个队伍, 需要从队伍中删除玩家
                 KFMsg::S2STeamJoinFailedToTeamReq req;
@@ -250,10 +241,10 @@ namespace KFrame
         }
 
         // 保存队伍数据
-        _kf_kernel->ParseFromMessage( kfteam, &kfmsg->pbteam() );
+        _kf_kernel->ParseFromMessage( team_data, &kfmsg->pbteam() );
 
         // 同步给客户端
-        entity->SyncUpdateDataToClient( kfteam, kfmsg->id() );
+        entity->SyncUpdateDataToClient( team_data, kfmsg->id() );
 
         // 提示
         _kf_display->DelayToClient( entity, KFMsg::TeamJoinOk );
@@ -261,13 +252,13 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamOnlineQueryToGameAck, KFMsg::S2STeamOnlineQueryToGameAck )
     {
-        auto kfteam = entity->Find( __STRING__( team ) );
+        auto team_data = entity->Find( __STRING__( team ) );
 
         // 保存队伍数据
-        _kf_kernel->ParseFromMessage( kfteam, &kfmsg->pbteam() );
+        _kf_kernel->ParseFromMessage( team_data, &kfmsg->pbteam() );
 
         // 同步给客户端
-        entity->SyncUpdateDataToClient( kfteam, kfteam->Get( __STRING__( id ) ) );
+        entity->SyncUpdateDataToClient( team_data, team_data->Get( __STRING__( id ) ) );
 
         // 更新状态
         EnterLeaveUpdateToTeam( entity );
@@ -275,16 +266,16 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamLeaveReq, KFMsg::MsgTeamLeaveReq )
     {
-        auto teamid = entity->Get( __STRING__( team ), __STRING__( id ) );
-        if ( teamid == _invalid_int )
+        auto team_id = entity->Get( __STRING__( team ), __STRING__( id ) );
+        if ( team_id == _invalid_int )
         {
             return _kf_display->SendToClient( entity, KFMsg::TeamNoInTeam );
         }
 
         KFMsg::S2STeamLeaveToTeamReq req;
-        req.set_teamid( teamid );
+        req.set_teamid( team_id );
         req.set_playerid( entity->GetKeyID() );
-        auto ok = _kf_route->SendToObject( entity->GetKeyID(), __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_LEAVE_TO_TEAM_REQ, &req );
+        auto ok = _kf_route->SendToObject( entity->GetKeyID(), __TEAM_ROUTE_NAME__, team_id, KFMsg::S2S_TEAM_LEAVE_TO_TEAM_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( entity, KFMsg::RouteServerBusy );
@@ -293,30 +284,30 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamKickReq, KFMsg::MsgTeamKickReq )
     {
-        auto kfteam = entity->Find( __STRING__( team ) );
-        auto teamid = kfteam->Get( __STRING__( id ) );
-        if ( teamid == _invalid_int )
+        auto team_data = entity->Find( __STRING__( team ) );
+        auto team_id = team_data->Get( __STRING__( id ) );
+        if ( team_id == _invalid_int )
         {
             return _kf_display->SendToClient( entity, KFMsg::TeamNoInTeam );
         }
 
-        auto captainid = kfteam->Get( __STRING__( captainid ) );
-        if ( captainid != entity->GetKeyID() )
+        auto captain_id = team_data->Get( __STRING__( captainid ) );
+        if ( captain_id != entity->GetKeyID() )
         {
             return _kf_display->SendToClient( entity, KFMsg::TeamNoInCaptain );
         }
 
-        auto kfmember = kfteam->Find( __STRING__( member ), kfmsg->memberid() );
-        if ( kfmember == nullptr )
+        auto member_data = team_data->Find( __STRING__( member ), kfmsg->memberid() );
+        if ( member_data == nullptr )
         {
             return _kf_display->SendToClient( entity, KFMsg::TeamNotHaveMember );
         }
 
         KFMsg::S2STeamKickToTeamReq req;
-        req.set_teamid( teamid );
+        req.set_teamid( team_id );
         req.set_memberid( kfmsg->memberid() );
         req.set_captainid( entity->GetKeyID() );
-        auto ok = _kf_route->SendToObject( entity->GetKeyID(), __TEAM_ROUTE_NAME__, teamid, KFMsg::S2S_TEAM_KICK_TO_TEAM_REQ, &req );
+        auto ok = _kf_route->SendToObject( entity->GetKeyID(), __TEAM_ROUTE_NAME__, team_id, KFMsg::S2S_TEAM_KICK_TO_TEAM_REQ, &req );
         if ( !ok )
         {
             _kf_display->SendToClient( entity, KFMsg::RouteServerBusy );
@@ -325,16 +316,16 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamLeaveToGameAck, KFMsg::S2STeamLeaveToGameAck )
     {
-        auto kfteam = entity->Find( __STRING__( team ) );
-        auto teamid = kfteam->Get( __STRING__( id ) );
-        if ( teamid != kfmsg->teamid() )
+        auto team_data = entity->Find( __STRING__( team ) );
+        auto team_id = team_data->Get( __STRING__( id ) );
+        if ( team_id != kfmsg->teamid() )
         {
             return;
         }
 
         // 清空队伍信息
-        entity->ClearRecord( kfteam->Find( __STRING__( member ) ) );
-        entity->UpdateObject( kfteam, __STRING__( id ), KFEnum::Set, _invalid_int );
+        entity->ClearRecord( team_data->Find( __STRING__( member ) ) );
+        entity->UpdateObject( team_data, __STRING__( id ), KFEnum::Set, _invalid_int );
 
         switch ( kfmsg->type() )
         {
@@ -352,32 +343,32 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamInviteReq, KFMsg::MsgTeamInviteReq )
     {
-        auto kfteam = entity->Find( __STRING__( team ) );
-        auto teamid = kfteam->Get( __STRING__( id ) );
-        if ( teamid == _invalid_int )
+        auto team_data = entity->Find( __STRING__( team ) );
+        auto team_id = team_data->Get( __STRING__( id ) );
+        if ( team_id == _invalid_int )
         {
             return _kf_display->SendToClient( entity, KFMsg::TeamNoInTeam );
         }
 
-        auto maxcount = kfteam->Get( __STRING__( maxcount ) );
-        auto nowcount = kfteam->Get( __STRING__( nowcount ) );
-        if ( nowcount >= maxcount )
+        auto max_count = team_data->Get( __STRING__( maxcount ) );
+        auto now_count = team_data->Get( __STRING__( nowcount ) );
+        if ( now_count >= max_count )
         {
             return _kf_display->SendToClient( entity, KFMsg::TeamIsFull );
         }
 
-        SendTeamInviteToTarget( entity, kfteam, kfmsg->server_id(), kfmsg->playerid() );
+        SendTeamInviteToTarget( entity, team_data, kfmsg->serverid(), kfmsg->playerid() );
     }
 
-    void KFTeamClientModule::SendTeamInviteToTarget( EntityPtr player, DataPtr kfteam, uint64 server_id, uint64 player_id )
+    void KFTeamClientModule::SendTeamInviteToTarget( EntityPtr player, DataPtr team_data, uint64 server_id, uint64 player_id )
     {
-        auto pbteam = _kf_kernel->SerializeToView( kfteam );
-        auto pbbasic = _kf_kernel->SerializeToView( player->Find( __STRING__( basic ) ) );
+        auto pb_team = _kf_kernel->SerializeToView( team_data );
+        auto pb_basic = _kf_kernel->SerializeToView( player->Find( __STRING__( basic ) ) );
 
         // 发送到目标玩家
         KFMsg::S2STeamTellInviteToGameAck tell;
-        tell.mutable_pbteam()->CopyFrom( *pbteam );
-        tell.mutable_pbplayer()->CopyFrom( *pbbasic );
+        tell.mutable_pbteam()->CopyFrom( *pb_team );
+        tell.mutable_pbplayer()->CopyFrom( *pb_basic );
         auto ok = _kf_route->SendToEntity( player->GetKeyID(), server_id, player_id, KFMsg::S2S_TEAM_TELL_INVITE_TO_GAME_ACK, &tell );
         if ( !ok )
         {
@@ -412,11 +403,11 @@ namespace KFrame
             return _kf_display->SendToClient( entity, KFMsg::TeamPlaying );
         }
 
-        auto pbbasic = _kf_kernel->SerializeToView( entity->Find( __STRING__( basic ) ) );
+        auto pb_basic = _kf_kernel->SerializeToView( entity->Find( __STRING__( basic ) ) );
 
         KFMsg::S2STeamTellApplyToGameAck tell;
-        tell.mutable_pbplayer()->CopyFrom( *pbbasic );
-        auto ok = _kf_route->SendToEntity( entity->GetKeyID(), kfmsg->server_id(), kfmsg->playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
+        tell.mutable_pbplayer()->CopyFrom( *pb_basic );
+        auto ok = _kf_route->SendToEntity( entity->GetKeyID(), kfmsg->serverid(), kfmsg->playerid(), KFMsg::S2S_TEAM_TELL_APPLY_TO_GAME_ACK, &tell );
         if ( !ok )
         {
             _kf_display->SendToClient( entity, KFMsg::RouteServerBusy );
@@ -426,16 +417,16 @@ namespace KFrame
     // 客户端收到申请, 直接再发一次邀请即可
     __KF_MESSAGE_FUNCTION__( KFTeamClientModule::HandleTeamTellApplyToGameAck, KFMsg::S2STeamTellInviteToGameAck )
     {
-        auto kfteam = entity->Find( __STRING__( team ) );
-        auto teamid = kfteam->Get( __STRING__( id ) );
-        if ( teamid == _invalid_int )
+        auto team_data = entity->Find( __STRING__( team ) );
+        auto team_id = team_data->Get( __STRING__( id ) );
+        if ( team_id == _invalid_int )
         {
             return _kf_display->SendToPlayer( route, KFMsg::TeamNoInTeam );
         }
 
-        auto maxcount = kfteam->Get( __STRING__( maxcount ) );
-        auto nowcount = kfteam->Get( __STRING__( nowcount ) );
-        if ( nowcount >= maxcount )
+        auto max_count = team_data->Get( __STRING__( maxcount ) );
+        auto now_count = team_data->Get( __STRING__( nowcount ) );
+        if ( now_count >= max_count )
         {
             return _kf_display->SendToPlayer( route, KFMsg::TeamIsFull );
         }
@@ -462,18 +453,18 @@ namespace KFrame
             return _kf_display->SendToClient( entity, KFMsg::TeamIdError );
         }
 
-        auto kfteam = entity->Find( __STRING__( team ) );
-        auto teamid = kfteam->Get( __STRING__( id ) );
-        if ( teamid != _invalid_int )
+        auto team_data = entity->Find( __STRING__( team ) );
+        auto team_id = team_data->Get( __STRING__( id ) );
+        if ( team_id != _invalid_int )
         {
             return _kf_display->SendToClient( entity, KFMsg::TeamAlready );
         }
 
-        auto pbbasic = _kf_kernel->SerializeToView( entity->Find( __STRING__( basic ) ) );
+        auto pb_basic = _kf_kernel->SerializeToView( entity->Find( __STRING__( basic ) ) );
 
         KFMsg::S2STeamAgreeToTeamReq req;
         req.set_teamid( kfmsg->teamid() );
-        req.mutable_pbplayer()->CopyFrom( *pbbasic );
+        req.mutable_pbplayer()->CopyFrom( *pb_basic );
         auto ok = _kf_route->SendToObject( entity->GetKeyID(), __TEAM_ROUTE_NAME__, kfmsg->teamid(), KFMsg::S2S_TEAM_AGREE_TO_TEAM_REQ, &req );
         if ( !ok )
         {
