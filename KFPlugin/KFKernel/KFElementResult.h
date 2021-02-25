@@ -53,11 +53,11 @@ namespace KFrame
         }
 
         // 添加不可叠加的数据
-        bool AddResult( uint32 id, DataPtr kfdata )
+        bool AddResult( uint32 id, DataPtr data )
         {
             _config_id = id;
             _total_value += 1u;
-            _not_overlay_list.push_back( kfdata );
+            _not_overlay_list.push_back( data );
             _show_type = KFDataShowEnum::Show_NotOverlay;
             return true;
         }
