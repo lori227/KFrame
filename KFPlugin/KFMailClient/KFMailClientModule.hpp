@@ -36,13 +36,13 @@ namespace KFrame
         ////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////
         // 发送全局邮件
-        virtual bool SendMail( uint32 configid, const KFElements* elements = nullptr );
+        virtual bool SendMail( uint32 config_id, const KFElements* elements = nullptr );
 
         // 系统给某人发送邮件
-        virtual bool SendMail( uint64 recv_id, uint32 configid, const KFElements* elements = nullptr );
+        virtual bool SendMail( uint64 recv_id, uint32 config_id, const KFElements* elements = nullptr );
 
         // 某人给某人发送邮件
-        virtual bool SendMail( EntityPtr player, uint64 recv_id, uint32 configid, const KFElements* elements = nullptr );
+        virtual bool SendMail( EntityPtr player, uint64 recv_id, uint32 config_id, const KFElements* elements = nullptr );
 
     protected:
 
@@ -91,19 +91,19 @@ namespace KFrame
         void SendQueryMailMessage( EntityPtr player );
 
         // 判断邮件过期
-        bool CheckMailTimeOut( DataPtr kfmail );
+        bool CheckMailTimeOut( DataPtr mail_data );
 
         // 更新状态到邮件
-        void UpdateMailStatusToShard( EntityPtr player, DataPtr kfmail, uint32 status );
+        void UpdateMailStatusToShard( EntityPtr player, DataPtr mail_data, uint32 status );
 
         // 领取邮件奖励
         void ReceiveMailReward( EntityPtr player, uint64 id );
 
         // 格式化邮件内容
-        StringMap& FormatMailData( EntityPtr sender, const KFMailSetting* setting, const KFElements* elements );
+        StringMap& FormatMailData( EntityPtr sender, std::shared_ptr<const KFMailSetting> setting, const KFElements* elements );
 
         // 发送添加邮件
-        bool SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recv_id, const StringMap& maildata );
+        bool SendAddMailToShard( uint64 send_id, uint32 flag, uint64 recv_id, const StringMap& mail_data_list );
     };
 }
 

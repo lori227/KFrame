@@ -61,7 +61,7 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////
     protected:
         // 添加邮件
-        uint64 AddMail( uint32 flag, uint64 objectid, StringMap& maildata );
+        uint64 AddMail( uint32 flag, uint64 object_id, StringMap& mail_data );
 
     private:
         // 邮件数据库逻辑

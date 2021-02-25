@@ -4,8 +4,8 @@ namespace KFrame
 {
     void KFMailShardModule::BeforeRun()
     {
-        auto maildatabasetype = KFGlobal::Instance()->GetUInt32( __STRING__( maildatabase ) );
-        switch ( maildatabasetype )
+        auto mail_database_type = KFGlobal::Instance()->GetUInt32( __STRING__( maildatabase ) );
+        switch ( mail_database_type )
         {
         case KFDatabaseEnum::Mongo:
             _mail_database_logic = __NEW_OBJECT__( KFMailDatabaseMongo );
@@ -58,41 +58,27 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_HTTP_FUNCTION__( KFMailShardModule::HandleGMAddMailReq )
     {
-        auto strdata = data;
-        KFUtility::ReplaceString( strdata, " ", "" );
-        KFUtility::ReplaceString( strdata, "%", "" );
+        auto str_data = data;
+        KFUtility::ReplaceString( str_data, " ", "" );
+        KFUtility::ReplaceString( str_data, "%", "" );
 
         __JSON_PARSE_STRING__( request, strdata );
 
         // 邮件玩家列表
-        UInt64Set playerlist;
+        UInt64Set player_list;
         if ( __JSON_HAS_MEMBER__( request, __STRING__( playerid ) ) )
         {
-            auto strplayerid = __JSON_GET_STRING__( request, __STRING__( playerid ) );
-            while ( !strplayerid.empty() )
-            {
-                auto player_id = KFUtility::SplitValue( strplayerid, "," );
-                if ( player_id != _invalid_int )
-                {
-                    playerlist.insert( player_id );
-                }
-            }
+            auto str_player_list = __JSON_GET_STRING__( request, __STRING__( playerid ) );
+            KFUtility::SplitSet( str_player_list, ",", player_list );
             __JSON_REMOVE__( request, __STRING__( playerid ) );
         }
 
         // 小区列表
-        UInt64Set zonelist;
+        UInt64Set zone_list;
         if ( __JSON_HAS_MEMBER__( request, __STRING__( zoneid ) ) )
         {
-            auto strzoneid = __JSON_GET_STRING__( request, __STRING__( zoneid ) );
-            while ( !strzoneid.empty() )
-            {
-                auto zone_id = KFUtility::SplitValue( strzoneid, "," );
-                if ( zone_id != _invalid_int )
-                {
-                    zonelist.insert( zone_id );
-                }
-            }
+            auto str_zone_id = __JSON_GET_STRING__( request, __STRING__( zoneid ) );
+            KFUtility::SplitSet( str_zone_id, ",", zone_list );
             __JSON_REMOVE__( request, __STRING__( zoneid ) );
         }
 
@@ -100,7 +86,7 @@ namespace KFrame
         StringMap values;
         __JSON_TO_MAP__( request, values );
 
-        if ( playerlist.empty() )
+        if ( player_list.empty() )
         {
             for ( auto zone_id : zonelist )
             {
@@ -109,7 +95,7 @@ namespace KFrame
         }
         else
         {
-            for ( auto player_id : playerlist )
+            for ( auto player_id : player_list )
             {
                 AddMail( KFMsg::PersonMail, player_id, values );
             }
@@ -122,16 +108,16 @@ namespace KFrame
     {
         __JSON_PARSE_STRING__( request, data );
 
-        const auto& maillist = __JSON_GET_ARRRY__( request, __STRING__( mailid ) );
-        auto count = __JSON_ARRAY_SIZE__( maillist );
+        const auto& mail_list = __JSON_GET_ARRRY__( request, __STRING__( mail_id ) );
+        auto count = __JSON_ARRAY_SIZE__( mail_list );
 
-        UInt64List mailidlist;
+        UInt64List mail_id_list;
         for ( auto i = 0u; i < count; ++i )
         {
-            auto mailid = __JSON_ARRAY_INDEX__( maillist, i ).GetUint64();
-            mailidlist.push_back( mailid );
+            auto mail_id = __JSON_ARRAY_INDEX__( mail_list, i ).GetUint64();
+            mail_id_list.push_back( mail_id );
         }
-        _mail_database_logic->RemoveMail( mailidlist );
+        _mail_database_logic->RemoveMail( mail_id_list );
 
         return _kf_http_server->SendCode( KFMsg::Ok );
     }
@@ -151,18 +137,18 @@ namespace KFrame
         _mail_database_logic->LoadGlobalMailToPerson( kfmsg->playerid(), kfmsg->zone_id() );
 
         // 查询邮件列表
-        auto kfmailist = _mail_database_logic->QueryMailList( kfmsg->playerid(), kfmsg->maxid() );
-        if ( kfmailist == nullptr || kfmailist->_value.empty() )
+        auto mail_list_result = _mail_database_logic->QueryMailList( kfmsg->playerid(), kfmsg->maxid() );
+        if ( mail_list_result == nullptr || mail_list_result->_value.empty() )
         {
             return;
         }
 
         KFMsg::S2SQueryMailAck ack;
         ack.set_playerid( kfmsg->playerid() );
-        for ( auto& maildata : kfmailist->_value )
+        for ( auto& mail_data : mail_list_result->_value )
         {
-            auto& pbmail = *( ack.add_mail()->mutable_data() );
-            __MAP_TO_PROTO__( maildata, pbmail );
+            auto& pb_mail = *( ack.add_mail()->mutable_data() );
+            __MAP_TO_PROTO__( mail_data, pb_mail );
         }
         _kf_route->SendToRoute( route, KFMsg::S2S_QUERY_MAIL_ACK, &ack );
     }
@@ -170,45 +156,45 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleAddMailReq, KFMsg::S2SAddMailReq )
     {
         // 邮件数据
-        StringMap maildata;
-        auto pbmail = &kfmsg->pbmail().data();
-        __PROTO_TO_MAP__( pbmail, maildata );
+        StringMap m;
+        auto pb_mail = &kfmsg->pb_mail().data();
+        __PROTO_TO_MAP__( pb_mail, mail_data );
 
         // 添加邮件
-        auto mailid = AddMail( kfmsg->flag(), kfmsg->objectid(), maildata );
-        if ( mailid == _invalid_int )
+        auto mail_id = AddMail( kfmsg->flag(), kfmsg->objectid(), mail_data );
+        if ( mail_id == _invalid_int )
         {
-            std::string strdata;
-            google::protobuf::util::MessageToJsonString( *kfmsg, &strdata );
-            __LOG_ERROR__( "objectid[{}] add mail[{}] failed", kfmsg->objectid(), strdata );
+            std::string str_data;
+            google::protobuf::util::MessageToJsonString( *kfmsg, &str_data );
+            __LOG_ERROR__( "objectid=[{}] add mail=[{}] failed", kfmsg->objectid(), str_data );
         }
     }
 
-    uint64 KFMailShardModule::AddMail( uint32 flag, uint64 objectid, StringMap& maildata )
+    uint64 KFMailShardModule::AddMail( uint32 flag, uint64 object_id, StringMap& mail_data )
     {
-        maildata[ __STRING__( flag ) ] = __TO_STRING__( flag );
-        maildata[ __STRING__( sendtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
-        auto validtime = __TO_UINT32__( maildata[ __STRING__( validtime ) ] );
-        if ( validtime == 0u )
+        mail_data[ __STRING__( flag ) ] = __TO_STRING__( flag );
+        mail_data[ __STRING__( sendtime ) ] = __TO_STRING__( KFGlobal::Instance()->_real_time );
+        auto valid_time = __TO_UINT32__( mail_data[ __STRING__( validtime ) ] );
+        if ( valid_time == 0u )
         {
-            validtime = 2592000;	// 默认30天有效期
-            maildata[ __STRING__( validtime ) ] = __TO_STRING__( validtime );
+            valid_time = 2592000;	// 默认30天有效期
+            mail_data[ __STRING__( validtime ) ] = __TO_STRING__( valid_time );
         }
 
-        auto mailid = _mail_database_logic->AddMail( flag, objectid, maildata, validtime );
-        if ( mailid != 0u && flag == KFMsg::PersonMail )
+        auto mail_id = _mail_database_logic->AddMail( flag, object_id, mail_data, valid_time );
+        if ( mail_id != 0u && flag == KFMsg::PersonMail )
         {
             // 通知玩家有新邮件
-            auto server_id = _kf_basic_database->QueryBasicServerId( objectid );
+            auto server_id = _kf_basic_database->QueryBasicServerId( object_id );
             if ( server_id != _invalid_int )
             {
                 KFMsg::S2SNoticeNewMailReq notice;
-                notice.set_playerid( objectid );
-                _kf_route->RepeatToEntity( 0, server_id, objectid, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
+                notice.set_playerid( object_id );
+                _kf_route->RepeatToEntity( 0, server_id, object_id, KFMsg::S2S_NOTICE_NEW_MAIL_REQ, &notice );
             }
         }
 
-        return mailid;
+        return mail_id;
     }
 
 
@@ -221,15 +207,15 @@ namespace KFrame
         }
 
         KFMsg::S2SUpdateMailStatusAck ack;
-        ack.set_playerid( kfmsg->playerid() );
         ack.set_id( kfmsg->id() );
         ack.set_status( kfmsg->status() );
+        ack.set_playerid( kfmsg->playerid() );
         _kf_route->SendToRoute( route, KFMsg::S2S_UPDATE_MAIL_STATUS_ACK, &ack );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailShardModule::HandleNewPlayerMailReq, KFMsg::S2SNewPlayerMailReq )
     {
         // 设置最大的gm邮件id
-        _mail_database_logic->InitNewPlayerMail( kfmsg->playerid(), kfmsg->zone_id() );
+        _mail_database_logic->InitNewPlayerMail( kfmsg->playerid(), kfmsg->zoneid() );
     }
 }

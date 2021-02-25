@@ -134,6 +134,6 @@ namespace KFrame
 
     __KF_UPDATE_DATA_FUNCTION__( KFAchieveModule::OnUpdateDataAchieveModule )
     {
-        __UPDATE_ACHIEVE_LIST__( _kf_condition->UpdateUpdateCondition( player, condition_object, data, operate, oldvalue, newvalue ) );
+        __UPDATE_ACHIEVE_LIST__( _kf_condition->UpdateUpdateCondition( player, condition_object, data, operate, old_value, new_value ) );
     }
 }

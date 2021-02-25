@@ -84,28 +84,28 @@ namespace KFrame
 
     uint64 KFMailClientModule::GetMaxMailId( EntityPtr player )
     {
-        auto maxmailid = 0u;
-        auto kfmailrecord = player->Find( __STRING__( mail ) );
-        for ( auto kfmail = kfmailrecord->First(); kfmail != nullptr; kfmail = kfmailrecord->Next() )
+        auto max_mail_id = 0u;
+        auto mail_record = player->Find( __STRING__( mail ) );
+        for ( auto mail_data = mail_record->First(); mail_data != nullptr; mail_data = mail_record->Next() )
         {
-            auto mailid = kfmail->GetKeyID();
-            if ( mailid > maxmailid )
+            auto mail_id = mail_data->GetKeyID();
+            if ( mail_id > max_mail_id )
             {
-                maxmailid = mailid;
+                max_mail_id = mail_id;
             }
         }
 
-        return maxmailid;
+        return max_mail_id;
     }
 
     void KFMailClientModule::SendQueryMailMessage( EntityPtr player )
     {
-        auto maxmailid = GetMaxMailId( player );
+        auto max_mail_id = GetMaxMailId( player );
         auto zone_id = KFGlobal::Instance()->_app_id->GetZoneId();
 
         KFMsg::S2SQueryMailReq req;
         req.set_zoneid( zone_id );
-        req.set_maxid( maxmailid );
+        req.set_maxid( max_mail_id );
         req.set_playerid( player->GetKeyID() );
         SendMessageToMail( player->GetKeyID(), KFMsg::S2S_QUERY_MAIL_REQ, &req );
     }
@@ -113,111 +113,109 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleQueryMailAck, KFMsg::S2SQueryMailAck )
     {
         // 将邮件保存到玩家属性中
-        auto kfmailrecord = entity->Find( __STRING__( mail ) );
+        auto mail_record = entity->Find( __STRING__( mail ) );
         for ( auto i = 0; i < kfmsg->mail_size(); ++i )
         {
-            auto pbmail = &kfmsg->mail( i );
-            auto pbdata = &pbmail->data();
-
             // 初始化邮件内容
-            auto kfmail = entity->CreateData( kfmailrecord );
-            for ( auto iter = pbdata->begin(); iter != pbdata->end(); ++iter )
+            auto pb_data = &kfmsg->mail( i ).data();
+            auto mail_data = entity->CreateData( mail_record );
+            for ( auto iter = pb_data->begin(); iter != pb_data->end(); ++iter )
             {
-                kfmail->Set( iter->first, iter->second );
+                mail_data->Operate( iter->first, KFEnum::Set, iter->second );
             }
-            entity->AddRecord( kfmailrecord, kfmail );
+            entity->AddRecord( mail_record, mail_data );
         }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool KFMailClientModule::CheckMailTimeOut( DataPtr kfmail )
+    bool KFMailClientModule::CheckMailTimeOut( DataPtr mail_data )
     {
-        auto validtime = kfmail->Get( __STRING__( validtime ) );
-        auto sendtime = kfmail->Get( __STRING__( sendtime ) );
+        auto valid_time = mail_data->Get( __STRING__( validtime ) );
+        auto send_time = mail_data->Get( __STRING__( sendtime ) );
 
-        return sendtime + validtime < KFGlobal::Instance()->_real_time;
+        return send_time + valid_time < KFGlobal::Instance()->_real_time;
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleViewMailReq, KFMsg::MsgViewMailReq )
     {
-        auto kfmail = entity->Find( __STRING__( mail ), kfmsg->id() );
-        if ( kfmail == nullptr )
+        auto mail_data = entity->Find( __STRING__( mail ), kfmsg->id() );
+        if ( mail_data == nullptr )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailNotExist );
         }
 
-        if ( CheckMailTimeOut( kfmail ) )
+        if ( CheckMailTimeOut( mail_data ) )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailTimeOut );
         }
 
-        auto status = kfmail->Get( __STRING__( status ) );
+        auto status = mail_data->Get( __STRING__( status ) );
         if ( status != KFMsg::InitStatus )
         {
             return;
         }
 
         // 更新状态
-        UpdateMailStatusToShard( entity, kfmail, KFMsg::DoneStatus );
+        UpdateMailStatusToShard( entity, mail_data, KFMsg::DoneStatus );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleDeleteMailReq, KFMsg::MsgDeleteMailReq )
     {
-        auto kfmail = entity->Find( __STRING__( mail ), kfmsg->id() );
-        if ( kfmail == nullptr )
+        auto mail_data = entity->Find( __STRING__( mail ), kfmsg->id() );
+        if ( mail_data == nullptr )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailNotExist );
         }
 
         // 如果有奖励, 并且没有领取
-        auto status = kfmail->Get( __STRING__( status ) );
-        auto reward = kfmail->Get<std::string>( __STRING__( reward ) );
+        auto status = mail_data->Get( __STRING__( status ) );
+        auto reward = mail_data->Get<std::string>( __STRING__( reward ) );
         if ( status != KFMsg::ReceiveStatus && !reward.empty() )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailDeleteFailed );
         }
 
         // 更新到邮件集群
-        UpdateMailStatusToShard( entity, kfmail, KFMsg::Remove );
+        UpdateMailStatusToShard( entity, mail_data, KFMsg::Remove );
     }
 
     __KF_MESSAGE_FUNCTION__( KFMailClientModule::HandleMailReceiveReq, KFMsg::MsgMailRewardReq )
     {
-        auto kfmail = entity->Find( __STRING__( mail ), kfmsg->id() );
-        if ( kfmail == nullptr )
+        auto mail_data = entity->Find( __STRING__( mail ), kfmsg->id() );
+        if ( mail_data == nullptr )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailNotExist );
         }
 
-        auto status = kfmail->Get( __STRING__( status ) );
+        auto status = mail_data->Get( __STRING__( status ) );
         if ( status == KFMsg::ReceiveStatus )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailAlreadyReceived );
         }
 
-        auto reward = kfmail->Get<std::string>( __STRING__( reward ) );
+        auto reward = mail_data->Get<std::string>( __STRING__( reward ) );
         if ( reward.empty() )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailNotHaveReward );
         }
 
-        if ( CheckMailTimeOut( kfmail ) )
+        if ( CheckMailTimeOut( mail_data ) )
         {
             return _kf_display->SendToClient( entity, KFMsg::MailTimeOut );
         }
 
-        UpdateMailStatusToShard( entity, kfmail, KFMsg::ReceiveRemove );
+        UpdateMailStatusToShard( entity, mail_data, KFMsg::ReceiveRemove );
     }
 
-    void KFMailClientModule::UpdateMailStatusToShard( EntityPtr player, DataPtr kfmail, uint32 status )
+    void KFMailClientModule::UpdateMailStatusToShard( EntityPtr player, DataPtr mail_data, uint32 status )
     {
-        auto mailid = kfmail->GetKeyID();
-        auto flag = kfmail->Get( __STRING__( flag ) );
+        auto mail_id = mail_data->GetKeyID();
+        auto flag = mail_data->Get( __STRING__( flag ) );
 
         KFMsg::S2SUpdateMailStatusReq req;
         req.set_flag( flag );
-        req.set_id( mailid );
+        req.set_id( mail_id );
         req.set_status( status );
         req.set_playerid( player->GetKeyID() );
         auto ok = SendMessageToMail( player->GetKeyID(), KFMsg::S2S_UPDATE_MAIL_STATUS_REQ, &req );
@@ -259,30 +257,31 @@ namespace KFrame
 
     void KFMailClientModule::ReceiveMailReward( EntityPtr player, uint64 id )
     {
-        auto kfmail = player->Find( __STRING__( mail ), id );
-        if ( kfmail == nullptr )
+        auto mail_data = player->Find( __STRING__( mail ), id );
+        if ( mail_data == nullptr )
         {
             return __LOG_ERROR__( "player={} can't find mail={}", player->GetKeyID(), id );
         }
 
-        auto reward = kfmail->Get<std::string>( __STRING__( reward ) );
+        auto reward = mail_data->Get<std::string>( __STRING__( reward ) );
         if ( reward.empty() )
         {
             return __LOG_ERROR__( "player={} mail={} no reward", player->GetKeyID(), id );
         }
 
         KFElements elements;
-        auto ok = elements.Parse( reward, __FUNC_LINE__ );
+        elements._str_parse = reward;
+        auto ok = KFGlobal::Instance()->ParseElement( elements, __FILE__, __LINE__ );
         if ( !ok )
         {
             return __LOG_ERROR__( "player={} mail={} reward={} error", player->GetKeyID(), id, reward );
         }
 
-        player->UpdateObject( kfmail, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
+        player->UpdateObject( mail_data, __STRING__( status ), KFEnum::Set, KFMsg::ReceiveStatus );
         player->AddElement( &elements, _default_multiple, __STRING__( mail ), id, __FUNC_LINE__ );
     }
 
-    StringMap& KFMailClientModule::FormatMailData( EntityPtr sender, const KFMailSetting* setting, const KFElements* elements )
+    StringMap& KFMailClientModule::FormatMailData( EntityPtr sender, std::shared_ptr<const KFMailSetting> setting, const KFElements* elements )
     {
         // 有优化的空间, 服务器只发configid到客户端, 客户端根据邮件配置表来获得邮件的基础数据
         // 暂时先发给客户端, 省去客户端读取邮件配置表
@@ -332,32 +331,28 @@ namespace KFrame
         return _mail_data;
     }
 
-    bool KFMailClientModule::SendAddMailToShard( uint64 sendid, uint32 flag, uint64 recv_id, const StringMap& maildata )
+    bool KFMailClientModule::SendAddMailToShard( uint64 send_id, uint32 flag, uint64 recv_id, const StringMap& mail_data )
     {
         KFMsg::S2SAddMailReq req;
         req.set_flag( flag );
         req.set_objectid( recv_id );
 
-        auto pbdata = req.mutable_pbmail()->mutable_data();
-        for ( auto& iter : maildata )
-        {
-            ( *pbdata )[ iter.first ] = iter.second;
-        }
-
+        auto& pb_data = *req.mutable_pbmail()->mutable_data();
+        __MAP_TO_PROTO__( mail_data, pb_data );
         auto ok = SendMessageToMail( sendid, KFMsg::S2S_ADD_MAIL_REQ, &req );
         if ( !ok )
         {
-            std::string strdata;
-            google::protobuf::util::MessageToJsonString( req, &strdata );
-            __LOG_ERROR__( "sendid={} mail={} failed", sendid, strdata );
+            std::string str_data;
+            google::protobuf::util::MessageToJsonString( req, &str_data );
+            __LOG_ERROR__( "sendid={} mail={} failed", sendid, str_data );
         }
 
         return ok;
     }
 
-    bool KFMailClientModule::SendMail( uint32 configid, const KFElements* elements )
+    bool KFMailClientModule::SendMail( uint32 config_id, const KFElements* elements )
     {
-        auto setting = KFMailConfig::Instance()->FindSetting( configid );
+        auto setting = KFMailConfig::Instance()->FindSetting( config_id );
         if ( setting == nullptr )
         {
             return false;
@@ -365,12 +360,24 @@ namespace KFrame
 
         auto zone_id = KFGlobal::Instance()->_app_id->GetZoneId();
 
-        auto& maildata = FormatMailData( nullptr, setting, elements );
-        return SendAddMailToShard( _invalid_int, KFMsg::GlobalMail, zone_id, maildata );
+        auto& mail_data = FormatMailData( nullptr, setting, elements );
+        return SendAddMailToShard( _invalid_int, KFMsg::GlobalMail, zone_id, mail_data );
     }
 
 
-    bool KFMailClientModule::SendMail( uint64 recv_id, uint32 configid, const KFElements* elements )
+    bool KFMailClientModule::SendMail( uint64 recv_id, uint32 config_id, const KFElements* elements )
+    {
+        auto setting = KFMailConfig::Instance()->FindSetting( config_id );
+        if ( setting == nullptr )
+        {
+            return false;
+        }
+
+        auto& mail_data = FormatMailData( nullptr, setting, elements );
+        return SendAddMailToShard( _invalid_int, KFMsg::PersonMail, recv_id, mail_data );
+    }
+
+    bool KFMailClientModule::SendMail( EntityPtr player, uint64 recv_id, uint32 config_id, const KFElements* elements )
     {
         auto setting = KFMailConfig::Instance()->FindSetting( configid );
         if ( setting == nullptr )
@@ -378,20 +385,8 @@ namespace KFrame
             return false;
         }
 
-        auto& maildata = FormatMailData( nullptr, setting, elements );
-        return SendAddMailToShard( _invalid_int, KFMsg::PersonMail, recv_id, maildata );
-    }
-
-    bool KFMailClientModule::SendMail( EntityPtr player, uint64 recv_id, uint32 configid, const KFElements* elements )
-    {
-        auto setting = KFMailConfig::Instance()->FindSetting( configid );
-        if ( setting == nullptr )
-        {
-            return false;
-        }
-
-        auto& maildata = FormatMailData( player, setting, elements );
-        return SendAddMailToShard( player->GetKeyID(), KFMsg::PersonMail, recv_id, maildata );
+        auto& mail_data = FormatMailData( player, setting, elements );
+        return SendAddMailToShard( player->GetKeyID(), KFMsg::PersonMail, recv_id, mail_data );
     }
 }
 
