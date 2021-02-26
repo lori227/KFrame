@@ -18,7 +18,7 @@ namespace KFrame
         KFTimeSectionConfig()
         {
             _key_name = "id";
-            _file_name = "time_section";
+            _file_name = "timesection";
         }
 
     protected:
