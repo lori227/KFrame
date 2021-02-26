@@ -11,6 +11,13 @@ namespace KFrame
     {
         typedef std::shared_ptr<T> ObjectPtr;
     public:
+        KFQueue()
+        {
+            _push_index = 0u;
+            _pop_index = 0u;
+            _max_count = 0u;
+        }
+        
         // 析构函数
         virtual ~KFQueue()
         {
