@@ -924,40 +924,40 @@ namespace KFrame
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleSellItemReq, KFMsg::MsgSellItemReq )
     {
-        auto item_record = entity->Find( kfmsg->name() );
+        auto item_record = player->Find( kfmsg->name() );
         auto item_data = item_record->Find( kfmsg->uuid() );
         if ( item_data == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemDataNotExist );
+            return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
         }
 
         auto item_id = item_data->Get<uint32>( __STRING__( id ) );
         auto setting = KFItemConfig::Instance()->FindSetting( item_id );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemSettingNotExist );
+            return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist );
         }
 
         if ( setting->_sell.IsEmpty() )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemCanNotSell );
+            return _kf_display->SendToClient( player, KFMsg::ItemCanNotSell );
         }
 
         auto count = item_data->Get<uint32>( __STRING__( count ) );
         if ( kfmsg->count() == 0u || count < kfmsg->count() )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemSellCountError );
+            return _kf_display->SendToClient( player, KFMsg::ItemSellCountError );
         }
 
         // 更新道具数量
-        entity->UpdateObject( item_data, __STRING__( count ), KFEnum::Dec, kfmsg->count() );
+        player->UpdateObject( item_data, __STRING__( count ), KFEnum::Dec, kfmsg->count() );
 
         // 添加道具
-        entity->AddElement( &setting->_sell, kfmsg->count(), __STRING__( sell ), item_id, __FUNC_LINE__ );
+        player->AddElement( &setting->_sell, kfmsg->count(), __STRING__( sell ), item_id, __FUNC_LINE__ );
 
         KFMsg::MsgSellItemAck ack;
         ack.set_itemid( item_id );
         ack.set_count( kfmsg->count() );
-        _kf_player->SendToClient( entity, KFMsg::MSG_SELL_ITEM_ACK, &ack );
+        _kf_player->SendToClient( player, KFMsg::MSG_SELL_ITEM_ACK, &ack );
     }
 }
