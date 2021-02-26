@@ -75,7 +75,7 @@ namespace KFrame
                 return true;
             }
 
-            return _objects[ _push_index ] != nullptr;
+            return _objects[_push_index] != nullptr;
         }
 
         // 判断队列是否为空
@@ -90,10 +90,10 @@ namespace KFrame
         {
             if ( _extends.empty() )
             {
-                if ( _objects[ _push_index ] == nullptr )
+                if ( _objects[_push_index] == nullptr )
                 {
                     // 列表未满, 直接插入
-                    _objects[ _push_index ] = object;
+                    _objects[_push_index] = object;
                     _push_index = ( _push_index + 1 ) % _max_count;
                     return true;
                 }
@@ -114,12 +114,12 @@ namespace KFrame
             // 判断是否环形列表是否有空位
             do
             {
-                if ( _objects[ _push_index ] != nullptr )
+                if ( _objects[_push_index] != nullptr )
                 {
                     break;
                 }
 
-                _objects[ _push_index ] = _extends.front();
+                _objects[_push_index] = _extends.front();
                 _push_index = ( _push_index + 1 ) % _max_count;
 
                 _extends.pop_front();
@@ -131,10 +131,10 @@ namespace KFrame
         // 弹出元素
         ObjectPtr Pop()
         {
-            auto object = _objects[ _pop_index ];
+            auto object = _objects[_pop_index];
             if ( object != nullptr )
             {
-                _objects[ _pop_index ] = nullptr;
+                _objects[_pop_index] = nullptr;
                 _pop_index = ( _pop_index + 1 ) % _max_count;
             }
 
@@ -144,7 +144,7 @@ namespace KFrame
         // 取第一个元素( 不删除 )
         inline ObjectPtr Front()
         {
-            return _objects[ _pop_index ];
+            return _objects[_pop_index];
         }
 
         inline void Clear()
@@ -168,11 +168,11 @@ namespace KFrame
         volatile uint32 _max_count;
 
         // 列表
-        std::vector< ObjectPtr > _objects;
+        std::vector<ObjectPtr> _objects;
 
         // 额外链表的最大数量
         uint32 _extend_count = 0;
-        std::list< ObjectPtr > _extends;
+        std::list<ObjectPtr> _extends;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////
