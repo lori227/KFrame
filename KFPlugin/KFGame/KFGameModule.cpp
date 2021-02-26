@@ -434,7 +434,12 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleDisconnectToGameReq, KFMsg::S2SDisconnectToGameReq )
     {
-        __FIND_PLAYER_BY_ID__;
+        player = _kf_player->FindPlayer( kfmsg->playerid() );
+        if ( player == nullptr )
+        {
+            return;
+        }
+
         __LOG_INFO__( "player=[{}] disconnect", kfmsg->playerid() );
     }
 

@@ -189,14 +189,6 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_INTERFACE__( _kf_player, KFPlayerInterface );
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define __FIND_PLAYER_BY_ID__ \
-    auto player_id = kfmsg->playerid(); \
-    auto player = _kf_player->FindPlayer( player_id );\
-    if ( player == nullptr )\
-    {\
-        return;\
-    }\
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define __KF_PLAYER_ENTER_FUNCTION__( function ) void function( EntityPtr player )
 #define __REGISTER_PLAYER_ENTER__( function ) _kf_player->RegisterEnterFunction( this, function )
 #define __UN_PLAYER_ENTER__() _kf_player->UnRegisterEnterFunction( this )
