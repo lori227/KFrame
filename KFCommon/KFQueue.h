@@ -11,13 +11,6 @@ namespace KFrame
     {
         typedef std::shared_ptr<T> ObjectPtr;
     public:
-        KFQueue()
-        {
-            _push_index = 0u;
-            _pop_index = 0u;
-            _max_count = 0u;
-        }
-        
         // 析构函数
         virtual ~KFQueue()
         {
@@ -29,6 +22,8 @@ namespace KFrame
         // @extend_count 当环形队列满时,额外的链表的最大数量, 0 表示丢弃
         inline void InitQueue( uint32 max_count, uint32 extend_count )
         {
+            _pop_index = 0u;
+            _push_index = 0u;
             _max_count = max_count;
             _extend_count = extend_count;
             _objects.resize( max_count, nullptr );
