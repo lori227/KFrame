@@ -117,6 +117,7 @@ namespace KFrame
         auto ret_message = __MAKE_SHARED__( KFNetMessage, net_header->_length );
 
         // 先将消息头拷贝过去
+        _recv_queue.Pop();
         memcpy( &ret_message->_header, message->_data, message->_header._length );
 
         // 合并子消息
