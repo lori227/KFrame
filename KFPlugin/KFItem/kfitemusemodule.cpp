@@ -68,44 +68,44 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFItemUseModule::HandleUseItemReq, KFMsg::MsgUseItemReq )
     {
         // 判断是否有这个道具
-        auto item_data = entity->Find( kfmsg->name(), kfmsg->uuid() );
+        auto item_data = player->Find( kfmsg->name(), kfmsg->uuid() );
         if ( item_data == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemDataNotExist );
+            return _kf_display->SendToClient( player, KFMsg::ItemDataNotExist );
         }
 
         auto item_id = item_data->Get<uint32>( item_data->_data_setting->_config_key_name  );
         auto item_setting = KFItemConfig::Instance()->FindSetting( item_id );
         if ( item_setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemSettingNotExist, item_id );
+            return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist, item_id );
         }
 
         auto item_type_setting = KFItemTypeConfig::Instance()->FindSetting( item_setting->_type );
         if ( item_type_setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemSettingNotExist, item_id );
+            return _kf_display->SendToClient( player, KFMsg::ItemSettingNotExist, item_id );
         }
 
         // 不能使用
         if ( item_setting->_use_count == 0u )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemCanNotUse );
+            return _kf_display->SendToClient( player, KFMsg::ItemCanNotUse );
         }
 
-        if ( !CheckCanUseItem( entity, item_data, item_setting, item_type_setting ) )
+        if ( !CheckCanUseItem( player, item_data, item_setting, item_type_setting ) )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemCanNotUseStatus );
+            return _kf_display->SendToClient( player, KFMsg::ItemCanNotUseStatus );
         }
 
-        auto ok = UseItem( entity, item_data, item_setting, item_type_setting );
+        auto ok = UseItem( player, item_data, item_setting, item_type_setting );
         if ( !ok )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ItemUseFailed );
+            return _kf_display->SendToClient( player, KFMsg::ItemUseFailed );
         }
 
-        UseCostItem( entity, item_data, item_setting );
-        _kf_display->SendToClient( entity, KFMsg::ItemUseOk, item_setting->_id );
+        UseCostItem( player, item_data, item_setting );
+        _kf_display->SendToClient( player, KFMsg::ItemUseOk, item_setting->_id );
     }
 
     bool KFItemUseModule::UseItem( EntityPtr player, DataPtr item_data, std::shared_ptr<const KFItemSetting> item_setting, std::shared_ptr<const KFItemTypeSetting> item_type_setting )

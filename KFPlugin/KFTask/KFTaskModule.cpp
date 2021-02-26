@@ -438,22 +438,22 @@ namespace KFrame
         auto setting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::TaskCanNotFind, kfmsg->id() );
+            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        auto task_data = entity->Find( __STRING__( task ), kfmsg->id() );
+        auto task_data = player->Find( __STRING__( task ), kfmsg->id() );
         if ( task_data == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::TaskNotActive );
+            return _kf_display->SendToClient( player, KFMsg::TaskNotActive );
         }
 
         auto status = task_data->Get<uint32>( __STRING__( status ) );
         if ( status != KFMsg::ActiveStatus )
         {
-            return _kf_display->SendToClient( entity, KFMsg::TaskAlreadyReceive );
+            return _kf_display->SendToClient( player, KFMsg::TaskAlreadyReceive );
         }
 
-        UpdateTaskStatus( entity, setting, task_data, KFMsg::ExecuteStatus, 0u );
+        UpdateTaskStatus( player, setting, task_data, KFMsg::ExecuteStatus, 0u );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRewardReq, KFMsg::MsgTaskRewardReq )
@@ -461,13 +461,13 @@ namespace KFrame
         auto setting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::TaskCanNotFind, kfmsg->id() );
+            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        auto task_data = entity->Find( __STRING__( task ), kfmsg->id() );
+        auto task_data = player->Find( __STRING__( task ), kfmsg->id() );
         if ( task_data == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::TaskCanNotFindData );
+            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFindData );
         }
 
         // 不是完成状态
@@ -476,16 +476,16 @@ namespace KFrame
         {
             if ( task_status == KFMsg::ReceiveStatus )
             {
-                return _kf_display->SendToClient( entity, KFMsg::TaskAlreadyReward );
+                return _kf_display->SendToClient( player, KFMsg::TaskAlreadyReward );
             }
             else
             {
-                return _kf_display->SendToClient( entity, KFMsg::TaskNotDone );
+                return _kf_display->SendToClient( player, KFMsg::TaskNotDone );
             }
         }
 
         // 交付完成任务
-        FinishTask( entity, task_data, setting );
+        FinishTask( player, task_data, setting );
     }
 
     __KF_MESSAGE_FUNCTION__( KFTaskModule::HandleTaskRemoveReq, KFMsg::MsgTaskRemoveReq )
@@ -493,10 +493,10 @@ namespace KFrame
         auto setting = KFTaskConfig::Instance()->FindSetting( kfmsg->id() );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::TaskCanNotFind, kfmsg->id() );
+            return _kf_display->SendToClient( player, KFMsg::TaskCanNotFind, kfmsg->id() );
         }
 
-        entity->RemoveRecord( __STRING__( task ), kfmsg->id() );
+        player->RemoveRecord( __STRING__( task ), kfmsg->id() );
     }
 
     __KF_EXECUTE_FUNCTION__( KFTaskModule::OnExecuteUpdateTaskStatus )

@@ -141,18 +141,18 @@ namespace KFrame
         auto setting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::RankNotExist );
+            return _kf_display->SendToClient( player, KFMsg::RankNotExist );
         }
 
         KFMsg::S2SQueryRankListReq req;
         req.set_rankid( kfmsg->rankid() );
         req.set_start( kfmsg->start() == 0u ? 1u : kfmsg->start() );
         req.set_count( kfmsg->count() );
-        req.set_zoneid( CalcRankZoneId( entity->GetKeyID(), setting ) );
-        auto ok = _kf_route->SendToRand( entity->GetKeyID(), __STRING__( rank ), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
+        req.set_zoneid( CalcRankZoneId( player->GetKeyID(), setting ) );
+        auto ok = _kf_route->SendToRand( player->GetKeyID(), __STRING__( rank ), KFMsg::S2S_QUERY_RANK_LIST_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( entity, KFMsg::RankServerBusy );
+            _kf_display->SendToClient( player, KFMsg::RankServerBusy );
         }
     }
 
@@ -161,13 +161,13 @@ namespace KFrame
         auto setting = KFRankConfig::Instance()->FindSetting( kfmsg->rankid() );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::RankNotExist );
+            return _kf_display->SendToClient( player, KFMsg::RankNotExist );
         }
 
         KFMsg::S2SQueryFriendRankListReq req;
         req.set_rankid( kfmsg->rankid() );
 
-        auto friend_record = entity->Find( __STRING__( friend ) );
+        auto friend_record = player->Find( __STRING__( friend ) );
         auto friend_data = friend_record->First();
         while ( friend_data != nullptr )
         {
@@ -175,10 +175,10 @@ namespace KFrame
             friend_data = friend_record->Next();
         }
 
-        auto ok = _kf_route->SendToRand( entity->GetKeyID(), __STRING__( rank ), KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );
+        auto ok = _kf_route->SendToRand( player->GetKeyID(), __STRING__( rank ), KFMsg::S2S_QUERY_FRIEND_RANK_LIST_REQ, &req );
         if ( !ok )
         {
-            _kf_display->SendToClient( entity, KFMsg::RankServerBusy );
+            _kf_display->SendToClient( player, KFMsg::RankServerBusy );
         }
     }
 }

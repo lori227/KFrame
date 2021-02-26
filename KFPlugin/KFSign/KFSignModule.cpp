@@ -27,38 +27,38 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFSignModule::HandleReceiveSevenRewardReq, KFMsg::MsgSevenSignRewardReq )
     {
-        auto day = entity->Get<uint32>( __STRING__( sevenday ) );
+        auto day = player->Get<uint32>( __STRING__( sevenday ) );
         if ( day < kfmsg->day() )
         {
-            return _kf_display->SendToClient( entity, KFMsg::SignInNotDay );
+            return _kf_display->SendToClient( player, KFMsg::SignInNotDay );
         }
 
         auto setting = KFSignConfig::Instance()->FindSetting( kfmsg->day() );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::SignInCanNotFind );
+            return _kf_display->SendToClient( player, KFMsg::SignInCanNotFind );
         }
 
-        auto seven_flag = entity->Get<uint32>( __STRING__( sevenreward ) );
+        auto seven_flag = player->Get<uint32>( __STRING__( sevenreward ) );
         auto flag = 1u << kfmsg->day();
         if ( KFUtility::HaveBitMask<uint32>( seven_flag, flag ) )
         {
-            return _kf_display->SendToClient( entity, KFMsg::SignInRewardAlready );
+            return _kf_display->SendToClient( player, KFMsg::SignInRewardAlready );
         }
 
         // 设置标记
-        entity->UpdateData( __STRING__( sevenreward ), KFEnum::Or, kfmsg->day() );
+        player->UpdateData( __STRING__( sevenreward ), KFEnum::Or, kfmsg->day() );
 
         // 添加奖励
-        entity->AddElement( &setting->_reward, _default_multiple, __STRING__( sign ), kfmsg->day(), __FUNC_LINE__ );
+        player->AddElement( &setting->_reward, _default_multiple, __STRING__( sign ), kfmsg->day(), __FUNC_LINE__ );
 
         // 额外的奖励
         if ( KFGlobal::Instance()->RandCheck( KFRandEnum::TenThousand, setting->_probability ) )
         {
-            entity->AddElement( &setting->_extend_reward, _default_multiple, __STRING__( sign ), kfmsg->day(), __FUNC_LINE__ );
+            player->AddElement( &setting->_extend_reward, _default_multiple, __STRING__( sign ), kfmsg->day(), __FUNC_LINE__ );
         }
 
-        _kf_display->SendToClient( entity, KFMsg::SignInRewardOk );
+        _kf_display->SendToClient( player, KFMsg::SignInRewardOk );
     }
 
     __KF_RESET_FUNCTION__( KFSignModule::OnResetSigninData )

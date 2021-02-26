@@ -56,8 +56,8 @@ namespace KFrame
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFAchieveModule::HandleAchieveRewardReq, KFMsg::MsgAchieveRewardReq )
     {
-        auto result = ReceiveAchieveReward( entity, kfmsg->id() );
-        _kf_display->SendToClient( entity, result, kfmsg->id() );
+        auto result = ReceiveAchieveReward( player, kfmsg->id() );
+        _kf_display->SendToClient( player, result, kfmsg->id() );
     }
 
     uint32 KFAchieveModule::ReceiveAchieveReward( EntityPtr player, uint32 achieve_id )

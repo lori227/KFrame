@@ -488,16 +488,16 @@ namespace KFrame
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleQueryPlayerReq, KFMsg::MsgQueryPlayerReq )
     {
         // 不能查询自己的数据，客户端本地可以获取到
-        if ( entity->GetKeyID() == kfmsg->playerid() )
+        if ( player->GetKeyID() == kfmsg->playerid() )
         {
             return;
         }
 
         //查询玩家数据
-        auto ok = _kf_data_client->QueryPlayerData( entity->GetKeyID(), kfmsg->playerid() );
+        auto ok = _kf_data_client->QueryPlayerData( player->GetKeyID(), kfmsg->playerid() );
         if ( !ok )
         {
-            _kf_display->SendToClient( entity, KFMsg::DataServerBusy );
+            _kf_display->SendToClient( player, KFMsg::DataServerBusy );
         }
     }
 

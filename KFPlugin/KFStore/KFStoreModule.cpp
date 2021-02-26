@@ -22,10 +22,10 @@ namespace KFrame
         auto setting = KFStoreConfig::Instance()->FindSetting( kfmsg->storeid() );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::StoreSettingError, kfmsg->storeid() );
+            return _kf_display->SendToClient( player, KFMsg::StoreSettingError, kfmsg->storeid() );
         }
 
-        auto result = _kf_goods->BuyGoods( entity, kfmsg->storeid(), kfmsg->goodsid(), kfmsg->buycount() );
-        return _kf_display->DelayToClient( entity, result );
+        auto result = _kf_goods->BuyGoods( player, kfmsg->storeid(), kfmsg->goodsid(), kfmsg->buycount() );
+        return _kf_display->DelayToClient( player, result );
     }
 }

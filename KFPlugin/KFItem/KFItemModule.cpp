@@ -95,24 +95,24 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemReq, KFMsg::MsgRemoveItemReq )
     {
-        __LOG_INFO__( "player=[{}] remove item=[{}:{}]", entity->GetKeyID(), kfmsg->sourcename(), kfmsg->uuid() );
+        __LOG_INFO__( "player=[{}] remove item=[{}:{}]", player->GetKeyID(), kfmsg->sourcename(), kfmsg->uuid() );
 
         if ( kfmsg->uuid() == 0u )
         {
-            entity->ClearRecord( kfmsg->sourcename() );
+            player->ClearRecord( kfmsg->sourcename() );
         }
         else
         {
-            entity->RemoveRecord( kfmsg->sourcename(), kfmsg->uuid() );
+            player->RemoveRecord( kfmsg->sourcename(), kfmsg->uuid() );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFItemModule::HandleRemoveItemCountReq, KFMsg::MsgRemoveItemCountReq )
     {
-        __LOG_INFO__( "player=[{}] remove item count=[{}:{}]", entity->GetKeyID(), kfmsg->itemid(), kfmsg->count() );
+        __LOG_INFO__( "player=[{}] remove item count=[{}:{}]", player->GetKeyID(), kfmsg->itemid(), kfmsg->count() );
 
-        auto item_record = FindItemBag( entity, kfmsg->itemid() );
-        RemoveItem( entity, item_record, kfmsg->itemid(), kfmsg->count() );
+        auto item_record = FindItemBag( player, kfmsg->itemid() );
+        RemoveItem( player, item_record, kfmsg->itemid(), kfmsg->count() );
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_GET_CONFIG_VALUE_FUNCTION__( KFItemModule::GetItemTotalCount )

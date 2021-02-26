@@ -25,7 +25,7 @@ namespace KFrame
         virtual void OpenFunction( bool open ) = 0;
 
         // 调用函数
-        virtual void CallFunction( EntityPtr entity, const Route& route, const char* data, uint32 length ) = 0;
+        virtual void CallFunction( EntityPtr player, const Route& route, const char* data, uint32 length ) = 0;
 
     public:
         // 消息处理类型
@@ -133,7 +133,7 @@ namespace KFrame
     ///////////////////////////////////////////////////////////////////////////////////////////
     // 消息函数
 #define __KF_MESSAGE_FUNCTION__( function, msg_type ) \
-    void function( EntityPtr entity, const Route& route, uint32 msg_id, std::shared_ptr<const msg_type> kfmsg )
+    void function( EntityPtr player, const Route& route, uint32 msg_id, std::shared_ptr<const msg_type> kfmsg )
 
 #define __REGISTER_MESSAGE__( msg_flag, msg_id, function ) \
     _kf_message->RegisterHandle( msg_flag, msg_id, this, function )
