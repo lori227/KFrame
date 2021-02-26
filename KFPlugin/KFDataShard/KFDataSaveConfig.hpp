@@ -43,7 +43,7 @@ namespace KFrame
         {
             setting->_is_open = xml_node.ReadUInt32( "open" );
             setting->_sort = xml_node.ReadUInt32( "sort" );
-            setting->_save_flag = xml_node.ReadUInt32( "save_flag" );
+            setting->_save_flag = xml_node.ReadUInt32( "saveflag" );
             setting->_cache_time = xml_node.ReadUInt32( "cachetime" );
             setting->_compress_type = xml_node.ReadUInt32( "compresstype" );
             setting->_compress_level = xml_node.ReadUInt32( "compresslevel" );
