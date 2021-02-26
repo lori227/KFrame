@@ -78,6 +78,7 @@ namespace KFrame
             message = nullptr;
             break;
         default:		// 不是拆包消息, 直接返回
+            _recv_queue.Pop();
             break;
         }
 
