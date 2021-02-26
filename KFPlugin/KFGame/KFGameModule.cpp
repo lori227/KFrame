@@ -384,7 +384,7 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleReLoginToGameReq, KFMsg::S2SReLoginToGameReq )
     {
-        auto player = _kf_player->ReLogin( kfmsg->playerid(), __ROUTE_RECV_ID__ );
+        player = _kf_player->ReLogin( kfmsg->playerid(), __ROUTE_RECV_ID__ );
         if ( player != nullptr )
         {
             KFMsg::S2SEnterToGateAck ack;
@@ -448,7 +448,11 @@ namespace KFrame
 
     __KF_MESSAGE_FUNCTION__( KFGameModule::HandleLogoutToGameReq, KFMsg::S2SLogoutToGameReq )
     {
-        __FIND_PLAYER_BY_ID__;
+        player = _kf_player->FindPlayer( kfmsg->playerid() );
+        if ( player == nullptr )
+        {
+            return;
+        }
         __LOG_DEBUG__( "player[{}] logout", kfmsg->playerid() );
 
         // 设置不在线, 后续不发送消息
