@@ -3,7 +3,7 @@
 
 namespace KFrame
 {
-#define __RELATION_REDIS_DRIVER__ _kf_redis->Create( __STRING__( relation ) )
+#define __RELATION_REDIS_DRIVER__ _kf_redis->Create( __STRING__( logic ) )
 
     std::string KFRelationDatabaseRedis::FormatRelationKey( const std::string& relation_name, uint64 first_id, uint64 second_id, bool is_both_way )
     {
