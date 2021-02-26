@@ -20,18 +20,18 @@ namespace KFrame
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleFriendChatReq, KFMsg::MsgFriendChatReq )
     {
-        if ( !CheckChatIntervalTime( entity ) )
+        if ( !CheckChatIntervalTime( player ) )
         {
             return;
         }
 
         // 判断是否是好友
-        auto kfrelation = entity->Find( __STRING__( friend ), kfmsg->playerid() );
-        if ( kfrelation == nullptr )
+        auto relation_data = player->Find( __STRING__( friend ), kfmsg->playerid() );
+        if ( relation_data == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ChatNotFriend );
+            return _kf_display->SendToClient( player, KFMsg::ChatNotFriend );
         }
-        auto basic_data = kfrelation->Find( __STRING__( basic ) );
+        auto basic_data = relation_data->Find( __STRING__( basic ) );
 
         // 判断屏蔽字符
         std::string content = kfmsg->content();
@@ -39,17 +39,17 @@ namespace KFrame
 
         KFMsg::MsgTellFriendChat chat;
         chat.set_content( content );
-        chat.set_playerid( entity->GetKeyID() );
-        auto ok = _kf_game->SendToPlayer( entity->GetKeyID(), basic_data, KFMsg::MSG_TELL_FRIEND_CHAT, &chat );
+        chat.set_playerid( player->GetKeyID() );
+        auto ok = _kf_game->SendToPlayer( player->GetKeyID(), basic_data, KFMsg::MSG_TELL_FRIEND_CHAT, &chat );
         if ( !ok )
         {
-            return _kf_display->SendToClient( entity, KFMsg::ChatFriendNotOnline );
+            return _kf_display->SendToClient( player, KFMsg::ChatFriendNotOnline );
         }
     }
 
     __KF_MESSAGE_FUNCTION__( KFChatModule::HandleServerChatReq, KFMsg::MsgServerChatReq )
     {
-        if ( !CheckChatIntervalTime( entity ) )
+        if ( !CheckChatIntervalTime( player ) )
         {
             return;
         }
@@ -58,12 +58,12 @@ namespace KFrame
         std::string content = kfmsg->content();
         _kf_filter->CensorFilter( content );
 
-        auto basic_data = entity->Find( __STRING__( basic ) );
-        auto pbbasic = _kf_kernel->SerializeToView( basic_data );
+        auto basic_data = player->Find( __STRING__( basic ) );
+        auto pb_basic = _kf_kernel->SerializeToView( basic_data );
 
         KFMsg::MsgTellServerChat chat;
         chat.set_content( content );
-        chat.mutable_player()->CopyFrom( *pbbasic );
+        chat.mutable_player()->CopyFrom( *pb_basic );
         _kf_game->BroadcastToServer( KFMsg::MSG_TELL_SERVER_CHAT, &chat );
     }
 
