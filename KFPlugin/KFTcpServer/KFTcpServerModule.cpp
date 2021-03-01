@@ -121,7 +121,7 @@ namespace KFrame
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool KFTcpServerModule::RegisteNetHandle( uint64 session_id, uint64 handle_id, uint64 object_id )
+    bool KFTcpServerModule::RegisterNetHandle( uint64 session_id, uint64 handle_id, uint64 object_id )
     {
         auto handle = _server_engine->RegisterHandle( session_id, handle_id, object_id );
         return handle != nullptr;
@@ -136,11 +136,6 @@ namespace KFrame
     {
         auto handle = _server_engine->FindNetHandle( handle_id );
         return handle != nullptr;
-    }
-
-    uint32 KFTcpServerModule::GetHandleCount()
-    {
-        return _server_engine->GetHandleCount();
     }
 
     void KFTcpServerModule::GetHandleList( NetDataList& out_list )
@@ -269,8 +264,8 @@ namespace KFrame
 
     void KFTcpServerModule::SendNetMessage( uint32 msg_id, google::protobuf::Message* message, uint64 exclude_id /* = 0 */ )
     {
-        auto strdata = message->SerializeAsString();
-        SendNetMessage( msg_id, strdata.data(), strdata.size(), exclude_id );
+        auto data = message->SerializeAsString();
+        SendNetMessage( msg_id, data.data(), data.size(), exclude_id );
     }
 
     void KFTcpServerModule::SendNetMessage( uint32 msg_id, const char* data, uint32 length, uint64 exclude_id /* = 0 */ )
@@ -280,8 +275,8 @@ namespace KFrame
 
     bool KFTcpServerModule::SendNetMessage( uint64 handle_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay )
     {
-        auto strdata = message->SerializeAsString();
-        return _server_engine->SendNetMessage( handle_id, msg_id, strdata.data(), strdata.size(), delay );
+        auto data = message->SerializeAsString();
+        return _server_engine->SendNetMessage( handle_id, msg_id, data.data(), data.size(), delay );
     }
 
     bool KFTcpServerModule::SendNetMessage( uint64 handle_id, uint32 msg_id, const char* data, uint32 length, uint32 delay )
@@ -296,20 +291,20 @@ namespace KFrame
 
     bool KFTcpServerModule::SendNetMessage( uint64 handle_id, uint64 recv_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay )
     {
-        auto strdata = message->SerializeAsString();
-        return _server_engine->SendNetMessage( handle_id, recv_id, msg_id, strdata.data(), strdata.size(), delay );
+        auto data = message->SerializeAsString();
+        return _server_engine->SendNetMessage( handle_id, recv_id, msg_id, data.data(), data.size(), delay );
     }
 
     void KFTcpServerModule::SendMessageToName( const std::string& name, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        _server_engine->SendMessageToName( name, msg_id, strdata.data(), strdata.size() );
+        auto data = message->SerializeAsString();
+        _server_engine->SendMessageToName( name, msg_id, data.data(), data.size() );
     }
 
     void KFTcpServerModule::SendMessageToType( const std::string& type, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        _server_engine->SendMessageToType( type, msg_id, strdata.data(), strdata.size() );
+        auto data = message->SerializeAsString();
+        _server_engine->SendMessageToType( type, msg_id, data.data(), data.size() );
     }
 
     void KFTcpServerModule::SendMessageToType( const std::string& type, uint32 msg_id, const char* data, uint32 length )

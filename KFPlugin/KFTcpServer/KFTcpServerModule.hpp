@@ -54,13 +54,10 @@ namespace KFrame
         /////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////
         // 注册到连接器
-        virtual bool RegisteNetHandle( uint64 session_id, uint64 handle_id, uint64 object_id );
+        virtual bool RegisterNetHandle( uint64 session_id, uint64 handle_id, uint64 object_id );
 
         // 删除连接器
         virtual bool CloseNetHandle( uint64 handle_id, uint32 delay_time, const char* function, uint32 line );
-
-        // 连接数量
-        virtual uint32 GetHandleCount();
 
         // 是否存在连接
         virtual bool HaveHandle( uint64 handle_id );

@@ -19,6 +19,11 @@ namespace KFrame
         __DELETE_OBJECT__( _uv_write );
     }
 
+    std::shared_ptr<KFNetSession> KFNetSession::GetSharedPtr()
+    {
+        return shared_from_this();
+    }
+
     void KFNetSession::InitSession( uint64 id, uint32 queue_count, uint32 header_length )
     {
         _session_id = id;

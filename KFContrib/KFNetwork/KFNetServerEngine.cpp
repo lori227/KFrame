@@ -121,42 +121,37 @@ namespace KFrame
         _trustee_handle_list.Insert( event_data->_id, handle );
 
         // 1分钟没有验证绑定, 自动断开
-        _bind_timeout_list[ event_data->_id ] = _net_server_service->_now_time + 60000;
+        _bind_timeout_list[event_data->_id] = _net_server_service->_now_time + 60000;
     }
 
     void KFNetServerEngine::OnServerShutDown( std::shared_ptr<KFNetEventData>& event_data )
     {
-        auto handle = _trustee_handle_list.Remove( event_data->_id );
-        if ( handle == nullptr )
-        {
-            handle = _work_handle_list.Remove( event_data->_id );
-            if ( handle == nullptr )
-            {
-                return __LOG_ERROR__( "handle[{}:{}] shutdown failed", event_data->_id, KFAppId::ToString( event_data->_id ) );
-            }
-        }
-
         __LOG_INFO__( "handle[{}:{}] shutdown ok", event_data->_id, KFAppId::ToString( event_data->_id ) );
+        auto handle = std::static_pointer_cast<KFNetHandle>( event_data->_data );
+        if ( handle->_is_trustee )
+        {
+            _trustee_handle_list.Remove( event_data->_id );
+        }
+        else
+        {
+            _work_handle_list.Remove( event_data->_id );
+        }
     }
 
     void KFNetServerEngine::OnServerDisconnect( std::shared_ptr<KFNetEventData>& event_data )
     {
         // 断开连接
-        auto handle = _work_handle_list.Find( event_data->_id );
-        if ( handle != nullptr )
+        auto handle = std::static_pointer_cast<KFNetHandle>( event_data->_data );
+        if ( handle ->_is_trustee )
+        {
+            _trustee_handle_list.Find( event_data->_id );
+        }
+        else
         {
             auto function = _event_function_list.Find( KFNetDefine::DisconnectEvent );
             if ( function != nullptr )
             {
                 function->Call( &handle->_net_data );
-            }
-        }
-        else
-        {
-            handle = _trustee_handle_list.Find( event_data->_id );
-            if ( handle == nullptr )
-            {
-                return __LOG_ERROR__( "can't find handle[{}]", event_data->_id );
             }
         }
 
@@ -167,7 +162,7 @@ namespace KFrame
     {
         __LOG_DEBUG_FUNCTION__( function, line, "add close handle[{}:{}]", id, KFAppId::ToString( id ) );
 
-        _close_handle_list[ id ] = _net_server_service->_now_time + delay_time;
+        _close_handle_list[id] = _net_server_service->_now_time + delay_time;
         return true;
     }
 

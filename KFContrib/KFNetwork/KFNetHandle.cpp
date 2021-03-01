@@ -47,7 +47,7 @@ namespace KFrame
     void KFNetHandle::OnDisconnect( int32 code, const char* function, uint32 line )
     {
         KFNetSession::OnDisconnect( code, function, line );
-        _net_service->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _session_id );
+        _net_service->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _session_id, shared_from_this() );
     }
 
     void KFNetHandle::CloseHandle()
@@ -71,6 +71,6 @@ namespace KFrame
     {
         auto net_handle = reinterpret_cast< KFNetHandle* >( handle->data );
 
-        net_handle->_net_service->_net_event->AddEvent( KFNetDefine::ShutEvent, net_handle->_session_id );
+        net_handle->_net_service->_net_event->AddEvent( KFNetDefine::ShutEvent, net_handle->_session_id, net_handle->GetSharedPtr() );
     }
 }

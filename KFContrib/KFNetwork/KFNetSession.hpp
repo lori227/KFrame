@@ -16,6 +16,7 @@ namespace KFrame
         KFNetSession();
         virtual ~KFNetSession();
 
+        std::shared_ptr<KFNetSession> GetSharedPtr();
         /////////////////////////////////////////////////////////////////////////
         // 处理连接成功
         virtual void OnConnect( uv_stream_t* stream );

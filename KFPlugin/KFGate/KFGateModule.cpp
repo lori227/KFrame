@@ -245,7 +245,7 @@ namespace KFrame
 
         __LOG_DEBUG__( "session[{}] account_id[{}] version[{}] token[{}] login req", session_id, account_id, kfmsg->version(), token );
         // 注册连接器
-        if ( !_kf_tcp_server->RegisteNetHandle( session_id, session_id, _invalid_int ) )
+        if ( !_kf_tcp_server->RegisterNetHandle( session_id, session_id, _invalid_int ) )
         {
             return __LOG_ERROR__( "account_id[{}] register[{}] failed", account_id, session_id );
         }
