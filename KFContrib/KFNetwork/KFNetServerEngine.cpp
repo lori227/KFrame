@@ -248,7 +248,7 @@ namespace KFrame
             auto handle = _trustee_handle_list.Find( iter.first );
             if ( handle != nullptr )
             {
-                handle->CloseHandle __FUNC_LINE__ );
+                handle->CloseHandle( __FUNC_LINE__ );
             }
             else
             {
