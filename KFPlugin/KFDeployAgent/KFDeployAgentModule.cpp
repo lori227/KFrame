@@ -85,7 +85,7 @@ namespace KFrame
         __LOG_INFO__( "agent table name = [{}]", _deploy_table_name );
 
         // deploy server
-        _str_deploy_server_id = query_result->_value[ "server_id" ];
+        _str_deploy_server_id = query_result->_value[ "serverid" ];
         _deploy_server_ip = query_result->_value[ "serverip" ];
         _deploy_server_port = __TO_UINT32__( query_result->_value[ "serverport" ] );
 

@@ -19,18 +19,18 @@ namespace KFrame
         auto setting = KFCompoundConfig::Instance()->FindSetting( kfmsg->id() );
         if ( setting == nullptr )
         {
-            return _kf_display->SendToClient( entity, KFMsg::CompoundNotExist );
+            return _kf_display->SendToClient( player, KFMsg::CompoundNotExist );
         }
 
         // 扣除材料
-        auto& data_name = entity->RemoveElement( &setting->_cost_data, _default_multiple, __STRING__( compound ), setting->_id, __FUNC_LINE__ );
+        auto& data_name = player->RemoveElement( &setting->_cost_data, _default_multiple, __STRING__( compound ), setting->_id, __FUNC_LINE__ );
         if ( !data_name.empty() )
         {
-            return _kf_display->SendToClient( entity, KFMsg::DataNotEnough, data_name );
+            return _kf_display->SendToClient( player, KFMsg::DataNotEnough, data_name );
         }
 
         // 添加合成的属性
-        entity->AddElement( &setting->_compound_data, _default_multiple, __STRING__( compound ), setting->_id, __FUNC_LINE__ );
-        _kf_display->SendToClient( entity, KFMsg::CompoundOk );
+        player->AddElement( &setting->_compound_data, _default_multiple, __STRING__( compound ), setting->_id, __FUNC_LINE__ );
+        _kf_display->SendToClient( player, KFMsg::CompoundOk );
     }
 }

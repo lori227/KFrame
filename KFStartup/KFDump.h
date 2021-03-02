@@ -13,7 +13,7 @@ namespace KFrame
         ~KFDump();
 
         // 异常回调
-        static LONG WINAPI MyExceptionFilter( struct _EXCEPTION_POINTERS* exception_info );
+        static LONG WINAPI MyExceptionFilter( struct _EXCEPTION_POINTERS* pExceptionInfo );
     };
 
 }
