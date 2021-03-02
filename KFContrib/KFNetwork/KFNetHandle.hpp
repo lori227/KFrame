@@ -18,7 +18,7 @@ namespace KFrame
         void InitHandle( uint64 id, void* uv_tcp, KFNetServerService* net_service );
 
         // 关闭服务
-        void CloseHandle();
+        void CloseHandle( const char* function, uint32 line );
 
         // 关闭连接
         virtual void CloseSession();

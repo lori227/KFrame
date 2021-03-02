@@ -44,7 +44,7 @@ namespace KFrame
             auto handle = _trustee_handle_list.First();
             while ( handle != nullptr )
             {
-                handle->CloseHandle();
+                handle->CloseHandle( __FUNC_LINE__ );
                 handle = _trustee_handle_list.Next();
             }
         }
@@ -53,7 +53,7 @@ namespace KFrame
             auto handle = _work_handle_list.First();
             while ( handle != nullptr )
             {
-                handle->CloseHandle();
+                handle->CloseHandle( __FUNC_LINE__ );
                 handle = _work_handle_list.Next();
             }
         }
@@ -155,7 +155,7 @@ namespace KFrame
             }
         }
 
-        handle->CloseHandle();
+        handle->CloseHandle( __FUNC_LINE__ );
     }
 
     bool KFNetServerEngine::CloseHandle( uint64 id, uint32 delay_time, const char* function, uint32 line )
@@ -248,14 +248,14 @@ namespace KFrame
             auto handle = _trustee_handle_list.Find( iter.first );
             if ( handle != nullptr )
             {
-                handle->CloseHandle();
+                handle->CloseHandle __FUNC_LINE__ );
             }
             else
             {
                 handle = _work_handle_list.Find( iter.first );
                 if ( handle != nullptr )
                 {
-                    handle->CloseHandle();
+                    handle->CloseHandle( __FUNC_LINE__ );
                 }
             }
         }
@@ -279,7 +279,7 @@ namespace KFrame
             auto handle = _work_handle_list.Find( iter->first );
             if ( handle != nullptr )
             {
-                handle->CloseHandle();
+                handle->CloseHandle( __FUNC_LINE__ );
             }
 
             iter = _close_handle_list.erase( iter );

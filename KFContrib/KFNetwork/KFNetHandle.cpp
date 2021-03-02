@@ -50,11 +50,12 @@ namespace KFrame
         _net_service->_net_event->AddEvent( KFNetDefine::DisconnectEvent, _session_id, shared_from_this() );
     }
 
-    void KFNetHandle::CloseHandle()
+    void KFNetHandle::CloseHandle( const char* function, uint32 line )
     {
         if ( !_is_shutdown )
         {
             SendServiceEvent( KFNetDefine::CloseEvent );
+            __LOG_INFO_FUNCTION__( function, line, "close handle session=[{}] object=[{}|{}]", _session_id, _object_id, KFAppId::ToString( _object_id ) );
         }
     }
 
