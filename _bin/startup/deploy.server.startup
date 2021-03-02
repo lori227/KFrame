@@ -6,6 +6,8 @@
 	</Includes>
 
 	<Plugins>
+		<Plugin Name="KFTimer" Param=""/>
+		<Plugin Name="KFLoader" Param=""/>
 		<Plugin Name="KFDelayed" Param=""/>
 		<Plugin Name="KFMySQL" Param=""/>
 		<Plugin Name="KFDeployServer" Param=""/>
