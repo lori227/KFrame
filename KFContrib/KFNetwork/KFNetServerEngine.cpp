@@ -25,9 +25,8 @@ namespace KFrame
         ///////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////
         _net_server_service->_net_event->BindEventFunction( KFNetDefine::ShutEvent, this, &KFNetServerEngine::OnServerShutDown );
-        _net_server_service->_net_event->BindEventFunction( KFNetDefine::ShutEvent, this, &KFNetServerEngine::OnServerDisconnect );
         _net_server_service->_net_event->BindEventFunction( KFNetDefine::ConnectEvent, this, &KFNetServerEngine::OnServerConnected );
-
+        _net_server_service->_net_event->BindEventFunction( KFNetDefine::DisconnectEvent, this, &KFNetServerEngine::OnServerDisconnect );
     }
 
     int32 KFNetServerEngine::StartEngine( const std::string& ip, uint32 port )
