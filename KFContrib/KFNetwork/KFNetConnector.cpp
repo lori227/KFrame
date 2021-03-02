@@ -53,6 +53,7 @@ namespace KFrame
                     // 防止多次调用
                     _last_recv_time = _net_service->_now_time;
                     SendServiceEvent( KFNetDefine::DisconnectEvent );
+                    __LOG_ERROR__("session=[{}] object=[{}|{}] lost connect", _session_id, _object_id, KFAppId::ToString( _object_id ) );
                 }
             }
         }

@@ -76,20 +76,20 @@ namespace KFrame
 
     void KFTcpClientModule::SendNetMessage( uint32 msg_id, google::protobuf::Message* message, uint32 delay )
     {
-        auto strdata = message->SerializeAsString();
-        _client_engine->SendNetMessage( msg_id, strdata.data(), strdata.size(), delay );
+        auto data = message->SerializeAsString();
+        _client_engine->SendNetMessage( msg_id, data.data(), data.size(), delay );
     }
 
     bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay )
     {
-        auto strdata = message->SerializeAsString();
-        return _client_engine->SendNetMessage( server_id, msg_id, strdata.data(), strdata.size(), delay );
+        auto data = message->SerializeAsString();
+        return _client_engine->SendNetMessage( server_id, msg_id, data.data(), data.size(), delay );
     }
 
     bool KFTcpClientModule::SendNetMessage( uint64 server_id, uint64 recv_id, uint32 msg_id, google::protobuf::Message* message, uint32 delay )
     {
-        auto strdata = message->SerializeAsString();
-        return _client_engine->SendNetMessage( server_id, recv_id, msg_id, strdata.data(), strdata.size(), delay );
+        auto data = message->SerializeAsString();
+        return _client_engine->SendNetMessage( server_id, recv_id, msg_id, data.data(), data.size(), delay );
     }
 
     void KFTcpClientModule::SendNetMessage( uint32 msg_id, const char* data, uint32 length )
@@ -110,8 +110,8 @@ namespace KFrame
     // 给某一类型服务器发送消息
     void KFTcpClientModule::SendMessageToType( const std::string& server_type, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        SendMessageToType( server_type, msg_id, strdata.data(), strdata.size() );
+        auto data = message->SerializeAsString();
+        SendMessageToType( server_type, msg_id, data.data(), data.size() );
     }
 
     void KFTcpClientModule::SendMessageToType( const std::string& server_type, uint32 msg_id, const char* data, uint32 length )
@@ -121,8 +121,8 @@ namespace KFrame
 
     void KFTcpClientModule::SendMessageToName( const std::string& server_name, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        SendMessageToName( server_name, msg_id, strdata.data(), strdata.size() );
+        auto data = message->SerializeAsString();
+        SendMessageToName( server_name, msg_id, data.data(), data.size() );
     }
 
     void KFTcpClientModule::SendMessageToName( const std::string& server_name, uint32 msg_id, const char* data, uint32 length )
@@ -132,8 +132,8 @@ namespace KFrame
 
     void KFTcpClientModule::SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, google::protobuf::Message* message )
     {
-        auto strdata = message->SerializeAsString();
-        SendMessageToServer( server_name, server_type, msg_id, strdata.data(), strdata.size() );
+        auto data = message->SerializeAsString();
+        SendMessageToServer( server_name, server_type, msg_id, data.data(), data.size() );
     }
 
     void KFTcpClientModule::SendMessageToServer( const std::string& server_name, const std::string& server_type, uint32 msg_id, const char* data, uint32 length )
@@ -162,14 +162,12 @@ namespace KFrame
             return;
         }
 
-        KFNetData kfnetdata;
-        kfnetdata = *net_data;
-        kfnetdata._str_id = KFAppId::ToString( kfnetdata._id );
-        auto ok = _client_engine->StartClient( &kfnetdata );
+        const_cast<KFNetData*>(net_data)->_str_id = KFAppId::ToString( net_data->_id );
+        auto ok = _client_engine->StartClient( net_data );
         if ( ok )
         {
-            __LOG_DEBUG__( "[{}:{}:{}|{}:{}] start connect",
-                           kfnetdata._name, kfnetdata._type, kfnetdata._str_id, kfnetdata._ip, kfnetdata._port );
+            __LOG_INFO__( "[{}:{}:{}|{}:{}] start connect",
+                           net_data->_name, net_data->_type, net_data->_str_id, net_data->_ip, net_data->_port );
         }
     }
 

@@ -7,8 +7,8 @@
 	<!--Password 登录密码 -->
 <root version="0000">
 	<!-- 部署数据库 -->
-	<node name="deploy" minid="0" maxid="0" database="kfdeploy" user="root" password="mysql@lori227-=" writeip="127.0.0.1" writeport="3306" readip="127.0.0.1" readort="3306"/>
+	<node name="deploy" minid="0" maxid="0" database="kfdeploy" user="root" password="mysql@lori227-=" writeip="180.169.238.146" writeport="13306" readip="180.169.238.146" readport="13306"/>
 
 	<!-- 玩家数据 -->
-	<node name="data" minid="1" maxid="10" database="chess" user="root" password="mysql@lori227-=" writeip="127.0.0.1" writeport="3306" readip="127.0.0.1" readort="3306"/>
+	<node name="data" minid="1" maxid="10" database="chess" user="root" password="mysql@lori227-=" writeip="180.169.238.146" writeport="13306" readip="180.169.238.146" readport="13306"/>
 </root>
