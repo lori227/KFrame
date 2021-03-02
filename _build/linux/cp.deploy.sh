@@ -27,8 +27,9 @@ cp -a -rf  $respath/startup/deploy.agent.startup $deploypath/startup/
 cp -a -rf  $respath/startup/deploy.server.startup $deploypath/startup/
 
 #config
+cp -a -rf  $respath/config/frameconfig.xml $deploypath/config/
 cp -a -rf  $respath/config/config.xml $deploypath/config/
-cp -a -rf  $respath/config/_xmlversion.xml $deploypath/config/
+cp -a -rf  $respath/config/version.xml $deploypath/config/
 
 #lib
 cp -f $respath/lib/* $deploypath/lib/
@@ -50,11 +51,11 @@ cp -f $binpath/KFHttpServer$filename.so $deploypath/bin/
 cp -f $binpath/KFTcpServer$filename.so $deploypath/bin/
 cp -f $binpath/KFTcpClient$filename.so $deploypath/bin/
 cp -f $binpath/KFMessage$filename.so $deploypath/bin/
-cp -f $binpath/KFConfig$filename.so $deploypath/bin/
+cp -f $binpath/KFLoader$filename.so $deploypath/bin/
 cp -f $binpath/KFDeployAgent$filename.so $deploypath/bin/
 cp -f $binpath/KFDeployServer$filename.so $deploypath/bin/
 cp -f $binpath/KFMySQL$filename.so $deploypath/bin/
-cp -f $binpath/KFSchedule$filename.so $deploypath/bin/
+cp -f $binpath/KFDelayed$filename.so $deploypath/bin/
 
 
 cd /tmp
