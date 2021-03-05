@@ -42,6 +42,12 @@ namespace KFrame
                 // ping 消息不处理, 继续取下一个消息
                 message = PopMessage();
             }
+
+            if ( message != nullptr )
+            {
+                message->_header._route._send_id = _object_id;
+                message->_header._route._server_id = _session_id;
+            }
         }
         else
         {
@@ -82,9 +88,6 @@ namespace KFrame
             _recv_queue.Pop();
             break;
         }
-
-        message->_header._route._send_id = _object_id;
-        message->_header._route._server_id = _session_id;
         return message;
     }
 

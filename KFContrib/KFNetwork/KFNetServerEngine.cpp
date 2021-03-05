@@ -143,7 +143,7 @@ namespace KFrame
         auto handle = std::static_pointer_cast<KFNetHandle>( event_data->_data );
         if ( handle ->_is_trustee )
         {
-            _trustee_handle_list.Find( event_data->_id );
+            _trustee_handle_list.Remove( event_data->_id );
         }
         else
         {
