@@ -95,7 +95,7 @@ blue "start building tcmalloc"
 
 cd tcmalloc
 bash ./autogen.sh
-bash ./configure --prefix=/usr/local
+bash ./configure --enable-minimal --disable-debugalloc  --disable-shared
 make clean
 make -j 4
 make install
