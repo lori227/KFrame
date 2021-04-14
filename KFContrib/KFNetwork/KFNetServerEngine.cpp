@@ -141,11 +141,7 @@ namespace KFrame
     {
         // 断开连接
         auto handle = std::static_pointer_cast<KFNetHandle>( event_data->_data );
-        if ( handle ->_is_trustee )
-        {
-            _trustee_handle_list.Remove( event_data->_id );
-        }
-        else
+        if ( !handle ->_is_trustee )
         {
             auto function = _event_function_list.Find( KFNetDefine::DisconnectEvent );
             if ( function != nullptr )
