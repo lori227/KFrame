@@ -11,22 +11,22 @@ namespace KFrame
 	class KFConditionSetting : public KFIntSetting
 	{
 	public:
-		// Íê³ÉÌõ¼þ¶¨Òå
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		KFConditionDefineOption _condition;
 
-		// Ìõ¼þÍê³ÉÊýÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 		uint32 _done_type = 0u;
 
-		// ¼ÆÊýÀÛ¼ÆÏÞÖÆ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32 _done_value = 0u;
 
-		// Çå³ý¼ÆÊýÌõ¼þ¶¨Òå
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		KFConditionDefineOption _clean;
 
-		// ¶¯Ì¬ÏÞÖÆÌõ¼þ
+		// ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		DynamicConditionGroupPtr _dynamic_condition_limit;
 
-		// ÏÞÖÆÌõ¼þ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		StaticConditionListPtr _static_condition_limit;
 
 	};
@@ -68,7 +68,7 @@ namespace KFrame
 		virtual void ReadSetting( KFXmlNode& xml_node, std::shared_ptr<KFConditionSetting> setting )
 		{
 			setting->_condition._str_condition = xml_node.ReadString( "condition", true );
-			setting->_done_type = xml_node.ReadUInt32( "donetype", true );
+			setting->_done_type = xml_node.ReadCheckType( "donetype", true );
 			setting->_done_value = xml_node.ReadUInt32( "donevalue", true );
 			setting->_clean._str_condition = xml_node.ReadString( "clean", true );
 			setting->_dynamic_condition_limit = xml_node.ReadDynamicConditionGroup( "dynamicconditionlimit", true );
