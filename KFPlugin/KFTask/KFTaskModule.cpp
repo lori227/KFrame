@@ -6,8 +6,8 @@ namespace KFrame
     {
         enum MyEnum
         {
-            CompleteRequest = 1,	// 玩家请求交付
-            CompleteAuto = 2,		// 自动交付
+            CompleteAuto = 1,		// 自动交付
+            CompleteRequest = 2,	// 玩家请求交付
         };
     }
 
