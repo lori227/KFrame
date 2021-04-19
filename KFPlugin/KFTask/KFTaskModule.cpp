@@ -266,8 +266,10 @@ namespace KFrame
         _kf_execute->Execute( player, setting->_execute, __STRING__( task ), setting->_id, __FUNC_LINE__ );
 
         // 删除任务
-        player->RemoveRecord( task_data->GetParent()->GetDataPtr(), setting->_id );
-
+        if ( setting->_complete_remove )
+        {
+            player->RemoveRecord( task_data->GetParent()->GetDataPtr(), setting->_id );
+        }
         // 提示客户端
         _kf_display->DelayToClient( player, KFMsg::TaskRewardOk, setting->_id );
     }

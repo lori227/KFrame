@@ -10,19 +10,21 @@ namespace KFrame
 	class KFTaskSetting : public KFIntSetting
 	{
 	public:
-		// ÀàÐÍ
+		// ï¿½ï¿½ï¿½ï¿½
 		uint32 _type = 0u;
 
-		// Æ·ÖÊ
+		// Æ·ï¿½ï¿½
 		uint32 _quality = 0u;
 
-		// Íê³É·½Ê½
+		// ï¿½ï¿½É·ï¿½Ê½
 		uint32 _complete_mode = 0u;
 
-		// Íê³ÉÌõ¼þ
+		bool _complete_remove = false;
+
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		DynamicConditionGroupPtr _complete_condition;
 
-		// ÈÎÎñÊä³ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		UInt32Vector _execute;
 
 	};
@@ -45,6 +47,7 @@ namespace KFrame
 			setting->_type = xml_node.ReadUInt32( "type", true );
 			setting->_quality = xml_node.ReadUInt32( "quality", true );
 			setting->_complete_mode = xml_node.ReadUInt32( "completemode", true );
+			setting->_complete_remove = xml_node.ReadBool("completeremove", true );
 			setting->_complete_condition = xml_node.ReadDynamicConditionGroup( "completecondition", true );
 			setting->_execute = xml_node.ReadUInt32Vector( "execute", true );
 		}
