@@ -316,21 +316,13 @@ namespace KFrame
         auto execute_data = __MAKE_SHARED__( KFExecuteData );
         execute_data->_name = ReadString( key, optional );
 
-        auto index = 1u;
-        while ( true )
-        {
-            auto param_key = __FORMAT__( "ExecuteParam{}", index++ );
-            auto ok = HaveChild( param_key.c_str() );
-            if ( !ok )
-            {
-                break;
-            }
-
+        for (auto i = 0; i < 4; ++i) {
+            auto param_key = __FORMAT__( "executeparam{}", i );
             auto param = execute_data->_param_list.AddParam();
-            param->_str_value = ReadString( param_key.c_str() );
-            param->_int_value = ReadUInt32( param_key.c_str() );
-            param->_map_value = ReadUInt32Map( param_key.c_str() );
-            param->_vector_value = ReadUInt32Vector( param_key.c_str() );
+            param->_str_value = ReadString( param_key.c_str(), true );
+            param->_int_value = ReadUInt32( param_key.c_str(), true );
+            param->_map_value = ReadUInt32Map( param_key.c_str() , true);
+            param->_vector_value = ReadUInt32Vector( param_key.c_str() , true);
         }
 
         return execute_data;
