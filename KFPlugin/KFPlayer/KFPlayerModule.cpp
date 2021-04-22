@@ -607,12 +607,6 @@ namespace KFrame
             return;
         }
 
-        auto data_setting = parent_data->_data_setting->_class_setting->FindSetting( kfmsg->data_name() );
-        if ( data_setting == nullptr || !data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
-        {
-            return;
-        }
-
         player->UpdateRecord( parent_data, kfmsg->key(), kfmsg->data_name(), kfmsg->operate(), kfmsg->value() );
     }
 
