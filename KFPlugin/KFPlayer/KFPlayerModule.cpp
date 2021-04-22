@@ -638,13 +638,7 @@ namespace KFrame
 
         // 3级record属性
         auto parent_data = player->Find( kfmsg->parent_name() );
-        if ( parent_data == nullptr )
-        {
-            return;
-        }
-
-        auto data_setting = parent_data->_data_setting->_class_setting->FindSetting( kfmsg->data_name() );
-        if ( data_setting == nullptr || !data_setting->HaveMask( KFDataDefine::DataMaskClient ) )
+        if ( parent_data == nullptr || !parent_data->_data_setting->HaveMask( KFDataDefine::DataMaskClient ))
         {
             return;
         }
