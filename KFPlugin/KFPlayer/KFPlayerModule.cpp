@@ -213,6 +213,8 @@ namespace KFrame
             auto function_data = iter.second;
             function_data->Call( player );
         }
+        
+        _component->RemoveEntity(player);
     }
 
     bool KFPlayerModule::SendToClient( EntityPtr player, uint32 msg_id, ::google::protobuf::Message* message, uint32 delay /* = 0 */ )
