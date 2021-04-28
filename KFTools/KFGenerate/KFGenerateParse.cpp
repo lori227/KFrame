@@ -735,8 +735,8 @@ namespace KFrame
                             xmlfile << __FORMAT__( "\t\t\t\tauto execute = setting->{};\n", attribute->_cpp_name );
                             xmlfile << __FORMAT__( "\t\t\t\tif ( execute->_name == __STRING__( data ) )\n",  );
                             xmlfile << "\t\t\t\t{\n";
-                            xmlfile << "\t\t\t\t\t\tauto& data_value = execute->_param_list._params[ 0 ]->_str_value;\n";
-                            xmlfile << "\t\t\t\t\t\tauto& data_name = execute->_param_list._params[ 1 ]->_str_value;\n";
+                            xmlfile << "\t\t\t\t\t\tauto& data_name = execute->_param_list._params[ 0 ]->_str_value;\n";
+                            xmlfile << "\t\t\t\t\t\tauto& data_value = execute->_param_list._params[ 1 ]->_str_value;\n";
                             xmlfile << "\t\t\t\t\t\tauto& data_key = execute->_param_list._params[ 2 ]->_int_value;\n";
                             xmlfile << "\t\t\t\t\t\tKFGlobal::Instance()->FormatElement( execute->_elements, data_name, data_value, data_key );\n";
                             xmlfile << "\t\t\t\t}\n\n";

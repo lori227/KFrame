@@ -9,7 +9,7 @@ namespace KFrame
 	class ExecuteData
 	{
 	public:
-		// Ö´ÐÐÂß¼­ÁÐ±í
+		// Ö´ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Ð±ï¿½
 		ExecuteDataPtr _execute;
 
 	};
@@ -18,7 +18,7 @@ namespace KFrame
 	class KFExecuteSetting : public KFIntSetting
 	{
 	public:
-		// Êä³öÖ´ÐÐÁÐ±í
+		// ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½Ð±ï¿½
 		std::vector<ExecuteData> _execute_data;
 	};
 
@@ -45,8 +45,8 @@ namespace KFrame
 					auto& execute = execute_data._execute;
 					if ( execute->_name == __STRING__( data ) )
 					{
-						auto& data_value = execute->_param_list._params[ 0 ]->_str_value;
-						auto& data_name = execute->_param_list._params[ 1 ]->_str_value;
+                        auto& data_name = execute->_param_list._params[ 0 ]->_str_value;
+                        auto& data_value = execute->_param_list._params[ 1 ]->_str_value;
 						auto& data_key = execute->_param_list._params[ 2 ]->_int_value;
 						KFGlobal::Instance()->FormatElement( execute->_elements, data_name, data_value, data_key );
 					}
