@@ -210,7 +210,7 @@ namespace KFrame
     {
         if ( !_cluster_in_services )
         {
-            __LOG_ERROR__( "cluster not in service, send msg_id=[{}] shardid=[{}] failed", msg_id );
+            __LOG_ERROR__( "cluster not in service, send msg_id=[{}] failed", msg_id );
             return false;
         }
 

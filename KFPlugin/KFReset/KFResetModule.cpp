@@ -76,7 +76,7 @@ namespace KFrame
         if ( time_data == nullptr )
         {
             time_data = player->CreateData( time_record );
-            time_record->Add( setting->_id, time_data );
+            player->AddRecord( time_record, setting->_id, time_data );
         }
 
         auto next_time = time_data->Get<uint64>( __STRING__( value ) );
