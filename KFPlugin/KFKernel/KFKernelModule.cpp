@@ -183,7 +183,7 @@ namespace KFrame
             {
                 auto child_object_data = KFDataFactory::Instance()->CreateData( child_record_data->_data_setting, false );
                 CopyFromObject( child_object_data, &object_iter->second );
-                object_data->Add( object_iter->first, child_object_data );
+                child_record_data->Add( object_iter->first, child_object_data );
             }
         }
     }
