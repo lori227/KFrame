@@ -64,15 +64,12 @@ echo -e "\n# enable coredump whith unlimited file-size for all users\n* soft cor
 # %t – 生成core文件的时间戳(seconds since 0:00h, 1 Jan 1970)
 # %h – 主机名
 # %e – 程序文件名
-echo -e "core-%e-%s-%p-%t" > /proc/sys/kernel/core_pattern
-
-# for centos7 system(update 2017.2.3 21:44)
-echo -e "core-%e-%s-%p-%t" > /etc/sysctl.conf
+echo -e "core-%s-%p-%e" > /proc/sys/kernel/core_pattern
 
 # suffix of the core file name
 echo -e "1" > /proc/sys/kernel/core_uses_pid
 
-echo -e "\nkernel.core_pattern=core-%e-%s-%p-%t" >> /etc/sysctl.conf
+echo -e "\nkernel.core_pattern=core-%s-%p-%e" >> /etc/sysctl.conf
 sysctl -p /etc/sysctl.conf
 
 
